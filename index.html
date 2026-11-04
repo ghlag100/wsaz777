@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#090708">
-<title>WSAZ_777 | IA v4.1</title>
+<title>WSAZ_777 | IA v4.2</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cinzel:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -72,6 +71,175 @@ body{
 }
 .glow.one{top:-200px;left:-150px}
 .glow.two{bottom:-220px;right:-150px}
+
+/* INICIALIZAÇÃO CINEMATOGRÁFICA */
+
+.boot-screen{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  overflow:hidden;
+  background:
+    radial-gradient(ellipse at center,#241014 0%,#0b0809 48%,#030303 100%);
+  transition:opacity .75s ease,visibility .75s ease;
+}
+
+.boot-screen.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.boot-screen::before,
+.boot-screen::after{
+  content:"";
+  position:absolute;
+  width:320px;
+  height:320px;
+  border-radius:50%;
+  background:#c51f2b;
+  filter:blur(130px);
+  opacity:.12;
+  animation:bootGlow 4s ease-in-out infinite alternate;
+}
+
+.boot-screen::after{
+  width:220px;
+  height:220px;
+  background:#ffffff;
+  opacity:.045;
+  animation-delay:1s;
+}
+
+.boot-content{
+  width:min(88%,390px);
+  text-align:center;
+  position:relative;
+  z-index:2;
+  animation:bootEnter 1s ease both;
+}
+
+.boot-symbol{
+  width:112px;
+  height:112px;
+  margin:0 auto 30px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  position:relative;
+  background:radial-gradient(circle,#351017 0%,#10090b 65%);
+  box-shadow:0 0 40px #c51f2b45,inset 0 0 25px #c51f2b30;
+}
+
+.boot-symbol::before,
+.boot-symbol::after{
+  content:"";
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  border:2px solid transparent;
+  border-top-color:#ff3545;
+  border-bottom-color:#ffffff90;
+  animation:bootSpin 2s linear infinite;
+}
+
+.boot-symbol::after{
+  inset:-16px;
+  border-top-color:#ffffff90;
+  border-bottom-color:transparent;
+  animation-direction:reverse;
+  animation-duration:3s;
+}
+
+.boot-crown{
+  font-size:49px;
+  color:#fff;
+  text-shadow:0 0 22px #ff3545;
+  animation:bootPulse 2s ease-in-out infinite;
+}
+
+.boot-title{
+  font-family:Cinzel,serif;
+  font-size:29px;
+  font-weight:800;
+  letter-spacing:5px;
+  color:#fff;
+  text-shadow:0 0 20px #c51f2b80;
+}
+
+.boot-title span{color:var(--red2)}
+
+.boot-description{
+  margin-top:12px;
+  color:#c7bfc0;
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+
+.boot-loading{
+  width:210px;
+  height:3px;
+  margin:30px auto 14px;
+  overflow:hidden;
+  border-radius:10px;
+  background:#ffffff20;
+}
+
+.boot-progress{
+  width:0;
+  height:100%;
+  background:linear-gradient(90deg,#8d101d,#ff3545,#fff);
+  box-shadow:0 0 15px #ff3545;
+  animation:bootProgress 3s linear forwards;
+}
+
+.boot-status{
+  color:#a99b9d;
+  font-size:10px;
+  letter-spacing:2px;
+  animation:bootText 1.5s ease-in-out infinite;
+}
+
+.boot-footer{
+  position:absolute;
+  bottom:30px;
+  color:#716568;
+  font-size:9px;
+  letter-spacing:3px;
+  z-index:2;
+}
+
+@keyframes bootSpin{
+  to{transform:rotate(360deg)}
+}
+
+@keyframes bootProgress{
+  to{width:100%}
+}
+
+@keyframes bootEnter{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes bootPulse{
+  50%{transform:scale(1.08);filter:brightness(1.4)}
+}
+
+@keyframes bootGlow{
+  to{transform:scale(1.3);opacity:.2}
+}
+
+@keyframes bootText{
+  50%{opacity:.45}
+}
+
+/* INTERFACE */
 
 header{
   height:88px;
@@ -238,7 +406,6 @@ header{
 }
 .action:hover{background:#8f1825}
 
-/* ESCOLHA DO ESTILO */
 .style-selector{
   padding:15px 20px;
   border-bottom:1px solid var(--border);
@@ -466,6 +633,34 @@ footer strong{color:#ff5963}
 </head>
 
 <body>
+
+<!-- TELA DE CARREGAMENTO -->
+<div class="boot-screen" id="bootScreen">
+  <div class="boot-content">
+    <div class="boot-symbol">
+      <div class="boot-crown">♛</div>
+    </div>
+
+    <div class="boot-title">WSAZ_<span>777</span></div>
+
+    <div class="boot-description">
+      Inteligência artificial
+    </div>
+
+    <div class="boot-loading">
+      <div class="boot-progress"></div>
+    </div>
+
+    <div class="boot-status">
+      Inicializando sistemas...
+    </div>
+  </div>
+
+  <div class="boot-footer">
+    PROJETO INDEPENDENTE · WSAZ_777
+  </div>
+</div>
+
 <div class="background"></div>
 <div class="grain"></div>
 <div class="glow one"></div>
@@ -475,7 +670,7 @@ footer strong{color:#ff5963}
   <div class="brand">
     <div class="crown">♛</div>
     <div>
-      <div class="logo">WSAZ_777 IA <span>v4.1</span></div>
+      <div class="logo">WSAZ_777 IA <span>v4.2</span></div>
       <div class="subtitle">Inteligência Artificial · Sempre evoluindo</div>
     </div>
   </div>
@@ -504,8 +699,8 @@ footer strong{color:#ff5963}
 
   <main class="main">
     <section class="welcome">
-      <div class="welcome-tag">✦ NOVA EXPERIÊNCIA · VERSÃO 4.1</div>
-      <h1>WSAZ_777 <span>IA v4.1</span></h1>
+      <div class="welcome-tag">✦ NOVA EXPERIÊNCIA · VERSÃO 4.2</div>
+      <h1>WSAZ_777 <span>IA v4.2</span></h1>
       <p>Pesquise · Aprenda · Crie · Descubra</p>
     </section>
 
@@ -572,54 +767,68 @@ footer strong{color:#ff5963}
 </div>
 
 <script>
-const form = document.getElementById("chatForm");
-const input = document.getElementById("messageInput");
-const messages = document.getElementById("messages");
-const sendButton = document.getElementById("sendButton");
-const attachButton = document.getElementById("attachButton");
-const imageInput = document.getElementById("imageInput");
-const preview = document.getElementById("preview");
-const previewImage = document.getElementById("previewImage");
-const removeImage = document.getElementById("removeImage");
-const clearChat = document.getElementById("clearChat");
+// INICIALIZAÇÃO DE 3 SEGUNDOS
+window.addEventListener("load",()=>{
+  const bootScreen=document.getElementById("bootScreen");
 
-const styleSelector = document.getElementById("styleSelector");
-const styleCurrent = document.getElementById("styleCurrent");
-const styleButtons = document.querySelectorAll(".style-option");
+  setTimeout(()=>{
+    bootScreen.classList.add("hide");
 
-let selectedImage = null;
-let busy = false;
+    setTimeout(()=>{
+      bootScreen.remove();
+    },800);
 
-const styleNames = {
+  },3000);
+});
+
+const form=document.getElementById("chatForm");
+const input=document.getElementById("messageInput");
+const messages=document.getElementById("messages");
+const sendButton=document.getElementById("sendButton");
+const attachButton=document.getElementById("attachButton");
+const imageInput=document.getElementById("imageInput");
+const preview=document.getElementById("preview");
+const previewImage=document.getElementById("previewImage");
+const removeImage=document.getElementById("removeImage");
+const clearChat=document.getElementById("clearChat");
+
+const styleSelector=document.getElementById("styleSelector");
+const styleCurrent=document.getElementById("styleCurrent");
+const styleButtons=document.querySelectorAll(".style-option");
+
+let selectedImage=null;
+let busy=false;
+
+const styleNames={
   concise:"⚡ Resumida",
   normal:"✦ Normal",
   detailed:"📚 Completa"
 };
 
-let responseStyle = localStorage.getItem("wsaz_response_style");
+let responseStyle=localStorage.getItem("wsaz_response_style");
 
 if(!["concise","normal","detailed"].includes(responseStyle)){
-  responseStyle = null;
+  responseStyle=null;
 }
 
 function scrollToBottom(){
-  messages.scrollTop = messages.scrollHeight;
+  messages.scrollTop=messages.scrollHeight;
 }
 
 function addMessage(text,type,imageUrl=null){
-  const element = document.createElement("div");
-  element.className = "message " + type;
+  const element=document.createElement("div");
+  element.className="message "+type;
 
   if(imageUrl){
-    const img = document.createElement("img");
-    img.src = imageUrl;
-    img.alt = "Imagem enviada";
+    const img=document.createElement("img");
+    img.src=imageUrl;
+    img.alt="Imagem enviada";
     element.appendChild(img);
   }
 
   if(text){
-    const textNode = document.createElement("div");
-    textNode.textContent = text;
+    const textNode=document.createElement("div");
+    textNode.textContent=text;
     element.appendChild(textNode);
   }
 
@@ -632,23 +841,23 @@ function updateStyle(){
   styleButtons.forEach(button=>{
     button.classList.toggle(
       "selected",
-      button.dataset.style === responseStyle
+      button.dataset.style===responseStyle
     );
   });
 
   styleCurrent.replaceChildren();
 
-  const label = document.createElement("span");
-  label.textContent = "Estilo atual: " + styleNames[responseStyle];
+  const label=document.createElement("span");
+  label.textContent="Estilo atual: "+styleNames[responseStyle];
   styleCurrent.appendChild(label);
 
-  const changeButton = document.createElement("button");
-  changeButton.className = "style-change";
-  changeButton.textContent = "Alterar";
+  const changeButton=document.createElement("button");
+  changeButton.className="style-change";
+  changeButton.textContent="Alterar";
 
   changeButton.addEventListener("click",()=>{
-    styleSelector.style.display = "block";
-    styleCurrent.textContent = "Escolha seu estilo de resposta.";
+    styleSelector.style.display="block";
+    styleCurrent.textContent="Escolha seu estilo de resposta.";
   });
 
   styleCurrent.appendChild(changeButton);
@@ -656,42 +865,42 @@ function updateStyle(){
 
 if(responseStyle){
   updateStyle();
-  styleSelector.style.display = "none";
+  styleSelector.style.display="none";
 }else{
-  styleSelector.style.display = "block";
+  styleSelector.style.display="block";
 }
 
 styleButtons.forEach(button=>{
   button.addEventListener("click",()=>{
-    responseStyle = button.dataset.style;
+    responseStyle=button.dataset.style;
     localStorage.setItem("wsaz_response_style",responseStyle);
 
     updateStyle();
-    styleSelector.style.display = "none";
+    styleSelector.style.display="none";
 
     addMessage(
-      "Preferência atualizada! A partir de agora, vou responder no estilo " +
-      styleNames[responseStyle] + ". ✦",
+      "Preferência atualizada! A partir de agora, vou responder no estilo "+
+      styleNames[responseStyle]+". ✦",
       "bot"
     );
   });
 });
 
 function addTypingIndicator(){
-  const element = document.createElement("div");
-  element.className = "message bot typing-message";
+  const element=document.createElement("div");
+  element.className="message bot typing-message";
 
-  const status = document.createElement("div");
-  status.className = "typing-status";
+  const status=document.createElement("div");
+  status.className="typing-status";
 
-  const dot = document.createElement("span");
-  dot.className = "typing-dot";
+  const dot=document.createElement("span");
+  dot.className="typing-dot";
 
-  const label = document.createElement("span");
-  label.textContent = "WSAZ_777 está digitando";
+  const label=document.createElement("span");
+  label.textContent="WSAZ_777 está digitando";
 
-  const dots = document.createElement("span");
-  dots.className = "typing-dots";
+  const dots=document.createElement("span");
+  dots.className="typing-dots";
 
   for(let i=0;i<3;i++){
     dots.appendChild(document.createElement("span"));
@@ -706,15 +915,15 @@ function addTypingIndicator(){
 }
 
 function clearSelectedImage(){
-  selectedImage = null;
-  imageInput.value = "";
-  preview.style.display = "none";
-  previewImage.src = "";
+  selectedImage=null;
+  imageInput.value="";
+  preview.style.display="none";
+  previewImage.src="";
 }
 
 function resetChat(){
-  if(busy) return;
-  if(!confirm("Deseja realmente limpar toda a conversa?")) return;
+  if(busy)return;
+  if(!confirm("Deseja realmente limpar toda a conversa?"))return;
 
   messages.replaceChildren();
   addMessage(
@@ -725,11 +934,11 @@ function resetChat(){
 }
 
 attachButton.addEventListener("click",()=>{
-  if(!busy) imageInput.click();
+  if(!busy)imageInput.click();
 });
 
 document.getElementById("imageShortcut").addEventListener("click",()=>{
-  if(!busy) imageInput.click();
+  if(!busy)imageInput.click();
 });
 
 document.getElementById("focusShortcut").addEventListener("click",()=>{
@@ -741,8 +950,8 @@ removeImage.addEventListener("click",clearSelectedImage);
 clearChat.addEventListener("click",resetChat);
 
 imageInput.addEventListener("change",async()=>{
-  const file = imageInput.files?.[0];
-  if(!file) return;
+  const file=imageInput.files?.[0];
+  if(!file)return;
 
   if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
     alert("Escolha uma imagem JPG, PNG ou WEBP.");
@@ -757,14 +966,14 @@ imageInput.addEventListener("change",async()=>{
   }
 
   try{
-    const dataUrl = await new Promise((resolve,reject)=>{
-      const reader = new FileReader();
+    const dataUrl=await new Promise((resolve,reject)=>{
+      const reader=new FileReader();
       reader.onload=()=>resolve(reader.result);
       reader.onerror=reject;
       reader.readAsDataURL(file);
     });
 
-    const image = new Image();
+    const image=new Image();
     image.src=dataUrl;
     await image.decode();
 
@@ -791,12 +1000,12 @@ imageInput.addEventListener("change",async()=>{
 form.addEventListener("submit",async(event)=>{
   event.preventDefault();
 
-  if(busy) return;
+  if(busy)return;
 
   const message=input.value.trim();
   const image=selectedImage;
 
-  if(!message&&!image) return;
+  if(!message&&!image)return;
 
   if(!responseStyle){
     styleSelector.style.display="block";
@@ -810,7 +1019,7 @@ form.addEventListener("submit",async(event)=>{
   clearChat.disabled=true;
 
   addMessage(
-    message || "Analise esta imagem, por favor.",
+    message||"Analise esta imagem, por favor.",
     "user",
     image
   );
@@ -835,17 +1044,10 @@ form.addEventListener("submit",async(event)=>{
 
     loading.remove();
 
-    if(!response.ok){
-      addMessage(
-        data.reply || "Não foi possível concluir sua solicitação.",
-        "bot"
-      );
-    }else{
-      addMessage(
-        data.reply || "Não consegui gerar uma resposta.",
-        "bot"
-      );
-    }
+    addMessage(
+      data.reply||"Não consegui gerar uma resposta.",
+      "bot"
+    );
 
   }catch(error){
     console.error("ERRO NO CHAT:",error);
