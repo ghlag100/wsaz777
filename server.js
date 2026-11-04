@@ -15,6 +15,7 @@ app.post("/api/chat", async (req, res) => {
   try {
     const { message, image } = req.body || {};
     const apiKey = process.env.OPENROUTER_API_KEY;
+    const model = process.env.OPENROUTER_MODEL || "openrouter/free";
 
     if (!apiKey) {
       return res.status(503).json({
@@ -22,15 +23,13 @@ app.post("/api/chat", async (req, res) => {
       });
     }
 
-    if (typeof message !== "string" || !message.trim()) {
-      if (!image) {
-        return res.status(400).json({
-          reply: "Digite uma pergunta ou envie uma imagem."
-        });
-      }
+    if ((!message || typeof message !== "string" || !message.trim()) && !image) {
+      return res.status(400).json({
+        reply: "Digite uma pergunta ou envie uma imagem."
+      });
     }
 
-    if (message && message.length > 2000) {
+    if (typeof message === "string" && message.length > 2000) {
       return res.status(400).json({
         reply: "Sua mensagem é muito longa."
       });
@@ -71,12 +70,12 @@ app.post("/api/chat", async (req, res) => {
           "X-OpenRouter-Title": "WSAZ_777"
         },
         body: JSON.stringify({
-          model: process.env.OPENROUTER_MODEL || "openrouter/free",
+          model,
           messages: [
             {
               role: "system",
               content:
-                "Você é o WSAZ_777, uma IA de uso geral. Responda em português brasileiro, com clareza, precisão e naturalidade. Ajude com estudos, matemática, programação, tecnologia, textos e conhecimentos gerais. Quando receber uma imagem, descreva o que realmente consegue observar e responda à pergunta do usuário. Não invente detalhes."
+                "Você é o WSAZ_777, uma IA de uso geral. Responda em português brasileiro, com clareza, precisão e naturalidade. Ajude com estudos, matemática, programação, tecnologia, textos e conhecimentos gerais. Em segurança digital, priorize aprendizado, defesa e práticas éticas. Quando receber uma imagem, descreva o que realmente consegue observar e responda à pergunta do usuário. Não invente detalhes."
             },
             {
               role: "user",
@@ -89,39 +88,63 @@ app.post("/api/chat", async (req, res) => {
       }
     );
 
-    const data = await response.json();
+    const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      console.error("OPENROUTER:", response.status, data.error?.message);
+      console.error(
+        "ERRO OPENROUTER:",
+        response.status,
+        data.error?.message || JSON.stringify(data).slice(0, 2000)
+      );
+
+      let reply = "Erro ao consultar a inteligência artificial.";
+
+      if (response.status === 429) {
+        reply = "Limite de uso atingido. Tente novamente mais tarde.";
+      } else if (response.status === 402) {
+        reply = "Créditos insuficientes para esse modelo.";
+      } else if (response.status === 401) {
+        reply = "A chave do OpenRouter é inválida.";
+      }
+
+      return res.status(502).json({ reply });
+    }
+
+    const rawAnswer = data.choices?.[0]?.message?.content;
+
+    let answer = "";
+
+    if (typeof rawAnswer === "string") {
+      answer = rawAnswer;
+    } else if (Array.isArray(rawAnswer)) {
+      answer = rawAnswer
+        .filter(item => item.type === "text" && item.text)
+        .map(item => item.text)
+        .join("\n");
+    }
+
+    if (!answer.trim()) {
+      console.error(
+        "RESPOSTA INVÁLIDA DO OPENROUTER:",
+        JSON.stringify(data).slice(0, 3000)
+      );
 
       return res.status(502).json({
-        reply: response.status === 429
-          ? "Limite de uso atingido. Tente novamente mais tarde."
-          : response.status === 402
-          ? "Créditos insuficientes para esse modelo."
-          : response.status === 401
-          ? "A chave do OpenRouter é inválida."
-          : "Erro ao consultar a inteligência artificial."
+        reply: "A IA recebeu sua solicitação, mas não retornou uma resposta válida. Tente novamente."
       });
     }
 
-    const answer = data.choices?.[0]?.message?.content;
-
-    return res.json({
-      reply: typeof answer === "string"
-        ? answer
-        : "Não consegui gerar uma resposta."
-    });
+    return res.json({ reply: answer });
 
   } catch (error) {
-    console.error("ERRO SERVIDOR:", error.message);
+    console.error("ERRO SERVIDOR:", error);
 
     return res.status(500).json({
-      reply: "Erro interno. Tente novamente."
+      reply: "Erro interno ao processar sua solicitação. Tente novamente."
     });
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log("WSAZ_777 ativo na porta " + PORT);
 });
