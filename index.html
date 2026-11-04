@@ -201,6 +201,59 @@ nav a:hover{color:white}
   margin-bottom:8px;
 }
 
+/* INDICADOR DE DIGITAÇÃO */
+
+.typing-message{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-height:48px;
+}
+
+.typing-status{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  color:#e8d5ff;
+  font-size:12px;
+}
+
+.typing-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#bd70ff;
+  box-shadow:0 0 10px #a855f7;
+  animation:statusPulse 1.1s infinite ease-in-out;
+}
+
+.typing-dots{
+  display:flex;
+  align-items:center;
+  gap:4px;
+}
+
+.typing-dots span{
+  width:5px;
+  height:5px;
+  background:#d49aff;
+  border-radius:50%;
+  animation:dotBounce 1s infinite ease-in-out;
+}
+
+.typing-dots span:nth-child(2){animation-delay:.15s}
+.typing-dots span:nth-child(3){animation-delay:.3s}
+
+@keyframes statusPulse{
+  0%,100%{opacity:.45;transform:scale(.8)}
+  50%{opacity:1;transform:scale(1.2)}
+}
+
+@keyframes dotBounce{
+  0%,60%,100%{transform:translateY(0);opacity:.45}
+  30%{transform:translateY(-5px);opacity:1}
+}
+
 .composer{
   border-top:1px solid var(--border);
   padding:13px;
@@ -339,6 +392,14 @@ footer strong{color:#c77aff}
   .send{padding:12px}
   .message{max-width:95%}
 }
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important;
+  }
+}
 </style>
 </head>
 
@@ -460,6 +521,10 @@ const clearChat = document.getElementById("clearChat");
 let selectedImage = null;
 let busy = false;
 
+function scrollToBottom(){
+  messages.scrollTop = messages.scrollHeight;
+}
+
 function addMessage(text, type, imageUrl = null) {
   const element = document.createElement("div");
   element.className = "message " + type;
@@ -478,7 +543,37 @@ function addMessage(text, type, imageUrl = null) {
   }
 
   messages.appendChild(element);
-  messages.scrollTop = messages.scrollHeight;
+  scrollToBottom();
+  return element;
+}
+
+/* Cria o indicador animado enquanto a IA responde */
+function addTypingIndicator(){
+  const element = document.createElement("div");
+  element.className = "message bot typing-message";
+
+  const status = document.createElement("div");
+  status.className = "typing-status";
+
+  const dot = document.createElement("span");
+  dot.className = "typing-dot";
+
+  const label = document.createElement("span");
+  label.textContent = "WSAZ_777 está digitando";
+
+  const dots = document.createElement("span");
+  dots.className = "typing-dots";
+
+  for(let i = 0; i < 3; i++){
+    dots.appendChild(document.createElement("span"));
+  }
+
+  status.append(dot, label, dots);
+  element.appendChild(status);
+
+  messages.appendChild(element);
+  scrollToBottom();
+
   return element;
 }
 
@@ -572,16 +667,16 @@ form.addEventListener("submit", async (event) => {
   attachButton.disabled = true;
   clearChat.disabled = true;
 
-  addMessage(message || "Analise esta imagem, por favor.", "user",
-    image ? URL.createObjectURL(
-      await (await fetch(image)).blob()
-    ) : null
+  addMessage(
+    message || "Analise esta imagem, por favor.",
+    "user",
+    image
   );
 
   input.value = "";
   clearSelectedImage();
 
-  const loading = addMessage("WSAZ_777 está analisando...", "bot");
+  const loading = addTypingIndicator();
 
   try {
     const response = await fetch("/api/chat", {
@@ -592,20 +687,30 @@ form.addEventListener("submit", async (event) => {
 
     const data = await response.json();
 
-    loading.textContent = data.reply ||
-      "Não consegui gerar uma resposta.";
+    loading.remove();
+
+    addMessage(
+      data.reply || "Não consegui gerar uma resposta.",
+      "bot"
+    );
 
   } catch (error) {
-    console.error(error);
-    loading.textContent =
-      "Falha na conexão. Verifique sua internet e tente novamente.";
+    console.error("ERRO NO CHAT:", error);
+
+    loading.remove();
+
+    addMessage(
+      "Falha na conexão. Verifique sua internet e tente novamente.",
+      "bot"
+    );
+
   } finally {
     busy = false;
     sendButton.disabled = false;
     attachButton.disabled = false;
     clearChat.disabled = false;
     input.focus();
-    messages.scrollTop = messages.scrollHeight;
+    scrollToBottom();
   }
 });
 </script>
