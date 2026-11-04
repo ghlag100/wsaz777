@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -72,7 +73,7 @@ body{
 .glow.one{top:-200px;left:-150px}
 .glow.two{bottom:-220px;right:-150px}
 
-/* INICIALIZAÇÃO CINEMATOGRÁFICA */
+/* INICIALIZAÇÃO */
 
 .boot-screen{
   position:fixed;
@@ -155,10 +156,16 @@ body{
   animation-duration:3s;
 }
 
-.boot-crown{
-  font-size:49px;
-  color:#fff;
-  text-shadow:0 0 22px #ff3545;
+/* FOTO DO PROPRIETÁRIO */
+
+.boot-photo{
+  width:94px;
+  height:94px;
+  object-fit:cover;
+  object-position:center;
+  border-radius:50%;
+  border:3px solid #ff3545;
+  box-shadow:0 0 22px #ff3545;
   animation:bootPulse 2s ease-in-out infinite;
 }
 
@@ -638,7 +645,11 @@ footer strong{color:#ff5963}
 <div class="boot-screen" id="bootScreen">
   <div class="boot-content">
     <div class="boot-symbol">
-      <div class="boot-crown">♛</div>
+      <img
+        class="boot-photo"
+        src="./file_000000009618820e9a50407df0e56103.png"
+        alt="Foto do criador"
+      >
     </div>
 
     <div class="boot-title">WSAZ_<span>777</span></div>
