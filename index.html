@@ -1,97 +1,348 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#170d2b">
-<title>WSAZ_777 • Travel Guide</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17132D">
+<title>WSAZ_777 | Inteligência Artificial</title>
+
 <style>
-:root{--bg:#10091d;--deep:#190e2c;--panel:#211438;--panel2:#2b1b43;--line:#4a3567;--purple:#a978ff;--lilac:#d7bdff;--white:#fff;--muted:#c4b6d7;--ink:#25163a;--paper:#faf8ff;--shadow:0 22px 70px #08031188}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 15% 0%,#43236b 0,transparent 35%),radial-gradient(ellipse at 100% 30%,#30204d 0,transparent 30%),var(--bg);color:var(--white);font:15px/1.6 Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
-a{color:inherit;text-decoration:none}a:hover{text-decoration:underline}.wrap{max-width:1160px;margin:auto;padding:0 22px}
-header{height:76px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff1a}.logo{font-weight:950;letter-spacing:1.8px}.logo b{color:var(--lilac)}.social{border:1px solid #ffffff35;border-radius:999px;padding:8px 14px;font-size:13px}
-.hero{padding:68px 0 42px;display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:center}.eyebrow{color:var(--lilac);font-weight:850;letter-spacing:2px;text-transform:uppercase;font-size:11px}.hero h1{font-size:clamp(40px,6vw,69px);line-height:1.02;letter-spacing:-2px;margin:14px 0}.hero h1 span{color:var(--lilac)}.hero p{color:var(--muted);font-size:17px;max-width:600px}.hero-panel{background:linear-gradient(145deg,#32204e,#1c112d);border:1px solid #ffffff25;border-radius:26px;padding:24px;box-shadow:var(--shadow)}.hero-panel .plane{font-size:48px}.hero-panel h3{font-size:21px;margin:5px 0}.hero-panel p{font-size:13px;margin:0;color:#d4c6e6}
-nav{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0 0}nav a,.chip{border:1px solid #ffffff25;background:#ffffff09;border-radius:99px;padding:7px 12px;font-size:12px;color:#f3ebff}
-section{padding:34px 0;scroll-margin-top:20px}.head{margin-bottom:17px}.head h2{font-size:28px;letter-spacing:-.7px;margin:4px 0}.head p{margin:0;color:var(--muted);font-size:13px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:linear-gradient(150deg,#25173a,#1a102a);border:1px solid var(--line);border-radius:18px;padding:19px}.card .ico{font-size:24px}.card h3{margin:8px 0 5px;font-size:17px}.card p{margin:0;color:var(--muted);font-size:13px}.links{display:flex;gap:7px;flex-wrap:wrap;margin-top:13px}.links a{font-size:11px;padding:7px 9px;border-radius:9px;background:#ffffff0c;border:1px solid #ffffff25;color:#e9dcff}
-.notice{background:#a978ff12;border:1px solid #a978ff66;border-radius:14px;padding:14px 16px;color:#e9dcff;margin:14px 0;font-size:13px}
-.chat-shell{display:grid;grid-template-columns:260px 1fr;min-height:510px;border:1px solid #ffffff28;border-radius:23px;overflow:hidden;background:#170f25;box-shadow:var(--shadow)}
-.chat-side{background:#211536;padding:20px;border-right:1px solid #ffffff1a}.chat-side h3{margin:0 0 10px}.chat-side p{font-size:12px;color:var(--muted)}.suggest{display:block;width:100%;text-align:left;border:1px solid #ffffff20;background:#ffffff08;color:#f7f1ff;border-radius:11px;padding:10px;margin:8px 0;cursor:pointer;font:inherit;font-size:12px}.suggest:hover{background:#a978ff25;border-color:var(--purple)}
-.chat-main{display:flex;flex-direction:column;min-width:0}.chat-top{padding:15px 18px;border-bottom:1px solid #ffffff1a;display:flex;justify-content:space-between;align-items:center}.online{font-size:11px;color:#a8f0c6}.messages{padding:18px;flex:1;min-height:310px;max-height:430px;overflow:auto;display:flex;flex-direction:column;gap:12px}.msg{max-width:85%;padding:12px 14px;border-radius:15px;font-size:13px;white-space:pre-wrap}.bot{align-self:flex-start;background:#2a1b40;border:1px solid #5a4278;color:#f3ebff;border-bottom-left-radius:4px}.user{align-self:flex-end;background:#eee5ff;color:#241337;border-bottom-right-radius:4px}.chat-input{display:flex;gap:8px;padding:13px;border-top:1px solid #ffffff1a}.chat-input input{min-width:0;flex:1;background:#241735;color:white;border:1px solid #594273;border-radius:12px;padding:12px;font:inherit;outline:none}.chat-input button,.primary{border:0;border-radius:12px;padding:11px 16px;background:linear-gradient(100deg,#b68cff,#e2ceff);color:#25143b;font-weight:900;cursor:pointer}.tiny{font-size:11px;color:var(--muted);padding:0 16px 13px}
-.steps{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.step{border:1px solid var(--line);background:#ffffff08;border-radius:14px;padding:14px;font-size:13px}.step b{color:var(--lilac)}.checkgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}.check{display:flex;gap:9px;padding:11px;border:1px solid var(--line);background:#ffffff08;border-radius:11px;font-size:13px}.check input{accent-color:#a978ff;margin-top:4px}.progress{height:7px;background:#ffffff1a;border-radius:99px;overflow:hidden;margin:12px 0}.bar{height:100%;width:0;background:linear-gradient(90deg,#a978ff,#e2ceff)}
-.formgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}.field input,.field select{width:100%;background:#160e23;color:white;border:1px solid #594273;border-radius:10px;padding:11px;font:inherit}.result{margin-top:13px;padding:14px;border:1px solid #a978ff66;background:#a978ff12;border-radius:12px;font-size:13px}
-details{border:1px solid var(--line);background:#ffffff08;border-radius:12px;padding:13px 15px;margin:8px 0}summary{cursor:pointer;font-weight:750}details p{color:var(--muted);font-size:13px;margin-bottom:0}
-footer{margin-top:25px;padding:30px 0 45px;border-top:1px solid #ffffff20;color:var(--muted);font-size:12px}.foot{display:flex;justify-content:space-between;gap:15px;flex-wrap:wrap}
-@media(max-width:800px){.hero{grid-template-columns:1fr;padding:45px 0 30px}.grid{grid-template-columns:1fr 1fr}.chat-shell{grid-template-columns:1fr}.chat-side{border-right:0;border-bottom:1px solid #ffffff1a}.chat-side .suggest{display:inline-block;width:auto;margin:4px}.chat-side p{margin-bottom:7px}}
-@media(max-width:540px){.wrap{padding:0 14px}.grid,.steps,.checkgrid,.formgrid{grid-template-columns:1fr}.hero h1{letter-spacing:-1px}.social{font-size:11px}.chat-input{padding:9px}.chat-input button{padding:10px}}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #100e1c;
+  color: white;
+  min-height: 100vh;
+}
+
+header {
+  height: 72px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid #302a45;
+  background: #17132d;
+}
+
+.logo {
+  width: 43px;
+  height: 43px;
+  border-radius: 14px;
+  background: #7958df;
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+}
+
+.brand {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.subtitle {
+  font-size: 11px;
+  color: #aaa0c5;
+  margin-top: 4px;
+}
+
+.status {
+  margin-left: auto;
+  color: #73e6a0;
+  font-size: 12px;
+}
+
+main {
+  max-width: 850px;
+  margin: auto;
+  padding: 30px 16px;
+}
+
+.welcome {
+  text-align: center;
+  padding: 35px 10px 25px;
+}
+
+.robot {
+  width: 112px;
+  height: 112px;
+  margin: auto auto 20px;
+  border-radius: 35px;
+  background: linear-gradient(145deg, #7958df, #38266e);
+  display: grid;
+  place-items: center;
+  font-size: 65px;
+  box-shadow: 0 0 40px #7958df44;
+}
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 12px;
+}
+
+.welcome p {
+  color: #aaa3bd;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+.suggestions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.suggestion {
+  background: #201c31;
+  color: #e6e0f5;
+  border: 1px solid #38304e;
+  padding: 15px;
+  border-radius: 13px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.suggestion:hover {
+  border-color: #9475ed;
+  background: #29213e;
+}
+
+#messages {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 20px;
+}
+
+.message {
+  max-width: 88%;
+  padding: 14px 16px;
+  border-radius: 16px;
+  line-height: 1.6;
+  font-size: 14px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.bot {
+  align-self: flex-start;
+  background: #211d32;
+  border: 1px solid #38304e;
+}
+
+.user {
+  align-self: flex-end;
+  background: #6245bd;
+}
+
+.chatbox {
+  position: sticky;
+  bottom: 10px;
+  background: #1c182a;
+  border: 1px solid #41365c;
+  border-radius: 17px;
+  padding: 10px;
+  display: flex;
+  gap: 9px;
+  box-shadow: 0 8px 30px #0008;
+}
+
+textarea {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: white;
+  resize: none;
+  padding: 12px 8px;
+  font-family: inherit;
+  font-size: 14px;
+  max-height: 120px;
+}
+
+textarea::placeholder {
+  color: #9189a5;
+}
+
+button.send {
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 13px;
+  background: #7958df;
+  color: white;
+  font-size: 21px;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.footer {
+  color: #756d88;
+  text-align: center;
+  font-size: 11px;
+  padding: 18px 0;
+}
+
+@media(max-width: 500px) {
+  h1 { font-size: 24px; }
+  .suggestions { grid-template-columns: 1fr; }
+  main { padding: 18px 12px; }
+}
 </style>
 </head>
-<body><div class="wrap">
-<header><div class="logo">WSAZ_777 <b>✦</b> <span style="font-weight:500;color:#c4b6d7">TRAVEL GUIDE</span></div><a class="social" href="https://www.instagram.com/wsaz_777/" target="_blank" rel="noopener">@wsaz_777 ↗</a></header>
+
+<body>
+
+<header>
+  <div class="logo">🤖</div>
+  <div>
+    <div class="brand">WSAZ_777</div>
+    <div class="subtitle">Inteligência artificial</div>
+  </div>
+  <div class="status">● Disponível</div>
+</header>
+
 <main>
-<div class="hero"><div><div class="eyebrow">Passaporte • Destinos • Planejamento</div><h1>O mundo espera.<br><span>Prepare sua viagem.</span></h1><p>Informação clara para sair do planejamento e chegar ao embarque. Tire dúvidas, confira documentos e organize cada etapa.</p><nav><a href="#assistente">Assistente</a><a href="#passaporte">Passaporte</a><a href="#destinos">Destinos e vistos</a><a href="#planejar">Planejar</a><a href="#checklist">Checklist</a><a href="#faq">FAQ</a></nav></div><div class="hero-panel"><div class="plane">✈️</div><div class="eyebrow">Seu próximo destino começa aqui</div><h3>Viaje com informação.</h3><p>Consulte fontes oficiais antes de comprar passagens ou enviar documentos. As regras de imigração podem mudar.</p><div style="margin-top:16px"><span class="chip">🇧🇷 Brasil</span> <span class="chip">🌍 Mundo</span> <span class="chip">💜 WSAZ</span></div></div></div>
 
-<section id="assistente"><div class="head"><div class="eyebrow">Atendimento de viagem</div><h2>Converse com o assistente WSAZ</h2><p>Pergunte do básico ao avançado. Se a IA estiver conectada no servidor, ela responderá livremente.</p></div>
-<div class="chat-shell"><aside class="chat-side"><h3>💬 Comece por aqui</h3><p>Escolha uma pergunta ou escreva sua própria dúvida.</p>
-<button class="suggest" onclick="askPreset('Como faço para tirar meu primeiro passaporte brasileiro?')">🛂 Como tirar passaporte?</button>
-<button class="suggest" onclick="askPreset('Tenho menos de 18 anos. Como funcionam passaporte e autorização de viagem?')">🧑‍🎓 Viajar sendo menor</button>
-<button class="suggest" onclick="askPreset('Quero viajar para os Estados Unidos. Quais documentos e visto devo pesquisar?')">🇺🇸 Viajar para os EUA</button>
-<button class="suggest" onclick="askPreset('Como descubro se preciso de visto para um país?')">🌍 Preciso de visto?</button>
-<button class="suggest" onclick="askPreset('Ajude-me a montar um orçamento para uma viagem internacional.')">💰 Planejar orçamento</button>
-<button class="suggest" onclick="askPreset('O que devo conferir antes de uma conexão internacional?')">🛫 Conexão internacional</button>
-</aside><div class="chat-main"><div class="chat-top"><div><b>WSAZ Travel Assistant</b><div class="small">Orientação inicial de viagem</div></div><span class="online">● Assistente disponível</span></div><div class="messages" id="messages" aria-live="polite"><div class="msg bot">Olá! Eu sou o assistente de viagens WSAZ. ✨\n\nPosso ajudar com passaporte, vistos, documentos, viagens de menores, orçamento e planejamento.\n\nQual é sua dúvida?</div></div><form class="chat-input" id="chatForm"><input id="question" autocomplete="off" placeholder="Digite sua pergunta..." aria-label="Sua pergunta"><button type="submit">Enviar ➤</button></form><div class="tiny" id="chatStatus">Modo local de demonstração. Configure o endpoint seguro /api/chat para ativar respostas de IA generativa.</div></div></div>
-<div class="notice"><b>Transparência:</b> esta versão inclui respostas orientativas locais. Para uma IA generativa real, publique também o backend incluído no pacote e configure uma chave de API como variável secreta no servidor. Nunca coloque chaves de API neste HTML.</div>
+<section class="welcome" id="welcome">
+  <div class="robot">🤖</div>
+  <h1>Olá! Eu sou WSAZ_777.</h1>
+  <p>
+    Sua inteligência artificial para ajudar em qualquer assunto.
+    Pergunte, explore ideias e descubra novas possibilidades.
+  </p>
 </section>
 
-<section id="passaporte"><div class="head"><div class="eyebrow">Documento brasileiro</div><h2>Como tirar o passaporte</h2><p>O processo oficial é feito pela Polícia Federal.</p></div><div class="steps">
-<div class="step"><b>01 • Preencher</b><br>Preencha a solicitação no portal oficial da Polícia Federal.</div><div class="step"><b>02 • Pagar</b><br>Gere e pague a taxa pelo procedimento oficial; confira o valor vigente.</div><div class="step"><b>03 • Agendar</b><br>Após a compensação, agende atendimento no posto disponível.</div><div class="step"><b>04 • Comparecer</b><br>Leve documentos originais exigidos para seu caso.</div><div class="step"><b>05 • Acompanhar</b><br>Consulte o andamento da solicitação no portal.</div><div class="step"><b>06 • Retirar</b><br>Retire pessoalmente, conforme as instruções da PF.</div></div><div class="links"><a href="https://www.gov.br/pf/pt-br/assuntos/passaporte" target="_blank" rel="noopener">Polícia Federal ↗</a><a href="https://www.gov.br/pt-br/servicos/obter-passaporte-comum-para-brasileiro" target="_blank" rel="noopener">Solicitar passaporte ↗</a><a href="https://www.gov.br/pf/pt-br/assuntos/passaporte/documentacao" target="_blank" rel="noopener">Documentação ↗</a><a href="https://www.gov.br/pf/pt-br/assuntos/passaporte/duvidas" target="_blank" rel="noopener">Dúvidas ↗</a></div></section>
+<section class="suggestions" id="suggestions">
+  <button class="suggestion"
+    onclick="sendQuestion('Quanto é 157 vezes 28? Explique.')">
+    🧮 Fazer cálculos
+  </button>
 
-<section id="destinos"><div class="head"><div class="eyebrow">Regras variam por destino</div><h2>Vistos, entrada e segurança</h2><p>Confira sempre a autoridade oficial do país e todos os países de conexão.</p></div><div class="grid">
-<article class="card"><div class="ico">🌐</div><h3>Portal Consular</h3><p>Orientações do Itamaraty para brasileiros no exterior, alertas e contatos consulares.</p><div class="links"><a href="https://www.gov.br/mre/pt-br/assuntos/portal-consular" target="_blank">Itamaraty ↗</a><a href="https://www.gov.br/mre/pt-br/assuntos/portal-consular/alertas-a-viagem" target="_blank">Alertas ↗</a></div></article>
-<article class="card"><div class="ico">🇺🇸</div><h3>Estados Unidos</h3><p>Pesquise a categoria de visto adequada ao objetivo da viagem e siga as instruções oficiais.</p><div class="links"><a href="https://br.usembassy.gov/pt/visas-pt/" target="_blank">Embaixada ↗</a><a href="https://ceac.state.gov/" target="_blank">CEAC ↗</a><a href="https://ais.usvisa-info.com/pt-br/niv" target="_blank">Agendamento ↗</a></div></article>
-<article class="card"><div class="ico">🇪🇺</div><h3>Europa / Schengen</h3><p>Confira permanência permitida, documentos, regras de fronteira e autorização aplicável.</p><div class="links"><a href="https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_pt.htm" target="_blank">União Europeia ↗</a><a href="https://travel-europe.europa.eu/etias_en" target="_blank">ETIAS ↗</a></div></article>
-<article class="card"><div class="ico">🧑‍🎓</div><h3>Menores de 18 anos</h3><p>Passaporte e autorização para viajar são processos diferentes. Confirme autorização dos responsáveis e exigências da companhia.</p><div class="links"><a href="https://www.cnj.jus.br/viagem-ao-exterior/" target="_blank">CNJ ↗</a><a href="https://www.gov.br/pf/pt-br/assuntos/passaporte" target="_blank">PF ↗</a></div></article>
-<article class="card"><div class="ico">💉</div><h3>Saúde e vacinação</h3><p>Verifique exigências sanitárias, vacinas recomendadas e certificado internacional.</p><div class="links"><a href="https://www.gov.br/anvisa/pt-br/assuntos/paf/certificado-internacional-de-vacinacao" target="_blank">Anvisa ↗</a><a href="https://www.who.int/health-topics/travel" target="_blank">OMS ↗</a></div></article>
-<article class="card"><div class="ico">🧳</div><h3>Voos e passageiros</h3><p>Confira bagagem, documentos, direitos do passageiro, conexões e regras de embarque.</p><div class="links"><a href="https://www.gov.br/anac/pt-br/assuntos/passageiros" target="_blank">ANAC ↗</a><a href="https://www.iatatravelcentre.com/" target="_blank">IATA ↗</a></div></article>
-</div></section>
+  <button class="suggestion"
+    onclick="sendQuestion('Me explique como funciona a inteligência artificial.')">
+    🧠 Aprender algo novo
+  </button>
 
-<section id="planejar"><div class="head"><div class="eyebrow">Organização financeira</div><h2>Planeje sua viagem</h2><p>Faça uma conta inicial do orçamento por pessoa e por dia.</p></div><div class="card"><div class="formgrid">
-<div class="field"><label>Destino</label><input id="dest" placeholder="Ex.: Lisboa, Portugal"></div><div class="field"><label>Número de viajantes</label><input id="people" type="number" min="1" value="1"></div><div class="field"><label>Duração em dias</label><input id="days" type="number" min="1" value="7"></div><div class="field"><label>Orçamento total (R$)</label><input id="budget" type="number" min="0" placeholder="Ex.: 9000"></div><div class="field"><label>Mês pretendido</label><input id="month" type="month"></div><div class="field"><label>Objetivo</label><select id="goal"><option>Turismo</option><option>Estudo</option><option>Visitar familiares</option><option>Trabalho (visto específico)</option><option>Outro</option></select></div></div><button class="primary" style="margin-top:14px" onclick="makePlan()">Criar meu resumo</button><div class="result" id="planResult" hidden></div><p class="small">Estimativa não consulta preços em tempo real. Inclua passagem, hospedagem, alimentação, transporte, visto, seguro e reserva para imprevistos.</p></div></section>
+  <button class="suggestion"
+    onclick="sendQuestion('Crie um texto profissional para mim.')">
+    ✍️ Criar textos
+  </button>
 
-<section id="checklist"><div class="head"><div class="eyebrow">Antes de embarcar</div><h2>Checklist da viagem</h2><p>Marque os itens concluídos. O progresso fica apenas no seu navegador.</p></div><div id="percent" class="chip">0% concluído</div><div class="progress"><div class="bar" id="bar"></div></div><div class="checkgrid" id="checks">
-<label class="check"><input type="checkbox"> Conferir validade do passaporte</label><label class="check"><input type="checkbox"> Verificar visto ou autorização</label><label class="check"><input type="checkbox"> Conferir regras para menores, se aplicável</label><label class="check"><input type="checkbox"> Verificar exigências dos países de conexão</label><label class="check"><input type="checkbox"> Confirmar passagem e hospedagem</label><label class="check"><input type="checkbox"> Conferir vacinas e saúde</label><label class="check"><input type="checkbox"> Avaliar seguro viagem</label><label class="check"><input type="checkbox"> Conferir bagagem e check-in</label><label class="check"><input type="checkbox"> Separar meios de pagamento</label><label class="check"><input type="checkbox"> Guardar cópias seguras dos documentos</label><label class="check"><input type="checkbox"> Salvar contatos de emergência</label><label class="check"><input type="checkbox"> Compartilhar roteiro com familiar</label></div></section>
-
-<section id="faq"><div class="head"><div class="eyebrow">Dúvidas comuns</div><h2>Perguntas frequentes</h2></div>
-<details><summary>Com 18 anos posso solicitar passaporte sozinho?</summary><p>Em regra, sim. A partir dos 18 anos, a solicitação é feita como adulto, sem autorização dos pais, observados os requisitos oficiais.</p></details>
-<details><summary>Passaporte garante entrada em qualquer país?</summary><p>Não. O destino pode exigir visto, validade mínima restante, comprovantes, passagem de saída, seguro ou outros documentos. A decisão de entrada cabe às autoridades migratórias.</p></details>
-<details><summary>Preciso de passaporte para viajar dentro do Brasil?</summary><p>Normalmente não. Para voos domésticos, confira os documentos de identificação aceitos pela ANAC e pela companhia aérea.</p></details>
-<details><summary>Conexão em outro país exige visto?</summary><p>Pode exigir. Verifique as regras de trânsito do país da escala, mesmo que você não pretenda sair do aeroporto.</p></details>
-<details><summary>Seguro viagem é obrigatório?</summary><p>Depende do destino e do tipo de viagem. Mesmo quando não é obrigatório, pode ser útil; leia cobertura, limites e exclusões.</p></details>
-<details><summary>Como saber se um link é oficial?</summary><p>Priorize domínios governamentais, embaixadas, consulados e companhias aéreas. Desconfie de cobranças e promessas de aprovação garantida.</p></details>
+  <button class="suggestion"
+    onclick="sendQuestion('Me ajude com programação.')">
+    💻 Programação
+  </button>
 </section>
-</main>
-<footer><div class="foot"><div><b style="color:white">WSAZ_777 • TRAVEL GUIDE</b><br>Informação para planejar melhor.</div><div>Instagram <a href="https://www.instagram.com/wsaz_777/" target="_blank">@wsaz_777 ↗</a><br>Projeto independente</div></div><p>Este portal não representa o Governo Federal, a Polícia Federal, consulados ou companhias aéreas. Conteúdo informativo: confirme regras, taxas e prazos nas fontes oficiais antes de agir. Não envie passaporte, CPF, senhas ou dados bancários pelo chat.</p></footer>
+
+<section id="messages"></section>
+
+<div class="chatbox">
+  <textarea
+    id="question"
+    rows="1"
+    maxlength="2000"
+    placeholder="Pergunte qualquer coisa..."
+  ></textarea>
+
+  <button class="send" id="send" onclick="sendQuestion()">
+    ➤
+  </button>
 </div>
+
+<div class="footer">
+  WSAZ_777 • Sua IA, suas possibilidades.
+</div>
+
+</main>
+
 <script>
-const API_ENDPOINT='/api/chat';
-const messages=document.getElementById('messages');
-function addMsg(text,who){const d=document.createElement('div');d.className='msg '+who;d.textContent=text;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;return d}
-function localAnswer(q){
- const s=q.toLowerCase();
- if(/passaporte|pf|documento/.test(s))return 'Para solicitar passaporte brasileiro: preencha o formulário no site da Polícia Federal, pague a taxa gerada no processo, aguarde a compensação, agende atendimento, compareça com os documentos originais e acompanhe a solicitação. Confira documentos e valores atualizados em https://www.gov.br/pf/pt-br/assuntos/passaporte. Você tem menos ou mais de 18 anos? Isso muda os documentos e autorizações.';
- if(/menor|17 anos|16 anos|15 anos|criança|responsável/.test(s))return 'Para menores de 18 anos, há regras específicas tanto para emitir o passaporte quanto para viajar ao exterior. A autorização para emissão do passaporte não é a mesma coisa que a autorização de viagem. Consulte o CNJ: https://www.cnj.jus.br/viagem-ao-exterior/ e a Polícia Federal: https://www.gov.br/pf/pt-br/assuntos/passaporte. A viagem seria com ambos os pais, só um deles, terceiros ou sozinho(a)?';
- if(/eua|estados unidos|america|americano/.test(s))return 'Para os Estados Unidos, o tipo de visto depende do objetivo da viagem. Para turismo/visita, consulte as orientações de visto de visitante na Embaixada dos EUA: https://br.usembassy.gov/pt/visas-pt/. Use apenas os portais oficiais para formulários e agendamento. Qual é o objetivo e por quanto tempo pretende ficar?';
- if(/europa|schengen|portugal|espanha|frança|alemanha|italia/.test(s))return 'As condições de entrada variam conforme o país e a duração da estadia. Consulte a página oficial da União Europeia: https://europa.eu/youreurope/citizens/travel/entry-exit/non-eu-nationals/index_pt.htm. Confira também a validade do passaporte, comprovantes e eventuais autorizações prévias.';
- if(/visto|preciso entrar|entrar no país/.test(s))return 'A exigência de visto depende da nacionalidade, destino, finalidade, duração e conexões. Consulte o consulado/embaixada do destino e o Portal Consular do Itamaraty: https://www.gov.br/mre/pt-br/assuntos/portal-consular. Qual é o país de destino e o motivo da viagem?';
- if(/orçamento|dinheiro|preço|planejar|planejamento|economizar/.test(s))return 'Comece separando: passagem, hospedagem, alimentação, transporte local, visto/taxas, seguro, internet, passeios e uma reserva para imprevistos. Compare preços em datas diferentes e evite comprar bilhetes não reembolsáveis antes de confirmar os requisitos de entrada. Para qual destino e quantos dias?';
- if(/conexão|escala|trânsito/.test(s))return 'Em conexões internacionais, verifique as regras de trânsito do país da escala. Pode haver exigência de visto de trânsito, retirada de bagagem, troca de aeroporto ou novo check-in. Confira todos os trechos com a companhia aérea e a autoridade migratória do país.';
- if(/vacina|saúde|febre amarela/.test(s))return 'As exigências sanitárias dependem do destino e do itinerário. Consulte a Anvisa sobre o Certificado Internacional de Vacinação ou Profilaxia (CIVP): https://www.gov.br/anvisa/pt-br/assuntos/paf/certificado-internacional-de-vacinacao e confirme as regras do país.';
- return 'Posso ajudar com passaporte, autorização para menores, vistos, documentos, conexão, saúde e orçamento. Para orientar com segurança, diga: (1) qual país; (2) sua idade — menor ou maior de 18; (3) objetivo da viagem; e (4) quando pretende ir. Para decisões finais, confirme sempre nas fontes oficiais.';
+const API_ENDPOINT = "/api/chat";
+
+const question = document.getElementById("question");
+const messages = document.getElementById("messages");
+const sendButton = document.getElementById("send");
+
+function addMessage(text, type) {
+  const div = document.createElement("div");
+  div.className = "message " + type;
+  div.textContent = text;
+  messages.appendChild(div);
+  div.scrollIntoView({ behavior: "smooth", block: "end" });
+  return div;
 }
-async function sendQuestion(q){q=q.trim();if(!q)return;addMsg(q,'user');document.getElementById('question').value='';const pending=addMsg('Vou verificar sua dúvida...','bot');
- try{const r=await fetch(API_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:q})});if(!r.ok)throw new Error('API indisponível');const data=await r.json();pending.textContent=data.reply||'Não consegui obter uma resposta. Tente novamente.';document.getElementById('chatStatus').textContent='Assistente conectado ao serviço de IA.'}
- catch(e){pending.textContent=localAnswer(q)+'\n\n[Resposta automática local: para respostas livres de IA, conecte o backend seguro descrito no pacote de publicação.]';document.getElementById('chatStatus').textContent='Modo local ativo • IA generativa ainda não conectada.'}
- messages.scrollTop=messages.scrollHeight}
-function askPreset(q){sendQuestion(q)}
-document.getElementById('chatForm').addEventListener('submit',e=>{e.preventDefault();sendQuestion(document.getElementById('question').value)});
-function makePlan(){let d=document.getElementById('dest').value||'Não informado',p=Math.max(1,+document.getElementById('people').value||1),n=Math.max(1,+document.getElementById('days').value||1),b=+document.getElementById('budget').value,m=document.getElementById('month').value||'A definir',g=document.getElementById('goal').value;let f=x=>x.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});let out=document.getElementById('planResult');out.hidden=false;out.textContent='Destino: '+d+' • Pessoas: '+p+' • Dias: '+n+' • Período: '+m+' • Objetivo: '+g+' • Orçamento por pessoa: '+(b?f(b/p):'não informado')+' • Referência por pessoa/dia: '+(b?f(b/(p*n)):'não calculada')+'. Inclua taxas, seguro e reserva de emergência.'}
-const checks=[...document.querySelectorAll('#checks input')];function progress(){let n=checks.filter(x=>x.checked).length,p=Math.round(n/checks.length*100);document.getElementById('bar').style.width=p+'%';document.getElementById('percent').textContent=p+'% concluído'}checks.forEach(x=>x.addEventListener('change',progress));progress();
-</script></body></html>
+
+async function sendQuestion(text) {
+  const message = (text || question.value).trim();
+
+  if (!message || sendButton.disabled) return;
+
+  document.getElementById("welcome").style.display = "none";
+  document.getElementById("suggestions").style.display = "none";
+
+  addMessage(message, "user");
+  question.value = "";
+  sendButton.disabled = true;
+
+  const pending = addMessage(
+    "WSAZ_777 está pensando...",
+    "bot"
+  );
+
+  try {
+    const response = await fetch(API_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message: message
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(
+        data.reply || "Erro HTTP " + response.status
+      );
+    }
+
+    pending.textContent =
+      data.reply || "Não recebi uma resposta da IA.";
+
+  } catch (error) {
+    pending.textContent =
+      "Não consegui conectar à inteligência artificial.\n\n" +
+      "Detalhes: " + error.message +
+      "\n\nTente novamente mais tarde.";
+
+  } finally {
+    sendButton.disabled = false;
+    question.focus();
+  }
+}
+
+question.addEventListener("keydown", function(event) {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    sendQuestion();
+  }
+});
+</script>
+
+</body>
+</html>
