@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#090708">
-<title>WSAZ_777 | IA v4.2</title>
+<title>WSAZ_777 | IA v4.3</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cinzel:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -14,6 +14,7 @@
 :root{
   --red:#c51f2b;
   --red2:#ff3545;
+  --gold:#e9bd58;
   --bg:#090708;
   --border:rgba(210,55,65,.38);
   --text:#f5eeee;
@@ -124,47 +125,145 @@ body{
   animation:bootEnter 1s ease both;
 }
 
+/* MOLDURA LENDÁRIA VERMELHA E DOURADA */
+
 .boot-symbol{
-  width:112px;
-  height:112px;
-  margin:0 auto 30px;
-  border-radius:50%;
+  width:166px;
+  height:166px;
+  margin:0 auto 34px;
   display:grid;
   place-items:center;
   position:relative;
-  background:radial-gradient(circle,#351017 0%,#10090b 65%);
-  box-shadow:0 0 40px #c51f2b45,inset 0 0 25px #c51f2b30;
+  isolation:isolate;
+  background:
+    linear-gradient(
+      135deg,
+      #fff5bd 0%,
+      #b77b23 12%,
+      #ffe89a 22%,
+      #875018 38%,
+      #fff0a6 52%,
+      #a56a20 70%,
+      #f9d875 85%,
+      #70400f 100%
+    );
+  clip-path:polygon(
+    22% 0%,
+    78% 0%,
+    100% 22%,
+    100% 78%,
+    78% 100%,
+    22% 100%,
+    0% 78%,
+    0% 22%
+  );
+  filter:
+    drop-shadow(0 0 9px #ff263d)
+    drop-shadow(0 0 22px #c51f2b);
+  animation:legendaryFrame 3s ease-in-out infinite;
 }
 
-.boot-symbol::before,
+.boot-symbol::before{
+  content:"";
+  position:absolute;
+  inset:5px;
+  z-index:-1;
+  background:
+    linear-gradient(
+      145deg,
+      #ff7780 0%,
+      #c51f2b 18%,
+      #760b19 43%,
+      #35050b 65%,
+      #a20c20 82%,
+      #ff3545 100%
+    );
+  clip-path:polygon(
+    22% 0%,
+    78% 0%,
+    100% 22%,
+    100% 78%,
+    78% 100%,
+    22% 100%,
+    0% 78%,
+    0% 22%
+  );
+}
+
 .boot-symbol::after{
   content:"";
   position:absolute;
-  inset:-8px;
-  border-radius:50%;
-  border:2px solid transparent;
-  border-top-color:#ff3545;
-  border-bottom-color:#ffffff90;
-  animation:bootSpin 2s linear infinite;
-}
-
-.boot-symbol::after{
-  inset:-16px;
-  border-top-color:#ffffff90;
-  border-bottom-color:transparent;
-  animation-direction:reverse;
-  animation-duration:3s;
+  inset:12px;
+  z-index:-1;
+  background:
+    linear-gradient(
+      145deg,
+      #48121b,
+      #10090b 48%,
+      #28070d 75%,
+      #64111c
+    );
+  clip-path:polygon(
+    22% 0%,
+    78% 0%,
+    100% 22%,
+    100% 78%,
+    78% 100%,
+    22% 100%,
+    0% 78%,
+    0% 22%
+  );
+  box-shadow:
+    inset 0 0 18px #ff263d70,
+    inset 0 0 35px #000;
 }
 
 .boot-photo{
-  width:94px;
-  height:94px;
+  width:116px;
+  height:116px;
   object-fit:cover;
   object-position:center;
-  border-radius:50%;
-  border:3px solid #ff3545;
-  box-shadow:0 0 22px #ff3545;
-  animation:bootPulse 2s ease-in-out infinite;
+  position:relative;
+  z-index:2;
+  border:3px solid #f1cf70;
+  clip-path:polygon(
+    19% 0%,
+    81% 0%,
+    100% 19%,
+    100% 81%,
+    81% 100%,
+    19% 100%,
+    0% 81%,
+    0% 19%
+  );
+  filter:
+    drop-shadow(0 0 5px #ff3545)
+    brightness(1.08);
+  animation:bootPulse 2.5s ease-in-out infinite;
+}
+
+/* REFLEXOS METÁLICOS */
+
+.boot-content::before,
+.boot-content::after{
+  content:"";
+  position:absolute;
+  width:34px;
+  height:3px;
+  top:54px;
+  left:calc(50% - 83px);
+  background:linear-gradient(90deg,transparent,#fff2b2,transparent);
+  box-shadow:0 0 10px #ffd76b;
+  transform:rotate(-45deg);
+  pointer-events:none;
+}
+
+.boot-content::after{
+  left:auto;
+  right:calc(50% - 83px);
+  transform:rotate(45deg);
+  background:linear-gradient(90deg,transparent,#ff5967,transparent);
+  box-shadow:0 0 10px #ff3545;
 }
 
 .boot-title{
@@ -198,7 +297,7 @@ body{
 .boot-progress{
   width:0;
   height:100%;
-  background:linear-gradient(90deg,#8d101d,#ff3545,#fff);
+  background:linear-gradient(90deg,#8d101d,#ff3545,#fff0a6);
   box-shadow:0 0 15px #ff3545;
   animation:bootProgress 3s linear forwards;
 }
@@ -219,6 +318,19 @@ body{
   z-index:2;
 }
 
+@keyframes legendaryFrame{
+  0%,100%{
+    filter:
+      drop-shadow(0 0 9px #ff263d90)
+      drop-shadow(0 0 17px #c99532);
+  }
+  50%{
+    filter:
+      drop-shadow(0 0 18px #ff263d)
+      drop-shadow(0 0 28px #f4c85e);
+  }
+}
+
 @keyframes bootSpin{to{transform:rotate(360deg)}}
 @keyframes bootProgress{to{width:100%}}
 @keyframes bootEnter{
@@ -226,7 +338,7 @@ body{
   to{opacity:1;transform:translateY(0)}
 }
 @keyframes bootPulse{
-  50%{transform:scale(1.08);filter:brightness(1.4)}
+  50%{transform:scale(1.045);filter:brightness(1.3)}
 }
 @keyframes bootGlow{
   to{transform:scale(1.3);opacity:.2}
@@ -668,7 +780,7 @@ footer strong{color:#ff5963}
   <div class="brand">
     <div class="crown">♛</div>
     <div>
-      <div class="logo">WSAZ_777 IA <span>v4.2</span></div>
+      <div class="logo">WSAZ_777 IA <span>v4.3</span></div>
       <div class="subtitle">Inteligência Artificial · Sempre evoluindo</div>
     </div>
   </div>
@@ -697,8 +809,8 @@ footer strong{color:#ff5963}
 
   <main class="main">
     <section class="welcome">
-      <div class="welcome-tag">✦ NOVA EXPERIÊNCIA · VERSÃO 4.2</div>
-      <h1>WSAZ_777 <span>IA v4.2</span></h1>
+      <div class="welcome-tag">✦ NOVA EXPERIÊNCIA · VERSÃO 4.3</div>
+      <h1>WSAZ_777 <span>IA v4.3</span></h1>
       <p>Pesquise · Aprenda · Crie · Descubra</p>
     </section>
 
