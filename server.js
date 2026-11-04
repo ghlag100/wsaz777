@@ -1,190 +1,287 @@
 
 import express from "express";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { GoogleGenAI } from "@google/genai";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-const API_KEY = process.env.GEMINI_API_KEY;
+app.use(express.json({ limit: "8mb" }));
 
-const ai = API_KEY
-  ? new GoogleGenAI({ apiKey: API_KEY })
-  : null;
+// =====================================
+// ARQUIVOS DO SITE
+// =====================================
 
-app.use(express.json({ limit: "18mb" }));
-app.use(express.urlencoded({ extended: true }));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "index.html"));
+});
 
-// Disponibiliza os arquivos do site
-app.use(express.static(__dirname));
-
-// Rota da imagem usada na tela de inicialização
+// Disponibiliza a foto do carregamento
 app.get("/file_000000009618820e9a50407df0e56103.png", (req, res) => {
   res.sendFile(
     path.join(
-      __dirname,
+      process.cwd(),
       "file_000000009618820e9a50407df0e56103.png"
     )
   );
 });
 
-// Instruções principais da WSAZ_777
 const BASE_PROMPT = `
-Você é a WSAZ_777, uma inteligência artificial assistente.
+Você é o WSAZ_777, uma inteligência artificial de uso geral.
 
-Seu objetivo é ajudar o usuário com:
-- Estudos e conhecimentos gerais.
-- Tecnologia e programação.
-- Explicações e pesquisas.
-- Criatividade e escrita.
-- Dúvidas do cotidiano.
-
-Responda sempre em português do Brasil, quando o usuário
-não solicitar outro idioma.
-
-Seja clara, útil, educada e natural.
-Não invente informações quando não souber a resposta.
+PERSONALIDADE:
+- Responda sempre em português brasileiro, salvo quando o usuário pedir outro idioma.
+- Seja natural, inteligente, educado e comunicativo.
+- Demonstre personalidade sem parecer robótico.
+- Utilize emojis de maneira moderada e contextual, sem exagerar.
+- Organize respostas com títulos, listas e exemplos quando isso ajudar.
+- Ajude com estudos, matemática, programação, tecnologia e conhecimentos gerais.
+- Não invente informações.
+- Não apresente raciocínio interno.
+- Se não souber algo, seja transparente.
 `;
 
-// Estilos de resposta
 const RESPONSE_STYLES = {
   concise: `
-Responda de maneira resumida e direta.
-Evite explicações desnecessariamente longas.
+ESTILO ESCOLHIDO: RESUMIDA.
+Responda de forma curta, direta e objetiva.
+Evite explicações desnecessárias.
 `,
 
   normal: `
-Responda de maneira equilibrada.
-Explique o necessário com clareza e organização.
+ESTILO ESCOLHIDO: NORMAL.
+Explique com clareza e organização.
+Inclua detalhes suficientes para facilitar o entendimento.
 `,
 
   detailed: `
-Forneça respostas completas e bem explicadas.
-Utilize exemplos e etapas quando forem úteis.
-Organize a resposta para facilitar a compreensão.
+ESTILO ESCOLHIDO: COMPLETA.
+Forneça explicações mais aprofundadas.
+Use etapas, exemplos e orientações quando necessário.
+Organize o conteúdo para facilitar a compreensão.
 `
 };
 
-// Endpoint principal da IA
+function extractAnswer(data) {
+  const raw = data?.choices?.[0]?.message?.content;
+
+  if (typeof raw === "string") return raw.trim();
+
+  if (Array.isArray(raw)) {
+    return raw
+      .filter(item => item.type === "text" && item.text)
+      .map(item => item.text)
+      .join("\n")
+      .trim();
+  }
+
+  return "";
+}
+
 app.post("/api/chat", async (req, res) => {
   try {
-    if (!ai) {
-      return res.status(500).json({
-        error: "A chave GEMINI_API_KEY não foi configurada no servidor."
-      });
-    }
-
     const { message, image, responseStyle } = req.body || {};
 
     if (
-      (typeof message !== "string" || !message.trim()) &&
+      (!message || typeof message !== "string" || !message.trim()) &&
       !image
     ) {
       return res.status(400).json({
-        error: "Digite uma mensagem ou envie uma imagem."
+        reply: "Digite uma pergunta ou envie uma imagem."
       });
     }
 
     if (typeof message === "string" && message.length > 2000) {
       return res.status(400).json({
-        error: "A mensagem ultrapassou o limite de 2000 caracteres."
+        reply: "Sua mensagem ultrapassou o limite de 2000 caracteres."
       });
     }
 
-    const style = RESPONSE_STYLES[responseStyle] ||
-      RESPONSE_STYLES.normal;
+    const selectedStyle = RESPONSE_STYLES[responseStyle]
+      ? responseStyle
+      : "normal";
 
-    const parts = [
-      {
-        text:
-          BASE_PROMPT +
-          "\n\nESTILO DE RESPOSTA:\n" +
-          style +
-          "\n\nMENSAGEM DO USUÁRIO:\n" +
-          (message?.trim() || "Analise a imagem enviada.")
-      }
-    ];
+    const systemPrompt =
+      BASE_PROMPT + RESPONSE_STYLES[selectedStyle];
 
-    // Processamento de imagem
+    let response;
+    let data;
+    let service;
+
+    // =====================================
+    // 1. ANÁLISE DE IMAGENS - OPENROUTER
+    // =====================================
+
     if (image) {
-      if (typeof image !== "string") {
-        return res.status(400).json({
-          error: "Formato de imagem inválido."
+      const apiKey = process.env.OPENROUTER_API_KEY;
+
+      const model =
+        process.env.OPENROUTER_VISION_MODEL ||
+        "nvidia/nemotron-3.5-super-vl:free";
+
+      if (!apiKey) {
+        return res.status(503).json({
+          reply: "A chave da OpenRouter não está configurada."
         });
       }
 
-      const match = image.match(
-        /^data:image\/(jpeg|png|webp);base64,([A-Za-z0-9+/=\s]+)$/
+      if (
+        typeof image !== "string" ||
+        !/^data:image\/(jpeg|png|webp);base64,/.test(image) ||
+        image.length > 6_000_000
+      ) {
+        return res.status(400).json({
+          reply: "Imagem inválida ou muito grande. Envie uma foto menor."
+        });
+      }
+
+      const content = [
+        {
+          type: "text",
+          text: message?.trim() ||
+            "Analise esta imagem e descreva seu conteúdo."
+        },
+        {
+          type: "image_url",
+          image_url: { url: image }
+        }
+      ];
+
+      service = "OPENROUTER - VISÃO";
+
+      response = await fetch(
+        "https://openrouter.ai/api/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://wsaz777.onrender.com",
+            "X-OpenRouter-Title": "WSAZ_777"
+          },
+          body: JSON.stringify({
+            model,
+            messages: [
+              {
+                role: "system",
+                content:
+                  systemPrompt +
+                  " Você também é especialista em interpretar imagens, fotografias, documentos, gráficos e exercícios. Leia cuidadosamente o conteúdo visível."
+              },
+              {
+                role: "user",
+                content
+              }
+            ],
+            max_tokens: 1200,
+            temperature: 0.4
+          })
+        }
+      );
+    }
+
+    // =====================================
+    // 2. TEXTO - NVIDIA NEMOTRON
+    // =====================================
+
+    else {
+      const apiKey = process.env.NVIDIA_API_KEY;
+
+      if (!apiKey) {
+        return res.status(503).json({
+          reply: "A chave da NVIDIA não está configurada."
+        });
+      }
+
+      service = "NVIDIA - TEXTO";
+
+      response = await fetch(
+        "https://integrate.api.nvidia.com/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${apiKey}`,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            model: "nvidia/nemotron-3-ultra-550b-a55b",
+            messages: [
+              {
+                role: "system",
+                content: systemPrompt
+              },
+              {
+                role: "user",
+                content: message.trim()
+              }
+            ],
+            max_tokens: 1200,
+            temperature: 0.6,
+            stream: false,
+            chat_template_kwargs: {
+              enable_thinking: false,
+              force_nonempty_content: true
+            }
+          })
+        }
+      );
+    }
+
+    // =====================================
+    // 3. TRATAMENTO DAS RESPOSTAS
+    // =====================================
+
+    data = await response.json().catch(() => ({}));
+
+    if (!response.ok) {
+      console.error(
+        `ERRO ${service}:`,
+        response.status,
+        data.error?.message || JSON.stringify(data).slice(0, 1500)
       );
 
-      if (!match) {
-        return res.status(400).json({
-          error: "Envie uma imagem JPG, PNG ou WEBP válida."
-        });
+      let reply = "Não foi possível consultar a inteligência artificial.";
+
+      if (response.status === 401) {
+        reply = "A configuração da API está inválida.";
+      } else if (response.status === 402) {
+        reply = "O serviço está sem créditos disponíveis.";
+      } else if (response.status === 429) {
+        reply = "Limite de solicitações atingido. Tente novamente mais tarde.";
+      } else if (response.status === 400) {
+        reply = "A API recusou a solicitação. Verifique o modelo e os dados enviados.";
+      } else if (response.status >= 500) {
+        reply = "O serviço de inteligência artificial está temporariamente indisponível.";
       }
 
-      const mimeType = match[1] === "jpg"
-        ? "image/jpeg"
-        : `image/${match[1]}`;
-
-      const imageData = match[2].replace(/\s/g, "");
-
-      parts.push({
-        inlineData: {
-          mimeType,
-          data: imageData
-        }
-      });
+      return res.status(502).json({ reply });
     }
 
-    const result = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: [
-        {
-          role: "user",
-          parts
-        }
-      ]
-    });
+    const answer = extractAnswer(data);
 
-    const reply = result.text;
+    if (!answer) {
+      console.error(
+        `RESPOSTA VAZIA ${service}:`,
+        JSON.stringify(data).slice(0, 1500)
+      );
 
-    if (!reply) {
       return res.status(502).json({
-        error: "A IA não retornou uma resposta."
+        reply: "A IA não conseguiu gerar uma resposta. Tente novamente."
       });
     }
 
-    return res.json({ reply });
+    console.log(`${service}: resposta concluída. Estilo: ${selectedStyle}`);
+
+    return res.json({ reply: answer });
 
   } catch (error) {
-    console.error("ERRO WSAZ_777:", error);
+    console.error("ERRO SERVIDOR:", error);
 
     return res.status(500).json({
-      error: "Não foi possível processar sua solicitação. Tente novamente."
+      reply: "Erro interno ao processar sua solicitação."
     });
   }
 });
 
-// Verificação do servidor
-app.get("/api/status", (req, res) => {
-  res.json({
-    status: "online",
-    system: "WSAZ_777",
-    version: "5.3",
-    ai: ai ? "configured" : "not_configured"
-  });
-});
-
-// Inicialização
 app.listen(PORT, "0.0.0.0", () => {
-  console.log("--------------------------------");
-  console.log(" WSAZ_777 AI SYSTEM");
-  console.log(" Servidor iniciado na porta " + PORT);
-  console.log(" Status: ONLINE");
-  console.log("--------------------------------");
+  console.log("WSAZ_777 ativo na porta " + PORT);
 });
