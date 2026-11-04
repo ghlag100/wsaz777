@@ -1,6 +1,6 @@
 
 import express from "express";
-import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 import path from "node:path";
 
 const app = express();
@@ -8,9 +8,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: "20kb" }));
 
-const client = process.env.OPENAI_API_KEY
-  ? new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY
+const ai = process.env.GEMINI_API_KEY
+  ? new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY
     })
   : null;
 
@@ -34,16 +34,17 @@ app.post("/api/chat", async (req, res) => {
       });
     }
 
-    if (!client) {
+    if (!ai) {
       return res.status(503).json({
-        reply: "A chave da API não foi configurada no servidor."
+        reply: "A chave do Gemini não foi configurada no servidor."
       });
     }
 
-    const response = await client.responses.create({
-      model: process.env.OPENAI_MODEL || "gpt-4.1-mini",
-
-      instructions: `
+    const response = await ai.models.generateContent({
+      model: process.env.GEMINI_MODEL || "gemini-3.8-flash",
+      contents: message,
+      config: {
+        systemInstruction: `
 Você é o WSAZ_777, uma inteligência artificial
 de uso geral.
 
@@ -55,47 +56,43 @@ Responda em português brasileiro por padrão.
 Explique cálculos passo a passo quando necessário.
 Seja natural, inteligente, claro e objetivo.
 Não invente informações.
-      `,
-
-      input: message,
-      max_output_tokens: 1200
+        `,
+        maxOutputTokens: 1200
+      }
     });
 
     return res.json({
-      reply: response.output_text ||
-        "Não consegui gerar uma resposta."
+      reply: response.text || "Não consegui gerar uma resposta."
     });
 
   } catch (error) {
-    console.error("ERRO OPENAI:", {
-      status: error.status,
-      code: error.code,
-      type: error.type,
+    const status = Number(error.status || error.code) || 0;
+
+    console.error("ERRO GEMINI:", {
+      status,
       message: error.message
     });
 
-    if (error.status === 401) {
+    if (status === 400 || status === 403) {
       return res.status(502).json({
-        reply: "Erro 401: a chave da API é inválida ou não está autorizada."
+        reply: "Erro na chave, nas permissões ou na configuração do Gemini."
       });
     }
 
-    if (error.status === 429) {
+    if (status === 429) {
       return res.status(502).json({
-        reply: "Erro 429: limite de uso ou crédito da API. Confira o faturamento."
+        reply: "Limite de uso do Gemini atingido. Confira as cotas da API."
       });
     }
 
-    if (error.status === 404) {
+    if (status === 404) {
       return res.status(502).json({
-        reply: "Erro 404: modelo não encontrado ou indisponível."
+        reply: "Modelo Gemini não encontrado ou indisponível."
       });
     }
 
     return res.status(502).json({
-      reply: "Erro na conexão com a IA. Código: " +
-        (error.status || "sem resposta HTTP") +
-        ". Confira os logs do servidor."
+      reply: "Erro na conexão com o Gemini. Confira os logs do servidor."
     });
   }
 });
