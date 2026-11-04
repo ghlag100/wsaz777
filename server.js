@@ -84,11 +84,7 @@ app.post("/api/chat", async (req, res) => {
             }
           ],
           max_tokens: 700,
-          temperature: 0.6,
-          reasoning: {
-            effort: "low",
-            max_tokens: 150
-          }
+          temperature: 0.6
         })
       }
     );
