@@ -7,8 +7,22 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: "8mb" }));
 
+// =====================================
+// ARQUIVOS DO SITE
+// =====================================
+
 app.get("/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "index.html"));
+});
+
+// Disponibiliza a foto do carregamento
+app.get("/file_000000009618820e9a50407df0e56103.png", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "file_000000009618820e9a50407df0e56103.png"
+    )
+  );
 });
 
 const BASE_PROMPT = `
