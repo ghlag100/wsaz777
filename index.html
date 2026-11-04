@@ -3,495 +3,341 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080510">
-<title>WSAZ_777 | Inteligência Artificial</title>
+<title>WSAZ_777 | IA</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --bg: #080510;
-  --panel: rgba(18, 10, 31, .88);
-  --purple: #a855f7;
-  --violet: #7628ff;
-  --pink: #dc5cff;
-  --text: #f7efff;
-  --muted: #b6a6c9;
-  --border: rgba(177, 77, 255, .4);
+  --purple:#a855f7;
+  --pink:#d946ef;
+  --bg:#080510;
+  --panel:rgba(15,8,27,.88);
+  --border:rgba(168,85,247,.35);
+  --text:#f8f2ff;
+  --muted:#b9a9ca;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
 }
 
-body {
-  min-height: 100vh;
-  background: var(--bg);
-  color: var(--text);
-  font-family: Inter, Arial, sans-serif;
-  overflow-x: hidden;
-}
-
-/* FUNDO ANIMADO */
-
-.background {
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  overflow: hidden;
+.background{
+  position:fixed;
+  inset:0;
+  z-index:-3;
   background:
-    radial-gradient(ellipse at 50% 20%, #35105f 0%, transparent 45%),
-    radial-gradient(ellipse at 10% 70%, #26094c 0%, transparent 40%),
-    radial-gradient(ellipse at 90% 80%, #3c0b65 0%, transparent 40%),
+    linear-gradient(90deg,rgba(5,3,12,.94),rgba(8,4,17,.70),rgba(8,4,17,.88)),
+    url("gojo-bg.jpg") center 25%/cover no-repeat,
     #080510;
 }
 
-.background::before,
-.background::after {
-  content: "";
-  position: absolute;
-  width: 600px;
-  height: 600px;
-  border-radius: 50%;
-  filter: blur(100px);
-  opacity: .25;
-  animation: energy 9s ease-in-out infinite alternate;
+.background:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse at 75% 35%,rgba(132,40,255,.25),transparent 48%),
+    linear-gradient(0deg,#080510 0%,transparent 55%);
 }
 
-.background::before {
-  background: #8b22ff;
-  top: -250px;
-  left: -150px;
+.energy{
+  position:fixed;
+  z-index:-2;
+  width:450px;
+  height:450px;
+  border-radius:50%;
+  filter:blur(100px);
+  opacity:.25;
+  background:#922cff;
+  animation:float 10s infinite alternate ease-in-out;
+  pointer-events:none;
 }
 
-.background::after {
-  background: #d000ff;
-  bottom: -300px;
-  right: -150px;
-  animation-delay: 2s;
+.energy.one{top:-180px;left:-160px}
+.energy.two{bottom:-200px;right:-130px;background:#d000ff;animation-delay:2s}
+
+@keyframes float{
+  to{transform:translate(100px,80px) scale(1.35)}
 }
 
-@keyframes energy {
-  from { transform: translate(0,0) scale(1); }
-  to { transform: translate(100px,80px) scale(1.4); }
+header{
+  height:72px;
+  padding:0 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-bottom:1px solid var(--border);
+  background:rgba(7,4,13,.85);
+  backdrop-filter:blur(16px);
+  position:sticky;
+  top:0;
+  z-index:10;
 }
 
-.particles {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: .35;
-  background-image:
-    radial-gradient(2px 2px at 20% 30%, white, transparent),
-    radial-gradient(2px 2px at 70% 60%, #c77aff, transparent),
-    radial-gradient(2px 2px at 40% 80%, white, transparent),
-    radial-gradient(2px 2px at 90% 20%, #a855f7, transparent);
-  background-size: 220px 220px;
-  animation: particles 25s linear infinite;
+.logo{font-size:22px;font-weight:900;letter-spacing:1px}
+.logo span{color:#c77aff;font-size:11px;margin-left:6px}
+
+nav{display:flex;gap:25px}
+nav a{color:var(--muted);text-decoration:none;font-size:13px}
+nav a:hover{color:white}
+
+.online{color:#4dffa1;font-size:12px}
+
+.container{width:min(1150px,92%);margin:auto}
+
+.hero{
+  text-align:center;
+  padding:65px 10px 32px;
 }
 
-@keyframes particles {
-  from { transform: translateY(0); }
-  to { transform: translateY(-220px); }
+.dev-tag{
+  display:inline-block;
+  border:1px solid var(--border);
+  padding:8px 15px;
+  border-radius:30px;
+  color:#d7a5ff;
+  font-size:11px;
+  letter-spacing:2px;
+  margin-bottom:20px;
+  background:rgba(30,10,50,.6);
 }
 
-/* CABEÇALHO */
-
-header {
-  width: 100%;
-  padding: 19px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid var(--border);
-  background: rgba(8,5,16,.8);
-  backdrop-filter: blur(15px);
-  position: sticky;
-  top: 0;
-  z-index: 10;
+.hero h1{
+  font-size:clamp(32px,6vw,65px);
+  font-weight:900;
+  line-height:1.1;
+  text-shadow:0 0 25px rgba(168,85,247,.5);
 }
 
-.logo {
-  font-size: 23px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-shadow: 0 0 15px var(--purple);
+.hero h1 span{
+  display:block;
+  color:#c36aff;
+  text-shadow:0 0 25px #8b2cff;
 }
 
-.logo span {
-  color: var(--purple);
-  font-size: 12px;
-  margin-left: 7px;
+.hero p{color:var(--muted);margin-top:15px;font-size:14px}
+
+.chat-panel{
+  border:1px solid var(--border);
+  background:var(--panel);
+  backdrop-filter:blur(17px);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 0 35px rgba(125,35,255,.15);
 }
 
-nav {
-  display: flex;
-  gap: 25px;
+.chat-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 20px;
+  border-bottom:1px solid var(--border);
 }
 
-nav a {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 13px;
-  transition: .3s;
+.chat-name{font-weight:800;font-size:14px}
+.chat-name small{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+
+.actions{display:flex;gap:8px}
+
+.action{
+  border:1px solid var(--border);
+  background:rgba(125,45,190,.15);
+  color:#e7d2ff;
+  border-radius:9px;
+  padding:9px 12px;
+  font-size:11px;
+  cursor:pointer;
 }
 
-nav a:hover {
-  color: white;
-  text-shadow: 0 0 12px var(--purple);
+.action:hover{background:#54208a}
+
+.messages{
+  height:390px;
+  overflow-y:auto;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  scroll-behavior:smooth;
 }
 
-.online {
-  color: #43ff9a;
-  font-size: 13px;
-  font-weight: 700;
+.message{
+  max-width:85%;
+  padding:14px 16px;
+  border-radius:14px;
+  font-size:13px;
+  line-height:1.65;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
 }
 
-/* CONTEÚDO */
-
-.container {
-  width: min(1200px, 92%);
-  margin: auto;
+.bot{
+  align-self:flex-start;
+  background:rgba(104,40,160,.25);
+  border:1px solid var(--border);
 }
 
-.hero {
-  padding: 65px 10px 35px;
-  text-align: center;
+.user{
+  align-self:flex-end;
+  background:linear-gradient(130deg,#7025c9,#a52cff);
+  box-shadow:0 0 15px rgba(150,50,255,.2);
 }
 
-.crown {
-  font-size: 42px;
-  color: var(--purple);
-  text-shadow: 0 0 25px var(--purple);
-  margin-bottom: 10px;
+.message img{
+  display:block;
+  max-width:220px;
+  max-height:200px;
+  object-fit:contain;
+  border-radius:9px;
+  margin-bottom:8px;
 }
 
-.hero h1 {
-  font-size: clamp(30px, 6vw, 65px);
-  font-weight: 900;
-  line-height: 1.12;
-  text-transform: uppercase;
-  text-shadow: 0 0 25px rgba(168,85,247,.6);
+.composer{
+  border-top:1px solid var(--border);
+  padding:13px;
+  display:flex;
+  align-items:center;
+  gap:9px;
 }
 
-.hero h1 span {
-  display: block;
-  color: #c15aff;
-  font-size: clamp(38px, 8vw, 85px);
-  text-shadow: 0 0 30px #852aff;
+.composer input[type=text]{
+  flex:1;
+  min-width:0;
+  padding:14px;
+  background:#0b0712;
+  border:1px solid var(--border);
+  border-radius:11px;
+  outline:none;
+  color:white;
+  font-size:13px;
 }
 
-.hero p {
-  color: var(--muted);
-  margin-top: 18px;
-  font-size: 15px;
+.composer input:focus{border-color:var(--purple)}
+
+.icon-btn{
+  background:rgba(125,45,190,.2);
+  color:#e7caff;
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;
+  cursor:pointer;
+  font-size:17px;
 }
 
-/* CHAT E RECURSOS */
-
-.workspace {
-  display: grid;
-  grid-template-columns: 235px 1fr;
-  gap: 13px;
-  margin-top: 20px;
+.send{
+  background:linear-gradient(135deg,#8b28ff,#c13cff);
+  border:0;
+  color:white;
+  border-radius:10px;
+  padding:13px 18px;
+  cursor:pointer;
+  font-size:17px;
 }
 
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  box-shadow: 0 0 25px rgba(128,0,255,.12);
-  backdrop-filter: blur(14px);
+button:disabled{opacity:.5;cursor:wait}
+
+.preview{
+  display:none;
+  padding:12px 18px;
+  border-top:1px solid var(--border);
+  align-items:center;
+  gap:12px;
 }
 
-.sidebar {
-  padding: 20px 15px;
+.preview img{
+  width:55px;height:55px;
+  object-fit:cover;border-radius:9px;
 }
 
-.sidebar h3 {
-  margin-bottom: 20px;
-  color: #d8a3ff;
+.preview button{
+  border:0;background:none;color:#ff8bba;
+  cursor:pointer;font-size:18px;
 }
 
-.resource {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 18px 0;
-  font-size: 12px;
-  color: var(--muted);
+.features{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+  margin:18px 0;
 }
 
-.toggle {
-  width: 35px;
-  height: 19px;
-  border-radius: 20px;
-  background: #6720aa;
-  position: relative;
-  box-shadow: 0 0 10px var(--purple);
+.feature{
+  padding:22px 12px;
+  text-align:center;
+  border:1px solid var(--border);
+  background:rgba(18,9,30,.8);
+  border-radius:15px;
 }
 
-.toggle::after {
-  content: "";
-  width: 13px;
-  height: 13px;
-  background: white;
-  border-radius: 50%;
-  position: absolute;
-  right: 3px;
-  top: 3px;
+.feature b{font-size:25px;color:#c77aff}
+.feature h3{font-size:13px;margin:10px 0}
+.feature p{font-size:11px;color:var(--muted);line-height:1.5}
+
+.dev{
+  margin:25px 0;
+  padding:27px;
+  display:grid;
+  grid-template-columns:1fr auto 1fr;
+  align-items:center;
+  gap:20px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:rgba(25,9,42,.88);
 }
 
-.chat {
-  min-height: 420px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+.dev h2{font-size:clamp(20px,3vw,30px)}
+.dev h2 span{display:block;color:#c16bff}
+.dev p{color:var(--muted);font-size:12px;margin-top:10px}
+
+.dev-label{
+  font-size:26px;
+  font-weight:900;
+  color:#d49aff;
+  padding:15px;
+  border:1px solid var(--purple);
+  border-radius:12px;
+  text-shadow:0 0 15px var(--purple);
 }
 
-.chat-header {
-  padding: 17px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  justify-content: space-between;
-  font-size: 13px;
-  color: #d6b2ff;
+.dev ul{list-style:none;color:var(--muted);font-size:12px;line-height:2}
+
+footer{
+  padding:25px 0 35px;
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:11px;
 }
 
-.messages {
-  flex: 1;
-  min-height: 300px;
-  max-height: 460px;
-  overflow-y: auto;
-  padding: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 17px;
+footer strong{color:#c77aff}
+
+@media(max-width:750px){
+  nav{display:none}
+  .hero{padding-top:45px}
+  .messages{height:350px;padding:14px}
+  .features{grid-template-columns:repeat(2,1fr)}
+  .dev{grid-template-columns:1fr;text-align:center}
+  .dev-label{justify-self:center}
+  .dev ul{text-align:left}
+  footer{flex-direction:column;text-align:center;gap:10px}
 }
 
-.message {
-  max-width: 85%;
-  padding: 14px 17px;
-  border-radius: 15px;
-  font-size: 14px;
-  line-height: 1.6;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
-.bot {
-  align-self: flex-start;
-  background: rgba(111,38,173,.2);
-  border: 1px solid var(--border);
-}
-
-.user {
-  align-self: flex-end;
-  background: linear-gradient(120deg,#7024c9,#a52cff);
-  box-shadow: 0 0 15px rgba(153,51,255,.2);
-}
-
-.composer {
-  display: flex;
-  gap: 10px;
-  padding: 13px;
-  border-top: 1px solid var(--border);
-}
-
-.composer input {
-  flex: 1;
-  min-width: 0;
-  background: rgba(0,0,0,.4);
-  border: 1px solid var(--border);
-  color: white;
-  border-radius: 12px;
-  padding: 15px;
-  outline: none;
-  font-size: 14px;
-}
-
-.composer input:focus {
-  border-color: var(--purple);
-  box-shadow: 0 0 12px rgba(168,85,247,.2);
-}
-
-.send {
-  border: none;
-  border-radius: 12px;
-  padding: 0 22px;
-  background: linear-gradient(135deg,#8b28ff,#bd36ff);
-  color: white;
-  font-size: 20px;
-  cursor: pointer;
-  box-shadow: 0 0 20px rgba(155,40,255,.35);
-}
-
-.send:disabled {
-  opacity: .5;
-  cursor: wait;
-}
-
-/* CARTÕES */
-
-.features {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 13px;
-  margin-top: 18px;
-}
-
-.feature {
-  padding: 23px 12px;
-  text-align: center;
-  transition: .3s;
-}
-
-.feature:hover {
-  transform: translateY(-5px);
-  border-color: var(--purple);
-  box-shadow: 0 0 25px rgba(168,85,247,.2);
-}
-
-.feature .symbol {
-  color: #c77aff;
-  font-size: 27px;
-  margin-bottom: 10px;
-}
-
-.feature h3 {
-  font-size: 14px;
-  margin-bottom: 8px;
-}
-
-.feature p {
-  font-size: 11px;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-/* ÁREA DEV */
-
-.dev {
-  margin: 25px 0;
-  padding: 28px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  gap: 25px;
-  align-items: center;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  background: linear-gradient(110deg,rgba(45,10,75,.8),rgba(8,5,16,.95));
-  box-shadow: 0 0 25px rgba(128,0,255,.12);
-}
-
-.dev h2 {
-  font-size: clamp(20px,3vw,32px);
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.dev h2 span {
-  display: block;
-  color: #bd59ff;
-}
-
-.dev p {
-  color: var(--muted);
-  font-size: 13px;
-  margin-top: 12px;
-}
-
-.dev-label {
-  font-size: 28px;
-  font-weight: 900;
-  color: #c36aff;
-  text-shadow: 0 0 20px var(--purple);
-  border: 1px solid var(--purple);
-  padding: 17px;
-  border-radius: 15px;
-}
-
-.dev-list {
-  list-style: none;
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 2.3;
-}
-
-footer {
-  padding: 25px 0 35px;
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  color: var(--muted);
-  font-size: 12px;
-}
-
-footer strong {
-  color: #bd6bff;
-}
-
-/* MOBILE */
-
-@media(max-width:800px) {
-  nav { display: none; }
-
-  .workspace {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar {
-    display: none;
-  }
-
-  .features {
-    grid-template-columns: repeat(2,1fr);
-  }
-
-  .dev {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
-  .dev-label {
-    justify-self: center;
-  }
-
-  .dev-list {
-    text-align: left;
-  }
-
-  footer {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .hero {
-    padding-top: 45px;
-  }
-
-  .message {
-    max-width: 95%;
-  }
-}
-
-@media(max-width:400px) {
-  .features {
-    grid-template-columns: 1fr;
-  }
-
-  .composer {
-    gap: 6px;
-    padding: 9px;
-  }
-
-  .send {
-    padding: 0 15px;
-  }
+@media(max-width:420px){
+  .chat-top{padding:12px}
+  .action{padding:8px;font-size:10px}
+  .composer{gap:5px;padding:8px}
+  .icon-btn{padding:10px}
+  .send{padding:12px}
+  .message{max-width:95%}
 }
 </style>
 </head>
@@ -499,167 +345,249 @@ footer strong {
 <body>
 
 <div class="background"></div>
-<div class="particles"></div>
+<div class="energy one"></div>
+<div class="energy two"></div>
 
 <header>
-  <div class="logo">♛ WSAZ_777 <span>IA v2.0</span></div>
-
+  <div class="logo">♛ WSAZ_777 <span>IA v3.0</span></div>
   <nav>
     <a href="#">Início</a>
+    <a href="#chat">Inteligência artificial</a>
     <a href="#recursos">Recursos</a>
-    <a href="#sobre">Sobre</a>
-    <a href="#dev">Contato</a>
+    <a href="#dev">DEV</a>
   </nav>
-
-  <div class="online">● Online</div>
+  <div class="online">● ONLINE</div>
 </header>
 
 <main class="container">
 
 <section class="hero">
-  <div class="crown">♛</div>
-
-  <h1>
-    Bem-vindo à IA de
-    <span>@WSAZ_777 !!</span>
-  </h1>
-
-  <p>Sua inteligência artificial, agora mais poderosa!</p>
-  <p>Pergunte, aprenda, resolva, crie e explore o seu potencial.</p>
+  <div class="dev-tag">✦ NOVA EXPERIÊNCIA · EM DESENVOLVIMENTO</div>
+  <h1>BEM-VINDO À IA DE <span>@WSAZ_777 !!</span></h1>
+  <p>Sua inteligência artificial. Seu conhecimento. Suas possibilidades.</p>
+  <p>Pergunte, aprenda, crie e descubra algo novo.</p>
 </section>
 
-<section class="workspace" id="recursos">
-
-  <aside class="panel sidebar">
-    <h3>♛ Recursos</h3>
-
-    <div class="resource">✦ Modo avançado <span class="toggle"></span></div>
-    <div class="resource">◎ Pesquisa web <span class="toggle"></span></div>
-    <div class="resource">▦ Raciocínio lógico <span class="toggle"></span></div>
-    <div class="resource">◇ Criatividade <span class="toggle"></span></div>
-    <div class="resource">⌘ Modo DEV <span class="toggle"></span></div>
-    <div class="resource">◈ Modo seguro <span class="toggle"></span></div>
-  </aside>
-
-  <section class="panel chat">
-    <div class="chat-header">
-      <strong>♛ WSAZ_777</strong>
-      <span>IA v2.0</span>
+<section class="chat-panel" id="chat">
+  <div class="chat-top">
+    <div class="chat-name">
+      ♛ WSAZ_777
+      <small>Assistente de inteligência artificial</small>
     </div>
-
-    <div class="messages" id="messages">
-      <div class="message bot">
-        Olá! Eu sou o WSAZ_777, sua IA de confiança!
-        Como posso te ajudar hoje? ✨
-      </div>
+    <div class="actions">
+      <button class="action" id="clearChat">⌫ Limpar chat</button>
     </div>
+  </div>
 
-    <form class="composer" id="chatForm">
-      <input
-        type="text"
-        id="messageInput"
-        placeholder="Digite sua mensagem..."
-        maxlength="2000"
-        autocomplete="off"
-        required
-      >
-      <button class="send" id="sendButton" type="submit">➤</button>
-    </form>
-  </section>
+  <div class="messages" id="messages">
+    <div class="message bot">
+      Olá! Eu sou o WSAZ_777. ✨
 
+      Posso conversar, ajudar nos estudos, resolver dúvidas e analisar imagens. O que vamos descobrir hoje?
+    </div>
+  </div>
+
+  <div class="preview" id="preview">
+    <img id="previewImage" alt="Prévia da imagem">
+    <span style="font-size:12px;color:#cda9ef;flex:1">Imagem selecionada</span>
+    <button type="button" id="removeImage" aria-label="Remover imagem">✕</button>
+  </div>
+
+  <form class="composer" id="chatForm">
+    <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp" hidden>
+    <button class="icon-btn" id="attachButton" type="button" title="Enviar imagem">＋</button>
+    <input type="text" id="messageInput" placeholder="Pergunte alguma coisa..." maxlength="2000" autocomplete="off">
+    <button class="send" id="sendButton" type="submit">➤</button>
+  </form>
 </section>
 
-<section class="features">
-
-  <div class="panel feature">
-    <div class="symbol">ϟ</div>
-    <h3>Respostas Rápidas</h3>
-    <p>Informações claras e objetivas.</p>
+<section class="features" id="recursos">
+  <div class="feature">
+    <b>ϟ</b>
+    <h3>Respostas inteligentes</h3>
+    <p>Ajuda rápida para suas dúvidas.</p>
   </div>
-
-  <div class="panel feature">
-    <div class="symbol">♧</div>
-    <h3>Conhecimento Avançado</h3>
-    <p>Aprenda, explore e descubra.</p>
+  <div class="feature">
+    <b>▧</b>
+    <h3>Análise de imagens</h3>
+    <p>Envie fotos e faça perguntas sobre elas.</p>
   </div>
-
-  <div class="panel feature">
-    <div class="symbol">☆</div>
+  <div class="feature">
+    <b>✦</b>
     <h3>Multifunções</h3>
-    <p>Tudo em um só lugar.</p>
+    <p>Estudos, tecnologia, escrita e criatividade.</p>
   </div>
-
-  <div class="panel feature">
-    <div class="symbol">♙</div>
-    <h3>Seguro e Confiável</h3>
-    <p>Sua privacidade em primeiro lugar.</p>
+  <div class="feature">
+    <b>⌘</b>
+    <h3>Em evolução</h3>
+    <p>Novas funções estão sendo desenvolvidas.</p>
   </div>
-
 </section>
 
 <section class="dev" id="dev">
-
   <div>
-    <h2>
-      Quer aprender a fazer
-      <span>seu próprio site?</span>
-    </h2>
+    <h2>QUER APRENDER A FAZER <span>SEU PRÓPRIO SITE?</span></h2>
     <p>Entre em contato comigo e tire seu projeto do papel.</p>
   </div>
-
   <div class="dev-label">DEV</div>
-
-  <ul class="dev-list">
+  <ul>
     <li>✓ Sites modernos e responsivos</li>
     <li>✓ Projetos personalizados</li>
-    <li>✓ Do zero ao projeto final</li>
-    <li>✓ Suporte e orientação</li>
+    <li>✓ Desenvolvimento web</li>
+    <li>✓ Projetos em evolução</li>
   </ul>
-
 </section>
 
-</main>
-
-<footer class="container" id="sobre">
-  <div><strong>♛ WSAZ_777</strong> · IA de próxima geração</div>
-  <div>Seu projeto, minha missão. ✦</div>
+<footer>
+  <div><strong>♛ WSAZ_777</strong> · Inteligência artificial</div>
+  <div>Projeto independente · Em desenvolvimento</div>
 </footer>
+
+</main>
 
 <script>
 const form = document.getElementById("chatForm");
 const input = document.getElementById("messageInput");
 const messages = document.getElementById("messages");
 const sendButton = document.getElementById("sendButton");
+const attachButton = document.getElementById("attachButton");
+const imageInput = document.getElementById("imageInput");
+const preview = document.getElementById("preview");
+const previewImage = document.getElementById("previewImage");
+const removeImage = document.getElementById("removeImage");
+const clearChat = document.getElementById("clearChat");
 
-function addMessage(text, type) {
+let selectedImage = null;
+let busy = false;
+
+function addMessage(text, type, imageUrl = null) {
   const element = document.createElement("div");
   element.className = "message " + type;
-  element.textContent = text;
+
+  if (imageUrl) {
+    const img = document.createElement("img");
+    img.src = imageUrl;
+    img.alt = "Imagem enviada";
+    element.appendChild(img);
+  }
+
+  if (text) {
+    const textNode = document.createElement("div");
+    textNode.textContent = text;
+    element.appendChild(textNode);
+  }
+
   messages.appendChild(element);
   messages.scrollTop = messages.scrollHeight;
   return element;
 }
 
+function clearSelectedImage() {
+  selectedImage = null;
+  imageInput.value = "";
+  preview.style.display = "none";
+  previewImage.src = "";
+}
+
+attachButton.addEventListener("click", () => {
+  if (!busy) imageInput.click();
+});
+
+imageInput.addEventListener("change", async () => {
+  const file = imageInput.files?.[0];
+  if (!file) return;
+
+  if (!["image/jpeg","image/png","image/webp"].includes(file.type)) {
+    alert("Escolha uma imagem JPG, PNG ou WEBP.");
+    imageInput.value = "";
+    return;
+  }
+
+  if (file.size > 10 * 1024 * 1024) {
+    alert("A imagem deve ter até 10 MB.");
+    imageInput.value = "";
+    return;
+  }
+
+  try {
+    const dataUrl = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+    const image = new Image();
+    image.src = dataUrl;
+    await image.decode();
+
+    const maxSide = 1280;
+    const scale = Math.min(1, maxSide / Math.max(image.width, image.height));
+    const canvas = document.createElement("canvas");
+
+    canvas.width = Math.round(image.width * scale);
+    canvas.height = Math.round(image.height * scale);
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    selectedImage = canvas.toDataURL("image/jpeg", 0.78);
+    previewImage.src = selectedImage;
+    preview.style.display = "flex";
+  } catch {
+    alert("Não foi possível abrir essa imagem.");
+    clearSelectedImage();
+  }
+});
+
+removeImage.addEventListener("click", clearSelectedImage);
+
+clearChat.addEventListener("click", () => {
+  if (busy) return;
+
+  if (!confirm("Deseja realmente limpar toda a conversa?")) return;
+
+  messages.replaceChildren();
+
+  addMessage(
+    "Conversa limpa! ✨ O que você gostaria de perguntar agora?",
+    "bot"
+  );
+
+  clearSelectedImage();
+});
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
+  if (busy) return;
+
   const message = input.value.trim();
+  const image = selectedImage;
 
-  if (!message || sendButton.disabled) return;
+  if (!message && !image) return;
 
-  addMessage(message, "user");
-  input.value = "";
+  busy = true;
   sendButton.disabled = true;
+  attachButton.disabled = true;
+  clearChat.disabled = true;
 
-  const loading = addMessage("WSAZ_777 está pensando...", "bot");
+  addMessage(message || "Analise esta imagem, por favor.", "user",
+    image ? URL.createObjectURL(
+      await (await fetch(image)).blob()
+    ) : null
+  );
+
+  input.value = "";
+  clearSelectedImage();
+
+  const loading = addMessage("WSAZ_777 está analisando...", "bot");
 
   try {
     const response = await fetch("/api/chat", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ message })
+      headers: {"Content-Type":"application/json"},
+      body: JSON.stringify({message, image})
     });
 
     const data = await response.json();
@@ -667,16 +595,15 @@ form.addEventListener("submit", async (event) => {
     loading.textContent = data.reply ||
       "Não consegui gerar uma resposta.";
 
-    if (!response.ok) {
-      console.error("Erro da API:", response.status, data);
-    }
-
   } catch (error) {
-    console.error("Erro de conexão:", error);
+    console.error(error);
     loading.textContent =
-      "Não consegui conectar à inteligência artificial. Tente novamente.";
+      "Falha na conexão. Verifique sua internet e tente novamente.";
   } finally {
+    busy = false;
     sendButton.disabled = false;
+    attachButton.disabled = false;
+    clearChat.disabled = false;
     input.focus();
     messages.scrollTop = messages.scrollHeight;
   }
