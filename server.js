@@ -11,8 +11,41 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "index.html"));
 });
 
-const SYSTEM_PROMPT =
-  "Você é o WSAZ_777, uma IA de uso geral. Responda sempre em português brasileiro, de forma clara, natural e objetiva. Ajude com estudos, matemática, programação, tecnologia e conhecimentos gerais. Não invente informações e não apresente raciocínio interno.";
+const BASE_PROMPT = `
+Você é o WSAZ_777, uma inteligência artificial de uso geral.
+
+PERSONALIDADE:
+- Responda sempre em português brasileiro, salvo quando o usuário pedir outro idioma.
+- Seja natural, inteligente, educado e comunicativo.
+- Demonstre personalidade sem parecer robótico.
+- Utilize emojis de maneira moderada e contextual, sem exagerar.
+- Organize respostas com títulos, listas e exemplos quando isso ajudar.
+- Ajude com estudos, matemática, programação, tecnologia e conhecimentos gerais.
+- Não invente informações.
+- Não apresente raciocínio interno.
+- Se não souber algo, seja transparente.
+`;
+
+const RESPONSE_STYLES = {
+  concise: `
+ESTILO ESCOLHIDO: RESUMIDA.
+Responda de forma curta, direta e objetiva.
+Evite explicações desnecessárias.
+`,
+
+  normal: `
+ESTILO ESCOLHIDO: NORMAL.
+Explique com clareza e organização.
+Inclua detalhes suficientes para facilitar o entendimento.
+`,
+
+  detailed: `
+ESTILO ESCOLHIDO: COMPLETA.
+Forneça explicações mais aprofundadas.
+Use etapas, exemplos e orientações quando necessário.
+Organize o conteúdo para facilitar a compreensão.
+`
+};
 
 function extractAnswer(data) {
   const raw = data?.choices?.[0]?.message?.content;
@@ -32,7 +65,7 @@ function extractAnswer(data) {
 
 app.post("/api/chat", async (req, res) => {
   try {
-    const { message, image } = req.body || {};
+    const { message, image, responseStyle } = req.body || {};
 
     if (
       (!message || typeof message !== "string" || !message.trim()) &&
@@ -48,6 +81,13 @@ app.post("/api/chat", async (req, res) => {
         reply: "Sua mensagem ultrapassou o limite de 2000 caracteres."
       });
     }
+
+    const selectedStyle = RESPONSE_STYLES[responseStyle]
+      ? responseStyle
+      : "normal";
+
+    const systemPrompt =
+      BASE_PROMPT + RESPONSE_STYLES[selectedStyle];
 
     let response;
     let data;
@@ -110,7 +150,7 @@ app.post("/api/chat", async (req, res) => {
               {
                 role: "system",
                 content:
-                  SYSTEM_PROMPT +
+                  systemPrompt +
                   " Você também é especialista em interpretar imagens, fotografias, documentos, gráficos e exercícios. Leia cuidadosamente o conteúdo visível."
               },
               {
@@ -153,7 +193,7 @@ app.post("/api/chat", async (req, res) => {
             messages: [
               {
                 role: "system",
-                content: SYSTEM_PROMPT
+                content: systemPrompt
               },
               {
                 role: "user",
@@ -215,7 +255,7 @@ app.post("/api/chat", async (req, res) => {
       });
     }
 
-    console.log(`${service}: resposta concluída.`);
+    console.log(`${service}: resposta concluída. Estilo: ${selectedStyle}`);
 
     return res.json({ reply: answer });
 
