@@ -5,7 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#090708">
-<title>WSAZ_777 | IA v4.0</title>
+<title>WSAZ_777 | IA v4.1</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Cinzel:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -15,7 +15,6 @@
   --red:#c51f2b;
   --red2:#ff3545;
   --bg:#090708;
-  --panel:rgba(12,10,11,.72);
   --border:rgba(210,55,65,.38);
   --text:#f5eeee;
   --muted:#b9abad;
@@ -32,7 +31,6 @@ body{
   overflow-x:hidden;
 }
 
-/* IMAGEM CENTRAL DOS PERSONAGENS */
 .background{
   position:fixed;
   inset:0;
@@ -75,7 +73,6 @@ body{
 .glow.one{top:-200px;left:-150px}
 .glow.two{bottom:-220px;right:-150px}
 
-/* CABEÇALHO */
 header{
   height:88px;
   margin:18px 2.5%;
@@ -93,37 +90,12 @@ header{
   z-index:5;
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
-
-.crown{
-  font-size:43px;
-  color:var(--red2);
-  text-shadow:0 0 18px #c51f2b80;
-}
-
-.logo{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:1px;
-}
-
+.brand{display:flex;align-items:center;gap:15px}
+.crown{font-size:43px;color:var(--red2);text-shadow:0 0 18px #c51f2b80}
+.logo{font-size:25px;font-weight:900;letter-spacing:1px}
 .logo span{color:var(--red2)}
-
-.subtitle{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:5px;
-}
-
-.online{
-  color:var(--green);
-  font-size:13px;
-  font-weight:800;
-}
+.subtitle{font-size:11px;color:var(--muted);margin-top:5px}
+.online{color:var(--green);font-size:13px;font-weight:800}
 
 .quote{
   text-align:right;
@@ -141,7 +113,6 @@ header{
   font-size:10px;
 }
 
-/* ESTRUTURA */
 .layout{
   display:grid;
   grid-template-columns:150px minmax(0,1fr);
@@ -152,7 +123,6 @@ header{
   align-items:stretch;
 }
 
-/* MENU LATERAL */
 .sidebar{
   border:1px solid var(--border);
   border-radius:19px;
@@ -189,20 +159,17 @@ header{
   border-radius:13px;
   background:rgba(0,0,0,.25);
 }
-
 .sidebar-card b{
   display:block;
   font-family:Cinzel,serif;
   font-size:14px;
   margin:10px 0;
 }
-
 .sidebar-card p{
   color:var(--muted);
   font-size:10px;
   line-height:1.6;
 }
-
 .sidebar-card .signature{
   color:var(--red2);
   font-family:Cinzel,serif;
@@ -210,7 +177,6 @@ header{
   margin-top:15px;
 }
 
-/* ÁREA PRINCIPAL */
 .main{
   min-width:0;
   display:flex;
@@ -218,33 +184,22 @@ header{
   gap:17px;
 }
 
-.welcome{
-  padding:20px 25px 10px;
-}
-
+.welcome{padding:20px 25px 10px}
 .welcome-tag{
   color:#ff9ca3;
   font-size:10px;
   letter-spacing:3px;
   font-weight:700;
 }
-
 .welcome h1{
   font-family:Cinzel,serif;
   font-size:clamp(24px,4vw,42px);
   margin-top:12px;
   text-shadow:0 3px 20px #000;
 }
-
 .welcome h1 span{color:var(--red2)}
+.welcome p{color:#ddd0d0;font-size:13px;margin-top:8px}
 
-.welcome p{
-  color:#ddd0d0;
-  font-size:13px;
-  margin-top:8px;
-}
-
-/* CHAT TRANSPARENTE */
 .chat-panel{
   border:1px solid var(--border);
   border-radius:20px;
@@ -262,12 +217,7 @@ header{
   background:rgba(8,6,7,.35);
   border-bottom:1px solid var(--border);
 }
-
-.chat-name{
-  font-weight:800;
-  font-size:14px;
-}
-
+.chat-name{font-weight:800;font-size:14px}
 .chat-name small{
   display:block;
   color:var(--muted);
@@ -288,7 +238,48 @@ header{
 }
 .action:hover{background:#8f1825}
 
-/* MENSAGENS */
+/* ESCOLHA DO ESTILO */
+.style-selector{
+  padding:15px 20px;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,6,7,.45);
+}
+.style-title{
+  font-size:12px;
+  font-weight:700;
+  margin-bottom:10px;
+  color:#f5eeee;
+}
+.style-options{display:flex;flex-wrap:wrap;gap:9px}
+.style-option{
+  border:1px solid var(--border);
+  background:rgba(20,15,16,.8);
+  color:#e5d5d5;
+  padding:10px 14px;
+  border-radius:9px;
+  font-size:11px;
+  cursor:pointer;
+  transition:.2s;
+}
+.style-option:hover,.style-option.selected{
+  border-color:var(--red2);
+  background:rgba(160,25,38,.3);
+  color:white;
+}
+.style-current{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:10px;
+}
+.style-change{
+  border:0;
+  background:none;
+  color:#ff858d;
+  cursor:pointer;
+  font-size:10px;
+  margin-left:5px;
+}
+
 .messages{
   height:410px;
   overflow-y:auto;
@@ -298,12 +289,8 @@ header{
   gap:16px;
   scroll-behavior:smooth;
 }
-
 .messages::-webkit-scrollbar{width:6px}
-.messages::-webkit-scrollbar-thumb{
-  background:#8c2932;
-  border-radius:20px;
-}
+.messages::-webkit-scrollbar-thumb{background:#8c2932;border-radius:20px}
 
 .message{
   max-width:85%;
@@ -315,21 +302,18 @@ header{
   overflow-wrap:anywhere;
   backdrop-filter:blur(10px);
 }
-
 .bot{
   align-self:flex-start;
   background:rgba(13,11,12,.83);
   border:1px solid rgba(210,55,65,.38);
   border-left:3px solid var(--red2);
 }
-
 .user{
   align-self:flex-end;
   background:linear-gradient(135deg,rgba(130,19,29,.92),rgba(65,12,17,.92));
   border:1px solid rgba(255,75,85,.4);
   box-shadow:0 0 20px #b51e2920;
 }
-
 .message img{
   display:block;
   max-width:230px;
@@ -339,48 +323,23 @@ header{
   margin-bottom:8px;
 }
 
-/* DIGITAÇÃO */
-.typing-message{
-  display:flex;
-  align-items:center;
-  min-height:48px;
-}
-
-.typing-status{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  color:#e8d5d5;
-  font-size:12px;
-}
-
+.typing-message{display:flex;align-items:center;min-height:48px}
+.typing-status{display:flex;align-items:center;gap:9px;color:#e8d5d5;font-size:12px}
 .typing-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:var(--red2);
-  box-shadow:0 0 12px var(--red2);
+  width:8px;height:8px;border-radius:50%;
+  background:var(--red2);box-shadow:0 0 12px var(--red2);
   animation:pulse 1s infinite;
 }
-
 .typing-dots{display:flex;gap:4px}
 .typing-dots span{
-  width:5px;height:5px;
-  border-radius:50%;
-  background:#ff9ca3;
-  animation:bounce 1s infinite;
+  width:5px;height:5px;border-radius:50%;
+  background:#ff9ca3;animation:bounce 1s infinite;
 }
 .typing-dots span:nth-child(2){animation-delay:.15s}
 .typing-dots span:nth-child(3){animation-delay:.3s}
+@keyframes pulse{50%{opacity:.4;transform:scale(.75)}}
+@keyframes bounce{50%{transform:translateY(-5px);opacity:.4}}
 
-@keyframes pulse{
-  50%{opacity:.4;transform:scale(.75)}
-}
-@keyframes bounce{
-  50%{transform:translateY(-5px);opacity:.4}
-}
-
-/* PRÉVIA */
 .preview{
   display:none;
   padding:12px 18px;
@@ -389,20 +348,10 @@ header{
   gap:12px;
   background:#08060788;
 }
-
-.preview img{
-  width:55px;height:55px;
-  object-fit:cover;
-  border-radius:9px;
-}
-
+.preview img{width:55px;height:55px;object-fit:cover;border-radius:9px}
 .preview span{font-size:12px;color:#d5baba;flex:1}
-.preview button{
-  border:0;background:none;
-  color:#ff858d;cursor:pointer;font-size:18px;
-}
+.preview button{border:0;background:none;color:#ff858d;cursor:pointer;font-size:18px}
 
-/* CAMPO DE MENSAGEM */
 .composer{
   border-top:1px solid var(--border);
   padding:13px;
@@ -411,7 +360,6 @@ header{
   gap:9px;
   background:rgba(5,4,5,.7);
 }
-
 .composer input[type=text]{
   flex:1;
   min-width:0;
@@ -423,9 +371,7 @@ header{
   color:white;
   font-size:13px;
 }
-
 .composer input:focus{border-color:var(--red2)}
-
 .icon-btn,.send{
   border:1px solid var(--border);
   color:white;
@@ -436,9 +382,7 @@ header{
   background:rgba(130,20,30,.35);
   transition:.2s;
 }
-
 .icon-btn:hover{background:#6d1922}
-
 .send{
   background:linear-gradient(135deg,#9e1825,#e02d3c);
   border:0;
@@ -446,14 +390,12 @@ header{
 .send:hover{filter:brightness(1.2)}
 button:disabled{opacity:.5;cursor:wait}
 
-/* ATALHOS */
 .shortcuts{
   display:flex;
   flex-wrap:wrap;
   gap:10px;
   padding:0 12px 15px;
 }
-
 .shortcut{
   border:1px solid var(--border);
   border-radius:30px;
@@ -463,18 +405,9 @@ button:disabled{opacity:.5;cursor:wait}
   font-size:11px;
   cursor:pointer;
 }
-.shortcut:hover{
-  border-color:var(--red2);
-  background:#8f18251c;
-}
+.shortcut:hover{border-color:var(--red2);background:#8f18251c}
 
-/* RECURSOS */
-.features{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-}
-
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
 .feature{
   padding:18px 12px;
   text-align:center;
@@ -483,16 +416,10 @@ button:disabled{opacity:.5;cursor:wait}
   backdrop-filter:blur(12px);
   border-radius:14px;
 }
-
-.feature b{
-  font-size:24px;
-  color:var(--red2);
-}
-
+.feature b{font-size:24px;color:var(--red2)}
 .feature h3{font-size:12px;margin:9px 0}
 .feature p{font-size:10px;color:var(--muted);line-height:1.5}
 
-/* RODAPÉ */
 footer{
   padding:20px 5px 30px;
   display:flex;
@@ -502,7 +429,6 @@ footer{
 }
 footer strong{color:#ff5963}
 
-/* CELULAR */
 @media(max-width:850px){
   header{margin:10px 3%;padding:0 15px;height:75px}
   .quote{display:none}
@@ -514,7 +440,6 @@ footer strong{color:#ff5963}
   .messages{height:380px}
   .features{grid-template-columns:repeat(2,1fr)}
 }
-
 @media(max-width:480px){
   .logo{font-size:18px}
   .crown{font-size:32px}
@@ -531,8 +456,6 @@ footer strong{color:#ff5963}
   .icon-btn,.send{padding:11px}
   footer{flex-direction:column;gap:8px;text-align:center}
 }
-
-/* ACESSIBILIDADE */
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{
     animation:none!important;
@@ -543,7 +466,6 @@ footer strong{color:#ff5963}
 </head>
 
 <body>
-
 <div class="background"></div>
 <div class="grain"></div>
 <div class="glow one"></div>
@@ -553,13 +475,11 @@ footer strong{color:#ff5963}
   <div class="brand">
     <div class="crown">♛</div>
     <div>
-      <div class="logo">WSAZ_777 IA <span>v4.0</span></div>
+      <div class="logo">WSAZ_777 IA <span>v4.1</span></div>
       <div class="subtitle">Inteligência Artificial · Sempre evoluindo</div>
     </div>
   </div>
-
   <div class="online">● ONLINE</div>
-
   <div class="quote">
     "Family don't end with blood."
     <small>— Dean Winchester</small>
@@ -567,7 +487,6 @@ footer strong{color:#ff5963}
 </header>
 
 <div class="layout">
-
   <aside class="sidebar">
     <a class="menu-item active" href="#">⌂ &nbsp; Início</a>
     <a class="menu-item" href="#chat">▤ &nbsp; Novo Chat</a>
@@ -584,21 +503,29 @@ footer strong{color:#ff5963}
   </aside>
 
   <main class="main">
-
     <section class="welcome">
-      <div class="welcome-tag">✦ NOVA EXPERIÊNCIA · VERSÃO 4.0</div>
-      <h1>WSAZ_777 <span>IA v4.0</span></h1>
+      <div class="welcome-tag">✦ NOVA EXPERIÊNCIA · VERSÃO 4.1</div>
+      <h1>WSAZ_777 <span>IA v4.1</span></h1>
       <p>Pesquise · Aprenda · Crie · Descubra</p>
     </section>
 
     <section class="chat-panel" id="chat">
-
       <div class="chat-top">
         <div class="chat-name">
           ♛ WSAZ_777
           <small>Assistente de inteligência artificial</small>
         </div>
         <button class="action" id="clearChat">⌫ Limpar chat</button>
+      </div>
+
+      <div class="style-selector" id="styleSelector">
+        <div class="style-title">✦ Como você prefere receber minhas respostas?</div>
+        <div class="style-options">
+          <button class="style-option" data-style="concise">⚡ Resumida</button>
+          <button class="style-option" data-style="normal">✦ Normal</button>
+          <button class="style-option" data-style="detailed">📚 Completa</button>
+        </div>
+        <div class="style-current" id="styleCurrent">Escolha um estilo para começar.</div>
       </div>
 
       <div class="messages" id="messages">
@@ -617,16 +544,9 @@ footer strong{color:#ff5963}
       </div>
 
       <form class="composer" id="chatForm">
-        <input type="file" id="imageInput"
-          accept="image/jpeg,image/png,image/webp" hidden>
-
-        <button class="icon-btn" id="attachButton"
-          type="button" title="Enviar imagem">＋</button>
-
-        <input type="text" id="messageInput"
-          placeholder="Digite sua mensagem..."
-          maxlength="2000" autocomplete="off">
-
+        <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp" hidden>
+        <button class="icon-btn" id="attachButton" type="button" title="Enviar imagem">＋</button>
+        <input type="text" id="messageInput" placeholder="Digite sua mensagem..." maxlength="2000" autocomplete="off">
         <button class="send" id="sendButton" type="submit">➤</button>
       </form>
 
@@ -635,37 +555,19 @@ footer strong{color:#ff5963}
         <button class="shortcut" type="button" id="focusShortcut">◉ Perguntar</button>
         <button class="shortcut" type="button" id="clearShortcut">⌫ Limpar</button>
       </div>
-
     </section>
 
     <section class="features" id="recursos">
-      <div class="feature">
-        <b>ϟ</b>
-        <h3>Respostas inteligentes</h3>
-        <p>Ajuda para suas dúvidas.</p>
-      </div>
-      <div class="feature">
-        <b>▧</b>
-        <h3>Análise de imagens</h3>
-        <p>Envie fotos e faça perguntas.</p>
-      </div>
-      <div class="feature">
-        <b>✦</b>
-        <h3>Multifunções</h3>
-        <p>Estudos, tecnologia e criatividade.</p>
-      </div>
-      <div class="feature">
-        <b>⌘</b>
-        <h3>Em evolução</h3>
-        <p>Novas funções em desenvolvimento.</p>
-      </div>
+      <div class="feature"><b>ϟ</b><h3>Respostas inteligentes</h3><p>Ajuda para suas dúvidas.</p></div>
+      <div class="feature"><b>▧</b><h3>Análise de imagens</h3><p>Envie fotos e faça perguntas.</p></div>
+      <div class="feature"><b>✦</b><h3>Multifunções</h3><p>Estudos, tecnologia e criatividade.</p></div>
+      <div class="feature"><b>⌘</b><h3>Em evolução</h3><p>Novas funções em desenvolvimento.</p></div>
     </section>
 
     <footer id="dev">
       <div><strong>♛ WSAZ_777</strong> · Inteligência artificial</div>
       <div>Projeto independente · Em desenvolvimento</div>
     </footer>
-
   </main>
 </div>
 
@@ -681,8 +583,24 @@ const previewImage = document.getElementById("previewImage");
 const removeImage = document.getElementById("removeImage");
 const clearChat = document.getElementById("clearChat");
 
+const styleSelector = document.getElementById("styleSelector");
+const styleCurrent = document.getElementById("styleCurrent");
+const styleButtons = document.querySelectorAll(".style-option");
+
 let selectedImage = null;
 let busy = false;
+
+const styleNames = {
+  concise:"⚡ Resumida",
+  normal:"✦ Normal",
+  detailed:"📚 Completa"
+};
+
+let responseStyle = localStorage.getItem("wsaz_response_style");
+
+if(!["concise","normal","detailed"].includes(responseStyle)){
+  responseStyle = null;
+}
 
 function scrollToBottom(){
   messages.scrollTop = messages.scrollHeight;
@@ -709,6 +627,55 @@ function addMessage(text,type,imageUrl=null){
   scrollToBottom();
   return element;
 }
+
+function updateStyle(){
+  styleButtons.forEach(button=>{
+    button.classList.toggle(
+      "selected",
+      button.dataset.style === responseStyle
+    );
+  });
+
+  styleCurrent.replaceChildren();
+
+  const label = document.createElement("span");
+  label.textContent = "Estilo atual: " + styleNames[responseStyle];
+  styleCurrent.appendChild(label);
+
+  const changeButton = document.createElement("button");
+  changeButton.className = "style-change";
+  changeButton.textContent = "Alterar";
+
+  changeButton.addEventListener("click",()=>{
+    styleSelector.style.display = "block";
+    styleCurrent.textContent = "Escolha seu estilo de resposta.";
+  });
+
+  styleCurrent.appendChild(changeButton);
+}
+
+if(responseStyle){
+  updateStyle();
+  styleSelector.style.display = "none";
+}else{
+  styleSelector.style.display = "block";
+}
+
+styleButtons.forEach(button=>{
+  button.addEventListener("click",()=>{
+    responseStyle = button.dataset.style;
+    localStorage.setItem("wsaz_response_style",responseStyle);
+
+    updateStyle();
+    styleSelector.style.display = "none";
+
+    addMessage(
+      "Preferência atualizada! A partir de agora, vou responder no estilo " +
+      styleNames[responseStyle] + ". ✦",
+      "bot"
+    );
+  });
+});
 
 function addTypingIndicator(){
   const element = document.createElement("div");
@@ -770,6 +737,8 @@ document.getElementById("focusShortcut").addEventListener("click",()=>{
 });
 
 document.getElementById("clearShortcut").addEventListener("click",resetChat);
+removeImage.addEventListener("click",clearSelectedImage);
+clearChat.addEventListener("click",resetChat);
 
 imageInput.addEventListener("change",async()=>{
   const file = imageInput.files?.[0];
@@ -819,9 +788,6 @@ imageInput.addEventListener("change",async()=>{
   }
 });
 
-removeImage.addEventListener("click",clearSelectedImage);
-clearChat.addEventListener("click",resetChat);
-
 form.addEventListener("submit",async(event)=>{
   event.preventDefault();
 
@@ -831,6 +797,12 @@ form.addEventListener("submit",async(event)=>{
   const image=selectedImage;
 
   if(!message&&!image) return;
+
+  if(!responseStyle){
+    styleSelector.style.display="block";
+    styleCurrent.textContent="Escolha um estilo antes de começar.";
+    return;
+  }
 
   busy=true;
   sendButton.disabled=true;
@@ -852,17 +824,28 @@ form.addEventListener("submit",async(event)=>{
     const response=await fetch("/api/chat",{
       method:"POST",
       headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({message,image})
+      body:JSON.stringify({
+        message,
+        image,
+        responseStyle
+      })
     });
 
     const data=await response.json();
 
     loading.remove();
 
-    addMessage(
-      data.reply || "Não consegui gerar uma resposta.",
-      "bot"
-    );
+    if(!response.ok){
+      addMessage(
+        data.reply || "Não foi possível concluir sua solicitação.",
+        "bot"
+      );
+    }else{
+      addMessage(
+        data.reply || "Não consegui gerar uma resposta.",
+        "bot"
+      );
+    }
 
   }catch(error){
     console.error("ERRO NO CHAT:",error);
@@ -883,6 +866,5 @@ form.addEventListener("submit",async(event)=>{
   }
 });
 </script>
-
 </body>
 </html>
