@@ -14,6 +14,7 @@ app.get("/", (req, res) => {
 app.post("/api/chat", async (req, res) => {
   try {
     const { message, image } = req.body || {};
+
     const apiKey = process.env.OPENROUTER_API_KEY;
     const model = process.env.OPENROUTER_MODEL || "openrouter/free";
 
@@ -31,16 +32,16 @@ app.post("/api/chat", async (req, res) => {
 
     if (typeof message === "string" && message.length > 2000) {
       return res.status(400).json({
-        reply: "Sua mensagem é muito longa."
+        reply: "Sua mensagem ultrapassou o limite de 2000 caracteres."
       });
     }
 
-    const content = [];
-
-    content.push({
-      type: "text",
-      text: message?.trim() || "Descreva esta imagem detalhadamente."
-    });
+    const content = [
+      {
+        type: "text",
+        text: message?.trim() || "Descreva esta imagem de forma objetiva."
+      }
+    ];
 
     if (image) {
       if (
@@ -75,7 +76,7 @@ app.post("/api/chat", async (req, res) => {
             {
               role: "system",
               content:
-                "Você é o WSAZ_777, uma IA de uso geral. Responda em português brasileiro, com clareza, precisão e naturalidade. Ajude com estudos, matemática, programação, tecnologia, textos e conhecimentos gerais. Em segurança digital, priorize aprendizado, defesa e práticas éticas. Quando receber uma imagem, descreva o que realmente consegue observar e responda à pergunta do usuário. Não invente detalhes."
+                "Você é o WSAZ_777, uma IA de uso geral. Responda em português brasileiro, de forma clara, objetiva e natural. Ajude com estudos, programação, tecnologia e conhecimentos gerais. Ao receber imagens, analise o conteúdo visível e responda à pergunta. Seja conciso, não apresente raciocínio interno e não invente informações."
             },
             {
               role: "user",
@@ -83,7 +84,11 @@ app.post("/api/chat", async (req, res) => {
             }
           ],
           max_tokens: 700,
-          temperature: 0.6
+          temperature: 0.6,
+          reasoning: {
+            effort: "low",
+            max_tokens: 150
+          }
         })
       }
     );
@@ -94,7 +99,7 @@ app.post("/api/chat", async (req, res) => {
       console.error(
         "ERRO OPENROUTER:",
         response.status,
-        data.error?.message || JSON.stringify(data).slice(0, 2000)
+        data.error?.message || JSON.stringify(data).slice(0, 1500)
       );
 
       let reply = "Erro ao consultar a inteligência artificial.";
@@ -102,15 +107,16 @@ app.post("/api/chat", async (req, res) => {
       if (response.status === 429) {
         reply = "Limite de uso atingido. Tente novamente mais tarde.";
       } else if (response.status === 402) {
-        reply = "Créditos insuficientes para esse modelo.";
+        reply = "O modelo está sem créditos disponíveis.";
       } else if (response.status === 401) {
-        reply = "A chave do OpenRouter é inválida.";
+        reply = "A configuração da API está inválida.";
       }
 
       return res.status(502).json({ reply });
     }
 
-    const rawAnswer = data.choices?.[0]?.message?.content;
+    const choice = data.choices?.[0];
+    const rawAnswer = choice?.message?.content;
 
     let answer = "";
 
@@ -126,11 +132,14 @@ app.post("/api/chat", async (req, res) => {
     if (!answer.trim()) {
       console.error(
         "RESPOSTA INVÁLIDA DO OPENROUTER:",
-        JSON.stringify(data).slice(0, 3000)
+        JSON.stringify(data).slice(0, 2000)
       );
 
       return res.status(502).json({
-        reply: "A IA recebeu sua solicitação, mas não retornou uma resposta válida. Tente novamente."
+        reply:
+          choice?.finish_reason === "length"
+            ? "A resposta ultrapassou o limite disponível. Tente fazer uma pergunta mais específica."
+            : "Não consegui gerar uma resposta válida. Tente novamente."
       });
     }
 
@@ -140,7 +149,7 @@ app.post("/api/chat", async (req, res) => {
     console.error("ERRO SERVIDOR:", error);
 
     return res.status(500).json({
-      reply: "Erro interno ao processar sua solicitação. Tente novamente."
+      reply: "Erro interno ao processar sua solicitação."
     });
   }
 });
