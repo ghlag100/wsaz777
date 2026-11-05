@@ -1,0 +1,142 @@
+/* WSAZ_777 — ROBÔ FUTURISTA PREMIUM */
+
+.robot-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1100px;
+  transform-style: preserve-3d;
+  overflow: visible;
+}
+
+.robot-stage::before {
+  content: "";
+  position: absolute;
+  width: 230px;
+  height: 230px;
+  border: 1px solid rgba(255, 45, 45, .35);
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(255, 35, 35, .15),
+              inset 0 0 25px rgba(255, 35, 35, .08);
+  animation: robotOrbit 9s linear infinite;
+}
+
+.robot-stage::after {
+  content: "";
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  border: 1px dashed rgba(255, 255, 255, .25);
+  border-radius: 50%;
+  animation: robotOrbit 14s linear infinite reverse;
+}
+
+.robot-head {
+  position: relative;
+  width: 125px;
+  height: 155px;
+  border-radius: 48% 48% 42% 42%;
+  background: linear-gradient(135deg, #fff, #dce1e8 25%, #8c96a5 48%, #f7f8fa 70%, #9ba5b3);
+  border: 2px solid rgba(255,255,255,.9);
+  box-shadow: 0 0 20px rgba(255,255,255,.3),
+              0 0 45px rgba(255,35,35,.25),
+              inset -12px -10px 20px rgba(20,25,35,.4),
+              inset 8px 8px 18px rgba(255,255,255,.8);
+  transform-style: preserve-3d;
+  animation: robotRotate 12s linear infinite;
+}
+
+.robot-head::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border-radius: inherit;
+  border: 1px solid rgba(255,45,45,.7);
+  box-shadow: 0 0 12px rgba(255,40,40,.5);
+}
+
+.robot-face {
+  position: absolute;
+  inset: 30px 12px 28px;
+  border-radius: 42%;
+  background: linear-gradient(145deg, #171c27, #05070c);
+  border: 2px solid #aeb8c6;
+  box-shadow: inset 0 0 18px rgba(0,0,0,.9),
+              0 0 12px rgba(255,35,35,.35);
+  overflow: hidden;
+}
+
+.robot-eyes {
+  position: absolute;
+  top: 35%;
+  left: 18%;
+  right: 18%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.robot-eyes::before,
+.robot-eyes::after {
+  content: "";
+  width: 22px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff3030;
+  box-shadow: 0 0 8px #ff3030, 0 0 18px #ff1515;
+}
+
+.robot-mouth {
+  position: absolute;
+  width: 28px;
+  height: 3px;
+  bottom: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  background: #ff3434;
+  box-shadow: 0 0 10px #ff3434;
+}
+
+.robot-side {
+  position: absolute;
+  top: 48px;
+  width: 17px;
+  height: 55px;
+  background: linear-gradient(90deg, #7e8998, #f5f6f8, #747e8b);
+  border: 1px solid #fff;
+  box-shadow: 0 0 12px rgba(255,40,40,.35);
+}
+
+.robot-back {
+  position: absolute;
+  inset: 15px 20px;
+  border-radius: 45%;
+  border: 2px solid rgba(255,45,45,.65);
+}
+
+.robot-glow {
+  position: absolute;
+  width: 170px;
+  height: 35px;
+  bottom: -35px;
+  border-radius: 50%;
+  background: rgba(255,25,25,.3);
+  filter: blur(18px);
+  animation: robotPulse 3s ease-in-out infinite;
+}
+
+@keyframes robotRotate {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+@keyframes robotOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes robotPulse {
+  0%, 100% { opacity: .35; transform: scale(.85); }
+  50% { opacity: .8; transform: scale(1.15); }
+}
