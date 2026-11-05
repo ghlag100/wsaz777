@@ -5,1100 +5,244 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#090a0f">
 <title>WSAZ_777 | Neural Core</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
 <style>
-:root{
---bg:#090a0f;--panel:#11131b;--line:#252a38;
---red:#e32636;--red2:#ff5362;--text:#f4f5fa;
---muted:#9298aa;--green:#37d69a;--cyan:#54dfff
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:radial-gradient(ellipse at 80% 0%,#271018 0,transparent 32%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
-button,input,textarea,select{font:inherit}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
-
-/* INICIALIZAÇÃO */
-#intro{
-position:fixed;inset:0;z-index:1000;background:#08090e;
-display:grid;place-items:center;transition:.65s;padding:20px
-}
-#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
-.boot-grid{
-position:absolute;inset:0;opacity:.15;
-background-image:linear-gradient(#e3263618 1px,transparent 1px),linear-gradient(90deg,#e3263618 1px,transparent 1px);
-background-size:42px 42px
-}
-.intro-content{
-position:relative;text-align:center;width:min(100%,390px);
-padding:25px;background:#11131bcc;border:1px solid #34303b;
-border-radius:22px;box-shadow:0 0 60px #e3263620
-}
-.intro-photo{
-width:78px;height:78px;object-fit:cover;object-position:center 28%;
-border-radius:22px;border:1px solid #ffffff35;
-box-shadow:0 0 35px #e3263650;margin-bottom:12px
-}
-.kicker{font:9px Orbitron;letter-spacing:3px;color:#ff6977}
-.intro-content h1{font:800 clamp(28px,8vw,43px) Orbitron;margin:12px 0;text-shadow:0 0 28px #e3263650}
-.intro-content p{color:#9397a5;font-size:9px;letter-spacing:2px}
-.intro-brand{margin:17px 0;font-size:12px;font-weight:900;letter-spacing:3px}
-.primary{
-border:0;border-radius:12px;padding:14px 22px;
-background:linear-gradient(135deg,var(--red),#a80e23);
-color:white;font-weight:900;letter-spacing:1px;
-box-shadow:0 0 18px #e3263660,0 0 38px #e3263630;
-transition:.2s
-}
-.primary:hover{filter:brightness(1.2);transform:translateY(-2px)}
-.boot-status{font:9px Orbitron;color:#858b9b;margin-top:15px;letter-spacing:1px}
-
-/* ESTRUTURA */
-.shell{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
-.sidebar{
-height:100vh;position:sticky;top:0;background:#101117;
-border-right:1px solid var(--line);padding:20px 15px;
-display:flex;flex-direction:column;z-index:80
-}
-.brand{display:flex;gap:12px;align-items:center;padding:4px 8px 22px;border-bottom:1px solid var(--line)}
-.brand-mark,.ai-logo{
-width:43px;height:43px;border-radius:13px;
-background:linear-gradient(145deg,#fa3448,#a90e24);
-display:grid;place-items:center;font-size:22px;
-box-shadow:0 8px 24px #e3263630
-}
-.brand-name{font:800 14px Orbitron}
-.brand-sub{font-size:8px;color:#8b91a1;letter-spacing:1.5px;margin-top:5px}
-.nav-label{font-size:9px;letter-spacing:2px;color:#73798a;font-weight:900;margin:25px 10px 10px}
-.nav-btn{
-width:100%;border:0;background:transparent;color:#b7bdca;
-padding:13px 12px;border-radius:10px;text-align:left;
-display:flex;align-items:center;gap:12px;font-size:11px;
-font-weight:750;margin:3px 0;transition:.2s
-}
-.nav-btn span:first-child{width:21px;text-align:center;font-size:17px}
-.nav-btn:hover,.nav-btn.active{background:#e32636;color:white;box-shadow:0 8px 24px #e326362b}
-.nav-spacer{flex:1}
-.profile{border-top:1px solid var(--line);padding:16px 7px 5px;display:flex;align-items:center;gap:10px}
-.profile img{width:36px;height:36px;object-fit:cover;border-radius:50%}
-.profile b{font-size:10px}
-.profile small{display:block;color:#83899a;font-size:9px;margin-top:4px}
-
-.main{min-width:0}
-.topbar{
-height:70px;position:sticky;top:0;z-index:50;
-background:#0c0e14ef;backdrop-filter:blur(18px);
-border-bottom:1px solid var(--line);
-display:flex;align-items:center;justify-content:space-between;padding:0 25px
-}
-.top-left{display:flex;align-items:center;gap:13px}
-.menu-toggle{display:none;background:none;color:white;border:0;font-size:24px}
-.top-title{font-size:13px;font-weight:850}
-.top-sub{font-size:9px;color:#7f8798;margin-top:4px}
-.status{color:var(--green);font-size:9px;font-weight:900;display:flex;align-items:center;gap:8px}
-.status i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
-.content{max-width:1500px;margin:auto;padding:26px 28px 45px}
-.page{display:none;animation:appear .35s ease}
-.page.active{display:block}
-@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.hero{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px}
-.eyebrow{color:var(--red2);font:10px Orbitron;letter-spacing:2.5px}
-.hero h1{font-size:clamp(23px,3vw,34px);letter-spacing:-1.3px;margin:9px 0}
-.hero p{color:var(--muted);font-size:12px;line-height:1.7;margin:0}
-.pill{border:1px solid #34394a;color:#b7bdca;background:#171a23;padding:9px 12px;border-radius:30px;font-size:9px;white-space:nowrap}
-.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:15px}
-.card{background:linear-gradient(145deg,#171a24,#10121a);border:1px solid var(--line);border-radius:17px;padding:19px;min-width:0}
-.card h3{font-size:13px;margin:0 0 8px}
-.muted{color:var(--muted);font-size:11px;line-height:1.75}
-.wide{grid-column:span 8}
-.narrow{grid-column:span 4}
-.full{grid-column:1/-1}
-
-/* BOTÕES COM BRILHO */
-.glow-btn{
-display:inline-flex;align-items:center;justify-content:center;gap:10px;
-padding:15px 23px;border:1px solid #ff6674;border-radius:12px;
-background:linear-gradient(135deg,#fa263b,#9d071c);
-color:white;font-size:11px;font-weight:900;letter-spacing:1px;
-box-shadow:0 0 12px #ff263b90,0 0 30px #ff263b45;
-animation:buttonGlow 2s infinite alternate;
-transition:.2s
-}
-.glow-btn:hover{transform:translateY(-3px);filter:brightness(1.2)}
-@keyframes buttonGlow{
-from{box-shadow:0 0 8px #ff263b70,0 0 18px #ff263b30}
-to{box-shadow:0 0 18px #ff263b,0 0 42px #ff263b70,0 0 65px #ff263b30}
-}
-.glow-btn:disabled{opacity:.5;cursor:not-allowed;animation:none}
-
-/* CHAT IA */
-.ai-panel{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#10121a}
-.ai-head{padding:15px 18px;background:#191c27;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.ai-identity{display:flex;align-items:center;gap:11px}
-.ai-logo{width:39px;height:39px}
-.ai-title{font:700 12px Orbitron}
-.ai-sub{font-size:9px;color:#969cac;margin-top:4px}
-.ai-head select{background:#242835;color:white;border:1px solid #3a4051;border-radius:8px;padding:9px;font-size:10px}
-.chat-stage{position:relative;isolation:isolate;background:#0d0f16;overflow:hidden}
-.ai-holo-bg{
-position:absolute;inset:0;z-index:-1;opacity:.25;pointer-events:none;
-background:radial-gradient(ellipse at center,#12344855,transparent 65%)
-}
-.ai-holo-bg canvas{width:100%;height:100%;display:block}
-.chat{
-height:min(55vh,570px);min-height:340px;overflow:auto;
-padding:22px;background:#0d0f16a8;
-backdrop-filter:blur(1px)
-}
-.message{display:flex;gap:10px;margin-bottom:18px;align-items:flex-start}
-.message.user{flex-direction:row-reverse}
-.avatar{width:31px;height:31px;flex:0 0 31px;border-radius:9px;background:#282d3b;display:grid;place-items:center;font-size:12px}
-.user .avatar{background:var(--red)}
-.bubble{
-max-width:min(84%,760px);white-space:pre-wrap;overflow-wrap:anywhere;
-line-height:1.8;font-size:12px;background:#181c27ed;
-border:1px solid #2a3040;border-radius:4px 13px 13px 13px;padding:12px 15px
-}
-.user .bubble{background:#351920ed;border-color:#62303a;border-radius:13px 4px 13px 13px}
-.bubble img{max-width:210px;max-height:170px;display:block;border-radius:9px;margin-top:8px}
-.message-actions{margin-top:9px}
-.message-actions button{background:#252a38;border:1px solid #353c4e;color:#cbd0dc;padding:6px 9px;border-radius:7px;font-size:10px}
-.typing{display:none;color:#9aa2b5;font-size:10px;padding:0 20px 12px;background:#0d0f16}
-.composer{border-top:1px solid var(--line);padding:14px;background:#141720}
-.preview-list{display:flex;gap:8px;margin-bottom:9px;flex-wrap:wrap}
-.preview-item{position:relative}
-.preview-item img{width:55px;height:55px;object-fit:cover;border-radius:8px}
-.preview-item button{position:absolute;right:-5px;top:-5px;background:var(--red);color:#fff;border:0;border-radius:50%;width:20px;height:20px}
-.input-row{display:flex;gap:8px;align-items:end}
-.tool-btn,.send-btn{height:45px;min-width:44px;border:1px solid #343a4a;background:#202431;color:#dce0e9;border-radius:10px;font-size:17px}
-.send-btn{background:var(--red);border-color:var(--red);color:white;font-size:20px}
-.send-btn:disabled{opacity:.5}
-#messageInput{flex:1;min-width:0;resize:vertical;min-height:45px;max-height:130px;background:#0e1119;color:white;border:1px solid #343a4a;border-radius:10px;padding:13px;outline:none;font-size:12px}
-#messageInput:focus{border-color:var(--red)}
-.note{font-size:9px;color:#788093;margin:9px 3px 0}
-
-/* CARDS E IMAGENS */
-.cards-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.resource-card{background:linear-gradient(145deg,#171b27,#10121a);border:1px solid var(--line);border-radius:15px;padding:17px}
-.resource-card .tag{font:9px Orbitron;color:#ff7180;letter-spacing:1.4px}
-.resource-card h3{font-size:14px;margin:11px 0 7px}
-.resource-card p{font-size:10px;line-height:1.7;color:var(--muted);min-height:45px}
-.resource-card a{color:#ff7581;font-size:10px;font-weight:800}
-.promo-image{
-width:100%;display:block;object-fit:cover;border-radius:15px;
-border:1px solid #38313b;box-shadow:0 10px 35px #0007;margin-bottom:18px
-}
-.promo-box{
-border:1px solid #57232e;background:linear-gradient(135deg,#241018,#11131b);
-padding:20px;border-radius:17px;margin-bottom:18px
-}
-.promo-box h2{font:700 17px Orbitron;margin:0 0 10px}
-.promo-box p{font-size:11px;color:#b5b8c4;line-height:1.8}
-.promo-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
-.coming-btn{
-display:inline-flex;align-items:center;justify-content:center;
-padding:14px 18px;border:1px solid #454b5a;border-radius:11px;
-background:#202431;color:#aab0be;font-size:10px;font-weight:800
-}
-
-/* CLOUD 3D */
-.holo-wrap{
-position:relative;min-height:430px;border:1px solid #28394b;
-border-radius:20px;overflow:hidden;
-background:radial-gradient(ellipse at center,#112b3c 0,#0b121c 48%,#090b12 80%);
-display:grid;place-items:center
-}
-.holo-wrap:before,.holo-wrap:after{
-content:"";position:absolute;width:310px;height:310px;
-border:1px solid #50dfff35;border-radius:50%;
-box-shadow:0 0 50px #28cfff14,inset 0 0 50px #28cfff12;pointer-events:none
-}
-.holo-wrap:after{width:390px;height:390px;border-style:dashed;animation:spin 35s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-#holoCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
-.holo-label{position:absolute;bottom:18px;left:20px;right:20px;display:flex;justify-content:space-between;color:#65dcf4;font:9px Orbitron;letter-spacing:1.5px;pointer-events:none}
-.holo-copy{position:absolute;top:18px;left:20px;color:#a8d9e7;font:9px Orbitron;letter-spacing:1.5px;pointer-events:none}
-.holo-controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
-.ghost-btn{background:#1b2230;border:1px solid #344254;color:#ccebf4;padding:10px 13px;border-radius:9px;font-size:10px}
-
-.footer{text-align:center;color:#687083;font-size:9px;padding:28px 10px}
-.overlay{display:none;position:fixed;inset:0;background:#0009;z-index:70}
-.overlay.show{display:block}
-
-@media(max-width:950px){
-.shell{grid-template-columns:220px 1fr}
-.wide,.narrow{grid-column:span 12}
-.cards-3{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:680px){
-.shell{display:block}
-.sidebar{position:fixed;left:-280px;top:0;bottom:0;width:260px;height:100dvh;transition:left .25s;box-shadow:12px 0 40px #0008}
-.sidebar.open{left:0}
-.menu-toggle{display:block}
-.topbar{height:62px;padding:0 13px}
-.top-title{font-size:11px}
-.top-sub{font-size:8px}
-.status{font-size:8px}
-.content{padding:18px 12px 30px}
-.hero{align-items:flex-start;flex-direction:column}
-.hero h1{font-size:25px}
-.cards-3{grid-template-columns:1fr}
-.chat{height:52dvh;min-height:320px;padding:14px 10px}
-.bubble{max-width:88%;font-size:12px;padding:10px}
-.ai-head{padding:12px}
-.ai-head select{max-width:100px}
-.composer{padding:10px 8px}
-.input-row{gap:5px}
-.tool-btn,.send-btn{min-width:37px;height:42px}
-#messageInput{font-size:12px;padding:11px}
-.holo-wrap{min-height:350px}
-.holo-wrap:before{width:230px;height:230px}
-.holo-wrap:after{width:285px;height:285px}
-.intro-content{padding:20px}
-}
-@media(prefers-reduced-motion:reduce){
-*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
-}
+:root{--bg:#090a0f;--panel:#11131b;--line:#252a38;--red:#e32636;--red2:#ff5362;--text:#f4f5fa;--muted:#9298aa;--green:#37d69a;--cyan:#54dfff}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#271018 0,transparent 32%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
+#intro{position:fixed;inset:0;z-index:1000;background:#08090e;display:grid;place-items:center;transition:.65s;padding:20px}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}.boot-grid{position:absolute;inset:0;opacity:.15;background-image:linear-gradient(#e3263618 1px,transparent 1px),linear-gradient(90deg,#e3263618 1px,transparent 1px);background-size:42px 42px}
+.intro-content{position:relative;text-align:center;width:min(100%,390px);padding:25px;background:#11131bcc;border:1px solid #34303b;border-radius:22px;box-shadow:0 0 60px #e3263620}
+.intro-photo{width:78px;height:78px;object-fit:cover;object-position:center 28%;border-radius:22px;border:1px solid #ffffff35;box-shadow:0 0 35px #e3263650;margin-bottom:12px}
+.kicker{font:9px Orbitron;letter-spacing:3px;color:#ff6977}.intro-content h1{font:800 clamp(28px,8vw,43px) Orbitron;margin:12px 0;text-shadow:0 0 28px #e3263650}.intro-content p{color:#9397a5;font-size:9px;letter-spacing:2px}.intro-brand{margin:17px 0;font-size:12px;font-weight:900;letter-spacing:3px}
+.primary{border:0;border-radius:12px;padding:14px 22px;background:linear-gradient(135deg,var(--red),#a80e23);color:white;font-weight:900;letter-spacing:1px;box-shadow:0 0 18px #e3263660,0 0 38px #e3263630;transition:.2s}.primary:hover{filter:brightness(1.2);transform:translateY(-2px)}.boot-status{font:9px Orbitron;color:#858b9b;margin-top:15px;letter-spacing:1px}
+.shell{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}.sidebar{height:100vh;position:sticky;top:0;background:#101117;border-right:1px solid var(--line);padding:20px 15px;display:flex;flex-direction:column;z-index:80}
+.brand{display:flex;gap:12px;align-items:center;padding:4px 8px 22px;border-bottom:1px solid var(--line)}.brand-mark,.ai-logo{width:43px;height:43px;border-radius:13px;background:linear-gradient(145deg,#fa3448,#a90e24);display:grid;place-items:center;font-size:22px;box-shadow:0 8px 24px #e3263630}.brand-name{font:800 14px Orbitron}.brand-sub{font-size:8px;color:#8b91a1;letter-spacing:1.5px;margin-top:5px}
+.nav-label{font-size:9px;letter-spacing:2px;color:#73798a;font-weight:900;margin:25px 10px 10px}.nav-btn{width:100%;border:0;background:transparent;color:#b7bdca;padding:13px 12px;border-radius:10px;text-align:left;display:flex;align-items:center;gap:12px;font-size:11px;font-weight:750;margin:3px 0;transition:.2s}.nav-btn span:first-child{width:21px;text-align:center;font-size:17px}.nav-btn:hover,.nav-btn.active{background:#e32636;color:white;box-shadow:0 8px 24px #e326362b}.nav-spacer{flex:1}.profile{border-top:1px solid var(--line);padding:16px 7px 5px;display:flex;align-items:center;gap:10px}.profile img{width:36px;height:36px;object-fit:cover;border-radius:50%}.profile b{font-size:10px}.profile small{display:block;color:#83899a;font-size:9px;margin-top:4px}
+.main{min-width:0}.topbar{height:70px;position:sticky;top:0;z-index:50;background:#0c0e14ef;backdrop-filter:blur(18px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 25px}.top-left{display:flex;align-items:center;gap:13px}.menu-toggle{display:none;background:none;color:white;border:0;font-size:24px}.top-title{font-size:13px;font-weight:850}.top-sub{font-size:9px;color:#7f8798;margin-top:4px}.status{color:var(--green);font-size:9px;font-weight:900;display:flex;align-items:center;gap:8px}.status i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+.content{max-width:1500px;margin:auto;padding:26px 28px 45px}.page{display:none;animation:appear .35s ease}.page.active{display:block}@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px}.eyebrow{color:var(--red2);font:10px Orbitron;letter-spacing:2.5px}.hero h1{font-size:clamp(23px,3vw,34px);letter-spacing:-1.3px;margin:9px 0}.hero p{color:var(--muted);font-size:12px;line-height:1.7;margin:0}.pill{border:1px solid #34394a;color:#b7bdca;background:#171a23;padding:9px 12px;border-radius:30px;font-size:9px;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:15px}.card{background:linear-gradient(145deg,#171a24,#10121a);border:1px solid var(--line);border-radius:17px;padding:19px;min-width:0}.card h3{font-size:13px;margin:0 0 8px}.muted{color:var(--muted);font-size:11px;line-height:1.75}.wide{grid-column:span 8}.narrow{grid-column:span 4}.full{grid-column:1/-1}
+.glow-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 23px;border:1px solid #ff6674;border-radius:12px;background:linear-gradient(135deg,#fa263b,#9d071c);color:white;font-size:11px;font-weight:900;letter-spacing:1px;box-shadow:0 0 12px #ff263b90,0 0 30px #ff263b45;animation:buttonGlow 2s infinite alternate;transition:.2s}.glow-btn:hover{transform:translateY(-3px);filter:brightness(1.2)}@keyframes buttonGlow{from{box-shadow:0 0 8px #ff263b70,0 0 18px #ff263b30}to{box-shadow:0 0 18px #ff263b,0 0 42px #ff263b70}}.glow-btn:disabled{opacity:.5;cursor:not-allowed;animation:none}
+.ai-panel{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#10121a}.ai-head{padding:15px 18px;background:#191c27;display:flex;justify-content:space-between;align-items:center;gap:12px}.ai-identity{display:flex;align-items:center;gap:11px}.ai-logo{width:39px;height:39px}.ai-title{font:700 12px Orbitron}.ai-sub{font-size:9px;color:#969cac;margin-top:4px}.ai-head select{background:#242835;color:white;border:1px solid #3a4051;border-radius:8px;padding:9px;font-size:10px}
+.chat-stage{position:relative;isolation:isolate;background:#0d0f16;overflow:hidden;min-height:340px}.ai-holo-bg{position:absolute;inset:0;z-index:0;opacity:.52;pointer-events:none;background:radial-gradient(ellipse at center,#12344888,transparent 68%)}.ai-holo-bg canvas{width:100%;height:100%;display:block}
+.chat{position:relative;z-index:1;height:min(55vh,570px);min-height:340px;overflow:auto;padding:22px;background:rgba(13,15,22,.30);backdrop-filter:blur(0px)}
+.message{display:flex;gap:10px;margin-bottom:18px;align-items:flex-start}.message.user{flex-direction:row-reverse}.avatar{width:31px;height:31px;flex:0 0 31px;border-radius:9px;background:#282d3b;display:grid;place-items:center;font-size:12px}.user .avatar{background:var(--red)}.bubble{max-width:min(84%,760px);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8;font-size:12px;background:rgba(24,28,39,.88);border:1px solid #2a3040;border-radius:4px 13px 13px 13px;padding:12px 15px}.user .bubble{background:rgba(53,25,32,.92);border-color:#62303a;border-radius:13px 4px 13px 13px}.bubble img{max-width:210px;max-height:170px;display:block;border-radius:9px;margin-top:8px}.message-actions{margin-top:9px}.message-actions button{background:#252a38;border:1px solid #353c4e;color:#cbd0dc;padding:6px 9px;border-radius:7px;font-size:10px}
+.typing{display:none;color:#9aa2b5;font-size:10px;padding:0 20px 12px;background:#0d0f16}.composer{border-top:1px solid var(--line);padding:14px;background:#141720}.preview-list{display:flex;gap:8px;margin-bottom:9px;flex-wrap:wrap}.preview-item{position:relative}.preview-item img{width:55px;height:55px;object-fit:cover;border-radius:8px}.preview-item button{position:absolute;right:-5px;top:-5px;background:var(--red);color:#fff;border:0;border-radius:50%;width:20px;height:20px}
+.input-row{display:flex;gap:8px;align-items:end}.tool-btn,.send-btn{height:45px;min-width:44px;border:1px solid #343a4a;background:#202431;color:#dce0e9;border-radius:10px;font-size:17px}.send-btn{background:var(--red);border-color:var(--red);color:white;font-size:20px}.send-btn:disabled{opacity:.5}#messageInput{flex:1;min-width:0;resize:vertical;min-height:45px;max-height:130px;background:#0e1119;color:white;border:1px solid #343a4a;border-radius:10px;padding:13px;outline:none;font-size:12px}#messageInput:focus{border-color:var(--red)}.note{font-size:9px;color:#788093;margin:9px 3px 0}.chat-tools{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:10px}.clear-btn{border:1px solid #56303a;background:#28151b;color:#ff9aa4;padding:7px 10px;border-radius:8px;font-size:10px;font-weight:700}
+.cards-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.resource-card{background:linear-gradient(145deg,#171b27,#10121a);border:1px solid var(--line);border-radius:15px;padding:17px}.resource-card .tag{font:9px Orbitron;color:#ff7180;letter-spacing:1.4px}.resource-card h3{font-size:14px;margin:11px 0 7px}.resource-card p{font-size:10px;line-height:1.7;color:var(--muted);min-height:45px}.resource-card a{color:#ff7581;font-size:10px;font-weight:800}
+.promo-image{width:100%;display:block;object-fit:cover;border-radius:15px;border:1px solid #38313b;box-shadow:0 10px 35px #0007;margin-bottom:18px}.promo-box{border:1px solid #57232e;background:linear-gradient(135deg,#241018,#11131b);padding:20px;border-radius:17px;margin-bottom:18px}.promo-box h2{font:700 17px Orbitron;margin:0 0 10px}.promo-box p{font-size:11px;color:#b5b8c4;line-height:1.8}.promo-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}.coming-btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 18px;border:1px solid #454b5a;border-radius:11px;background:#202431;color:#aab0be;font-size:10px;font-weight:800}
+.holo-wrap{position:relative;min-height:430px;border:1px solid #28394b;border-radius:20px;overflow:hidden;background:radial-gradient(ellipse at center,#112b3c 0,#0b121c 48%,#090b12 80%);display:grid;place-items:center}.holo-wrap:before,.holo-wrap:after{content:"";position:absolute;width:310px;height:310px;border:1px solid #50dfff35;border-radius:50%;box-shadow:0 0 50px #28cfff14,inset 0 0 50px #28cfff12;pointer-events:none}.holo-wrap:after{width:390px;height:390px;border-style:dashed;animation:spin 35s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}#holoCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}.holo-label{position:absolute;bottom:18px;left:20px;right:20px;display:flex;justify-content:space-between;color:#65dcf4;font:9px Orbitron;letter-spacing:1.5px;pointer-events:none}.holo-copy{position:absolute;top:18px;left:20px;color:#a8d9e7;font:9px Orbitron;letter-spacing:1.5px;pointer-events:none}.holo-controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.ghost-btn{background:#1b2230;border:1px solid #344254;color:#ccebf4;padding:10px 13px;border-radius:9px;font-size:10px}
+.footer{text-align:center;color:#687083;font-size:9px;padding:28px 10px}.overlay{display:none;position:fixed;inset:0;background:#0009;z-index:70}.overlay.show{display:block}
+.contact-link{display:inline-flex;margin-top:12px;padding:12px 16px;border-radius:10px;background:#e32636;font-size:11px;font-weight:800}.contact-note{margin-top:18px;padding:16px;border:1px solid #3b2932;border-radius:13px;background:#17121a;color:#c7c1cc;font-size:12px;line-height:1.7}
+@media(max-width:950px){.shell{grid-template-columns:220px 1fr}.wide,.narrow{grid-column:span 12}.cards-3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.shell{display:block}.sidebar{position:fixed;left:-280px;top:0;bottom:0;width:260px;height:100dvh;transition:left .25s;box-shadow:12px 0 40px #0008}.sidebar.open{left:0}.menu-toggle{display:block}.topbar{height:62px;padding:0 13px}.top-title{font-size:11px}.top-sub{font-size:8px}.status{font-size:8px}.content{padding:18px 12px 30px}.hero{align-items:flex-start;flex-direction:column}.hero h1{font-size:25px}.cards-3{grid-template-columns:1fr}.chat{height:52dvh;min-height:320px;padding:14px 10px}.bubble{max-width:88%;font-size:12px;padding:10px}.ai-head{padding:12px}.ai-head select{max-width:100px}.composer{padding:10px 8px}.input-row{gap:5px}.tool-btn,.send-btn{min-width:37px;height:42px}#messageInput{font-size:12px;padding:11px}.holo-wrap{min-height:350px}.holo-wrap:before{width:230px;height:230px}.holo-wrap:after{width:285px;height:285px}.intro-content{padding:20px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 </style>
 </head>
-
 <body>
-
 <div id="intro">
   <div class="boot-grid"></div>
   <div class="intro-content">
     <img class="intro-photo" src="/file_000000009618820e9a50407df0e56103.png" alt="Inicialização WSAZ">
-    <div class="kicker">ARTIFICIAL INTELLIGENCE</div>
-    <h1>WSAZ_777</h1>
-    <p>YOUR AI. YOUR POSSIBILITIES.</p>
-    <div class="intro-brand">STORE DE WALLACE</div>
-    <button class="primary" onclick="enterSite()">INICIALIZAR SISTEMA →</button>
+    <div class="kicker">ARTIFICIAL INTELLIGENCE</div><h1>WSAZ_777</h1>
+    <p>YOUR AI. YOUR POSSIBILITIES.</p><div class="intro-brand">STORE DE WALLACE</div>
+    <button class="primary" id="enterBtn">ENTRAR →</button>
     <div class="boot-status" id="bootStatus">NEURAL CORE · AGUARDANDO AUTORIZAÇÃO</div>
   </div>
 </div>
-
-<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
+<div class="overlay" id="overlay"></div>
 <div class="shell">
 <aside class="sidebar" id="sidebar">
-  <div class="brand">
-    <div class="brand-mark">♛</div>
-    <div>
-      <div class="brand-name">WSAZ_777</div>
-      <div class="brand-sub">ARTIFICIAL INTELLIGENCE</div>
-    </div>
-  </div>
-
+  <div class="brand"><div class="brand-mark">♛</div><div><div class="brand-name">WSAZ_777</div><div class="brand-sub">ARTIFICIAL INTELLIGENCE</div></div></div>
   <div class="nav-label">MENU PRINCIPAL</div>
   <button class="nav-btn active" data-page="assistant"><span>⌘</span>Assistente IA</button>
   <button class="nav-btn" data-page="cloud"><span>◉</span>Neural Cloud 360°</button>
-
   <div class="nav-label">OTIMIZAÇÃO</div>
   <button class="nav-btn" data-page="pc"><span>▣</span>Otimização para PC</button>
   <button class="nav-btn" data-page="mobile"><span>▧</span>Otimização mobile</button>
-
   <div class="nav-label">PLATAFORMA</div>
   <button class="nav-btn" data-page="resources"><span>✦</span>Recursos e manuais</button>
   <button class="nav-btn" data-page="contact"><span>◌</span>Contato</button>
-
   <div class="nav-spacer"></div>
-
-  <div class="profile">
-    <img src="/file_000000009618820e9a50407df0e56103.png" alt="WSAZ_777">
-    <div><b>WSAZ_777</b><small>NEURAL CORE · STORE DE WALLACE</small></div>
-  </div>
+  <div class="profile"><img src="/file_000000009618820e9a50407df0e56103.png" alt="WSAZ_777"><div><b>WSAZ_777</b><small>NEURAL CORE · STORE DE WALLACE</small></div></div>
 </aside>
-
 <main class="main">
-<header class="topbar">
-  <div class="top-left">
-    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
-    <div>
-      <div class="top-title">Painel de inteligência artificial</div>
-      <div class="top-sub">WSAZ_777 · NEURAL CORE</div>
-    </div>
-  </div>
-  <div class="status"><i></i><span id="systemStatus">VERIFICANDO SISTEMA</span></div>
-</header>
-
+<header class="topbar"><div class="top-left"><button class="menu-toggle" id="menuToggle">☰</button><div><div class="top-title">Painel de inteligência artificial</div><div class="top-sub">WSAZ_777 · NEURAL CORE</div></div></div><div class="status"><i></i><span id="systemStatus">VERIFICANDO SISTEMA</span></div></header>
 <div class="content">
-
-<!-- ASSISTENTE IA -->
 <section class="page active" id="page-assistant">
-  <div class="hero">
-    <div>
-      <div class="eyebrow">NEURAL CORE / CHAT</div>
-      <h1>Olá! Como posso ajudar?</h1>
-      <p>Converse com sua inteligência artificial. Envie uma pergunta para começar.</p>
-    </div>
-    <span class="pill">● NVIDIA + OPENROUTER</span>
-  </div>
-
+  <div class="hero"><div><div class="eyebrow">NEURAL CORE / CHAT</div><h1>Olá! Como posso ajudar?</h1><p>Converse com sua inteligência artificial. Envie uma pergunta para começar.</p></div><span class="pill">● NVIDIA + OPENROUTER</span></div>
   <div class="ai-panel">
-    <div class="ai-head">
-      <div class="ai-identity">
-        <div class="ai-logo">♛</div>
-        <div>
-          <div class="ai-title">WSAZ_777 IA</div>
-          <div class="ai-sub">ASSISTENTE INTELIGENTE</div>
-        </div>
-      </div>
-      <select id="responseStyle">
-        <option value="concise">Resumida</option>
-        <option value="normal" selected>Normal</option>
-        <option value="detailed">Completa</option>
-      </select>
-    </div>
-
-    <div class="chat-stage">
-      <div class="ai-holo-bg" id="aiHoloBg"></div>
-      <div class="chat" id="chat" aria-live="polite">
-        <div class="message">
-          <div class="avatar">♛</div>
-          <div class="bubble">Bem-vindo à WSAZ_777 IA!
-
-Posso ajudar com tecnologia, jogos, configurações de PC, Android, estudos, programação e muito mais.
-
-O que você gostaria de saber?</div>
-        </div>
-      </div>
-    </div>
-
+    <div class="ai-head"><div class="ai-identity"><div class="ai-logo">♛</div><div><div class="ai-title">WSAZ_777 IA</div><div class="ai-sub">ASSISTENTE INTELIGENTE</div></div></div><select id="responseStyle"><option value="concise">Resumida</option><option value="normal" selected>Normal</option><option value="detailed">Completa</option></select></div>
+    <div class="chat-stage"><div class="ai-holo-bg" id="aiHoloBg"></div><div class="chat" id="chat" aria-live="polite"></div></div>
     <div class="typing" id="typing">WSAZ_777 está processando...</div>
-
     <div class="composer">
+      <div class="chat-tools"><span class="note">Seu histórico fica salvo neste navegador.</span><button class="clear-btn" id="clearChat">🗑 LIMPAR CHAT</button></div>
       <div class="preview-list" id="previewList"></div>
       <div class="input-row">
         <input type="file" id="imageInput" accept="image/png,image/jpeg,image/webp" multiple hidden>
         <button class="tool-btn" id="attachBtn" title="Anexar imagem">＋</button>
-        <button class="tool-btn" onclick="startVoice()" title="Ditado por voz">◉</button>
-        <textarea id="messageInput" rows="1" maxlength="4000" placeholder="Digite sua mensagem para a WSAZ_777..."></textarea>
-        <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
+        <button class="tool-btn" id="voiceBtn" title="Falar no chat">🎙</button>
+        <textarea id="messageInput" rows="1" maxlength="4000" placeholder="Digite ou fale com a WSAZ_777..."></textarea>
+        <button class="send-btn" id="sendBtn">➤</button>
       </div>
       <div class="note">ENTER para enviar · SHIFT + ENTER para quebrar linha · Até 5 imagens</div>
     </div>
   </div>
 </section>
-
-<!-- CLOUD -->
 <section class="page" id="page-cloud">
-  <div class="hero">
-    <div>
-      <div class="eyebrow">HOLOGRAPHIC INTERFACE / 360°</div>
-      <h1>WSAZ Neural Cloud</h1>
-      <p>Avatar digital 3D com aparência mais humana e rotação interativa.</p>
-    </div>
-    <span class="pill">REAL-TIME 3D</span>
-  </div>
-
-  <div class="holo-wrap" id="holoWrap">
-    <div class="holo-copy">NEURAL AVATAR · LIVE RENDER</div>
-    <div class="holo-label"><span>WSAZ_777 / CORE</span><span>360° ROTATION</span></div>
-  </div>
-
-  <div class="holo-controls">
-    <button class="ghost-btn" id="rotateBtn">Ⅱ Pausar rotação</button>
-    <button class="ghost-btn" id="resetView">↻ Reiniciar visão</button>
-    <span class="pill">Arraste para girar · Scroll para zoom</span>
-  </div>
-  <p class="muted">O avatar também aparece discretamente no fundo do chat enquanto você conversa com a IA.</p>
+  <div class="hero"><div><div class="eyebrow">HOLOGRAPHIC INTERFACE / 360°</div><h1>WSAZ Neural Cloud</h1><p>Avatar digital 3D com rotação interativa.</p></div><span class="pill">REAL-TIME 3D</span></div>
+  <div class="holo-wrap" id="holoWrap"><div class="holo-copy">NEURAL AVATAR · LIVE RENDER</div><div class="holo-label"><span>WSAZ_777 / CORE</span><span>360° ROTATION</span></div></div>
+  <div class="holo-controls"><button class="ghost-btn" id="rotateBtn">Ⅱ Pausar rotação</button><button class="ghost-btn" id="resetView">↻ Reiniciar visão</button><span class="pill">Arraste para girar · Scroll para zoom</span></div>
+  <p class="muted">Avatar 3D interativo da WSAZ_777.</p>
 </section>
-
-<!-- PC -->
 <section class="page" id="page-pc">
-  <div class="hero">
-    <div>
-      <div class="eyebrow">PERFORMANCE LAB / WINDOWS</div>
-      <h1>Otimização para PC</h1>
-      <p>Manual, programas e recursos para cuidar do desempenho do seu computador.</p>
-    </div>
-    <span class="pill">PC WORKSTATION</span>
-  </div>
-
+  <div class="hero"><div><div class="eyebrow">PERFORMANCE LAB / WINDOWS</div><h1>Otimização para PC</h1><p>Manual, programas e recursos para cuidar do desempenho do computador.</p></div><span class="pill">PC WORKSTATION</span></div>
   <img class="promo-image" src="/file_000000007cf4820ebdefa259761976fc.png" alt="WSAZ 777 - Otimização PC">
-
-  <div class="promo-box">
-    <h2>🚀 PREPARE SEU PC!</h2>
-    <p>
-      ⚙️ Aprenda configurações que fazem a diferença.<br>
-      🎮 Melhore a experiência nos seus jogos.<br>
-      💻 Conheça programas para manutenção e desempenho.<br>
-      🔥 Tenha seu manual e pack de ferramentas em um só lugar!
-    </p>
-
-    <div class="promo-actions">
-      <button class="glow-btn" onclick="openPcPack()">🔥 QUERO OTIMIZAR MEU PC</button>
-      <span class="coming-btn">📦 PACK PC · EM PREPARAÇÃO</span>
-    </div>
-    <p id="pcPackStatus" class="muted">O link do pack será liberado assim que você adicionar o endereço do MediaFire.</p>
-  </div>
-
+  <div class="promo-box"><h2>🚀 PREPARE SEU PC!</h2><p>⚙️ Aprenda configurações que fazem a diferença.<br>🎮 Melhore a experiência nos seus jogos.<br>💻 Conheça programas para manutenção e desempenho.<br>🔥 Tenha seu manual e pack de ferramentas em um só lugar!</p><div class="promo-actions"><button class="glow-btn" id="pcPackBtn">🔥 QUERO OTIMIZAR MEU PC</button><span class="coming-btn">📦 PACK PC · EM PREPARAÇÃO</span></div><p id="pcPackStatus" class="muted">O link do pack será liberado quando o endereço for adicionado.</p></div>
   <div class="cards-3">
-    <article class="resource-card">
-      <div class="tag">MEMÓRIA RAM</div>
-      <h3>Mem Reduct</h3>
-      <p>Ferramenta para acompanhar e gerenciar o uso da memória RAM.</p>
-      <a href="https://github.com/henrypp/memreduct" target="_blank" rel="noopener">SITE DO PROJETO ↗</a>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">MONITORAMENTO</div>
-      <h3>MSI Afterburner</h3>
-      <p>Monitore informações da placa de vídeo e do computador.</p>
-      <a href="https://www.msi.com/Landing/afterburner" target="_blank" rel="noopener">SITE OFICIAL ↗</a>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">LIMPEZA</div>
-      <h3>CCleaner</h3>
-      <p>Conheça recursos de limpeza e gerenciamento do sistema.</p>
-      <a href="https://www.ccleaner.com/" target="_blank" rel="noopener">SITE OFICIAL ↗</a>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">DESEMPENHO</div>
-      <h3>Razer Cortex</h3>
-      <p>Ferramenta com recursos voltados à experiência de jogos no PC.</p>
-      <a href="https://www.razer.com/cortex" target="_blank" rel="noopener">SITE OFICIAL ↗</a>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">DRIVERS</div>
-      <h3>NVIDIA Drivers</h3>
-      <p>Encontre atualizações de drivers para placas de vídeo compatíveis.</p>
-      <a href="https://www.nvidia.com/Download/index.aspx" target="_blank" rel="noopener">DOWNLOAD OFICIAL ↗</a>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">WINDOWS</div>
-      <h3>Microsoft PC Manager</h3>
-      <p>Ferramenta da Microsoft para manutenção básica do computador.</p>
-      <a href="https://pcmanager.microsoft.com/" target="_blank" rel="noopener">SITE OFICIAL ↗</a>
-    </article>
+    <article class="resource-card"><div class="tag">MEMÓRIA RAM</div><h3>Mem Reduct</h3><p>Ferramenta para acompanhar e gerenciar o uso da memória RAM.</p><a href="https://github.com/henrypp/memreduct" target="_blank" rel="noopener">SITE DO PROJETO ↗</a></article>
+    <article class="resource-card"><div class="tag">MONITORAMENTO</div><h3>MSI Afterburner</h3><p>Monitore informações da placa de vídeo e do computador.</p><a href="https://www.msi.com/Landing/afterburner" target="_blank" rel="noopener">SITE OFICIAL ↗</a></article>
+    <article class="resource-card"><div class="tag">LIMPEZA</div><h3>CCleaner</h3><p>Conheça recursos de limpeza e gerenciamento do sistema.</p><a href="https://www.ccleaner.com/" target="_blank" rel="noopener">SITE OFICIAL ↗</a></article>
+    <article class="resource-card"><div class="tag">DESEMPENHO</div><h3>Razer Cortex</h3><p>Ferramenta com recursos voltados à experiência de jogos no PC.</p><a href="https://www.razer.com/cortex" target="_blank" rel="noopener">SITE OFICIAL ↗</a></article>
+    <article class="resource-card"><div class="tag">DRIVERS</div><h3>NVIDIA Drivers</h3><p>Encontre atualizações de drivers para placas de vídeo compatíveis.</p><a href="https://www.nvidia.com/Download/index.aspx" target="_blank" rel="noopener">DOWNLOAD OFICIAL ↗</a></article>
+    <article class="resource-card"><div class="tag">WINDOWS</div><h3>Microsoft PC Manager</h3><p>Ferramenta da Microsoft para manutenção básica do computador.</p><a href="https://pcmanager.microsoft.com/" target="_blank" rel="noopener">SITE OFICIAL ↗</a></article>
   </div>
 </section>
-
-<!-- MOBILE -->
 <section class="page" id="page-mobile">
-  <div class="hero">
-    <div>
-      <div class="eyebrow">MOBILE PERFORMANCE / ANDROID</div>
-      <h1>Otimização mobile</h1>
-      <p>Manual e configurações para aproveitar melhor o seu celular.</p>
-    </div>
-    <span class="pill">ANDROID</span>
-  </div>
-
+  <div class="hero"><div><div class="eyebrow">MOBILE PERFORMANCE / ANDROID</div><h1>Otimização mobile</h1><p>Manual e configurações para aproveitar melhor o celular.</p></div><span class="pill">ANDROID</span></div>
   <img class="promo-image" src="/file_000000005b0c820e92fb18f631db2fe0.png" alt="WSAZ 777 - Otimização Mobile">
-
-  <div class="promo-box">
-    <h2>📱 DEIXE SEU CELULAR MAIS FLUIDO!</h2>
-    <p>
-      🚀 Aprenda a otimizar celulares fracos ou potentes.<br>
-      ⚙️ Descubra configurações que fazem diferença.<br>
-      🎮 Melhore sua experiência nos jogos e aplicativos.<br>
-      💎 Aproveite melhor os recursos do seu aparelho!
-    </p>
-
-    <div class="promo-actions">
-      <button class="glow-btn" onclick="showNotice('O pack mobile será disponibilizado em breve!')">🔥 QUERO OTIMIZAR MEU CELULAR</button>
-      <span class="coming-btn">📦 PACK MOBILE · EM BREVE</span>
-    </div>
-  </div>
-
+  <div class="promo-box"><h2>📱 DEIXE SEU CELULAR MAIS FLUIDO!</h2><p>🚀 Aprenda a otimizar celulares fracos ou potentes.<br>⚙️ Descubra configurações que fazem diferença.<br>🎮 Melhore sua experiência nos jogos e aplicativos.<br>💎 Aproveite melhor os recursos do aparelho!</p><div class="promo-actions"><button class="glow-btn" id="mobilePackBtn">🔥 QUERO OTIMIZAR MEU CELULAR</button><span class="coming-btn">📦 PACK MOBILE · EM BREVE</span></div></div>
   <div class="cards-3">
-    <article class="resource-card">
-      <div class="tag">ARMAZENAMENTO</div>
-      <h3>Files by Google</h3>
-      <p>Organize arquivos e confira itens que podem ser removidos.</p>
-      <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.files" target="_blank" rel="noopener">GOOGLE PLAY ↗</a>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">SISTEMA</div>
-      <h3>Atualizações Android</h3>
-      <p>Mantenha seu sistema e aplicativos atualizados.</p>
-      <a href="https://support.google.com/android/" target="_blank" rel="noopener">SUPORTE GOOGLE ↗</a>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">BATERIA</div>
-      <h3>Consumo de energia</h3>
-      <p>Confira quais aplicativos utilizam mais bateria.</p>
-      <a href="https://support.google.com/android/" target="_blank" rel="noopener">GUIA ANDROID ↗</a>
-    </article>
+    <article class="resource-card"><div class="tag">ARMAZENAMENTO</div><h3>Files by Google</h3><p>Organize arquivos e confira itens que podem ser removidos.</p><a href="https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.files" target="_blank" rel="noopener">GOOGLE PLAY ↗</a></article>
+    <article class="resource-card"><div class="tag">SISTEMA</div><h3>Atualizações Android</h3><p>Mantenha seu sistema e aplicativos atualizados.</p><a href="https://support.google.com/android/" target="_blank" rel="noopener">SUPORTE GOOGLE ↗</a></article>
+    <article class="resource-card"><div class="tag">BATERIA</div><h3>Consumo de energia</h3><p>Confira quais aplicativos utilizam mais bateria.</p><a href="https://support.google.com/android/" target="_blank" rel="noopener">GUIA ANDROID ↗</a></article>
   </div>
 </section>
-
-<!-- RECURSOS -->
 <section class="page" id="page-resources">
-  <div class="hero">
-    <div>
-      <div class="eyebrow">KNOWLEDGE BASE</div>
-      <h1>Recursos e manuais</h1>
-      <p>Biblioteca de orientações da WSAZ_777.</p>
-    </div>
-  </div>
-
-  <div class="cards-3">
-    <article class="resource-card">
-      <div class="tag">MANUAL 01</div>
-      <h3>Começando no painel</h3>
-      <p>Use o menu para alternar entre chat, holograma e otimização.</p>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">MANUAL 02</div>
-      <h3>Chat e imagens</h3>
-      <p>Faça perguntas, escolha o estilo de resposta e anexe imagens.</p>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">MANUAL 03</div>
-      <h3>Boas práticas</h3>
-      <p>Baixe programas de fontes oficiais e evite ferramentas desconhecidas.</p>
-    </article>
-  </div>
+  <div class="hero"><div><div class="eyebrow">KNOWLEDGE BASE</div><h1>Recursos e manuais</h1><p>Biblioteca de orientações da WSAZ_777.</p></div></div>
+  <div class="cards-3"><article class="resource-card"><div class="tag">MANUAL 01</div><h3>Começando no painel</h3><p>Use o menu para alternar entre chat, holograma e otimização.</p></article><article class="resource-card"><div class="tag">MANUAL 02</div><h3>Chat e imagens</h3><p>Faça perguntas, escolha o estilo de resposta e anexe imagens.</p></article><article class="resource-card"><div class="tag">MANUAL 03</div><h3>Boas práticas</h3><p>Baixe programas de fontes oficiais e evite ferramentas desconhecidas.</p></article></div>
 </section>
-
-<!-- CONTATO -->
 <section class="page" id="page-contact">
-  <div class="hero">
-    <div>
-      <div class="eyebrow">STORE DE WALLACE</div>
-      <h1>Central de contato</h1>
-      <p>Fale com o atendimento da WSAZ_777.</p>
-    </div>
-  </div>
-
+  <div class="hero"><div><div class="eyebrow">STORE DE WALLACE</div><h1>Central de contato</h1><p>Fale com o atendimento da WSAZ_777.</p></div></div>
   <div class="grid">
-    <article class="card wide">
-      <h3>Atendimento pelo WhatsApp</h3>
-      <p class="muted">Dúvidas sobre a plataforma, acesso e suporte.</p>
-      <a class="primary" style="display:inline-block;margin-top:12px" href="https://wa.me/5587981368837" target="_blank" rel="noopener">ABRIR WHATSAPP ↗</a>
-    </article>
-
-    <article class="card narrow">
-      <h3>WSAZ_777</h3>
-      <p class="muted">Gaming · Technology · Artificial Intelligence.</p>
-      <a href="https://wsaz777.onrender.com">wsaz777.onrender.com ↗</a>
-    </article>
+    <article class="card wide"><h3>📸 Instagram oficial</h3><p class="muted">Acompanhe a WSAZ_777 e mande sua mensagem pelo direct.</p><a class="contact-link" href="https://www.instagram.com/wsaz_777/" target="_blank" rel="noopener">ENTRAR NO INSTAGRAM ↗</a><div class="contact-note">❓ Ficou com alguma dúvida? Entra em PV pelo Instagram!<br><b>@wsaz_777</b></div></article>
+    <article class="card narrow"><h3>Atendimento pelo WhatsApp</h3><p class="muted">Dúvidas sobre a plataforma, acesso e suporte.</p><a class="contact-link" href="https://wa.me/5587981368837" target="_blank" rel="noopener">ABRIR WHATSAPP ↗</a></article>
   </div>
 </section>
-
 <footer class="footer">WSAZ_777 · STORE DE WALLACE · ARTIFICIAL INTELLIGENCE · NEURAL CORE</footer>
-</div>
-</main>
-</div>
+</div></main></div>
 
 <script type="module">
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+const $=id=>document.getElementById(id);
+const chat=$("chat"),input=$("messageInput"),imageInput=$("imageInput"),previewList=$("previewList"),typing=$("typing"),sendBtn=$("sendBtn");
+let selectedImages=[],history=[],busy=false,recognition=null;
+const HISTORY_KEY="wsaz777_chat_history_v2";
+const INTRO_KEY="wsaz777_intro_entered_v2";
+const PC_PACK_URL="";
 
-const $ = id => document.getElementById(id);
-const chat = $("chat");
-const input = $("messageInput");
-const imageInput = $("imageInput");
-const previewList = $("previewList");
-const typing = $("typing");
-const sendBtn = $("sendBtn");
-
-let selectedImages = [];
-let history = [];
-let busy = false;
-
-/* LINK DO PACK PC */
-const PC_PACK_URL = "";
-
-window.openPcPack = function(){
-  if(!PC_PACK_URL){
-    $("pcPackStatus").textContent =
-      "📦 O pack ainda está sendo preparado. O botão será liberado quando o link do MediaFire for adicionado.";
-    return;
-  }
-  window.open(PC_PACK_URL,"_blank","noopener");
-};
-
-/* INICIALIZAÇÃO */
-window.enterSite = function(){
-  $("bootStatus").textContent = "INICIANDO NEURAL CORE...";
-  $("intro").classList.add("hide");
-  try{sessionStorage.setItem("wsazIntroSeen","1")}catch{}
-  setTimeout(()=>input.focus(),450);
-};
-
-try{
-  if(sessionStorage.getItem("wsazIntroSeen")){
-    $("intro").classList.add("hide");
-  }
-}catch{}
-
-/* MENU */
-window.toggleSidebar = function(){
-  $("sidebar").classList.toggle("open");
-  $("overlay").classList.toggle("show");
-};
-
-window.closeSidebar = function(){
-  $("sidebar").classList.remove("open");
-  $("overlay").classList.remove("show");
-};
-
-document.querySelectorAll(".nav-btn").forEach(btn=>{
-  btn.addEventListener("click",()=>{
-    document.querySelectorAll(".nav-btn").forEach(x=>x.classList.remove("active"));
-    btn.classList.add("active");
-
-    document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
-    $("page-"+btn.dataset.page).classList.add("active");
-
-    closeSidebar();
-
-    if(btn.dataset.page==="cloud"){
-      moveHoloToCloud();
-      setTimeout(resizeHolo,80);
-    }else if(btn.dataset.page==="assistant"){
-      moveHoloToChat();
-      setTimeout(resizeHolo,80);
-    }
-  });
-});
-
-/* CHAT */
+function saveHistory(){try{localStorage.setItem(HISTORY_KEY,JSON.stringify(history.slice(-60)))}catch{}}
 function addMessage(role,text,images=[]){
-  const wrap=document.createElement("div");
-  wrap.className="message "+(role==="user"?"user":"");
-
-  const avatar=document.createElement("div");
-  avatar.className="avatar";
-  avatar.textContent=role==="user"?"U":"♛";
-
-  const bubble=document.createElement("div");
-  bubble.className="bubble";
-  bubble.textContent=text;
-
-  images.forEach(src=>{
-    const im=document.createElement("img");
-    im.src=src;
-    im.alt="Imagem enviada";
-    bubble.appendChild(im);
-  });
-
-  if(role==="assistant" && "speechSynthesis" in window){
-    const actions=document.createElement("div");
-    actions.className="message-actions";
-    const b=document.createElement("button");
-    b.textContent="🔊 Ouvir";
-    b.onclick=()=>speakText(text);
-    actions.appendChild(b);
-    bubble.appendChild(actions);
-  }
-
-  wrap.append(avatar,bubble);
-  chat.appendChild(wrap);
-  chat.scrollTop=chat.scrollHeight;
+  const wrap=document.createElement("div");wrap.className="message "+(role==="user"?"user":"");
+  const avatar=document.createElement("div");avatar.className="avatar";avatar.textContent=role==="user"?"U":"♛";
+  const bubble=document.createElement("div");bubble.className="bubble";bubble.textContent=text;
+  images.forEach(src=>{const im=document.createElement("img");im.src=src;im.alt="Imagem enviada";bubble.appendChild(im)});
+  if(role==="assistant"&&"speechSynthesis"in window){const actions=document.createElement("div");actions.className="message-actions";const b=document.createElement("button");b.textContent="🔊 Ouvir resposta";b.onclick=()=>speakText(text);actions.appendChild(b);bubble.appendChild(actions)}
+  wrap.append(avatar,bubble);chat.appendChild(wrap);chat.scrollTop=chat.scrollHeight;
 }
-
-function renderPreviews(){
-  previewList.replaceChildren();
-
-  selectedImages.forEach((item,i)=>{
-    const box=document.createElement("div");
-    box.className="preview-item";
-    const im=document.createElement("img");
-    im.src=item.data;
-    const b=document.createElement("button");
-    b.textContent="×";
-    b.onclick=()=>{
-      selectedImages.splice(i,1);
-      renderPreviews();
-    };
-    box.append(im,b);
-    previewList.appendChild(box);
-  });
-}
-
-function resizeImage(file){
-  return new Promise((resolve,reject)=>{
-    if(!/^image\/(jpeg|png|webp)$/.test(file.type)){
-      return reject(Error("Formato não suportado."));
-    }
-    const r=new FileReader();
-    r.onload=()=>{
-      const im=new Image();
-      im.onload=()=>{
-        const ratio=Math.min(1,1400/Math.max(im.width,im.height));
-        const c=document.createElement("canvas");
-        c.width=Math.round(im.width*ratio);
-        c.height=Math.round(im.height*ratio);
-        c.getContext("2d").drawImage(im,0,0,c.width,c.height);
-        resolve(c.toDataURL("image/jpeg",.72));
-      };
-      im.onerror=()=>reject(Error("Falha ao ler imagem."));
-      im.src=r.result;
-    };
-    r.onerror=()=>reject(Error("Falha no arquivo."));
-    r.readAsDataURL(file);
-  });
-}
-
-$("attachBtn").onclick=()=>imageInput.click();
-
-imageInput.addEventListener("change",async e=>{
-  const files=Array.from(e.target.files||[]);
-  const available=5-selectedImages.length;
-
-  if(files.length>available)alert(`Você pode adicionar mais ${available} imagem(ns).`);
-
-  for(const f of files.slice(0,available)){
-    try{selectedImages.push({data:await resizeImage(f)})}
-    catch(err){alert(err.message)}
-  }
-  renderPreviews();
-  imageInput.value="";
-});
-
-window.sendMessage=async function(){
-  if(busy)return;
-  const message=input.value.trim();
-  if(!message&&!selectedImages.length)return;
-
-  const imgs=selectedImages.map(x=>x.data);
-  const userContent=message||"Analise estas imagens.";
-  addMessage("user",userContent,imgs);
-
-  const prev=[...history];
-  input.value="";
-  selectedImages=[];
-  renderPreviews();
-
-  busy=true;
-  sendBtn.disabled=true;
-  typing.style.display="block";
-
-  try{
-    const r=await fetch("/api/chat",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        message,
-        images:imgs,
-        history:prev,
-        responseStyle:$("responseStyle").value
-      })
-    });
-
-    const data=await r.json().catch(()=>({}));
-    if(!r.ok)throw Error(data.reply||"Falha ao consultar o servidor.");
-
-    const answer=data.reply||"Não foi possível obter resposta.";
-    addMessage("assistant",answer);
-
-    history.push(
-      {role:"user",content:userContent},
-      {role:"assistant",content:answer}
-    );
-    history=history.slice(-12);
-
-    try{
-      sessionStorage.setItem("wsaz777_private_chat_history",JSON.stringify(history));
-    }catch{}
-
-  }catch(e){
-    addMessage("assistant",e.message||"Erro de conexão.");
-  }finally{
-    busy=false;
-    sendBtn.disabled=false;
-    typing.style.display="none";
-    input.focus();
-  }
-};
-
-input.addEventListener("keydown",e=>{
-  if(e.key==="Enter"&&!e.shiftKey){
-    e.preventDefault();
-    sendMessage();
-  }
-});
-
+function showWelcome(){chat.replaceChildren();addMessage("assistant","Olá! Você está na WSAZ_777 IA. 🚀\nFaça sua pergunta ou use o microfone para falar comigo.")}
 function loadHistory(){
-  try{
-    const saved=JSON.parse(sessionStorage.getItem("wsaz777_private_chat_history")||"[]");
-    if(!Array.isArray(saved))return;
-
-    history=saved.filter(x=>
-      x&&["user","assistant"].includes(x.role)&&typeof x.content==="string"
-    ).slice(-12);
-
-    if(history.length){
-      chat.replaceChildren();
-      history.forEach(x=>addMessage(x.role,x.content));
-    }
-  }catch{}
+  try{const saved=JSON.parse(localStorage.getItem(HISTORY_KEY)||"[]");if(Array.isArray(saved))history=saved.filter(x=>x&&["user","assistant"].includes(x.role)&&typeof x.content==="string").slice(-60)}catch{history=[]}
+  if(history.length){chat.replaceChildren();history.forEach(x=>addMessage(x.role,x.content))}else showWelcome();
 }
-
-window.startVoice=function(){
-  const R=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!R)return alert("Ditado não disponível neste navegador.");
-
-  const rec=new R();
-  rec.lang="pt-BR";
-  rec.onresult=e=>{
-    input.value+=(input.value?" ":"")+e.results[0][0].transcript;
-    input.focus();
-  };
-  rec.onerror=()=>alert("Verifique a permissão do microfone.");
-  rec.start();
+$("enterBtn").addEventListener("click",()=>{try{localStorage.setItem(INTRO_KEY,"1")}catch{}$("bootStatus").textContent="NEURAL CORE INICIADO";$("intro").classList.add("hide");setTimeout(()=>input.focus(),350)});
+try{if(localStorage.getItem(INTRO_KEY)==="1")$("intro").classList.add("hide")}catch{}
+$("menuToggle").onclick=()=>{$("sidebar").classList.toggle("open");$("overlay").classList.toggle("show")};
+$("overlay").onclick=closeSidebar;
+function closeSidebar(){$("sidebar").classList.remove("open");$("overlay").classList.remove("show")}
+document.querySelectorAll(".nav-btn").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".nav-btn").forEach(x=>x.classList.remove("active"));btn.classList.add("active");
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));$("page-"+btn.dataset.page).classList.add("active");closeSidebar();
+  if(btn.dataset.page==="cloud"){moveHoloToCloud();setTimeout(resizeHolo,80)}else if(btn.dataset.page==="assistant"){moveHoloToChat();setTimeout(resizeHolo,80)}
+}));
+$("clearChat").onclick=()=>{
+  if(!confirm("Tem certeza que deseja apagar todo o histórico deste navegador?"))return;
+  history=[];try{localStorage.removeItem(HISTORY_KEY)}catch{}showWelcome();
 };
-
-function speakText(t){
-  speechSynthesis.cancel();
-  const u=new SpeechSynthesisUtterance(t.replace(/```[\s\S]*?```/g,"Código omitido."));
-  u.lang="pt-BR";
-  u.rate=.96;
-  speechSynthesis.speak(u);
-}
-
-async function health(){
+$("attachBtn").onclick=()=>imageInput.click();
+function renderPreviews(){previewList.replaceChildren();selectedImages.forEach((item,i)=>{const box=document.createElement("div");box.className="preview-item";const im=document.createElement("img");im.src=item.data;const b=document.createElement("button");b.textContent="×";b.onclick=()=>{selectedImages.splice(i,1);renderPreviews()};box.append(im,b);previewList.appendChild(box)})}
+function resizeImage(file){return new Promise((resolve,reject)=>{
+  if(!/^image\/(jpeg|png|webp)$/.test(file.type))return reject(Error("Formato não suportado."));
+  const reader=new FileReader();reader.onload=()=>{const im=new Image();im.onload=()=>{const ratio=Math.min(1,1400/Math.max(im.width,im.height));const c=document.createElement("canvas");c.width=Math.round(im.width*ratio);c.height=Math.round(im.height*ratio);c.getContext("2d").drawImage(im,0,0,c.width,c.height);resolve(c.toDataURL("image/jpeg",.72))};im.onerror=()=>reject(Error("Falha ao ler imagem."));im.src=reader.result};reader.onerror=()=>reject(Error("Falha no arquivo."));reader.readAsDataURL(file)
+})}
+imageInput.addEventListener("change",async e=>{const files=Array.from(e.target.files||[]),available=5-selectedImages.length;if(files.length>available)alert(`Você pode adicionar mais ${available} imagem(ns).`);for(const f of files.slice(0,available)){try{selectedImages.push({data:await resizeImage(f)})}catch(err){alert(err.message)}}renderPreviews();imageInput.value=""});
+window.sendMessage=async()=>{
+  if(busy)return;const message=input.value.trim();if(!message&&!selectedImages.length)return;
+  const imgs=selectedImages.map(x=>x.data),userContent=message||"Analise estas imagens.";
+  addMessage("user",userContent,imgs);const previous=[...history];input.value="";selectedImages=[];renderPreviews();
+  busy=true;sendBtn.disabled=true;typing.style.display="block";
   try{
-    const r=await fetch("/api/health");
-    const d=await r.json();
-    $("systemStatus").textContent=r.ok&&d.status==="online"?"SISTEMA ONLINE":"SISTEMA INDISPONÍVEL";
-  }catch{
-    $("systemStatus").textContent="SEM CONEXÃO";
-  }
+    const response=await fetch("/api/chat",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,images:imgs,history:previous,responseStyle:$("responseStyle").value})});
+    const data=await response.json().catch(()=>({}));if(!response.ok)throw Error(data.reply||"Falha ao consultar o servidor.");
+    const answer=data.reply||"Não foi possível obter resposta.";addMessage("assistant",answer);
+    history.push({role:"user",content:userContent},{role:"assistant",content:answer});history=history.slice(-60);saveHistory();
+  }catch(error){addMessage("assistant",error.message||"Erro de conexão.")}finally{busy=false;sendBtn.disabled=false;typing.style.display="none";input.focus()}
+};
+sendBtn.onclick=()=>window.sendMessage();
+input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();window.sendMessage()}});
+function startVoice(){
+  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!Recognition){alert("O reconhecimento de voz não está disponível neste navegador. Tente pelo Chrome e permita o microfone.");return}
+  if(recognition){recognition.stop();recognition=null;return}
+  recognition=new Recognition();recognition.lang="pt-BR";recognition.continuous=false;recognition.interimResults=true;
+  $("voiceBtn").textContent="🔴";
+  recognition.onresult=e=>{let finalText="";for(let i=e.resultIndex;i<e.results.length;i++)finalText+=e.results[i][0].transcript;input.value=finalText};
+  recognition.onerror=e=>{if(e.error!=="no-speech")alert("Não foi possível usar o microfone. Confira a permissão do navegador.")};
+  recognition.onend=()=>{$("voiceBtn").textContent="🎙";recognition=null;input.focus()};
+  try{recognition.start()}catch{$("voiceBtn").textContent="🎙";recognition=null}
 }
+$("voiceBtn").onclick=startVoice;
+function speakText(text){if(!("speechSynthesis"in window))return;speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text.replace(/```[\s\S]*?```/g,"Código omitido."));utterance.lang="pt-BR";utterance.rate=.96;speechSynthesis.speak(utterance)}
+async function health(){try{const r=await fetch("/api/health");const d=await r.json();$("systemStatus").textContent=r.ok&&d.status==="online"?"SISTEMA ONLINE":"SISTEMA INDISPONÍVEL"}catch{$("systemStatus").textContent="SEM CONEXÃO"}}
+$("pcPackBtn").onclick=()=>{if(!PC_PACK_URL){$("pcPackStatus").textContent="📦 O pack ainda está sendo preparado. O botão será liberado quando o link for adicionado.";return}window.open(PC_PACK_URL,"_blank","noopener")};
+$("mobilePackBtn").onclick=()=>alert("O pack mobile será disponibilizado em breve!");
+loadHistory();health();
 
-window.showNotice=t=>alert(t);
-loadHistory();
-health();
-
-/* AVATAR 3D */
-let scene,camera,renderer,head;
-let drag=false,lastX=0,lastY=0,autoRotate=true,zoom=1;
-let holoCanvas;
-
-function makeMaterial(color,roughness=.6){
-  return new THREE.MeshStandardMaterial({color,roughness,metalness:.12});
-}
-
-function addSphere(parent,geometry,material,x,y,z,sx=1,sy=1,sz=1){
-  const mesh=new THREE.Mesh(geometry,material);
-  mesh.position.set(x,y,z);
-  mesh.scale.set(sx,sy,sz);
-  parent.add(mesh);
-  return mesh;
-}
-
+let scene,camera,renderer,head,drag=false,lastX=0,lastY=0,autoRotate=true,zoom=1,holoCanvas;
+function mat(color,roughness=.6){return new THREE.MeshStandardMaterial({color,roughness,metalness:.12})}
+function sphere(parent,geometry,material,x,y,z,sx=1,sy=1,sz=1){const mesh=new THREE.Mesh(geometry,material);mesh.position.set(x,y,z);mesh.scale.set(sx,sy,sz);parent.add(mesh);return mesh}
 function initHolo(){
   try{
-    scene=new THREE.Scene();
-    camera=new THREE.PerspectiveCamera(40,1,.1,100);
-    camera.position.set(0,0,6.5);
-
-    holoCanvas=document.createElement("canvas");
-    holoCanvas.id="holoCanvas";
-
-    renderer=new THREE.WebGLRenderer({
-      canvas:holoCanvas,
-      alpha:true,
-      antialias:true
-    });
-    renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
-    renderer.setClearColor(0x000000,0);
-
-    scene.add(new THREE.AmbientLight(0x9bdfff,2));
-
-    const light=new THREE.PointLight(0x53dfff,35);
-    light.position.set(3,3,5);
-    scene.add(light);
-
-    const redLight=new THREE.PointLight(0xe32636,12);
-    redLight.position.set(-3,-1,2);
-    scene.add(redLight);
-
-    head=new THREE.Group();
-    scene.add(head);
-
-    const skin=makeMaterial(0x9ccbd6,.48);
-    const skinDark=makeMaterial(0x477d8e,.55);
-    const hair=makeMaterial(0x142433,.35);
-    const eyeWhite=makeMaterial(0xd9f5ff,.3);
-    const iris=new THREE.MeshBasicMaterial({color:0x36dfff});
-    const dark=new THREE.MeshBasicMaterial({color:0x07121d});
-
-    /* ROSTO */
-    addSphere(head,new THREE.SphereGeometry(1,40,32),skin,0,.05,0,.77,1.12,.66);
-    addSphere(head,new THREE.SphereGeometry(.5,24,20),skin,0,-.92,-.02,.48,.75,.48);
-    addSphere(head,new THREE.SphereGeometry(.65,32,24),skin,0,-.32,.08,.88,.70,.67);
-
-    /* ORELHAS */
-    for(const x of [-.72,.72]){
-      addSphere(head,new THREE.SphereGeometry(.18,20,16),skin,x,-.03,0,.55,1,.5);
-      addSphere(head,new THREE.SphereGeometry(.09,16,12),skinDark,x,-.03,.08,.5,1,.5);
-    }
-
-    /* CABELO */
-    const hairCap=addSphere(head,new THREE.SphereGeometry(.79,36,24),hair,0,.48,-.04,1,.72,.86);
-    hairCap.rotation.z=-.08;
-
-    addSphere(head,new THREE.SphereGeometry(.32,24,18),hair,-.48,.63,.05,1,.55,.8);
-    addSphere(head,new THREE.SphereGeometry(.32,24,18),hair,.48,.63,.05,1,.55,.8);
-
-    /* OLHOS */
-    for(const x of [-.29,.29]){
-      addSphere(head,new THREE.SphereGeometry(.13,20,16),skinDark,x,.17,.57,1.35,.75,.45);
-      addSphere(head,new THREE.SphereGeometry(.085,20,16),eyeWhite,x,.15,.62,1.2,.85,.55);
-      addSphere(head,new THREE.SphereGeometry(.045,16,12),iris,x,.15,.67,1,1,.7);
-      addSphere(head,new THREE.SphereGeometry(.022,12,8),dark,x,.15,.70,1,1,1);
-      const brow=addSphere(head,new THREE.SphereGeometry(.15,16,12),hair,x,.34,.59,1.3,.25,.4);
-      brow.rotation.z=x<0?-.1:.1;
-    }
-
-    /* NARIZ */
-    addSphere(head,new THREE.SphereGeometry(.13,20,16),skin,0,-.03,.65,.72,1.3,.8);
-    addSphere(head,new THREE.SphereGeometry(.10,20,16),skin,0,-.16,.68,1.1,.55,.8);
-
-    /* BOCA */
-    addSphere(head,new THREE.SphereGeometry(.16,20,12),skinDark,0,-.40,.59,1.2,.22,.35);
-    addSphere(head,new THREE.SphereGeometry(.13,20,12),skin,0,-.36,.62,1.2,.12,.35);
-
-    /* MALHA DIGITAL */
-    const wire=new THREE.Mesh(
-      new THREE.SphereGeometry(1.01,28,22),
-      new THREE.MeshBasicMaterial({
-        color:0x55ddff,wireframe:true,transparent:true,opacity:.10
-      })
-    );
-    wire.scale.set(.79,1.13,.68);
-    wire.position.y=.04;
-    head.add(wire);
-
-    /* PARTÍCULAS */
-    const pts=[];
-    for(let i=0;i<900;i++){
-      const y=Math.random()*2.6-1.3;
-      const a=Math.random()*Math.PI*2;
-      const r=Math.sqrt(Math.max(0,1-(y/1.4)**2));
-      pts.push(Math.cos(a)*r*.88,y,Math.sin(a)*r*.72);
-    }
-
-    const pg=new THREE.BufferGeometry();
-    pg.setAttribute("position",new THREE.Float32BufferAttribute(pts,3));
-    const particles=new THREE.Points(pg,new THREE.PointsMaterial({
-      color:0x76eaff,size:.012,transparent:true,opacity:.65
-    }));
-    head.add(particles);
-
-    /* ANÉIS */
-    const ring=new THREE.Mesh(
-      new THREE.TorusGeometry(1.55,.009,8,140),
-      new THREE.MeshBasicMaterial({color:0x43dfff,transparent:true,opacity:.6})
-    );
-    ring.rotation.x=1.2;
-    head.add(ring);
-
-    const ring2=ring.clone();
-    ring2.scale.set(.82,.82,.82);
-    ring2.rotation.y=1.1;
-    head.add(ring2);
-
-    /* OMBROS */
-    addSphere(
-      head,new THREE.SphereGeometry(.8,32,20),
-      new THREE.MeshBasicMaterial({color:0x123449,wireframe:true,transparent:true,opacity:.2}),
-      0,-1.25,-.1,1.3,.48,.55
-    );
-
-    moveHoloToChat();
-    animate();
-
-    holoCanvas.addEventListener("pointerdown",e=>{
-      drag=true;lastX=e.clientX;lastY=e.clientY;
-      holoCanvas.setPointerCapture(e.pointerId);
-    });
-
-    holoCanvas.addEventListener("pointermove",e=>{
-      if(!drag)return;
-      head.rotation.y+=(e.clientX-lastX)*.008;
-      head.rotation.x+=(e.clientY-lastY)*.008;
-      lastX=e.clientX;lastY=e.clientY;
-    });
-
-    holoCanvas.addEventListener("pointerup",()=>drag=false);
-    holoCanvas.addEventListener("pointercancel",()=>drag=false);
-
-    holoCanvas.addEventListener("wheel",e=>{
-      e.preventDefault();
-      zoom=Math.max(.75,Math.min(1.35,zoom-e.deltaY*.001));
-      camera.position.z=6.5/zoom;
-    },{passive:false});
-
-    $("rotateBtn").onclick=()=>{
-      autoRotate=!autoRotate;
-      $("rotateBtn").textContent=autoRotate?"Ⅱ Pausar rotação":"▶ Retomar rotação";
-    };
-
-    $("resetView").onclick=()=>{
-      head.rotation.set(0,0,0);
-      zoom=1;
-      camera.position.z=6.5;
-    };
-
-  }catch(e){
-    console.warn("WebGL indisponível",e);
-    $("holoWrap").insertAdjacentHTML("beforeend",
-      '<p class="muted">Seu navegador não conseguiu iniciar o modo 3D.</p>');
-  }
+    scene=new THREE.Scene();camera=new THREE.PerspectiveCamera(40,1,.1,100);camera.position.set(0,0,6.5);
+    holoCanvas=document.createElement("canvas");holoCanvas.id="holoCanvas";
+    renderer=new THREE.WebGLRenderer({canvas:holoCanvas,alpha:true,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.setClearColor(0x000000,0);
+    scene.add(new THREE.AmbientLight(0x9bdfff,2));const light=new THREE.PointLight(0x53dfff,35);light.position.set(3,3,5);scene.add(light);const redLight=new THREE.PointLight(0xe32636,12);redLight.position.set(-3,-1,2);scene.add(redLight);
+    head=new THREE.Group();scene.add(head);const skin=mat(0x9ccbd6,.48),skinDark=mat(0x477d8e,.55),hair=mat(0x142433,.35),eyeWhite=mat(0xd9f5ff,.3),iris=new THREE.MeshBasicMaterial({color:0x36dfff}),dark=new THREE.MeshBasicMaterial({color:0x07121d});
+    sphere(head,new THREE.SphereGeometry(1,40,32),skin,0,.05,0,.77,1.12,.66);sphere(head,new THREE.SphereGeometry(.5,24,20),skin,0,-.92,-.02,.48,.75,.48);sphere(head,new THREE.SphereGeometry(.65,32,24),skin,0,-.32,.08,.88,.70,.67);
+    for(const x of [-.72,.72]){sphere(head,new THREE.SphereGeometry(.18,20,16),skin,x,-.03,0,.55,1,.5);sphere(head,new THREE.SphereGeometry(.09,16,12),skinDark,x,-.03,.08,.5,1,.5)}
+    const cap=sphere(head,new THREE.SphereGeometry(.79,36,24),hair,0,.48,-.04,1,.72,.86);cap.rotation.z=-.08;sphere(head,new THREE.SphereGeometry(.32,24,18),hair,-.48,.63,.05,1,.55,.8);sphere(head,new THREE.SphereGeometry(.32,24,18),hair,.48,.63,.05,1,.55,.8);
+    for(const x of [-.29,.29]){sphere(head,new THREE.SphereGeometry(.13,20,16),skinDark,x,.17,.57,1.35,.75,.45);sphere(head,new THREE.SphereGeometry(.085,20,16),eyeWhite,x,.15,.62,1.2,.85,.55);sphere(head,new THREE.SphereGeometry(.045,16,12),iris,x,.15,.67,1,1,.7);sphere(head,new THREE.SphereGeometry(.022,12,8),dark,x,.15,.70,1,1,1);const brow=sphere(head,new THREE.SphereGeometry(.15,16,12),hair,x,.34,.59,1.3,.25,.4);brow.rotation.z=x<0?-.1:.1}
+    sphere(head,new THREE.SphereGeometry(.13,20,16),skin,0,-.03,.65,.72,1.3,.8);sphere(head,new THREE.SphereGeometry(.10,20,16),skin,0,-.16,.68,1.1,.55,.8);sphere(head,new THREE.SphereGeometry(.16,20,12),skinDark,0,-.40,.59,1.2,.22,.35);sphere(head,new THREE.SphereGeometry(.13,20,12),skin,0,-.36,.62,1.2,.12,.35);
+    const wire=new THREE.Mesh(new THREE.SphereGeometry(1.01,28,22),new THREE.MeshBasicMaterial({color:0x55ddff,wireframe:true,transparent:true,opacity:.10}));wire.scale.set(.79,1.13,.68);wire.position.y=.04;head.add(wire);
+    const pts=[];for(let i=0;i<900;i++){const y=Math.random()*2.6-1.3,a=Math.random()*Math.PI*2,r=Math.sqrt(Math.max(0,1-(y/1.4)**2));pts.push(Math.cos(a)*r*.88,y,Math.sin(a)*r*.72)}
+    const pg=new THREE.BufferGeometry();pg.setAttribute("position",new THREE.Float32BufferAttribute(pts,3));head.add(new THREE.Points(pg,new THREE.PointsMaterial({color:0x76eaff,size:.012,transparent:true,opacity:.65})));
+    const ring=new THREE.Mesh(new THREE.TorusGeometry(1.55,.009,8,140),new THREE.MeshBasicMaterial({color:0x43dfff,transparent:true,opacity:.6}));ring.rotation.x=1.2;head.add(ring);const ring2=ring.clone();ring2.scale.set(.82,.82,.82);ring2.rotation.y=1.1;head.add(ring2);
+    sphere(head,new THREE.SphereGeometry(.8,32,20),new THREE.MeshBasicMaterial({color:0x123449,wireframe:true,transparent:true,opacity:.2}),0,-1.25,-.1,1.3,.48,.55);
+    moveHoloToChat();animate();
+    holoCanvas.addEventListener("pointerdown",e=>{drag=true;lastX=e.clientX;lastY=e.clientY;holoCanvas.setPointerCapture(e.pointerId)});
+    holoCanvas.addEventListener("pointermove",e=>{if(!drag)return;head.rotation.y+=(e.clientX-lastX)*.008;head.rotation.x+=(e.clientY-lastY)*.008;lastX=e.clientX;lastY=e.clientY});
+    holoCanvas.addEventListener("pointerup",()=>drag=false);holoCanvas.addEventListener("pointercancel",()=>drag=false);
+    holoCanvas.addEventListener("wheel",e=>{e.preventDefault();zoom=Math.max(.75,Math.min(1.35,zoom-e.deltaY*.001));camera.position.z=6.5/zoom},{passive:false});
+    $("rotateBtn").onclick=()=>{autoRotate=!autoRotate;$("rotateBtn").textContent=autoRotate?"Ⅱ Pausar rotação":"▶ Retomar rotação"};
+    $("resetView").onclick=()=>{head.rotation.set(0,0,0);zoom=1;camera.position.z=6.5};
+  }catch(error){console.warn("WebGL indisponível",error);$("holoWrap").insertAdjacentHTML("beforeend",'<p class="muted">Seu navegador não conseguiu iniciar o modo 3D.</p>')}
 }
-
-/* AVATAR ENTRE CHAT E CLOUD */
-function moveHoloToChat(){
-  if(!holoCanvas)return;
-  $("aiHoloBg").appendChild(holoCanvas);
-  if(renderer){
-    renderer.setClearColor(0x000000,0);
-    resizeHolo();
-  }
-}
-
-function moveHoloToCloud(){
-  if(!holoCanvas)return;
-  $("holoWrap").appendChild(holoCanvas);
-  if(renderer){
-    renderer.setClearColor(0x000000,0);
-    resizeHolo();
-  }
-}
-
-function resizeHolo(){
-  if(!renderer||!holoCanvas||!holoCanvas.parentElement)return;
-  const w=holoCanvas.parentElement.clientWidth;
-  const h=holoCanvas.parentElement.clientHeight;
-  if(!w||!h)return;
-  renderer.setSize(w,h,false);
-  camera.aspect=w/h;
-  camera.updateProjectionMatrix();
-}
-
-function animate(){
-  requestAnimationFrame(animate);
-
-  if(head&&autoRotate&&!drag){
-    head.rotation.y+=.0025;
-    head.rotation.x=Math.sin(Date.now()*.00035)*.045;
-    head.position.y=Math.sin(Date.now()*.001)*.025;
-  }
-
-  if(renderer)renderer.render(scene,camera);
-}
-
-initHolo();
-window.addEventListener("resize",resizeHolo);
+function moveHoloToChat(){if(!holoCanvas)return;$("aiHoloBg").appendChild(holoCanvas);resizeHolo()}
+function moveHoloToCloud(){if(!holoCanvas)return;$("holoWrap").appendChild(holoCanvas);resizeHolo()}
+function resizeHolo(){if(!renderer||!holoCanvas?.parentElement)return;const w=holoCanvas.parentElement.clientWidth,h=holoCanvas.parentElement.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+function animate(){requestAnimationFrame(animate);if(head&&autoRotate&&!drag){head.rotation.y+=.0025;head.rotation.x=Math.sin(Date.now()*.00035)*.045;head.position.y=Math.sin(Date.now()*.001)*.025}if(renderer)renderer.render(scene,camera)}
+initHolo();window.addEventListener("resize",resizeHolo);
 </script>
-
 </body>
 </html>
