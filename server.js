@@ -1,3 +1,4 @@
+
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -16,10 +17,11 @@ const BASE_PROMPT = `
 Você é o WSAZ_777, uma inteligência artificial de uso geral.
 Responda em português brasileiro, salvo pedido contrário.
 Seja natural, inteligente, educado, comunicativo e profissional.
-Ajude com estudos, matemática, programação, tecnologia, computadores,
-Android, jogos e conhecimentos gerais.
+Ajude com estudos, matemática, programação, tecnologia,
+computadores, Android, jogos e conhecimentos gerais.
 Não invente informações. Não apresente raciocínio interno.
-Considere o contexto anterior. Use títulos curtos e listas quando ajudarem.
+Considere o contexto anterior.
+Use títulos curtos e listas quando ajudarem.
 Priorize segurança, privacidade e orientações legítimas.
 `;
 
@@ -29,9 +31,10 @@ const RESPONSE_STYLES = {
   detailed: "Explique com profundidade, etapas e exemplos úteis."
 };
 
+const TIMEOUT_MS = 40000;
+
 function extractAnswer(data) {
-  const message = data?.choices?.[0]?.message;
-  const raw = message?.content;
+  const raw = data?.choices?.[0]?.message?.content;
 
   if (typeof raw === "string" && raw.trim()) {
     return raw.trim();
@@ -79,6 +82,135 @@ async function readResponse(response) {
   }
 }
 
+async function requestAI(url, apiKey, body, extraHeaders = {}) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+      ...extraHeaders
+    },
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(TIMEOUT_MS)
+  });
+
+  const data = await readResponse(response);
+
+  return { response, data };
+}
+
+function isTimeout(error) {
+  return error?.name === "TimeoutError" ||
+         error?.name === "AbortError";
+}
+
+function buildMessages(systemPrompt, history, text) {
+  return [
+    { role: "system", content: systemPrompt },
+    ...history,
+    { role: "user", content: text }
+  ];
+}
+
+// =====================================
+// NVIDIA - TEXTO
+// =====================================
+
+async function askNvidia(messages) {
+  const apiKey = process.env.NVIDIA_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("NVIDIA_API_KEY não configurada.");
+  }
+
+  const model =
+    process.env.NVIDIA_TEXT_MODEL ||
+    "nvidia/nemotron-3-nano-30b-a3b";
+
+  const result = await requestAI(
+    "https://integrate.api.nvidia.com/v1/chat/completions",
+    apiKey,
+    {
+      model,
+      messages,
+      max_tokens: 900,
+      temperature: 0.6,
+      stream: false
+    }
+  );
+
+  if (!result.response.ok) {
+    const error = new Error(
+      `NVIDIA HTTP ${result.response.status}`
+    );
+
+    error.status = result.response.status;
+    error.data = result.data;
+    throw error;
+  }
+
+  const answer = extractAnswer(result.data);
+
+  if (!answer) {
+    throw new Error("NVIDIA retornou uma resposta vazia.");
+  }
+
+  return answer;
+}
+
+// =====================================
+// OPENROUTER - TEXTO ALTERNATIVO
+// =====================================
+
+async function askOpenRouter(messages) {
+  const apiKey = process.env.OPENROUTER_API_KEY;
+
+  if (!apiKey) {
+    throw new Error("OPENROUTER_API_KEY não configurada.");
+  }
+
+  const model =
+    process.env.OPENROUTER_TEXT_MODEL ||
+    "openrouter/free";
+
+  const result = await requestAI(
+    "https://openrouter.ai/api/v1/chat/completions",
+    apiKey,
+    {
+      model,
+      messages,
+      max_tokens: 900,
+      temperature: 0.6
+    },
+    {
+      "HTTP-Referer": "https://wsaz777.onrender.com",
+      "X-OpenRouter-Title": "WSAZ_777"
+    }
+  );
+
+  if (!result.response.ok) {
+    const error = new Error(
+      `OpenRouter HTTP ${result.response.status}`
+    );
+
+    error.status = result.response.status;
+    error.data = result.data;
+    throw error;
+  }
+
+  const answer = extractAnswer(result.data);
+
+  if (!answer) {
+    throw new Error("OpenRouter retornou uma resposta vazia.");
+  }
+
+  return answer;
+}
+
+// =====================================
+// ROTAS
+// =====================================
+
 app.get("/", (_req, res) => {
   res.sendFile(path.join(root, "index.html"));
 });
@@ -86,10 +218,17 @@ app.get("/", (_req, res) => {
 app.get("/api/health", (_req, res) => {
   res.json({
     status: "online",
-    text: Boolean(process.env.NVIDIA_API_KEY),
+    text: Boolean(
+      process.env.NVIDIA_API_KEY ||
+      process.env.OPENROUTER_API_KEY
+    ),
     vision: Boolean(process.env.OPENROUTER_API_KEY)
   });
 });
+
+// =====================================
+// CHAT
+// =====================================
 
 app.post("/api/chat", async (req, res) => {
   try {
@@ -104,7 +243,9 @@ app.post("/api/chat", async (req, res) => {
       ? message.trim()
       : "";
 
-    const selectedImages = Array.isArray(images) ? images : [];
+    const selectedImages = Array.isArray(images)
+      ? images
+      : [];
 
     if (!text && !selectedImages.length) {
       return res.status(400).json({
@@ -120,7 +261,7 @@ app.post("/api/chat", async (req, res) => {
 
     if (selectedImages.length > 5) {
       return res.status(400).json({
-        reply: "Envie no máximo 5 imagens por mensagem."
+        reply: "Envie no máximo 5 imagens."
       });
     }
 
@@ -138,24 +279,22 @@ app.post("/api/chat", async (req, res) => {
 
     const systemPrompt =
       `${BASE_PROMPT}\n\nESTILO:\n${
-        RESPONSE_STYLES[responseStyle] || RESPONSE_STYLES.normal
+        RESPONSE_STYLES[responseStyle] ||
+        RESPONSE_STYLES.normal
       }`;
 
     const previousMessages = safeHistory(history);
 
-    let response;
-    let data;
-    let service;
+    // =====================================
+    // IMAGENS - OPENROUTER
+    // =====================================
 
-    // =====================================
-    // ANÁLISE DE IMAGENS - OPENROUTER
-    // =====================================
     if (selectedImages.length > 0) {
       const apiKey = process.env.OPENROUTER_API_KEY;
 
       if (!apiKey) {
         return res.status(503).json({
-          reply: "A chave da OpenRouter não está configurada no Render."
+          reply: "A chave da OpenRouter não está configurada."
         });
       }
 
@@ -170,178 +309,143 @@ app.post("/api/chat", async (req, res) => {
         }))
       ];
 
-      service = "OPENROUTER - VISÃO";
+      const model =
+        process.env.OPENROUTER_VISION_MODEL ||
+        "nvidia/nemotron-3.5-super-vl:free";
 
-      response = await fetch(
+      const result = await requestAI(
         "https://openrouter.ai/api/v1/chat/completions",
+        apiKey,
         {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-            "HTTP-Referer": "https://wsaz777.onrender.com",
-            "X-OpenRouter-Title": "WSAZ_777"
-          },
-          body: JSON.stringify({
-            model:
-              process.env.OPENROUTER_VISION_MODEL ||
-              "nvidia/nemotron-3.5-super-vl:free",
-            messages: [
-              {
-                role: "system",
-                content:
-                  systemPrompt +
-                  "\nInterprete imagens com cuidado e descreva apenas o que conseguir observar."
-              },
-              ...previousMessages,
-              { role: "user", content }
-            ],
-            max_tokens: 1400,
-            temperature: 0.4
-          }),
-          signal: AbortSignal.timeout(90000)
+          model,
+          messages: [
+            {
+              role: "system",
+              content: systemPrompt +
+                "\nAnalise as imagens com cuidado."
+            },
+            ...previousMessages,
+            { role: "user", content }
+          ],
+          max_tokens: 1000,
+          temperature: 0.4
+        },
+        {
+          "HTTP-Referer": "https://wsaz777.onrender.com",
+          "X-OpenRouter-Title": "WSAZ_777"
         }
       );
 
-      data = await readResponse(response);
-    }
+      if (!result.response.ok) {
+        console.error("ERRO OPENROUTER VISÃO:", {
+          status: result.response.status,
+          resposta: result.data
+        });
 
-    // =====================================
-    // CHAT DE TEXTO - NVIDIA
-    // =====================================
-    else {
-      const apiKey = process.env.NVIDIA_API_KEY;
-
-      if (!apiKey) {
-        return res.status(503).json({
-          reply: "A chave da NVIDIA não está configurada no Render."
+        return res.status(502).json({
+          reply: "Não consegui analisar a imagem. Tente novamente."
         });
       }
 
-      service = "NVIDIA - TEXTO";
+      const answer = extractAnswer(result.data);
 
-      const model =
-        process.env.NVIDIA_TEXT_MODEL ||
-        "nvidia/nemotron-3-ultra-550b-a55b";
+      if (!answer) {
+        return res.status(502).json({
+          reply: "A IA não conseguiu interpretar a imagem."
+        });
+      }
 
-      const messages = [
-        { role: "system", content: systemPrompt },
-        ...previousMessages,
-        { role: "user", content: text }
-      ];
+      return res.json({ reply: answer });
+    }
 
-      const headers = {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json"
-      };
+    // =====================================
+    // TEXTO - NVIDIA + ALTERNATIVA
+    // =====================================
 
-      const endpoint =
-        "https://integrate.api.nvidia.com/v1/chat/completions";
+    const messages = buildMessages(
+      systemPrompt,
+      previousMessages,
+      text
+    );
 
-      // Primeira tentativa: configuração original.
-      response = await fetch(endpoint, {
-        method: "POST",
-        headers,
-        body: JSON.stringify({
-          model,
-          messages,
-          max_tokens: 1400,
-          temperature: 0.6,
-          stream: false,
-          chat_template_kwargs: {
-            enable_thinking: false,
-            force_nonempty_content: true
-          }
-        }),
-        signal: AbortSignal.timeout(90000)
-      });
+    let answer;
 
-      data = await readResponse(response);
+    if (process.env.NVIDIA_API_KEY) {
+      try {
+        console.log("Consultando NVIDIA...");
 
-      // Segunda tentativa: remove parâmetros extras que podem
-      // provocar erro 400 em modelos que não os aceitam.
-      if (response.status === 400) {
-        console.warn(
-          "NVIDIA retornou 400. Tentando novamente sem parâmetros extras."
-        );
+        answer = await askNvidia(messages);
 
-        response = await fetch(endpoint, {
-          method: "POST",
-          headers,
-          body: JSON.stringify({
-            model,
-            messages,
-            max_tokens: 1400,
-            temperature: 0.6,
-            stream: false
-          }),
-          signal: AbortSignal.timeout(90000)
+        console.log("NVIDIA respondeu com sucesso.");
+
+      } catch (error) {
+        console.error("FALHA NVIDIA:", {
+          nome: error.name,
+          status: error.status,
+          mensagem: error.message,
+          resposta: error.data
         });
 
-        data = await readResponse(response);
+        if (!process.env.OPENROUTER_API_KEY) {
+          throw error;
+        }
+
+        console.log("Tentando alternativa OpenRouter...");
       }
     }
 
-    // =====================================
-    // TRATAMENTO DE ERROS
-    // =====================================
-    if (!response.ok) {
-      console.error(`ERRO ${service}:`, {
-        status: response.status,
-        resposta: data
-      });
+    if (!answer && process.env.OPENROUTER_API_KEY) {
+      try {
+        answer = await askOpenRouter(messages);
+        console.log("OpenRouter respondeu com sucesso.");
+      } catch (error) {
+        console.error("FALHA OPENROUTER:", {
+          nome: error.name,
+          status: error.status,
+          mensagem: error.message,
+          resposta: error.data
+        });
 
-      let reply =
-        "Não foi possível consultar a inteligência artificial.";
-
-      if (response.status === 400) {
-        reply =
-          "A API recusou a configuração da solicitação. Verifique o modelo configurado no Render.";
-      } else if (response.status === 401 || response.status === 403) {
-        reply =
-          "A chave da API é inválida ou não tem autorização para acessar esse serviço.";
-      } else if (response.status === 402) {
-        reply = "O serviço está sem créditos disponíveis.";
-      } else if (response.status === 404) {
-        reply =
-          "O modelo configurado não foi encontrado. Confira a variável de modelo no Render.";
-      } else if (response.status === 429) {
-        reply =
-          "Limite de solicitações atingido. Tente novamente mais tarde.";
-      } else if (response.status >= 500) {
-        reply =
-          "O serviço de IA está temporariamente indisponível.";
+        throw error;
       }
-
-      return res.status(502).json({ reply });
     }
-
-    const answer = extractAnswer(data);
 
     if (!answer) {
-      console.error("Resposta sem texto:", data);
-
-      return res.status(502).json({
-        reply: "A IA não conseguiu gerar uma resposta. Tente novamente."
+      return res.status(503).json({
+        reply: "Nenhum serviço de IA está configurado."
       });
     }
-
-    console.log(`${service}: resposta concluída.`);
 
     return res.json({ reply: answer });
 
   } catch (error) {
-    console.error("ERRO SERVIDOR:", error);
+    console.error("ERRO SERVIDOR:", {
+      nome: error.name,
+      status: error.status,
+      mensagem: error.message,
+      resposta: error.data
+    });
 
-    const timeout = [
-      "TimeoutError",
-      "AbortError"
-    ].includes(error?.name);
+    if (isTimeout(error)) {
+      return res.status(504).json({
+        reply: "A IA demorou para responder. Tente novamente."
+      });
+    }
 
-    return res.status(timeout ? 504 : 500).json({
-      reply: timeout
-        ? "A solicitação demorou demais. Tente novamente."
-        : "Erro interno ao processar sua solicitação."
+    if (error.status === 401 || error.status === 403) {
+      return res.status(502).json({
+        reply: "A chave da API é inválida ou não tem autorização."
+      });
+    }
+
+    if (error.status === 429) {
+      return res.status(502).json({
+        reply: "Limite de solicitações atingido. Tente novamente mais tarde."
+      });
+    }
+
+    return res.status(502).json({
+      reply: "Não foi possível consultar a IA. Tente novamente."
     });
   }
 });
