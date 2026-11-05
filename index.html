@@ -5,143 +5,799 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080808">
 <title>WSAZ_777 | STORE DE WALLACE</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
 <style>
-:root{--bg:#080808;--panel:#111;--green:#a6ff00;--red:#ff2348;--white:#f5f5f5;--muted:#999;--border:#303030}
+:root{
+ --bg:#080808;
+ --panel:#111;
+ --green:#a6ff00;
+ --red:#ff2348;
+ --white:#f5f5f5;
+ --muted:#999;
+ --border:#303030;
+}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;overflow-anchor:none}
-body{background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif;overflow-x:hidden}
-button,input{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
-.background{position:fixed;inset:0;z-index:-3;background:radial-gradient(ellipse at 10% 10%,#a6ff0017,transparent 40%),radial-gradient(ellipse at 90% 85%,#ff234817,transparent 38%),#080808}
-.background:after{content:"";position:absolute;inset:0;opacity:.08;background-image:linear-gradient(#a6ff00 1px,transparent 1px),linear-gradient(90deg,#a6ff00 1px,transparent 1px);background-size:35px 35px}
-.grain{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse,transparent 25%,#000b)}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+body{
+ background:var(--bg);
+ color:var(--white);
+ font-family:Inter,Arial,sans-serif;
+ overflow-x:hidden;
+}
+button,input{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+
+.background{
+ position:fixed;
+ inset:0;
+ z-index:-3;
+ background:
+ radial-gradient(ellipse at 10% 10%,#a6ff0017,transparent 40%),
+ radial-gradient(ellipse at 90% 85%,#ff234817,transparent 38%),
+ #080808;
+}
+.background:after{
+ content:"";
+ position:absolute;
+ inset:0;
+ opacity:.08;
+ background-image:
+ linear-gradient(#a6ff00 1px,transparent 1px),
+ linear-gradient(90deg,#a6ff00 1px,transparent 1px);
+ background-size:35px 35px;
+}
+.grain{
+ position:fixed;
+ inset:0;
+ z-index:-1;
+ pointer-events:none;
+ background:radial-gradient(ellipse,transparent 25%,#000b);
+}
+
+@keyframes rise{
+ from{opacity:0;transform:translateY(14px)}
+ to{opacity:1;transform:translateY(0)}
+}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes scan{to{top:110%}}
 @keyframes load{to{width:100%}}
-@keyframes ringRotate{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes ringRotate{
+ to{transform:translate(-50%,-50%) rotate(360deg)}
+}
 @keyframes float{50%{transform:translateY(-9px)}}
-.boot{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;background:radial-gradient(circle,#19200b,#080808 65%);transition:.7s}
-.boot.hide{opacity:0;visibility:hidden;pointer-events:none}
-.boot-grid{position:absolute;inset:0;opacity:.16;background-image:linear-gradient(#a6ff0030 1px,transparent 1px),linear-gradient(90deg,#a6ff0030 1px,transparent 1px);background-size:32px 32px}
-.boot-content{position:relative;text-align:center;width:min(90%,390px);animation:rise .8s}
-.photo-frame{width:210px;height:210px;margin:0 auto 27px;position:relative;padding:7px;background:#090909;clip-path:polygon(12% 0,88% 0,100% 12%,100% 88%,88% 100%,12% 100%,0 88%,0 12%)}
-.photo-frame:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,var(--green),#222,var(--red),var(--green));animation:spin 7s linear infinite}
-.photo-frame img{position:absolute;inset:5px;width:calc(100% - 10px);height:calc(100% - 10px);object-fit:cover}
-.boot-tag{font:800 10px Orbitron;letter-spacing:4px;color:var(--green)}
-.boot h1{font:900 30px Orbitron;margin-top:10px}
+
+.boot{
+ position:fixed;
+ inset:0;
+ z-index:9999;
+ display:grid;
+ place-items:center;
+ background:radial-gradient(circle,#19200b,#080808 65%);
+ transition:.7s;
+}
+.boot.hide{
+ opacity:0;
+ visibility:hidden;
+ pointer-events:none;
+}
+.boot-grid{
+ position:absolute;
+ inset:0;
+ opacity:.16;
+ background-image:
+ linear-gradient(#a6ff0030 1px,transparent 1px),
+ linear-gradient(90deg,#a6ff0030 1px,transparent 1px);
+ background-size:32px 32px;
+}
+.boot-content{
+ position:relative;
+ text-align:center;
+ width:min(90%,390px);
+ animation:rise .8s;
+}
+.photo-frame{
+ width:210px;
+ height:210px;
+ margin:0 auto 27px;
+ position:relative;
+ padding:7px;
+ background:#090909;
+ clip-path:polygon(12% 0,88% 0,100% 12%,100% 88%,88% 100%,12% 100%,0 88%,0 12%);
+}
+.photo-frame:before{
+ content:"";
+ position:absolute;
+ inset:0;
+ background:linear-gradient(135deg,var(--green),#222,var(--red),var(--green));
+ animation:spin 7s linear infinite;
+}
+.photo-frame img{
+ position:absolute;
+ inset:5px;
+ width:calc(100% - 10px);
+ height:calc(100% - 10px);
+ object-fit:cover;
+}
+.boot-tag{
+ font:800 10px Orbitron;
+ letter-spacing:4px;
+ color:var(--green);
+}
+.boot h1{
+ font:900 30px Orbitron;
+ margin-top:10px;
+}
 .boot h1 span{color:var(--green)}
-.boot p{font-size:10px;color:#aaa;letter-spacing:3px;margin-top:10px}
-.boot-store{margin:17px auto 0;padding:12px 15px;width:min(100%,285px);border:1px solid #a6ff0066;background:#a6ff0012}
-.boot-store strong{display:block;font:900 13px Orbitron;letter-spacing:3px;color:var(--green)}
-.boot-store small{display:block;margin-top:7px;color:#888;font-size:8px;letter-spacing:2px}
-.boot-bar{height:3px;background:#333;width:210px;margin:25px auto 15px;overflow:hidden}
-.boot-bar i{display:block;height:100%;width:0;background:var(--green);animation:load 2.5s forwards}
-.boot button{display:none;margin:20px auto;padding:13px 40px;background:var(--green);color:#080808;border:0;font:900 12px Orbitron}
+.boot p{
+ font-size:10px;
+ color:#aaa;
+ letter-spacing:3px;
+ margin-top:10px;
+}
+.boot-store{
+ margin:17px auto 0;
+ padding:12px 15px;
+ width:min(100%,285px);
+ border:1px solid #a6ff0066;
+ background:#a6ff0012;
+}
+.boot-store strong{
+ display:block;
+ font:900 13px Orbitron;
+ letter-spacing:3px;
+ color:var(--green);
+}
+.boot-store small{
+ display:block;
+ margin-top:7px;
+ color:#888;
+ font-size:8px;
+ letter-spacing:2px;
+}
+.boot-bar{
+ height:3px;
+ background:#333;
+ width:210px;
+ margin:25px auto 15px;
+ overflow:hidden;
+}
+.boot-bar i{
+ display:block;
+ height:100%;
+ width:0;
+ background:var(--green);
+ animation:load 2.5s forwards;
+}
+.boot button{
+ display:none;
+ margin:20px auto;
+ padding:13px 40px;
+ background:var(--green);
+ color:#080808;
+ border:0;
+ font:900 12px Orbitron;
+}
 .boot.ready button{display:block}
-.boot.ready .boot-bar,.boot.ready .boot-status{display:none}
-.boot-status{font-size:9px;color:var(--green);letter-spacing:2px}
-header{width:95%;max-width:1500px;margin:17px auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:15px;border:1px solid var(--border);background:#101010ef}
-.brand{display:flex;align-items:center;gap:12px}
-.brand-icon{font-size:32px;color:var(--green)}
+.boot.ready .boot-bar,
+.boot.ready .boot-status{display:none}
+.boot-status{
+ font-size:9px;
+ color:var(--green);
+ letter-spacing:2px;
+}
+
+header{
+ width:95%;
+ max-width:1500px;
+ margin:17px auto;
+ padding:14px 20px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:15px;
+ border:1px solid var(--border);
+ background:#101010ef;
+}
+.brand{
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
+.brand-icon{
+ font-size:32px;
+ color:var(--green);
+}
 .logo{font:900 19px Orbitron}
 .logo span{color:var(--green)}
-.subtitle{font-size:9px;color:var(--muted);margin-top:5px}
-.status{color:var(--green);font:700 9px Orbitron}
-.layout{width:95%;max-width:1500px;margin:25px auto;display:grid;grid-template-columns:175px minmax(0,1fr);gap:18px}
-.sidebar,.panel{background:#101010ed;border:1px solid var(--border)}
-.sidebar{padding:12px;display:flex;flex-direction:column;gap:7px;min-height:600px}
-.menu{display:block;padding:13px 10px;font-size:11px;color:#ccc;border-left:2px solid transparent}
-.menu:hover,.menu.active{background:#a6ff0014;border-left-color:var(--green);color:var(--green)}
-.side-note{margin-top:auto;padding:14px 7px;border:1px dashed #555;text-align:center}
-.side-note b{font:800 12px Orbitron;color:var(--green)}
-.side-note p{font-size:9px;color:var(--muted);line-height:1.7;margin-top:8px}
-.main{min-width:0;display:flex;flex-direction:column;gap:18px}
+.subtitle{
+ font-size:9px;
+ color:var(--muted);
+ margin-top:5px;
+}
+.status{
+ color:var(--green);
+ font:700 9px Orbitron;
+}
+
+.layout{
+ width:95%;
+ max-width:1500px;
+ margin:25px auto;
+ display:grid;
+ grid-template-columns:175px minmax(0,1fr);
+ gap:18px;
+}
+.sidebar,.panel{
+ background:#101010ed;
+ border:1px solid var(--border);
+}
+.sidebar{
+ padding:12px;
+ display:flex;
+ flex-direction:column;
+ gap:7px;
+ min-height:600px;
+}
+.menu{
+ display:block;
+ padding:13px 10px;
+ font-size:11px;
+ color:#ccc;
+ border-left:2px solid transparent;
+}
+.menu:hover,.menu.active{
+ background:#a6ff0014;
+ border-left-color:var(--green);
+ color:var(--green);
+}
+.side-note{
+ margin-top:auto;
+ padding:14px 7px;
+ border:1px dashed #555;
+ text-align:center;
+}
+.side-note b{
+ font:800 12px Orbitron;
+ color:var(--green);
+}
+.side-note p{
+ font-size:9px;
+ color:var(--muted);
+ line-height:1.7;
+ margin-top:8px;
+}
+
+.main{
+ min-width:0;
+ display:flex;
+ flex-direction:column;
+ gap:18px;
+}
 .hero{padding:18px 8px}
-.kicker{color:var(--green);font:700 10px Orbitron;letter-spacing:3px}
-.hero h2{font:900 clamp(24px,4vw,42px) Orbitron;margin-top:12px}
+.kicker{
+ color:var(--green);
+ font:700 10px Orbitron;
+ letter-spacing:3px;
+}
+.hero h2{
+ font:900 clamp(24px,4vw,42px) Orbitron;
+ margin-top:12px;
+}
 .hero h2 span{color:var(--green)}
-.hero p{font-size:12px;color:#aaa;margin-top:10px;line-height:1.7}
-.spray{color:var(--red);font:900 11px Orbitron;letter-spacing:3px;display:inline-block;margin-top:14px}
+.hero p{
+ font-size:12px;
+ color:#aaa;
+ margin-top:10px;
+ line-height:1.7;
+}
+.spray{
+ color:var(--red);
+ font:900 11px Orbitron;
+ letter-spacing:3px;
+ display:inline-block;
+ margin-top:14px;
+}
 .panel{overflow:hidden}
-.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:15px 17px;background:#181818;border-bottom:1px solid var(--border)}
+.panel-head{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+ padding:15px 17px;
+ background:#181818;
+ border-bottom:1px solid var(--border);
+}
 .panel-head b{font:800 12px Orbitron}
-.panel-head span{font:700 8px Orbitron;color:var(--green);letter-spacing:2px}
-.visual{min-height:330px;position:relative;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at center,#263313 0%,#101010 48%,#080808)}
-.visual:after{content:"";position:absolute;left:0;right:0;top:-30%;height:30%;background:linear-gradient(transparent,#a6ff0022,transparent);animation:scan 5s linear infinite;pointer-events:none}
-.visual-grid{position:absolute;inset:0;opacity:.2;background-image:linear-gradient(#a6ff0025 1px,transparent 1px),linear-gradient(90deg,#a6ff0025 1px,transparent 1px);background-size:25px 25px}
-.visual-corner{position:absolute;top:16px;left:17px;font:700 8px Orbitron;color:#aaa;z-index:3}
-.visual-corner.right{left:auto;right:17px;color:var(--red)}
-.ai-frame{position:relative;width:260px;height:260px;display:grid;place-items:center}
-.ai-ring{position:absolute;left:50%;top:50%;width:230px;height:230px;border:1px solid #a6ff0080;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 25px #a6ff0022}
+.panel-head span{
+ font:700 8px Orbitron;
+ color:var(--green);
+ letter-spacing:2px;
+}
+
+/* CENTRAL DE OPERAÇÕES */
+.visual{
+ min-height:330px;
+ position:relative;
+ display:grid;
+ place-items:center;
+ overflow:hidden;
+ background:radial-gradient(ellipse at center,#263313 0%,#101010 48%,#080808);
+}
+.visual:after{
+ content:"";
+ position:absolute;
+ left:0;
+ right:0;
+ top:-30%;
+ height:30%;
+ background:linear-gradient(transparent,#a6ff0022,transparent);
+ animation:scan 5s linear infinite;
+ pointer-events:none;
+}
+.visual-grid{
+ position:absolute;
+ inset:0;
+ opacity:.2;
+ background-image:
+ linear-gradient(#a6ff0025 1px,transparent 1px),
+ linear-gradient(90deg,#a6ff0025 1px,transparent 1px);
+ background-size:25px 25px;
+}
+.visual-corner{
+ position:absolute;
+ top:16px;
+ left:17px;
+ font:700 8px Orbitron;
+ color:#aaa;
+ z-index:3;
+}
+.visual-corner.right{
+ left:auto;
+ right:17px;
+ color:var(--red);
+}
+.ai-frame{
+ position:relative;
+ width:260px;
+ height:260px;
+ display:grid;
+ place-items:center;
+}
+.ai-ring{
+ position:absolute;
+ left:50%;
+ top:50%;
+ width:230px;
+ height:230px;
+ border:1px solid #a6ff0080;
+ border-radius:50%;
+ transform:translate(-50%,-50%);
+ box-shadow:0 0 25px #a6ff0022;
+}
 .ai-ring.one{animation:ringRotate 12s linear infinite}
-.ai-ring.two{width:190px;height:190px;border-style:dashed;border-color:#ff234866;animation:ringRotate 18s linear infinite reverse}
-.ai-ring.three{width:250px;height:250px;border-color:#a6ff0030;border-style:dotted}
-.particle-core{position:relative;width:150px;height:150px;border:1px solid #a6ff0080;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#a6ff0022,transparent 70%);animation:float 4s ease-in-out infinite;box-shadow:0 0 35px #a6ff0033}
-.particle-core strong{font:900 38px Orbitron;color:var(--green);text-shadow:0 0 20px #a6ff00}
-.particle-core small{position:absolute;bottom:28px;font:700 8px Orbitron;letter-spacing:3px;color:#ddd}
-.particle{position:absolute;width:5px;height:5px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green);animation:float 2s ease-in-out infinite}
-.p1{top:20px;left:45px}.p2{top:55px;right:12px;animation-delay:.4s}.p3{bottom:35px;left:12px;animation-delay:.8s}.p4{bottom:15px;right:48px;animation-delay:1s}.p5{top:5px;right:70px;animation-delay:.6s}.p6{bottom:90px;right:0;animation-delay:1.2s}
-.visual-label{position:absolute;bottom:17px;z-index:3;font:700 9px Orbitron;color:var(--green);letter-spacing:3px;text-align:center}
-.ai-data{position:absolute;bottom:45px;right:18px;color:#a6ff0080;font:700 7px Orbitron;line-height:2;text-align:right}
-.ai-status{position:absolute;bottom:45px;left:18px;color:#ff2348aa;font:700 7px Orbitron;line-height:2}
-.section-title{font:800 14px Orbitron;margin:22px 0 13px}
-.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.product{background:linear-gradient(145deg,#191919,#0c0c0c);border:1px solid #333;padding:17px;position:relative;overflow:hidden}
-.product:before{content:"";position:absolute;top:0;left:0;width:45px;height:2px;background:var(--green)}
-.product-icon{font-size:27px;color:var(--green)}
-.product h3{font:800 11px Orbitron;margin:12px 0 8px}
-.product p{font-size:10px;color:#aaa;line-height:1.7;min-height:50px}
-.product a{display:block;margin-top:14px;padding:10px;text-align:center;background:#a6ff00;color:#090909;font:900 9px Orbitron}
-.chat-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px;background:#181818}
+.ai-ring.two{
+ width:190px;
+ height:190px;
+ border-style:dashed;
+ border-color:#ff234866;
+ animation:ringRotate 18s linear infinite reverse;
+}
+.ai-ring.three{
+ width:250px;
+ height:250px;
+ border-color:#a6ff0030;
+ border-style:dotted;
+}
+.particle-core{
+ position:relative;
+ width:150px;
+ height:150px;
+ border:1px solid #a6ff0080;
+ border-radius:50%;
+ display:grid;
+ place-items:center;
+ background:radial-gradient(circle,#a6ff0022,transparent 70%);
+ animation:float 4s ease-in-out infinite;
+ box-shadow:0 0 35px #a6ff0033;
+}
+.particle-core strong{
+ font:900 38px Orbitron;
+ color:var(--green);
+ text-shadow:0 0 20px #a6ff00;
+}
+.particle-core small{
+ position:absolute;
+ bottom:28px;
+ font:700 8px Orbitron;
+ letter-spacing:3px;
+ color:#ddd;
+}
+.particle{
+ position:absolute;
+ width:5px;
+ height:5px;
+ background:var(--green);
+ border-radius:50%;
+ box-shadow:0 0 12px var(--green);
+ animation:float 2s ease-in-out infinite;
+}
+.p1{top:20px;left:45px}
+.p2{top:55px;right:12px;animation-delay:.4s}
+.p3{bottom:35px;left:12px;animation-delay:.8s}
+.p4{bottom:15px;right:48px;animation-delay:1s}
+.p5{top:5px;right:70px;animation-delay:.6s}
+.p6{bottom:90px;right:0;animation-delay:1.2s}
+.visual-label{
+ position:absolute;
+ bottom:17px;
+ z-index:3;
+ font:700 9px Orbitron;
+ color:var(--green);
+ letter-spacing:3px;
+ text-align:center;
+}
+.ai-data{
+ position:absolute;
+ bottom:45px;
+ right:18px;
+ color:#a6ff0080;
+ font:700 7px Orbitron;
+ line-height:2;
+ text-align:right;
+}
+.ai-status{
+ position:absolute;
+ bottom:45px;
+ left:18px;
+ color:#ff2348aa;
+ font:700 7px Orbitron;
+ line-height:2;
+}
+
+.section-title{
+ font:800 14px Orbitron;
+ margin:22px 0 13px;
+}
+.products{
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:12px;
+}
+.product{
+ background:linear-gradient(145deg,#191919,#0c0c0c);
+ border:1px solid #333;
+ padding:17px;
+ position:relative;
+ overflow:hidden;
+}
+.product:before{
+ content:"";
+ position:absolute;
+ top:0;
+ left:0;
+ width:45px;
+ height:2px;
+ background:var(--green);
+}
+.product-icon{
+ font-size:27px;
+ color:var(--green);
+}
+.product h3{
+ font:800 11px Orbitron;
+ margin:12px 0 8px;
+}
+.product p{
+ font-size:10px;
+ color:#aaa;
+ line-height:1.7;
+ min-height:50px;
+}
+.product a{
+ display:block;
+ margin-top:14px;
+ padding:10px;
+ text-align:center;
+ background:#a6ff00;
+ color:#090909;
+ font:900 9px Orbitron;
+}
+
+/* CHAT */
+.chat-top{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+ padding:14px 16px;
+ background:#181818;
+}
 .chat-top b{font:800 12px Orbitron}
-.action{padding:9px 12px;border:1px solid #444;background:#222;color:white;font-size:10px}
-.style-selector{padding:14px;border-bottom:1px solid #333}
-.style-selector p{font-size:11px;margin-bottom:10px}
-.style-options{display:flex;gap:8px;flex-wrap:wrap}
-.style-option{padding:9px 12px;background:#202020;color:#ddd;border:1px solid #444;font-size:10px}
-.style-option.selected{border-color:var(--green);color:var(--green)}
-.messages{height:360px;min-height:260px;overflow-y:auto;padding:15px;display:flex;flex-direction:column;gap:12px;overscroll-behavior:contain;overflow-anchor:none}
-.message{max-width:88%;padding:12px 14px;border:1px solid #333;font-size:12px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;animation:rise .2s}
-.bot{align-self:flex-start;background:#191919;border-left:3px solid var(--green)}
-.user{align-self:flex-end;background:#202a13;border-right:3px solid var(--green)}
-.message img{max-width:220px;max-height:180px;object-fit:contain;display:block;margin-bottom:8px}
-.preview{display:none;align-items:center;gap:10px;padding:10px;border-top:1px solid #333}
-.preview img{width:55px;height:55px;object-fit:cover}
+.action{
+ padding:9px 12px;
+ border:1px solid #444;
+ background:#222;
+ color:white;
+ font-size:10px;
+}
+.style-selector{
+ padding:14px;
+ border-bottom:1px solid #333;
+}
+.style-selector p{
+ font-size:11px;
+ margin-bottom:10px;
+}
+.style-options{
+ display:flex;
+ gap:8px;
+ flex-wrap:wrap;
+}
+.style-option{
+ padding:9px 12px;
+ background:#202020;
+ color:#ddd;
+ border:1px solid #444;
+ font-size:10px;
+}
+.style-option.selected{
+ border-color:var(--green);
+ color:var(--green);
+}
+.messages{
+ height:360px;
+ min-height:260px;
+ overflow-y:auto;
+ padding:15px;
+ display:flex;
+ flex-direction:column;
+ gap:12px;
+ overscroll-behavior:contain;
+ overflow-anchor:none;
+}
+.message{
+ max-width:88%;
+ padding:12px 14px;
+ border:1px solid #333;
+ font-size:12px;
+ line-height:1.7;
+ white-space:pre-wrap;
+ overflow-wrap:anywhere;
+ animation:rise .2s;
+}
+.bot{
+ align-self:flex-start;
+ background:#191919;
+ border-left:3px solid var(--green);
+}
+.user{
+ align-self:flex-end;
+ background:#202a13;
+ border-right:3px solid var(--green);
+}
+.message img{
+ max-width:220px;
+ max-height:180px;
+ object-fit:contain;
+ display:block;
+ margin-bottom:8px;
+}
+.preview{
+ display:none;
+ align-items:center;
+ gap:10px;
+ padding:10px;
+ border-top:1px solid #333;
+}
+.preview img{
+ width:55px;
+ height:55px;
+ object-fit:cover;
+}
 .preview span{font-size:10px;flex:1}
-.preview button{background:none;color:var(--red);border:0}
-.composer{display:flex;gap:7px;padding:10px;border-top:1px solid #333}
-.composer input[type=text]{flex:1;min-width:0;height:45px;padding:0 12px;background:#1b1b1b;border:1px solid #444;color:white;outline:none;border-radius:3px;font-size:16px}
+.preview button{
+ background:none;
+ color:var(--red);
+ border:0;
+}
+.composer{
+ display:flex;
+ gap:7px;
+ padding:10px;
+ border-top:1px solid #333;
+}
+.composer input[type=text]{
+ flex:1;
+ min-width:0;
+ height:45px;
+ padding:0 12px;
+ background:#1b1b1b;
+ border:1px solid #444;
+ color:white;
+ outline:none;
+ border-radius:3px;
+ font-size:16px;
+}
 .composer input:focus{border-color:var(--green)}
-.icon-btn,.send{min-width:43px;height:45px;border:1px solid #444;background:#222;color:white}
-.send{background:var(--green);color:#080808;border:0;font-weight:900}
-.shortcuts{display:flex;gap:8px;padding:0 10px 12px}
-.shortcut{background:none;border:1px solid #333;color:#bbb;padding:8px 11px;font-size:9px}
+.icon-btn,.send{
+ min-width:43px;
+ height:45px;
+ border:1px solid #444;
+ background:#222;
+ color:white;
+}
+.send{
+ background:var(--green);
+ color:#080808;
+ border:0;
+ font-weight:900;
+}
+.shortcuts{
+ display:flex;
+ gap:8px;
+ padding:0 10px 12px;
+}
+.shortcut{
+ background:none;
+ border:1px solid #333;
+ color:#bbb;
+ padding:8px 11px;
+ font-size:9px;
+}
+
+/* CONTATO E FOTO DE GAMEPLAY */
 .demo-wrap{padding:20px}
-.demo-heading{font:800 12px Orbitron;color:var(--green);letter-spacing:2px;margin-bottom:10px}
-.demo-description{font-size:11px;color:#aaa;line-height:1.7;margin-bottom:15px}
-.demo-video{display:block;width:100%;max-height:440px;aspect-ratio:16/9;background:#050505;border:1px solid #3a3a3a;object-fit:contain}
-.demo-caption{font-size:9px;color:#777;margin-top:10px;line-height:1.6}
-.contact-shot{display:block;width:100%;max-height:440px;object-fit:contain;border:1px solid #3a3a3a;background:#050505}
-footer{padding:20px 5px 30px;display:flex;justify-content:space-between;gap:10px;color:#888;font-size:9px}
+.demo-heading{
+ font:800 12px Orbitron;
+ color:var(--green);
+ letter-spacing:2px;
+ margin-bottom:10px;
+}
+.demo-description{
+ font-size:11px;
+ color:#aaa;
+ line-height:1.7;
+ margin-bottom:15px;
+}
+.gameplay-image{
+ width:100%;
+ overflow:hidden;
+ border:1px solid #3a3a3a;
+ background:#050505;
+ border-radius:5px;
+}
+.gameplay-image img{
+ display:block;
+ width:100%;
+ max-height:520px;
+ object-fit:contain;
+ margin:0 auto;
+}
+.demo-caption{
+ font-size:9px;
+ color:#777;
+ margin-top:10px;
+ line-height:1.6;
+}
+.info-area{padding:0 20px 20px}
+.info-grid{
+ display:grid;
+ grid-template-columns:repeat(2,minmax(0,1fr));
+ gap:10px;
+}
+.info-item{
+ padding:14px;
+ background:#171717;
+ border:1px solid #333;
+}
+.info-item strong{
+ display:block;
+ color:var(--green);
+ font:800 10px Orbitron;
+ margin-bottom:8px;
+}
+.info-item span{
+ display:block;
+ color:#aaa;
+ font-size:10px;
+ line-height:1.7;
+}
+.contact-description{
+ padding:0 20px 20px;
+}
+.contact-description p{
+ font-size:12px;
+ color:#bbb;
+ line-height:1.8;
+}
+.whatsapp-button{
+ display:block;
+ margin-top:15px;
+ padding:14px;
+ text-align:center;
+ background:var(--green);
+ color:#080808;
+ font:900 11px Orbitron;
+}
+
+footer{
+ padding:20px 5px 30px;
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ color:#888;
+ font-size:9px;
+}
 footer strong{color:var(--green)}
-@media(max-width:850px){.layout{grid-template-columns:1fr}.sidebar{min-height:auto;flex-direction:row;overflow-x:auto}.menu{white-space:nowrap}.side-note{display:none}}
-@media(max-width:600px){header{padding:12px}.logo{font-size:15px}.subtitle{font-size:8px}.status{font-size:7px}.products{grid-template-columns:repeat(2,minmax(0,1fr))}.product{padding:13px}.product p{min-height:65px}.messages{height:42vh;min-height:250px}.message{max-width:95%}footer{flex-direction:column;text-align:center}.visual{min-height:300px}.ai-frame{transform:scale(.9)}.ai-data,.ai-status{font-size:6px}}
-@media(max-width:390px){.products{grid-template-columns:1fr}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+@media(max-width:850px){
+ .layout{grid-template-columns:1fr}
+ .sidebar{
+  min-height:auto;
+  flex-direction:row;
+  overflow-x:auto;
+ }
+ .menu{white-space:nowrap}
+ .side-note{display:none}
+}
+@media(max-width:600px){
+ header{padding:12px}
+ .logo{font-size:15px}
+ .subtitle{font-size:8px}
+ .status{font-size:7px}
+ .products{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .product{padding:13px}
+ .product p{min-height:65px}
+ .messages{height:42vh;min-height:250px}
+ .message{max-width:95%}
+ footer{flex-direction:column;text-align:center}
+ .visual{min-height:300px}
+ .ai-frame{transform:scale(.9)}
+ .ai-data,.ai-status{font-size:6px}
+ .info-grid{grid-template-columns:1fr}
+ .gameplay-image img{max-height:420px}
+}
+@media(max-width:390px){
+ .products{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{
+  animation:none!important;
+  transition:none!important;
+ }
+}
 </style>
 </head>
-<body>
-<div class="background"></div><div class="grain"></div>
 
+<body>
+
+<div class="background"></div>
+<div class="grain"></div>
+
+<!-- TELA DE INICIALIZAÇÃO -->
 <div class="boot" id="boot">
  <div class="boot-grid"></div>
+
  <div class="boot-content">
-  <div class="photo-frame"><img src="/file_000000009618820e9a50407df0e56103.png" alt="Foto de inicialização WSAZ_777"></div>
+  <div class="photo-frame">
+   <img
+    src="./file_000000009618820e9a50407df0e56103.png"
+    alt="Foto de inicialização WSAZ_777"
+   >
+  </div>
+
   <div class="boot-tag">ELITE GAMING SYSTEM</div>
   <h1>WSAZ_<span>777</span></h1>
   <p>GAMING · TECHNOLOGY · PERFORMANCE</p>
-  <div class="boot-store"><strong>STORE DE WALLACE</strong><small>TECNOLOGIA • PERSONALIZAÇÃO • IA</small></div>
+
+  <div class="boot-store">
+   <strong>STORE DE WALLACE</strong>
+   <small>TECNOLOGIA • PERSONALIZAÇÃO • IA</small>
+  </div>
+
   <div class="boot-bar"><i></i></div>
   <div class="boot-status" id="bootStatus">INICIALIZANDO SISTEMA...</div>
   <button id="enterButton" type="button">ACESSAR PAINEL</button>
@@ -149,20 +805,33 @@ footer strong{color:var(--green)}
 </div>
 
 <header>
- <div class="brand"><div class="brand-icon">♛</div><div><div class="logo">WSAZ_777 <span>ELITE</span></div><div class="subtitle">STORE DE WALLACE · GAMING LAB</div></div></div>
+ <div class="brand">
+  <div class="brand-icon">♛</div>
+  <div>
+   <div class="logo">WSAZ_777 <span>ELITE</span></div>
+   <div class="subtitle">STORE DE WALLACE · GAMING LAB</div>
+  </div>
+ </div>
  <div class="status">● PAINEL ATIVO</div>
 </header>
 
 <div class="layout">
+
  <aside class="sidebar">
   <a class="menu active" href="#inicio">⌂ &nbsp; INÍCIO</a>
   <a class="menu" href="#servicos">▣ &nbsp; SERVIÇOS</a>
   <a class="menu" href="#chat">⌘ &nbsp; ASSISTENTE IA</a>
   <a class="menu" href="#contato">◉ &nbsp; CONTATO</a>
-  <div class="side-note"><b>STORE DE WALLACE</b><p>Configurações, desempenho e suporte para jogadores.</p></div>
+
+  <div class="side-note">
+   <b>STORE DE WALLACE</b>
+   <p>Configurações, desempenho e suporte para jogadores.</p>
+  </div>
  </aside>
 
  <main class="main">
+
+  <!-- INÍCIO -->
   <section class="hero" id="inicio">
    <div class="kicker">✦ WSAZ_777 / GAMING DIVISION</div>
    <h2>LEVEL UP YOUR <span>GAME.</span></h2>
@@ -170,96 +839,250 @@ footer strong{color:var(--green)}
    <div class="spray">NO LIMITS // JUST PERFORMANCE</div>
   </section>
 
+  <!-- CENTRAL DE OPERAÇÕES -->
   <section class="panel">
-   <div class="panel-head"><b>◈ CENTRAL DE OPERAÇÕES</b><span>● AI SYSTEM ONLINE</span></div>
+   <div class="panel-head">
+    <b>◈ CENTRAL DE OPERAÇÕES</b>
+    <span>● AI SYSTEM ONLINE</span>
+   </div>
+
    <div class="visual">
     <div class="visual-grid"></div>
     <div class="visual-corner">WSAZ_777 // AI CORE</div>
     <div class="visual-corner right">WALLACE SYSTEM</div>
+
     <div class="ai-frame">
-     <div class="ai-ring one"></div><div class="ai-ring two"></div><div class="ai-ring three"></div>
+     <div class="ai-ring one"></div>
+     <div class="ai-ring two"></div>
+     <div class="ai-ring three"></div>
+
      <div class="particle-core">
-      <strong>777</strong><small>AI CORE</small>
-      <i class="particle p1"></i><i class="particle p2"></i><i class="particle p3"></i><i class="particle p4"></i><i class="particle p5"></i><i class="particle p6"></i>
+      <strong>777</strong>
+      <small>AI CORE</small>
+      <i class="particle p1"></i>
+      <i class="particle p2"></i>
+      <i class="particle p3"></i>
+      <i class="particle p4"></i>
+      <i class="particle p5"></i>
+      <i class="particle p6"></i>
      </div>
     </div>
+
     <div class="ai-status">CORE: ACTIVE<br>PARTICLES: ONLINE</div>
     <div class="ai-data">SYSTEM 777<br>NEURAL LINK<br>STATUS: READY</div>
     <div class="visual-label">ARTIFICIAL INTELLIGENCE · WSAZ_777</div>
    </div>
   </section>
 
+  <!-- SERVIÇOS -->
   <section id="servicos">
    <div class="section-title">✦ SERVIÇOS & SOLUÇÕES</div>
+
    <div class="products">
-    <article class="product"><div class="product-icon">⌖</div><h3>SENSIBILIDADE</h3><p>Configurações personalizadas de sensibilidade para seu estilo de jogo.</p><a href="#contato">CONSULTAR</a></article>
-    <article class="product"><div class="product-icon">▦</div><h3>HUD PERSONALIZADO</h3><p>Organização de botões e layout para melhorar conforto e controle.</p><a href="#contato">CONSULTAR</a></article>
-    <article class="product"><div class="product-icon">ϟ</div><h3>OTIMIZAÇÃO PC</h3><p>Ajustes de desempenho, estabilidade e configurações do Windows.</p><a href="#contato">CONSULTAR</a></article>
-    <article class="product"><div class="product-icon">◎</div><h3>PRECISÃO</h3><p>Dicas e ajustes legítimos para controle, mira e consistência.</p><a href="#contato">CONSULTAR</a></article>
-    <article class="product"><div class="product-icon">▤</div><h3>CONFIGURAÇÃO EMULADOR</h3><p>Orientações para resolução, controles e desempenho no PC.</p><a href="#contato">CONSULTAR</a></article>
-    <article class="product"><div class="product-icon">⌘</div><h3>SUPORTE</h3><p>Atendimento para dúvidas e orientações sobre configurações.</p><a href="#contato">CONSULTAR</a></article>
+
+    <article class="product">
+     <div class="product-icon">⌖</div>
+     <h3>SENSIBILIDADE</h3>
+     <p>Configurações personalizadas de sensibilidade para seu estilo de jogo.</p>
+     <a href="#contato">CONSULTAR</a>
+    </article>
+
+    <article class="product">
+     <div class="product-icon">▦</div>
+     <h3>HUD PERSONALIZADO</h3>
+     <p>Organização de botões e layout para melhorar conforto e controle.</p>
+     <a href="#contato">CONSULTAR</a>
+    </article>
+
+    <article class="product">
+     <div class="product-icon">ϟ</div>
+     <h3>OTIMIZAÇÃO PC</h3>
+     <p>Ajustes de desempenho, estabilidade e configurações do Windows.</p>
+     <a href="#contato">CONSULTAR</a>
+    </article>
+
+    <article class="product">
+     <div class="product-icon">◎</div>
+     <h3>PRECISÃO</h3>
+     <p>Dicas e ajustes legítimos para controle, mira e consistência.</p>
+     <a href="#contato">CONSULTAR</a>
+    </article>
+
+    <article class="product">
+     <div class="product-icon">▤</div>
+     <h3>CONFIGURAÇÃO EMULADOR</h3>
+     <p>Orientações para resolução, controles e desempenho no PC.</p>
+     <a href="#contato">CONSULTAR</a>
+    </article>
+
+    <article class="product">
+     <div class="product-icon">⌘</div>
+     <h3>SUPORTE</h3>
+     <p>Atendimento para dúvidas e orientações sobre configurações.</p>
+     <a href="#contato">CONSULTAR</a>
+    </article>
+
    </div>
   </section>
 
+  <!-- ASSISTENTE IA -->
   <section class="panel" id="chat">
-   <div class="chat-top"><b>♛ WSAZ_777 IA</b><button class="action" id="clearChat" type="button">LIMPAR CHAT</button></div>
-   <div class="style-selector" id="styleSelector"><p>ESTILO DAS RESPOSTAS</p><div class="style-options">
-    <button class="style-option" data-style="concise">RESUMIDA</button>
-    <button class="style-option" data-style="normal">NORMAL</button>
-    <button class="style-option" data-style="detailed">COMPLETA</button>
-   </div></div>
-   <div class="messages" id="messages"><div class="message bot">✦ Bem-vindo ao assistente WSAZ_777.
+
+   <div class="chat-top">
+    <b>♛ WSAZ_777 IA</b>
+    <button class="action" id="clearChat" type="button">LIMPAR CHAT</button>
+   </div>
+
+   <div class="style-selector" id="styleSelector">
+    <p>ESTILO DAS RESPOSTAS</p>
+    <div class="style-options">
+     <button class="style-option" data-style="concise" type="button">RESUMIDA</button>
+     <button class="style-option" data-style="normal" type="button">NORMAL</button>
+     <button class="style-option" data-style="detailed" type="button">COMPLETA</button>
+    </div>
+   </div>
+
+   <div class="messages" id="messages">
+    <div class="message bot">✦ Bem-vindo ao assistente WSAZ_777.
 
 Posso ajudar com Free Fire, configurações de PC, sensibilidade, HUD, estudos, tecnologia e muito mais.
 
-Como posso ajudar?</div></div>
-   <div class="preview" id="preview"><img id="previewImage" alt="Imagem selecionada"><span>Imagem selecionada</span><button id="removeImage" type="button">✕</button></div>
+Como posso ajudar?</div>
+   </div>
+
+   <div class="preview" id="preview">
+    <img id="previewImage" alt="Imagem selecionada">
+    <span>Imagem selecionada</span>
+    <button id="removeImage" type="button">✕</button>
+   </div>
+
    <form class="composer" id="chatForm">
     <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp" hidden>
     <button class="icon-btn" id="attachButton" type="button">＋</button>
     <input type="text" id="messageInput" placeholder="Digite sua mensagem..." maxlength="2000" autocomplete="off">
     <button class="send" id="sendButton" type="submit">➤</button>
    </form>
-   <div class="shortcuts"><button class="shortcut" id="imageShortcut" type="button">＋ IMAGEM</button><button class="shortcut" id="focusShortcut" type="button">◉ PERGUNTAR</button></div>
+
+   <div class="shortcuts">
+    <button class="shortcut" id="imageShortcut" type="button">＋ IMAGEM</button>
+    <button class="shortcut" id="focusShortcut" type="button">◉ PERGUNTAR</button>
+   </div>
+
   </section>
 
+  <!-- CONTATO E FOTO DE GAMEPLAY -->
   <section id="contato" class="panel">
-   <div class="panel-head"><b>CONTATO & ATENDIMENTO</b><span>WHATSAPP</span></div>
+
+   <div class="panel-head">
+    <b>CONTATO & ATENDIMENTO</b>
+    <span>WHATSAPP</span>
+   </div>
+
    <div class="demo-wrap">
+
     <div class="demo-heading">◈ DEMONSTRAÇÃO DE GAMEPLAY</div>
-    <p class="demo-description">Confira a demonstração em vídeo e conheça o conteúdo apresentado pela Store de Wallace.</p>
-    <video class="demo-video" controls playsinline preload="metadata">
-     <source src="demonstracao-ff.mp4" type="video/mp4">
-     Seu navegador não suporta a reprodução deste vídeo.
-    </video>
-    <p class="demo-caption">Vídeo demonstrativo da Store de Wallace.</p>
+
+    <p class="demo-description">
+     Confira uma captura de gameplay apresentada pela Store de Wallace.
+    </p>
+
+    <div class="gameplay-image">
+     <img
+      src="./gameplay-print.jpg"
+      alt="Captura de gameplay de Free Fire"
+      loading="lazy"
+     >
+    </div>
+
+    <p class="demo-caption">
+     WSAZ_777 · STORE DE WALLACE · GAMEPLAY
+    </p>
+
    </div>
-   <div style="padding:0 20px 20px">
-    <p style="font-size:12px;color:#bbb;line-height:1.8">Entre em contato para consultar configurações, suporte e serviços disponíveis.</p>
-    <a href="https://wa.me/5587981368837" target="_blank" rel="noopener noreferrer" style="display:block;margin-top:15px;padding:14px;text-align:center;background:#a6ff00;color:#080808;font:900 11px Orbitron">FALAR COM WSAZ_777 NO WHATSAPP</a>
+
+   <div class="info-area">
+
+    <div class="demo-heading">◈ INFORMAÇÕES DO SERVIÇO</div>
+
+    <div class="info-grid">
+
+     <div class="info-item">
+      <strong>INTERNAL</strong>
+      <span>Informações sobre o tipo de ferramenta.</span>
+     </div>
+
+     <div class="info-item">
+      <strong>COMPATIBILIDADE</strong>
+      <span>Consulte os dispositivos e versões compatíveis.</span>
+     </div>
+
+     <div class="info-item">
+      <strong>SUPORTE</strong>
+      <span>Atendimento para dúvidas e orientações.</span>
+     </div>
+
+     <div class="info-item">
+      <strong>SEGURANÇA</strong>
+      <span>Não existe garantia de ausência de banimento.</span>
+     </div>
+
+    </div>
    </div>
+
+   <div class="contact-description">
+    <p>
+     Entre em contato para consultar informações, disponibilidade e serviços.
+    </p>
+
+    <a
+     class="whatsapp-button"
+     href="https://wa.me/5587981368837"
+     target="_blank"
+     rel="noopener noreferrer"
+    >
+     FALAR COM WSAZ_777 NO WHATSAPP
+    </a>
+   </div>
+
   </section>
 
-  <footer><div><strong>♛ WSAZ_777</strong> · STORE DE WALLACE</div><div>Projeto independente · 2026</div></footer>
+  <footer>
+   <div><strong>♛ WSAZ_777</strong> · STORE DE WALLACE</div>
+   <div>Projeto independente · 2026</div>
+  </footer>
+
  </main>
 </div>
 
 <script>
 "use strict";
+
+/* INICIALIZAÇÃO */
 const boot=document.getElementById("boot");
 const enterButton=document.getElementById("enterButton");
 const bootStatus=document.getElementById("bootStatus");
 
-setTimeout(()=>{bootStatus.textContent="SISTEMA PRONTO.";boot.classList.add("ready")},2600);
-enterButton.addEventListener("click",()=>{boot.classList.add("hide");setTimeout(()=>boot.remove(),750)});
+setTimeout(()=>{
+ bootStatus.textContent="SISTEMA PRONTO.";
+ boot.classList.add("ready");
+},2600);
 
+enterButton.addEventListener("click",()=>{
+ boot.classList.add("hide");
+ setTimeout(()=>boot.remove(),750);
+});
+
+/* MENU */
 document.querySelectorAll(".menu").forEach(link=>{
  link.addEventListener("click",()=>{
-  document.querySelectorAll(".menu").forEach(item=>item.classList.remove("active"));
+  document.querySelectorAll(".menu").forEach(item=>{
+   item.classList.remove("active");
+  });
   link.classList.add("active");
  });
 });
 
+/* ELEMENTOS DO CHAT */
 const form=document.getElementById("chatForm");
 const input=document.getElementById("messageInput");
 const messages=document.getElementById("messages");
@@ -273,113 +1096,266 @@ const styleSelector=document.getElementById("styleSelector");
 
 let selectedImage=null;
 let busy=false;
+
 let responseStyle=localStorage.getItem("wsaz_response_style");
-if(!["concise","normal","detailed"].includes(responseStyle))responseStyle=null;
 
-const styleNames={concise:"Resumida",normal:"Normal",detailed:"Completa"};
+if(!["concise","normal","detailed"].includes(responseStyle)){
+ responseStyle=null;
+}
 
-function scrollMessages(){messages.scrollTop=messages.scrollHeight}
+const styleNames={
+ concise:"Resumida",
+ normal:"Normal",
+ detailed:"Completa"
+};
+
+/* MENSAGENS */
+function scrollMessages(){
+ messages.scrollTop=messages.scrollHeight;
+}
 
 function addMessage(text,type,imageUrl=null){
  const element=document.createElement("div");
  element.className="message "+type;
+
  if(imageUrl){
   const image=document.createElement("img");
-  image.src=imageUrl;image.alt="Imagem enviada";
+  image.src=imageUrl;
+  image.alt="Imagem enviada";
   element.appendChild(image);
  }
+
  if(text){
   const content=document.createElement("div");
-  content.textContent=text;element.appendChild(content);
+  content.textContent=text;
+  element.appendChild(content);
  }
- messages.appendChild(element);scrollMessages();return element;
+
+ messages.appendChild(element);
+ scrollMessages();
+
+ return element;
 }
 
+/* ESTILO DAS RESPOSTAS */
 function updateStyle(){
  document.querySelectorAll(".style-option").forEach(button=>{
-  button.classList.toggle("selected",button.dataset.style===responseStyle);
+  button.classList.toggle(
+   "selected",
+   button.dataset.style===responseStyle
+  );
  });
 }
 
 document.querySelectorAll(".style-option").forEach(button=>{
  button.addEventListener("click",()=>{
   responseStyle=button.dataset.style;
-  localStorage.setItem("wsaz_response_style",responseStyle);
-  updateStyle();styleSelector.style.display="none";
-  addMessage("Estilo de resposta definido: "+styleNames[responseStyle]+".","bot");
+
+  localStorage.setItem(
+   "wsaz_response_style",
+   responseStyle
+  );
+
+  updateStyle();
+  styleSelector.style.display="none";
+
+  addMessage(
+   "Estilo de resposta definido: "+styleNames[responseStyle]+".",
+   "bot"
+  );
  });
 });
 
-if(responseStyle){updateStyle();styleSelector.style.display="none"}
+if(responseStyle){
+ updateStyle();
+ styleSelector.style.display="none";
+}
 
+/* IMAGENS DO CHAT */
 function clearSelectedImage(){
- selectedImage=null;imageInput.value="";preview.style.display="none";previewImage.removeAttribute("src");
+ selectedImage=null;
+ imageInput.value="";
+ preview.style.display="none";
+ previewImage.removeAttribute("src");
 }
 
 function resetChat(){
  if(busy)return;
+
  messages.replaceChildren();
- addMessage("Conversa reiniciada. Como posso ajudar?","bot");
+
+ addMessage(
+  "Conversa reiniciada. Como posso ajudar?",
+  "bot"
+ );
+
  clearSelectedImage();
 }
 
 document.getElementById("clearChat").addEventListener("click",resetChat);
-attachButton.addEventListener("click",()=>{if(!busy)imageInput.click()});
-document.getElementById("imageShortcut").addEventListener("click",()=>{if(!busy)imageInput.click()});
-document.getElementById("focusShortcut").addEventListener("click",()=>input.focus({preventScroll:true}));
+
+attachButton.addEventListener("click",()=>{
+ if(!busy)imageInput.click();
+});
+
+document.getElementById("imageShortcut").addEventListener("click",()=>{
+ if(!busy)imageInput.click();
+});
+
+document.getElementById("focusShortcut").addEventListener("click",()=>{
+ input.focus({preventScroll:true});
+});
+
 removeImage.addEventListener("click",clearSelectedImage);
 
 imageInput.addEventListener("change",async()=>{
- const file=imageInput.files?.[0];if(!file)return;
+ const file=imageInput.files?.[0];
+
+ if(!file)return;
+
  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
-  alert("Escolha uma imagem JPG, PNG ou WEBP.");imageInput.value="";return;
+  alert("Escolha uma imagem JPG, PNG ou WEBP.");
+  imageInput.value="";
+  return;
  }
+
  if(file.size>10*1024*1024){
-  alert("A imagem deve ter até 10 MB.");imageInput.value="";return;
+  alert("A imagem deve ter até 10 MB.");
+  imageInput.value="";
+  return;
  }
+
  try{
   const dataUrl=await new Promise((resolve,reject)=>{
-   const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(file);
+   const reader=new FileReader();
+
+   reader.onload=()=>resolve(reader.result);
+   reader.onerror=reject;
+
+   reader.readAsDataURL(file);
   });
-  const image=new Image();image.src=dataUrl;await image.decode();
-  const scale=Math.min(1,1280/Math.max(image.width,image.height));
+
+  const image=new Image();
+  image.src=dataUrl;
+
+  await image.decode();
+
+  const scale=Math.min(
+   1,
+   1280/Math.max(image.width,image.height)
+  );
+
   const canvas=document.createElement("canvas");
-  canvas.width=Math.round(image.width*scale);canvas.height=Math.round(image.height*scale);
-  canvas.getContext("2d").drawImage(image,0,0,canvas.width,canvas.height);
+
+  canvas.width=Math.round(image.width*scale);
+  canvas.height=Math.round(image.height*scale);
+
+  canvas.getContext("2d").drawImage(
+   image,
+   0,
+   0,
+   canvas.width,
+   canvas.height
+  );
+
   selectedImage=canvas.toDataURL("image/jpeg",.78);
-  previewImage.src=selectedImage;preview.style.display="flex";
+
+  previewImage.src=selectedImage;
+  preview.style.display="flex";
+
  }catch(error){
-  console.error(error);alert("Não foi possível carregar a imagem.");clearSelectedImage();
+  console.error(error);
+  alert("Não foi possível carregar a imagem.");
+  clearSelectedImage();
  }
 });
 
+/* ENVIO AO ASSISTENTE */
 form.addEventListener("submit",async event=>{
- event.preventDefault();if(busy)return;
- const message=input.value.trim();const image=selectedImage;
+ event.preventDefault();
+
+ if(busy)return;
+
+ const message=input.value.trim();
+ const image=selectedImage;
+
  if(!message&&!image)return;
- if(!responseStyle){styleSelector.style.display="block";return}
- busy=true;sendButton.disabled=true;attachButton.disabled=true;
- addMessage(message||"Analise esta imagem, por favor.","user",image);
- input.value="";clearSelectedImage();
- const loading=addMessage("WSAZ_777 está processando...","bot");
+
+ if(!responseStyle){
+  styleSelector.style.display="block";
+  return;
+ }
+
+ busy=true;
+ sendButton.disabled=true;
+ attachButton.disabled=true;
+
+ addMessage(
+  message||"Analise esta imagem, por favor.",
+  "user",
+  image
+ );
+
+ input.value="";
+ clearSelectedImage();
+
+ const loading=addMessage(
+  "WSAZ_777 está processando...",
+  "bot"
+ );
+
  try{
   const response=await fetch("/api/chat",{
    method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({message,image,responseStyle})
+   headers:{
+    "Content-Type":"application/json"
+   },
+   body:JSON.stringify({
+    message,
+    image,
+    responseStyle
+   })
   });
-  let data={};try{data=await response.json()}catch{}
+
+  let data={};
+
+  try{
+   data=await response.json();
+  }catch{}
+
   loading.remove();
-  if(!response.ok)addMessage(data.error||data.reply||"O servidor não conseguiu processar sua solicitação.","bot");
-  else addMessage(data.reply||"Não consegui gerar uma resposta.","bot");
+
+  if(!response.ok){
+   addMessage(
+    data.error||data.reply||"O servidor não conseguiu processar sua solicitação.",
+    "bot"
+   );
+  }else{
+   addMessage(
+    data.reply||"Não consegui gerar uma resposta.",
+    "bot"
+   );
+  }
+
  }catch(error){
-  console.error("ERRO NO CHAT:",error);loading.remove();
-  addMessage("Falha na conexão. Verifique sua internet e tente novamente.","bot");
+  console.error("ERRO NO CHAT:",error);
+
+  loading.remove();
+
+  addMessage(
+   "Falha na conexão. Verifique sua internet e tente novamente.",
+   "bot"
+  );
+
  }finally{
-  busy=false;sendButton.disabled=false;attachButton.disabled=false;
+  busy=false;
+  sendButton.disabled=false;
+  attachButton.disabled=false;
+
   input.focus({preventScroll:true});
  }
 });
 </script>
+
 </body>
 </html>
