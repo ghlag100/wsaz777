@@ -9,11 +9,9 @@ const root = path.dirname(fileURLToPath(import.meta.url));
 app.disable("x-powered-by");
 app.use(express.json({ limit: "12mb" }));
 
-// ARQUIVOS PÚBLICOS
 app.use(express.static(path.join(root, "public")));
 app.use(express.static(root));
 
-// PERSONALIDADE DA WSAZ_777
 const BASE_PROMPT = `
 Você é o WSAZ_777, uma inteligência artificial de uso geral.
 Responda em português brasileiro, salvo pedido contrário.
@@ -31,11 +29,11 @@ const RESPONSE_STYLES = {
   detailed: "Explique com profundidade, etapas e exemplos úteis."
 };
 
-// EXTRAIR RESPOSTA DA IA
 function extractAnswer(data) {
-  const raw = data?.choices?.[0]?.message?.content;
+  const message = data?.choices?.[0]?.message;
+  const raw = message?.content;
 
-  if (typeof raw === "string") {
+  if (typeof raw === "string" && raw.trim()) {
     return raw.trim();
   }
 
@@ -47,14 +45,18 @@ function extractAnswer(data) {
       .trim();
   }
 
+  if (typeof data?.output_text === "string") {
+    return data.output_text.trim();
+  }
+
   return "";
 }
 
-// VALIDAR HISTÓRICO
 function safeHistory(history) {
   if (!Array.isArray(history)) return [];
 
-  return history.slice(-12)
+  return history
+    .slice(-12)
     .filter(item =>
       item &&
       ["user", "assistant"].includes(item.role) &&
@@ -67,12 +69,20 @@ function safeHistory(history) {
     }));
 }
 
-// PÁGINA PRINCIPAL
+async function readResponse(response) {
+  const raw = await response.text();
+
+  try {
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return { raw };
+  }
+}
+
 app.get("/", (_req, res) => {
   res.sendFile(path.join(root, "index.html"));
 });
 
-// STATUS DO SERVIDOR
 app.get("/api/health", (_req, res) => {
   res.json({
     status: "online",
@@ -81,7 +91,6 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
-// CHAT DA WSAZ_777
 app.post("/api/chat", async (req, res) => {
   try {
     const {
@@ -95,9 +104,7 @@ app.post("/api/chat", async (req, res) => {
       ? message.trim()
       : "";
 
-    const selectedImages = Array.isArray(images)
-      ? images
-      : [];
+    const selectedImages = Array.isArray(images) ? images : [];
 
     if (!text && !selectedImages.length) {
       return res.status(400).json({
@@ -137,10 +144,13 @@ app.post("/api/chat", async (req, res) => {
     const previousMessages = safeHistory(history);
 
     let response;
+    let data;
     let service;
 
-    // COM IMAGENS: OPENROUTER
-    if (selectedImages.length) {
+    // =====================================
+    // ANÁLISE DE IMAGENS - OPENROUTER
+    // =====================================
+    if (selectedImages.length > 0) {
       const apiKey = process.env.OPENROUTER_API_KEY;
 
       if (!apiKey) {
@@ -193,8 +203,13 @@ app.post("/api/chat", async (req, res) => {
         }
       );
 
-    } else {
-      // SEM IMAGENS: NVIDIA
+      data = await readResponse(response);
+    }
+
+    // =====================================
+    // CHAT DE TEXTO - NVIDIA
+    // =====================================
+    else {
       const apiKey = process.env.NVIDIA_API_KEY;
 
       if (!apiKey) {
@@ -205,52 +220,91 @@ app.post("/api/chat", async (req, res) => {
 
       service = "NVIDIA - TEXTO";
 
-      response = await fetch(
-        "https://integrate.api.nvidia.com/v1/chat/completions",
-        {
+      const model =
+        process.env.NVIDIA_TEXT_MODEL ||
+        "nvidia/nemotron-3-ultra-550b-a55b";
+
+      const messages = [
+        { role: "system", content: systemPrompt },
+        ...previousMessages,
+        { role: "user", content: text }
+      ];
+
+      const headers = {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json"
+      };
+
+      const endpoint =
+        "https://integrate.api.nvidia.com/v1/chat/completions";
+
+      // Primeira tentativa: configuração original.
+      response = await fetch(endpoint, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          model,
+          messages,
+          max_tokens: 1400,
+          temperature: 0.6,
+          stream: false,
+          chat_template_kwargs: {
+            enable_thinking: false,
+            force_nonempty_content: true
+          }
+        }),
+        signal: AbortSignal.timeout(90000)
+      });
+
+      data = await readResponse(response);
+
+      // Segunda tentativa: remove parâmetros extras que podem
+      // provocar erro 400 em modelos que não os aceitam.
+      if (response.status === 400) {
+        console.warn(
+          "NVIDIA retornou 400. Tentando novamente sem parâmetros extras."
+        );
+
+        response = await fetch(endpoint, {
           method: "POST",
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            "Content-Type": "application/json"
-          },
+          headers,
           body: JSON.stringify({
-            model:
-              process.env.NVIDIA_TEXT_MODEL ||
-              "nvidia/nemotron-3-ultra-550b-a55b",
-            messages: [
-              { role: "system", content: systemPrompt },
-              ...previousMessages,
-              { role: "user", content: text }
-            ],
+            model,
+            messages,
             max_tokens: 1400,
             temperature: 0.6,
-            stream: false,
-            chat_template_kwargs: {
-              enable_thinking: false,
-              force_nonempty_content: true
-            }
+            stream: false
           }),
           signal: AbortSignal.timeout(90000)
-        }
-      );
+        });
+
+        data = await readResponse(response);
+      }
     }
 
-    const data = await response.json().catch(() => ({}));
-
+    // =====================================
+    // TRATAMENTO DE ERROS
+    // =====================================
     if (!response.ok) {
-      console.error(
-        `ERRO ${service}:`,
-        response.status,
-        data?.error?.message || ""
-      );
+      console.error(`ERRO ${service}:`, {
+        status: response.status,
+        resposta: data
+      });
 
       let reply =
         "Não foi possível consultar a inteligência artificial.";
 
-      if (response.status === 401) {
-        reply = "A configuração da API está inválida.";
+      if (response.status === 400) {
+        reply =
+          "A API recusou a configuração da solicitação. Verifique o modelo configurado no Render.";
+      } else if (response.status === 401 || response.status === 403) {
+        reply =
+          "A chave da API é inválida ou não tem autorização para acessar esse serviço.";
       } else if (response.status === 402) {
         reply = "O serviço está sem créditos disponíveis.";
+      } else if (response.status === 404) {
+        reply =
+          "O modelo configurado não foi encontrado. Confira a variável de modelo no Render.";
       } else if (response.status === 429) {
         reply =
           "Limite de solicitações atingido. Tente novamente mais tarde.";
@@ -265,6 +319,8 @@ app.post("/api/chat", async (req, res) => {
     const answer = extractAnswer(data);
 
     if (!answer) {
+      console.error("Resposta sem texto:", data);
+
       return res.status(502).json({
         reply: "A IA não conseguiu gerar uma resposta. Tente novamente."
       });
@@ -290,7 +346,6 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// INICIALIZAÇÃO
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`WSAZ_777 ativo na porta ${PORT}`);
 });
