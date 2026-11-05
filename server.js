@@ -1,3 +1,4 @@
+
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -14,25 +15,83 @@ Você é o WSAZ_777, uma inteligência artificial de uso geral.
 
 PERSONALIDADE:
 - Responda em português brasileiro, salvo pedido contrário.
-- Seja natural, inteligente, educado e comunicativo.
-- Use emojis moderadamente.
-- Organize respostas com títulos, listas e exemplos quando útil.
-- Ajude com estudos, matemática, programação, tecnologia e conhecimentos gerais.
-- Não invente informações.
+- Seja natural, inteligente, educado, comunicativo e prestativo.
+- Tenha uma personalidade própria, confiante e profissional.
+- Use emojis moderadamente, somente quando fizer sentido.
+- Ajude com estudos, matemática, programação, tecnologia, computadores, Android, jogos e conhecimentos gerais.
+- Não invente informações, dados ou fontes.
 - Não apresente raciocínio interno.
 - Se não souber algo, seja transparente.
+- Considere o contexto das mensagens anteriores antes de responder.
+
+FORMATO E QUALIDADE DAS RESPOSTAS:
+
+O objetivo é produzir respostas bonitas, organizadas, profissionais e fáceis de ler.
+
+1. ORGANIZAÇÃO:
+- Use títulos curtos quando houver assuntos diferentes.
+- Separe os assuntos com espaçamento adequado.
+- Escreva parágrafos curtos e objetivos.
+- Não misture várias explicações diferentes no mesmo parágrafo.
+- Não repita a pergunta do usuário desnecessariamente.
+
+2. FORMATAÇÃO:
+- Evite excesso de asteriscos, negrito, emojis e símbolos.
+- Não coloque asteriscos em praticamente todas as frases.
+- Use negrito apenas para destacar informações realmente importantes.
+- Não utilize títulos em excesso.
+- Não use linhas decorativas sem necessidade.
+- Não transforme respostas simples em textos enormes.
+
+3. LISTAS E ETAPAS:
+- Use listas numeradas para tutoriais e procedimentos.
+- Use marcadores para apresentar opções e características.
+- Explique procedimentos em uma sequência lógica.
+- Não crie listas quando uma frase simples resolver a pergunta.
+
+4. CÓDIGOS E TECNOLOGIA:
+- Apresente códigos em blocos de código apropriados.
+- Explique onde colocar cada código quando necessário.
+- Organize comandos e instruções por etapas.
+- Não invente comandos ou configurações.
+- Antes de recomendar alterações importantes no sistema, explique possíveis riscos.
+
+5. CONVERSAÇÃO:
+- Em perguntas simples, responda diretamente.
+- Em conversas informais, fale de maneira natural e humana.
+- Em assuntos técnicos, seja preciso e didático.
+- Em assuntos complexos, aprofunde a explicação sem enrolar.
+
+6. COMPARAÇÕES:
+- Utilize tabelas quando realmente facilitarem a comparação.
+- Mostre vantagens, desvantagens e diferenças relevantes.
+- Não invente preços, especificações ou resultados.
+
+7. QUALIDADE:
+- Priorize clareza, precisão e utilidade.
+- Evite repetir informações.
+- Não utilize frases genéricas apenas para aumentar o tamanho da resposta.
+- Entregue primeiro a informação mais importante.
+- Adapte o tamanho da resposta à complexidade da pergunta.
+
+SEGURANÇA E CONFIABILIDADE:
+- Não ajude a criar ferramentas para roubar contas, invadir sistemas ou prejudicar outras pessoas.
+- Não prometa resultados impossíveis ou garantias que não pode cumprir.
+- Em assuntos de segurança digital, priorize orientações legítimas e preventivas.
 `;
 
 const RESPONSE_STYLES = {
-  concise: "Responda de forma curta, direta e objetiva.",
-  normal: "Explique com clareza e organização.",
-  detailed: "Explique com profundidade, etapas e exemplos quando útil."
+  concise: "Responda de forma curta, direta e objetiva. Preserve a clareza.",
+  normal: "Explique com clareza, naturalidade e boa organização.",
+  detailed: "Explique com profundidade, etapas e exemplos quando forem úteis. Evite repetições."
 };
 
 function extractAnswer(data) {
   const raw = data?.choices?.[0]?.message?.content;
 
-  if (typeof raw === "string") return raw.trim();
+  if (typeof raw === "string") {
+    return raw.trim();
+  }
 
   if (Array.isArray(raw)) {
     return raw
@@ -84,9 +143,12 @@ app.post("/api/chat", async (req, res) => {
       responseStyle = "normal"
     } = req.body || {};
 
-    const text = typeof message === "string" ? message.trim() : "";
+    const text = typeof message === "string"
+      ? message.trim()
+      : "";
+
     const selectedImages = Array.isArray(images)
-      ? images
+      ? [...images]
       : [];
 
     if (image && typeof image === "string") {
@@ -123,8 +185,20 @@ app.post("/api/chat", async (req, res) => {
       }
     }
 
-    const style = RESPONSE_STYLES[responseStyle] || RESPONSE_STYLES.normal;
-    const systemPrompt = `${BASE_PROMPT}\n\nESTILO: ${style}`;
+    const style = RESPONSE_STYLES[responseStyle]
+      || RESPONSE_STYLES.normal;
+
+    const systemPrompt = `
+${BASE_PROMPT}
+
+ESTILO DE RESPOSTA SELECIONADO:
+${style}
+
+IMPORTANTE:
+Mantenha o padrão de organização em todas as respostas.
+Não exagere na formatação Markdown.
+Evite asteriscos desnecessários.
+`;
 
     const previousMessages = safeHistory(history);
 
@@ -167,11 +241,13 @@ app.post("/api/chat", async (req, res) => {
             model:
               process.env.OPENROUTER_VISION_MODEL ||
               "nvidia/nemotron-3.5-super-vl:free",
+
             messages: [
               {
                 role: "system",
-                content: systemPrompt +
-                  " Você também é especialista em interpretar imagens, fotografias, documentos e gráficos."
+                content:
+                  systemPrompt +
+                  "\nVocê também é especialista em interpretar imagens, fotografias, documentos e gráficos. Descreva apenas o que conseguir observar."
               },
               ...previousMessages,
               {
@@ -179,12 +255,14 @@ app.post("/api/chat", async (req, res) => {
                 content
               }
             ],
+
             max_tokens: 1400,
             temperature: 0.4
           }),
           signal: AbortSignal.timeout(90000)
         }
       );
+
     } else {
       const apiKey = process.env.NVIDIA_API_KEY;
 
@@ -208,6 +286,7 @@ app.post("/api/chat", async (req, res) => {
             model:
               process.env.NVIDIA_TEXT_MODEL ||
               "nvidia/nemotron-3-ultra-550b-a55b",
+
             messages: [
               {
                 role: "system",
@@ -219,9 +298,11 @@ app.post("/api/chat", async (req, res) => {
                 content: text
               }
             ],
+
             max_tokens: 1400,
             temperature: 0.6,
             stream: false,
+
             chat_template_kwargs: {
               enable_thinking: false,
               force_nonempty_content: true
@@ -241,16 +322,19 @@ app.post("/api/chat", async (req, res) => {
         data?.error?.message || ""
       );
 
-      let reply = "Não foi possível consultar a inteligência artificial.";
+      let reply =
+        "Não foi possível consultar a inteligência artificial.";
 
       if (response.status === 401) {
         reply = "A configuração da API está inválida.";
       } else if (response.status === 402) {
         reply = "O serviço está sem créditos disponíveis.";
       } else if (response.status === 429) {
-        reply = "Limite de solicitações atingido. Tente novamente mais tarde.";
+        reply =
+          "Limite de solicitações atingido. Tente novamente mais tarde.";
       } else if (response.status >= 500) {
-        reply = "O serviço de IA está temporariamente indisponível.";
+        reply =
+          "O serviço de IA está temporariamente indisponível.";
       }
 
       return res.status(502).json({ reply });
@@ -260,18 +344,24 @@ app.post("/api/chat", async (req, res) => {
 
     if (!answer) {
       return res.status(502).json({
-        reply: "A IA não conseguiu gerar uma resposta. Tente novamente."
+        reply:
+          "A IA não conseguiu gerar uma resposta. Tente novamente."
       });
     }
 
-    console.log(`${service}: resposta concluída. Estilo: ${responseStyle}`);
+    console.log(
+      `${service}: resposta concluída. Estilo: ${responseStyle}`
+    );
 
     return res.json({ reply: answer });
 
   } catch (error) {
     console.error("ERRO SERVIDOR:", error);
 
-    const timeout = ["TimeoutError", "AbortError"].includes(error?.name);
+    const timeout = [
+      "TimeoutError",
+      "AbortError"
+    ].includes(error?.name);
 
     return res.status(timeout ? 504 : 500).json({
       reply: timeout
