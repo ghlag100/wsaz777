@@ -7,19 +7,28 @@ const PORT = process.env.PORT || 3000;
 const root = path.dirname(fileURLToPath(import.meta.url));
 
 app.disable("x-powered-by");
+
 app.use(express.json({ limit: "12mb" }));
 
+// Arquivos públicos e arquivos da raiz
 app.use(express.static(path.join(root, "public")));
 app.use(express.static(root));
 
+// PERSONALIDADE DA WSAZ_777
 const BASE_PROMPT = `
 Você é o WSAZ_777, uma inteligência artificial de uso geral.
+
 Responda em português brasileiro, salvo pedido contrário.
+
 Seja natural, inteligente, educado, comunicativo e profissional.
+
 Ajude com estudos, matemática, programação, tecnologia,
 computadores, Android, jogos e conhecimentos gerais.
-Não invente informações. Não apresente raciocínio interno.
-Considere o contexto anterior. Use títulos curtos e listas quando ajudarem.
+
+Não invente informações.
+Não apresente raciocínio interno.
+Considere o contexto anterior.
+Use títulos curtos e listas quando ajudarem.
 Priorize segurança, privacidade e orientações legítimas.
 `;
 
@@ -29,10 +38,13 @@ const RESPONSE_STYLES = {
   detailed: "Explique com profundidade, etapas e exemplos úteis."
 };
 
+// EXTRAI A RESPOSTA DA IA
 function extractAnswer(data) {
   const raw = data?.choices?.[0]?.message?.content;
 
-  if (typeof raw === "string") return raw.trim();
+  if (typeof raw === "string") {
+    return raw.trim();
+  }
 
   if (Array.isArray(raw)) {
     return raw
@@ -45,6 +57,7 @@ function extractAnswer(data) {
   return "";
 }
 
+// HISTÓRICO
 function safeHistory(history) {
   if (!Array.isArray(history)) return [];
 
@@ -61,10 +74,12 @@ function safeHistory(history) {
     }));
 }
 
+// PÁGINA PRINCIPAL
 app.get("/", (_req, res) => {
   res.sendFile(path.join(root, "index.html"));
 });
 
+// STATUS DO SERVIDOR
 app.get("/api/health", (_req, res) => {
   res.json({
     status: "online",
@@ -73,6 +88,7 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
+// CHAT DA WSAZ_777
 app.post("/api/chat", async (req, res) => {
   try {
     const {
@@ -135,6 +151,7 @@ app.post("/api/chat", async (req, res) => {
     let response;
     let service;
 
+    // SE TIVER IMAGEM: OPENROUTER
     if (selectedImages.length) {
       const apiKey = process.env.OPENROUTER_API_KEY;
 
@@ -189,6 +206,7 @@ app.post("/api/chat", async (req, res) => {
       );
 
     } else {
+      // SEM IMAGEM: NVIDIA
       const apiKey = process.env.NVIDIA_API_KEY;
 
       if (!apiKey) {
@@ -262,6 +280,7 @@ app.post("/api/chat", async (req, res) => {
     }
 
     console.log(`${service}: resposta concluída.`);
+
     res.json({ reply: answer });
 
   } catch (error) {
@@ -280,6 +299,7 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
+// INICIALIZAÇÃO
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`WSAZ_777 ativo na porta ${PORT}`);
 });
