@@ -7,28 +7,21 @@ const PORT = process.env.PORT || 3000;
 const root = path.dirname(fileURLToPath(import.meta.url));
 
 app.disable("x-powered-by");
-
 app.use(express.json({ limit: "12mb" }));
 
-// Arquivos públicos e arquivos da raiz
+// ARQUIVOS PÚBLICOS
 app.use(express.static(path.join(root, "public")));
 app.use(express.static(root));
 
 // PERSONALIDADE DA WSAZ_777
 const BASE_PROMPT = `
 Você é o WSAZ_777, uma inteligência artificial de uso geral.
-
 Responda em português brasileiro, salvo pedido contrário.
-
 Seja natural, inteligente, educado, comunicativo e profissional.
-
-Ajude com estudos, matemática, programação, tecnologia,
-computadores, Android, jogos e conhecimentos gerais.
-
-Não invente informações.
-Não apresente raciocínio interno.
-Considere o contexto anterior.
-Use títulos curtos e listas quando ajudarem.
+Ajude com estudos, matemática, programação, tecnologia, computadores,
+Android, jogos e conhecimentos gerais.
+Não invente informações. Não apresente raciocínio interno.
+Considere o contexto anterior. Use títulos curtos e listas quando ajudarem.
 Priorize segurança, privacidade e orientações legítimas.
 `;
 
@@ -38,7 +31,7 @@ const RESPONSE_STYLES = {
   detailed: "Explique com profundidade, etapas e exemplos úteis."
 };
 
-// EXTRAI A RESPOSTA DA IA
+// EXTRAIR RESPOSTA DA IA
 function extractAnswer(data) {
   const raw = data?.choices?.[0]?.message?.content;
 
@@ -48,8 +41,8 @@ function extractAnswer(data) {
 
   if (Array.isArray(raw)) {
     return raw
-      .filter(x => x?.type === "text" && x.text)
-      .map(x => x.text)
+      .filter(item => item?.type === "text" && item.text)
+      .map(item => item.text)
       .join("\n")
       .trim();
   }
@@ -57,20 +50,20 @@ function extractAnswer(data) {
   return "";
 }
 
-// HISTÓRICO
+// VALIDAR HISTÓRICO
 function safeHistory(history) {
   if (!Array.isArray(history)) return [];
 
   return history.slice(-12)
-    .filter(x =>
-      x &&
-      ["user", "assistant"].includes(x.role) &&
-      typeof x.content === "string" &&
-      x.content.trim()
+    .filter(item =>
+      item &&
+      ["user", "assistant"].includes(item.role) &&
+      typeof item.content === "string" &&
+      item.content.trim()
     )
-    .map(x => ({
-      role: x.role,
-      content: x.content.slice(0, 5000)
+    .map(item => ({
+      role: item.role,
+      content: item.content.slice(0, 5000)
     }));
 }
 
@@ -93,7 +86,6 @@ app.post("/api/chat", async (req, res) => {
   try {
     const {
       message = "",
-      image,
       images = [],
       history = [],
       responseStyle = "normal"
@@ -104,12 +96,8 @@ app.post("/api/chat", async (req, res) => {
       : "";
 
     const selectedImages = Array.isArray(images)
-      ? [...images]
+      ? images
       : [];
-
-    if (image && typeof image === "string") {
-      selectedImages.push(image);
-    }
 
     if (!text && !selectedImages.length) {
       return res.status(400).json({
@@ -151,7 +139,7 @@ app.post("/api/chat", async (req, res) => {
     let response;
     let service;
 
-    // SE TIVER IMAGEM: OPENROUTER
+    // COM IMAGENS: OPENROUTER
     if (selectedImages.length) {
       const apiKey = process.env.OPENROUTER_API_KEY;
 
@@ -206,7 +194,7 @@ app.post("/api/chat", async (req, res) => {
       );
 
     } else {
-      // SEM IMAGEM: NVIDIA
+      // SEM IMAGENS: NVIDIA
       const apiKey = process.env.NVIDIA_API_KEY;
 
       if (!apiKey) {
@@ -256,16 +244,19 @@ app.post("/api/chat", async (req, res) => {
         data?.error?.message || ""
       );
 
-      let reply = "Não foi possível consultar a inteligência artificial.";
+      let reply =
+        "Não foi possível consultar a inteligência artificial.";
 
       if (response.status === 401) {
         reply = "A configuração da API está inválida.";
       } else if (response.status === 402) {
         reply = "O serviço está sem créditos disponíveis.";
       } else if (response.status === 429) {
-        reply = "Limite de solicitações atingido. Tente novamente mais tarde.";
+        reply =
+          "Limite de solicitações atingido. Tente novamente mais tarde.";
       } else if (response.status >= 500) {
-        reply = "O serviço de IA está temporariamente indisponível.";
+        reply =
+          "O serviço de IA está temporariamente indisponível.";
       }
 
       return res.status(502).json({ reply });
@@ -281,7 +272,7 @@ app.post("/api/chat", async (req, res) => {
 
     console.log(`${service}: resposta concluída.`);
 
-    res.json({ reply: answer });
+    return res.json({ reply: answer });
 
   } catch (error) {
     console.error("ERRO SERVIDOR:", error);
@@ -291,7 +282,7 @@ app.post("/api/chat", async (req, res) => {
       "AbortError"
     ].includes(error?.name);
 
-    res.status(timeout ? 504 : 500).json({
+    return res.status(timeout ? 504 : 500).json({
       reply: timeout
         ? "A solicitação demorou demais. Tente novamente."
         : "Erro interno ao processar sua solicitação."
