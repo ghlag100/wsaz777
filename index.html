@@ -2,716 +2,456 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#080d16">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0c11">
+<meta name="description" content="WSAZ_777 — Neural Core, inteligência artificial e otimização.">
 <title>WSAZ_777 | Neural Core</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root {
-  --bg:#080d16;
-  --panel:#101a29;
-  --line:#203b52;
-  --cyan:#35e5ff;
-  --text:#edf8ff;
-  --muted:#91a6ba;
-}
-
-* { box-sizing:border-box; }
-
-body {
-  margin:0;
-  background:radial-gradient(ellipse at top,#12324a,transparent 45%),var(--bg);
-  color:var(--text);
-  font-family:Inter,Arial,sans-serif;
-}
-
-button,input,textarea { font:inherit; }
-button { cursor:pointer; }
-
-.hidden { display:none!important; }
-
-/* ACESSO */
-
-#accessGate {
-  min-height:100vh;
-  display:grid;
-  place-items:center;
-  padding:20px;
-}
-
-.access-card {
-  width:min(100%,420px);
-  padding:28px;
-  border:1px solid #28536b;
-  border-radius:20px;
-  background:#0d1928;
-  text-align:center;
-}
-
-.access-logo {
-  font:800 28px Orbitron;
-  color:var(--cyan);
-  text-shadow:0 0 22px #35e5ff77;
-}
-
-.field {
-  width:100%;
-  padding:14px;
-  margin:8px 0;
-  border-radius:10px;
-  border:1px solid #31516b;
-  background:#071321;
-  color:white;
-}
-
-.primary {
-  border:0;
-  border-radius:10px;
-  padding:13px 18px;
-  background:linear-gradient(120deg,#0c9dbb,#1768b8);
-  color:white;
-  font-weight:800;
-}
-
-.access-card button { width:100%; }
-
-/* PAINEL */
-
-#app { display:none; }
-
-.sidebar {
-  position:fixed;
-  inset:0 auto 0 0;
-  width:245px;
-  padding:22px 16px;
-  background:#081321;
-  border-right:1px solid var(--line);
-  z-index:20;
-}
-
-.brand {
-  font:800 18px Orbitron;
-  color:var(--cyan);
-  letter-spacing:2px;
-  padding:8px 9px 25px;
-}
-
-.nav-label {
-  font-size:10px;
-  color:#66829b;
-  margin:18px 9px 8px;
-}
-
-.nav button {
-  display:block;
-  width:100%;
-  text-align:left;
-  padding:13px;
-  border-radius:9px;
-  border:1px solid transparent;
-  background:transparent;
-  color:#b5c9d9;
-  margin:3px 0;
-}
-
-.nav button.active,
-.nav button:hover {
-  color:var(--cyan);
-  background:#0d2b40;
-  border-color:#24516b;
-}
-
-.main { margin-left:245px; }
-
-.topbar {
-  height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 25px;
-  background:#091321;
-  border-bottom:1px solid var(--line);
-}
-
-.topbar span {
-  color:var(--cyan);
-  font-size:10px;
-}
-
-.content {
-  max-width:1400px;
-  margin:auto;
-  padding:25px;
-}
-
-.page { display:none; }
-.page.active { display:block; }
-
-.hero {
-  padding:22px;
-  border:1px solid var(--line);
-  border-radius:17px;
-  background:linear-gradient(120deg,#11283b,#0b1727);
-  margin-bottom:18px;
-}
-
-.eyebrow {
-  font:10px Orbitron;
-  color:var(--cyan);
-  letter-spacing:2px;
-}
-
-.hero h1 { font-size:30px; }
-
-.hero p,.muted {
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.7;
-}
-
-/* IA */
-
-.ai-panel,.card {
-  border:1px solid var(--line);
-  border-radius:16px;
-  background:linear-gradient(145deg,#122238,#0b1625);
-  overflow:hidden;
-}
-
-.ai-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:15px;
-  background:#12263a;
-}
-
-.ai-title {
-  font:700 13px Orbitron;
-  color:var(--cyan);
-}
-
-.chat {
-  height:480px;
-  overflow:auto;
-  padding:18px;
-  background:#091321;
-}
-
-.message {
-  display:flex;
-  gap:9px;
-  margin-bottom:15px;
-}
-
-.message.user { flex-direction:row-reverse; }
-
-.avatar {
-  width:32px;
-  height:32px;
-  flex-shrink:0;
-  border-radius:10px;
-  display:grid;
-  place-items:center;
-  background:#123b51;
-  color:var(--cyan);
-}
-
-.bubble {
-  max-width:88%;
-  padding:12px 14px;
-  border:1px solid #24445d;
-  border-radius:4px 13px 13px 13px;
-  background:#112238;
-  font-size:12px;
-  line-height:1.8;
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
-}
-
-.message.user .bubble {
-  background:#103653;
-  border-radius:13px 4px 13px 13px;
-}
-
-.bubble img {
-  display:block;
-  max-width:250px;
-  max-height:220px;
-  object-fit:contain;
-  border-radius:9px;
-  margin-top:8px;
-}
-
-.composer {
-  padding:13px;
-  border-top:1px solid var(--line);
-  background:#0e1b2b;
-}
-
-.preview-list {
-  display:flex;
-  gap:9px;
-  flex-wrap:wrap;
-  margin-bottom:10px;
-}
-
-.preview-item { position:relative; }
-
-.preview-item img {
-  width:70px;
-  height:70px;
-  object-fit:cover;
-  border-radius:9px;
-}
-
-.preview-item button {
-  position:absolute;
-  right:-5px;
-  top:-5px;
-  border:0;
-  border-radius:50%;
-  background:#ff586d;
-  color:white;
-}
-
-.input-row {
-  display:flex;
-  gap:8px;
-  align-items:end;
-}
-
-.input-row textarea {
-  flex:1;
-  min-width:0;
-  min-height:46px;
-  padding:13px;
-  background:#071321;
-  border:1px solid #31516b;
-  border-radius:10px;
-  color:white;
-}
-
-.tool,.send {
-  height:46px;
-  min-width:44px;
-  border:1px solid #31516b;
-  border-radius:10px;
-  background:#10283b;
-  color:var(--cyan);
-}
-
-.send {
-  background:var(--cyan);
-  color:#05202b;
-}
-
-/* OTIMIZAÇÃO */
-
-.mobile-hero {
-  padding:24px;
-  border-radius:18px;
-  border:1px solid #23617a;
-  background:linear-gradient(120deg,#10283d,#0a1727);
-}
-
-.benefits {
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-  margin-top:15px;
-}
-
-.benefit {
-  padding:17px;
-  border:1px solid #24475f;
-  border-radius:13px;
-  background:#0e1d2d;
-}
-
-.benefit b {
-  display:block;
-  color:#dffaff;
-  margin-bottom:7px;
-}
-
-.benefit span {
-  font-size:11px;
-  line-height:1.6;
-  color:var(--muted);
-}
-
-/* HOLOGRAMA */
-
-.holo-wrap {
-  height:460px;
-  position:relative;
-  overflow:hidden;
-  border:1px solid #28556e;
-  border-radius:18px;
-  background:radial-gradient(ellipse at center,#12354a,#08121f 68%);
-}
-
-#holoCanvas {
-  width:100%;
-  height:100%;
-  display:block;
-}
-
-/* ADMIN */
-
-.admin-row {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.card {
-  padding:18px;
-  margin-bottom:14px;
-}
-
-.admin-output {
-  padding:12px;
-  border:1px dashed var(--cyan);
-  color:var(--cyan);
-  overflow-wrap:anywhere;
-}
-
-@media(max-width:760px) {
-  .sidebar {
-    width:265px;
-    transform:translateX(-105%);
-    transition:.25s;
-  }
-
-  .sidebar.open { transform:translateX(0); }
-
-  .main { margin-left:0; }
-
-  .content { padding:15px 12px; }
-
-  .benefits { grid-template-columns:1fr; }
-
-  .chat { height:48vh; }
-
-  .admin-row { grid-template-columns:1fr; }
-
-  .holo-wrap { height:380px; }
-}
+:root{--bg:#090a0f;--panel:#11131b;--panel2:#171a24;--line:#252a38;--red:#e32636;--red2:#ff5362;--text:#f4f5fa;--muted:#9298aa;--green:#37d69a;--cyan:#54dfff;--gold:#e8c56b}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(ellipse at 80% 0%,#271018 0,transparent 32%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+a{color:inherit;text-decoration:none}
+#intro{position:fixed;inset:0;z-index:1000;background:#08090e;display:grid;place-items:center;transition:.65s;padding:24px}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+.boot-grid{position:absolute;inset:0;opacity:.15;background-image:linear-gradient(#e3263618 1px,transparent 1px),linear-gradient(90deg,#e3263618 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(transparent,#000,transparent)}
+.intro-content{position:relative;text-align:center;width:min(100%,520px)}
+.intro-photo{width:112px;height:112px;object-fit:cover;object-position:center 28%;border-radius:27px;border:1px solid #ffffff35;box-shadow:0 0 55px #e3263650;margin-bottom:22px}
+.kicker{font:11px Orbitron;letter-spacing:5px;color:#ff6977}
+.intro-content h1{font:800 clamp(35px,9vw,66px) Orbitron;margin:14px 0;text-shadow:0 0 28px #e3263650}
+.intro-content p{color:#9397a5;font-size:11px;letter-spacing:3px}
+.intro-brand{margin:25px 0;font-weight:900;letter-spacing:4px}
+.primary{border:0;border-radius:12px;padding:16px 28px;background:linear-gradient(135deg,var(--red),#a80e23);color:white;font-weight:900;letter-spacing:1px;box-shadow:0 10px 35px #e3263640}
+.primary:hover{filter:brightness(1.12);transform:translateY(-1px)}
+.boot-status{font:10px Orbitron;color:#858b9b;margin-top:22px;letter-spacing:2px}
+.shell{min-height:100vh;display:grid;grid-template-columns:260px minmax(0,1fr)}
+.sidebar{height:100vh;position:sticky;top:0;background:#101117;border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;z-index:80}
+.brand{display:flex;gap:12px;align-items:center;padding:4px 8px 23px;border-bottom:1px solid var(--line)}
+.brand-mark,.ai-logo{width:44px;height:44px;border-radius:13px;background:linear-gradient(145deg,#fa3448,#a90e24);display:grid;place-items:center;font-size:23px;box-shadow:0 8px 24px #e3263630}
+.brand-name{font:800 14px Orbitron}
+.brand-sub{font-size:8px;color:#8b91a1;letter-spacing:1.6px;margin-top:5px}
+.nav-label{font-size:9px;letter-spacing:2px;color:#73798a;font-weight:900;margin:27px 10px 10px}
+.nav-btn{width:100%;border:0;background:transparent;color:#b7bdca;padding:13px 12px;border-radius:10px;text-align:left;display:flex;align-items:center;gap:12px;font-size:11px;font-weight:750;margin:3px 0;transition:.2s}
+.nav-btn span:first-child{width:21px;text-align:center;font-size:17px}
+.nav-btn:hover,.nav-btn.active{background:#e32636;color:#fff;box-shadow:0 8px 24px #e326362b}
+.nav-spacer{flex:1}
+.profile{border-top:1px solid var(--line);padding:17px 7px 5px;display:flex;align-items:center;gap:10px}
+.profile img{width:36px;height:36px;object-fit:cover;object-position:center 25%;border-radius:50%}
+.profile b{font-size:10px}
+.profile small{display:block;color:#83899a;font-size:9px;margin-top:4px}
+.main{min-width:0}
+.topbar{height:72px;position:sticky;top:0;z-index:50;background:#0c0e14eF;backdrop-filter:blur(18px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px}
+.top-left{display:flex;align-items:center;gap:13px}
+.menu-toggle{display:none;background:none;color:white;border:0;font-size:24px}
+.top-title{font-size:13px;font-weight:850}
+.top-sub{font-size:9px;color:#7f8798;margin-top:4px}
+.status{color:var(--green);font-size:9px;font-weight:900;display:flex;align-items:center;gap:8px}
+.status i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+.content{max-width:1500px;margin:auto;padding:28px 30px 50px}
+.page{display:none;animation:appear .35s ease}
+.page.active{display:block}
+@keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:22px}
+.eyebrow{color:var(--red2);font:10px Orbitron;letter-spacing:2.5px}
+.hero h1{font-size:clamp(23px,3vw,34px);letter-spacing:-1.3px;margin:9px 0}
+.hero p{color:var(--muted);font-size:12px;line-height:1.7;margin:0}
+.pill{border:1px solid #34394a;color:#b7bdca;background:#171a23;padding:9px 12px;border-radius:30px;font-size:9px;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:15px}
+.card{background:linear-gradient(145deg,#171a24,#10121a);border:1px solid var(--line);border-radius:17px;padding:19px;min-width:0;box-shadow:0 12px 40px #0002}
+.card h3{font-size:13px;margin:0 0 8px}
+.muted{color:var(--muted);font-size:11px;line-height:1.75}
+.stat{grid-column:span 3}
+.stat strong{font:700 23px Orbitron;display:block;margin:9px 0 5px}
+.stat small{font-size:9px;color:#8991a3}
+.wide{grid-column:span 8}
+.narrow{grid-column:span 4}
+.full{grid-column:1/-1}
+.feature{display:flex;align-items:center;gap:13px}
+.feature-icon{width:42px;height:42px;flex:0 0 42px;border-radius:13px;background:#e326361b;color:#ff7180;display:grid;place-items:center;font-size:20px}
+.feature h3{margin:0 0 5px}
+.feature p{margin:0;color:var(--muted);font-size:10px;line-height:1.6}
+.ai-panel{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#10121a}
+.ai-head{padding:16px 19px;background:#191c27;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ai-identity{display:flex;align-items:center;gap:11px}
+.ai-logo{width:39px;height:39px}
+.ai-title{font:700 12px Orbitron}
+.ai-sub{font-size:9px;color:#969cac;margin-top:4px}
+.ai-head select{background:#242835;color:white;border:1px solid #3a4051;border-radius:8px;padding:9px;font-size:10px}
+.chat{height:min(55vh,570px);min-height:340px;overflow:auto;padding:22px;background:#0d0f16}
+.message{display:flex;gap:10px;margin-bottom:18px;align-items:flex-start}
+.message.user{flex-direction:row-reverse}
+.avatar{width:31px;height:31px;flex:0 0 31px;border-radius:9px;background:#282d3b;display:grid;place-items:center;font-size:12px}
+.user .avatar{background:var(--red)}
+.bubble{max-width:min(84%,760px);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8;font-size:12px;background:#181c27;border:1px solid #2a3040;border-radius:4px 13px 13px 13px;padding:12px 15px}
+.user .bubble{background:#351920;border-color:#62303a;border-radius:13px 4px 13px 13px}
+.bubble img{max-width:210px;max-height:170px;display:block;border-radius:9px;margin-top:8px}
+.message-actions{margin-top:9px}
+.message-actions button{background:#252a38;border:1px solid #353c4e;color:#cbd0dc;padding:6px 9px;border-radius:7px;font-size:10px}
+.typing{display:none;color:#9aa2b5;font-size:10px;padding:0 20px 12px}
+.composer{border-top:1px solid var(--line);padding:14px;background:#141720}
+.preview-list{display:flex;gap:8px;margin-bottom:9px;flex-wrap:wrap}
+.preview-item{position:relative}
+.preview-item img{width:55px;height:55px;object-fit:cover;border-radius:8px}
+.preview-item button{position:absolute;right:-5px;top:-5px;background:var(--red);color:#fff;border:0;border-radius:50%;width:20px;height:20px}
+.input-row{display:flex;gap:8px;align-items:end}
+.tool-btn,.send-btn{height:45px;min-width:44px;border:1px solid #343a4a;background:#202431;color:#dce0e9;border-radius:10px;font-size:17px}
+.send-btn{background:var(--red);border-color:var(--red);color:white;font-size:20px}
+.send-btn:disabled{opacity:.5}
+#messageInput{flex:1;min-width:0;resize:vertical;min-height:45px;max-height:130px;background:#0e1119;color:white;border:1px solid #343a4a;border-radius:10px;padding:13px;outline:none;font-size:12px}
+#messageInput:focus{border-color:var(--red)}
+.note{font-size:9px;color:#788093;margin:9px 3px 0}
+.cards-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.resource-card{background:linear-gradient(145deg,#171b27,#10121a);border:1px solid var(--line);border-radius:15px;padding:17px}
+.resource-card .tag{font:9px Orbitron;color:#ff7180;letter-spacing:1.4px}
+.resource-card h3{font-size:14px;margin:11px 0 7px}
+.resource-card p{font-size:10px;line-height:1.7;color:var(--muted);min-height:52px}
+.resource-card a{color:#ff7581;font-size:10px;font-weight:800}
+.resource-card button{border:1px solid #41485a;color:#fff;background:#252a38;border-radius:8px;padding:9px 11px;font-size:10px}
+.holo-wrap{position:relative;min-height:430px;border:1px solid #28394b;border-radius:20px;overflow:hidden;background:radial-gradient(ellipse at center,#112b3c 0,#0b121c 40%,#090b12 75%);display:grid;place-items:center}
+.holo-wrap:before,.holo-wrap:after{content:"";position:absolute;width:310px;height:310px;border:1px solid #50dfff35;border-radius:50%;box-shadow:0 0 50px #28cfff14,inset 0 0 50px #28cfff12}
+.holo-wrap:after{width:390px;height:390px;border-style:dashed;animation:spin 35s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#holoCanvas{position:absolute;inset:0;width:100%;height:100%}
+.holo-label{position:absolute;bottom:18px;left:20px;right:20px;display:flex;justify-content:space-between;color:#65dcf4;font:9px Orbitron;letter-spacing:1.5px;pointer-events:none}
+.holo-copy{position:absolute;top:18px;left:20px;color:#a8d9e7;font:9px Orbitron;letter-spacing:1.5px;pointer-events:none}
+.holo-controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.ghost-btn{background:#1b2230;border:1px solid #344254;color:#ccebf4;padding:10px 13px;border-radius:9px;font-size:10px}
+.form-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.field{flex:1;min-width:140px;background:#0c0f17;border:1px solid #343a4b;color:white;border-radius:9px;padding:12px;outline:none;font-size:11px}
+.result{margin-top:13px;padding:13px;border:1px solid #2d394b;border-radius:10px;color:#b8c5d5;font-size:11px;line-height:1.7;overflow-wrap:anywhere}
+.hidden{display:none!important}
+.footer{text-align:center;color:#687083;font-size:9px;padding:28px 10px}
+.overlay{display:none;position:fixed;inset:0;background:#0009;z-index:70}
+.overlay.show{display:block}
+@media(max-width:950px){.shell{grid-template-columns:225px 1fr}.stat{grid-column:span 6}.wide,.narrow{grid-column:span 12}.cards-3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:680px){.shell{display:block}.sidebar{position:fixed;left:-280px;top:0;bottom:0;width:260px;height:100dvh;transition:left .25s;box-shadow:12px 0 40px #0008}.sidebar.open{left:0}.menu-toggle{display:block}.overlay.show{display:block}.topbar{height:62px;padding:0 13px}.top-title{font-size:11px}.top-sub{font-size:8px}.status{font-size:8px}.content{padding:20px 12px 35px}.hero{align-items:flex-start;flex-direction:column}.hero h1{font-size:25px}.stat{grid-column:span 6;padding:14px}.stat strong{font-size:19px}.cards-3{grid-template-columns:1fr}.chat{height:52dvh;min-height:320px;padding:14px 10px}.bubble{max-width:88%;font-size:12px;padding:10px}.ai-head{padding:12px}.ai-head select{max-width:100px}.composer{padding:10px 8px}.input-row{gap:5px}.tool-btn,.send-btn{min-width:37px;height:42px}#messageInput{font-size:12px;padding:11px}.holo-wrap{min-height:350px}.holo-wrap:before{width:230px;height:230px}.holo-wrap:after{width:285px;height:285px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 </style>
 </head>
 
 <body>
-
-<!-- ACESSO POR KEY -->
-
-<section id="accessGate">
-  <div class="access-card">
-    <div class="access-logo">WSAZ_777</div>
-    <p>NEURAL CORE · ÁREA DE ACESSO</p>
-
-    <h2>🔐 Acesso ao painel</h2>
-    <p>Insira a KEY fornecida pelo administrador.</p>
-
-    <input class="field" id="accessKey"
-      placeholder="WSAZ-777-XXXXXX-XXXXXX">
-
-    <button class="primary" id="accessBtn">
-      VALIDAR E ENTRAR
-    </button>
-
-    <p id="accessError"></p>
+<div id="intro">
+  <div class="boot-grid"></div>
+  <div class="intro-content">
+    <img class="intro-photo" src="/wallace.png" alt="Foto de Wallace">
+    <div class="kicker">ARTIFICIAL INTELLIGENCE</div>
+    <h1>WSAZ_777</h1>
+    <p>YOUR AI. YOUR POSSIBILITIES.</p>
+    <div class="intro-brand">STORE DE WALLACE</div>
+    <button class="primary" onclick="enterSite()">INICIALIZAR SISTEMA&nbsp; →</button>
+    <div class="boot-status" id="bootStatus">NEURAL CORE · AGUARDANDO AUTORIZAÇÃO</div>
   </div>
-</section>
+</div>
 
-<!-- PAINEL -->
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
 
-<div id="app">
-
+<div class="shell">
 <aside class="sidebar" id="sidebar">
-
   <div class="brand">
-    WSAZ_777
-    <small>NEURAL CORE · AI SYSTEM</small>
+    <div class="brand-mark">♛</div>
+    <div>
+      <div class="brand-name">WSAZ_777</div>
+      <div class="brand-sub">ARTIFICIAL INTELLIGENCE</div>
+    </div>
   </div>
 
-  <div class="nav-label">INTELIGÊNCIA</div>
+  <div class="nav-label">MENU PRINCIPAL</div>
+  <button class="nav-btn active" data-page="assistant"><span>⌘</span>Assistente IA</button>
+  <button class="nav-btn" data-page="cloud"><span>◉</span>Neural Cloud 360°</button>
 
-  <nav class="nav">
-    <button class="active" data-page="assistant">🤖 Assistente IA</button>
-    <button data-page="cloud">☁️ Neural Cloud 360°</button>
+  <div class="nav-label">OTIMIZAÇÃO</div>
+  <button class="nav-btn" data-page="pc"><span>▣</span>Otimização para PC</button>
+  <button class="nav-btn" data-page="mobile"><span>▧</span>Otimização mobile</button>
 
-    <div class="nav-label">OTIMIZAÇÃO</div>
+  <div class="nav-label">PLATAFORMA</div>
+  <button class="nav-btn" data-page="resources"><span>✦</span>Recursos e manuais</button>
+  <button class="nav-btn" data-page="contact"><span>◌</span>Contato</button>
 
-    <button data-page="mobile">📱 Melhor experiência mobile</button>
-    <button data-page="pc">💻 Otimização para PC</button>
-
-    <div class="nav-label">ADMINISTRAÇÃO</div>
-
-    <button data-page="owner">🔐 Área do dono</button>
-    <button data-page="contact">✉ Suporte</button>
-  </nav>
-
-  <button class="primary" id="logoutBtn">SAIR DO PAINEL</button>
-
+  <div class="nav-spacer"></div>
+  <div class="profile">
+    <img src="/wallace.png" alt="">
+    <div><b>WSAZ_777</b><small>NEURAL CORE · STORE DE WALLACE</small></div>
+  </div>
 </aside>
 
 <main class="main">
-
 <header class="topbar">
-  <b>WSAZ_777 · CONTROL CENTER</b>
-  <span id="serverStatus">● VERIFICANDO</span>
+  <div class="top-left">
+    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Abrir menu">☰</button>
+    <div>
+      <div class="top-title">Painel de inteligência artificial</div>
+      <div class="top-sub">WSAZ_777 · NEURAL CORE</div>
+    </div>
+  </div>
+  <div class="status"><i></i><span id="systemStatus">VERIFICANDO SISTEMA</span></div>
 </header>
 
 <div class="content">
 
-<!-- IA -->
-
 <section class="page active" id="page-assistant">
-
   <div class="hero">
-    <div class="eyebrow">ARTIFICIAL INTELLIGENCE</div>
-    <h1>🤖 WSAZ_777 IA</h1>
-    <p>Converse, envie imagens e use sua voz. Sua inteligência artificial está no centro do painel. 🚀</p>
+    <div>
+      <div class="eyebrow">NEURAL CORE / CHAT</div>
+      <h1>Olá! Como posso ajudar?</h1>
+      <p>Converse com sua inteligência artificial. Envie uma pergunta para começar.</p>
+    </div>
+    <span class="pill">● NVIDIA + OPENROUTER</span>
   </div>
 
   <div class="ai-panel">
-
     <div class="ai-head">
-      <div class="ai-title">✦ WSAZ_777 AI ASSISTANT</div>
-
-      <select id="responseStyle">
-        <option value="concise">Direta</option>
+      <div class="ai-identity">
+        <div class="ai-logo">♛</div>
+        <div>
+          <div class="ai-title">WSAZ_777 IA</div>
+          <div class="ai-sub">ASSISTENTE INTELIGENTE</div>
+        </div>
+      </div>
+      <select id="responseStyle" aria-label="Estilo da resposta">
+        <option value="concise">Resumida</option>
         <option value="normal" selected>Normal</option>
         <option value="detailed">Completa</option>
       </select>
     </div>
 
-    <div class="chat" id="chat">
+    <div class="chat" id="chat" aria-live="polite">
       <div class="message">
-        <div class="avatar">AI</div>
-        <div class="bubble">
-          Olá! 👋 Eu sou a WSAZ_777 IA.
+        <div class="avatar">♛</div>
+        <div class="bubble">Bem-vindo à WSAZ_777 IA!
 
-          Posso ajudar com tecnologia, jogos, Android, PC, estudos e programação.
+Posso ajudar com tecnologia, jogos, configurações de PC, Android, estudos, programação e muito mais.
 
-          Envie sua pergunta ou uma imagem! 🚀
-        </div>
+O que você gostaria de saber?</div>
       </div>
     </div>
 
-    <div id="typing" style="display:none;padding:10px">
-      🤖 WSAZ_777 está pensando...
-    </div>
+    <div class="typing" id="typing">WSAZ_777 está processando...</div>
 
     <div class="composer">
-
       <div class="preview-list" id="previewList"></div>
-
       <div class="input-row">
-
-        <input type="file" id="imageInput"
-          accept="image/png,image/jpeg,image/webp"
-          multiple hidden>
-
-        <button class="tool" id="attachBtn">＋</button>
-        <button class="tool" id="pasteBtn">📋</button>
-        <button class="tool" id="voiceBtn">🎙️</button>
-
-        <textarea id="messageInput"
-          placeholder="Digite sua mensagem..."></textarea>
-
-        <button class="send" id="sendBtn">➤</button>
-
+        <input type="file" id="imageInput" accept="image/png,image/jpeg,image/webp" multiple hidden>
+        <button class="tool-btn" id="attachBtn" onclick="imageInput.click()" title="Anexar imagem">＋</button>
+        <button class="tool-btn" onclick="startVoice()" title="Ditado por voz">◉</button>
+        <textarea id="messageInput" rows="1" maxlength="4000" placeholder="Digite sua mensagem para a WSAZ_777..."></textarea>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Enviar">➤</button>
       </div>
-
-      <p class="muted">
-        ENTER envia · SHIFT + ENTER quebra linha · Até 5 imagens
-      </p>
-
+      <div class="note">ENTER para enviar · SHIFT + ENTER para quebrar linha · Até 5 imagens</div>
     </div>
+  </div>
+
+  <div class="grid" style="margin-top:15px">
+    <article class="card wide">
+      <div class="feature">
+        <div class="feature-icon">✦</div>
+        <div>
+          <h3>Inteligência artificial multimodal</h3>
+          <p>Chat com NVIDIA e análise de imagens pela OpenRouter, mantendo suas integrações atuais.</p>
+        </div>
+      </div>
+    </article>
+    <article class="card narrow">
+      <h3>Central WSAZ</h3>
+      <p class="muted">Acesse ferramentas, guias e recursos da plataforma.</p>
+    </article>
   </div>
 </section>
 
-<!-- CLOUD 360 -->
-
 <section class="page" id="page-cloud">
-
   <div class="hero">
-    <div class="eyebrow">HOLOGRAPHIC INTERFACE / 360°</div>
-    <h1>☁️ WSAZ Neural Cloud</h1>
-    <p>Avatar holográfico 3D com rotação contínua, partículas e brilho ciano.</p>
+    <div>
+      <div class="eyebrow">HOLOGRAPHIC INTERFACE / 360°</div>
+      <h1>WSAZ Neural Cloud</h1>
+      <p>Visualização holográfica interativa com partículas e malha digital.</p>
+    </div>
+    <span class="pill">REAL-TIME 3D</span>
   </div>
 
   <div class="holo-wrap">
+    <div class="holo-copy">NEURAL AVATAR · LIVE RENDER</div>
     <canvas id="holoCanvas"></canvas>
-  </div>
-
-  <button class="tool" id="rotateBtn">Ⅱ PAUSAR ROTAÇÃO</button>
-  <button class="tool" id="resetView">↻ REINICIAR</button>
-
-</section>
-
-<!-- CELULAR -->
-
-<section class="page" id="page-mobile">
-
-  <div class="mobile-hero">
-
-    <div class="eyebrow">MOBILE PERFORMANCE EXPERIENCE</div>
-
-    <h1>🚀 Melhor experiência para o celular</h1>
-
-    <p class="muted">
-      Mais fluidez, velocidade e organização para aproveitar melhor seu aparelho.
-    </p>
-
-    <div class="benefits">
-
-      <div class="benefit">
-        <b>⚡ Mais velocidade</b>
-        <span>Revise aplicativos em segundo plano e mantenha o sistema atualizado.</span>
-      </div>
-
-      <div class="benefit">
-        <b>🎮 Menos lag nos jogos</b>
-        <span>Feche downloads durante as partidas e confira a estabilidade da conexão.</span>
-      </div>
-
-      <div class="benefit">
-        <b>📱 Menos travamentos</b>
-        <span>Mantenha espaço livre e evite muitos aplicativos pesados abertos.</span>
-      </div>
-
-      <div class="benefit">
-        <b>✨ Mais fluidez</b>
-        <span>Confira as opções de taxa de atualização de tela, quando disponíveis.</span>
-      </div>
-
-      <div class="benefit">
-        <b>🔋 Bateria bem aproveitada</b>
-        <span>Identifique aplicativos que consomem muita energia.</span>
-      </div>
-
-      <div class="benefit">
-        <b>🧹 Mais organização</b>
-        <span>Revise downloads e arquivos antes de remover qualquer conteúdo.</span>
-      </div>
-
+    <div class="holo-label">
+      <span>WSAZ_777 / CORE</span>
+      <span>360° ROTATION · WEBGL</span>
     </div>
   </div>
 
+  <div class="holo-controls">
+    <button class="ghost-btn" id="rotateBtn">Ⅱ Pausar rotação</button>
+    <button class="ghost-btn" id="resetView">↻ Reiniciar visão</button>
+    <span class="pill">Arraste para girar · Pinça/scroll para zoom</span>
+  </div>
+  <p class="muted">O avatar é uma representação digital abstrata criada em tempo real no navegador. O render 3D pode reduzir automaticamente a qualidade em celulares mais simples.</p>
 </section>
-
-<!-- PC -->
 
 <section class="page" id="page-pc">
-
   <div class="hero">
-    <h1>💻 Otimização para PC</h1>
-    <p>Guias de manutenção, desempenho e organização do Windows.</p>
+    <div>
+      <div class="eyebrow">PERFORMANCE LAB / WINDOWS</div>
+      <h1>Otimização para PC</h1>
+      <p>Programas e guias para manutenção, desempenho e organização do Windows.</p>
+    </div>
+    <span class="pill">PC WORKSTATION</span>
   </div>
 
-  <div class="card">
-    <h3>⚡ Inicialização</h3>
-    <p>Revise os programas que iniciam com o Windows.</p>
-    <a href="https://support.microsoft.com/windows" target="_blank">SUPORTE MICROSOFT ↗</a>
-  </div>
+  <div class="cards-3">
+    <article class="resource-card">
+      <div class="tag">DIAGNÓSTICO</div>
+      <h3>Monitoramento do sistema</h3>
+      <p>Aprenda a conferir CPU, memória, armazenamento, temperatura e processos no Gerenciador de Tarefas.</p>
+      <a href="https://support.microsoft.com/windows" target="_blank" rel="noopener">GUIAS MICROSOFT ↗</a>
+    </article>
 
-  <div class="card">
-    <h3>🧹 Armazenamento</h3>
-    <p>Use as ferramentas de armazenamento do Windows.</p>
-    <a href="https://support.microsoft.com/windows" target="_blank">GUIAS WINDOWS ↗</a>
-  </div>
+    <article class="resource-card">
+      <div class="tag">ARMAZENAMENTO</div>
+      <h3>Limpeza segura</h3>
+      <p>Use o Sensor de Armazenamento e a Limpeza de Disco para remover arquivos temporários com segurança.</p>
+      <a href="https://support.microsoft.com/windows" target="_blank" rel="noopener">VER SUPORTE ↗</a>
+    </article>
 
-  <div class="card">
-    <h3>🎮 Drivers NVIDIA</h3>
-    <p>Baixe drivers diretamente do fabricante.</p>
-    <a href="https://www.nvidia.com/Download/index.aspx" target="_blank">NVIDIA DRIVERS ↗</a>
-  </div>
+    <article class="resource-card">
+      <div class="tag">DRIVERS</div>
+      <h3>Atualização de drivers</h3>
+      <p>Priorize Windows Update e páginas oficiais do fabricante da placa de vídeo e do computador.</p>
+      <a href="https://www.nvidia.com/Download/index.aspx" target="_blank" rel="noopener">NVIDIA DRIVERS ↗</a>
+    </article>
 
+    <article class="resource-card">
+      <div class="tag">FERRAMENTA</div>
+      <h3>Microsoft PC Manager</h3>
+      <p>Ferramenta oficial para manutenção básica e gerenciamento do computador, quando disponível na região.</p>
+      <a href="https://pcmanager.microsoft.com/" target="_blank" rel="noopener">SITE OFICIAL ↗</a>
+    </article>
+
+    <article class="resource-card">
+      <div class="tag">DESEMPENHO</div>
+      <h3>Inicialização do Windows</h3>
+      <p>Revise os aplicativos iniciados com o Windows e desative apenas o que reconhecer e não precisar.</p>
+      <a href="https://support.microsoft.com/windows" target="_blank" rel="noopener">MANUAL ↗</a>
+    </article>
+
+    <article class="resource-card">
+      <div class="tag">SEGURANÇA</div>
+      <h3>Restauração e proteção</h3>
+      <p>Crie ponto de restauração antes de mudanças importantes e mantenha a proteção do sistema ativa.</p>
+      <a href="https://support.microsoft.com/windows" target="_blank" rel="noopener">APRENDER ↗</a>
+    </article>
+  </div>
 </section>
 
-<!-- ADMINISTRAÇÃO -->
-
-<section class="page" id="page-owner">
-
+<section class="page" id="page-mobile">
   <div class="hero">
-    <h1>🔐 Área exclusiva do dono</h1>
-    <p>Somente o administrador pode gerar, consultar e revogar Keys.</p>
+    <div>
+      <div class="eyebrow">MOBILE PERFORMANCE / ANDROID</div>
+      <h1>Otimização mobile</h1>
+      <p>Aplicativos confiáveis e configurações para cuidar do desempenho do celular.</p>
+    </div>
+    <span class="pill">ANDROID · RESPONSIVE</span>
   </div>
 
-  <div class="card">
+  <div class="cards-3">
+    <article class="resource-card">
+      <div class="tag">ARMAZENAMENTO</div>
+      <h3>Files by Google</h3>
+      <p>Organize arquivos e identifique itens que podem ser removidos após sua conferência.</p>
+      <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.files" target="_blank" rel="noopener">GOOGLE PLAY ↗</a>
+    </article>
 
-    <h3>Autenticação administrativa</h3>
+    <article class="resource-card">
+      <div class="tag">DIAGNÓSTICO</div>
+      <h3>Configurações da bateria</h3>
+      <p>Confira o consumo por aplicativo e restrinja atividade em segundo plano somente quando fizer sentido.</p>
+      <a href="https://support.google.com/android/" target="_blank" rel="noopener">GUIA ANDROID ↗</a>
+    </article>
 
-    <input class="field" type="password"
-      id="adminSecret"
-      placeholder="Chave administrativa">
+    <article class="resource-card">
+      <div class="tag">ATUALIZAÇÃO</div>
+      <h3>Sistema e aplicativos</h3>
+      <p>Mantenha Android, aplicativos e atualizações de segurança em dia.</p>
+      <a href="https://support.google.com/android/" target="_blank" rel="noopener">SUPORTE GOOGLE ↗</a>
+    </article>
 
-    <button class="primary" id="adminConnect">
-      ENTRAR NA ADMINISTRAÇÃO
-    </button>
+    <article class="resource-card">
+      <div class="tag">DESEMPENHO</div>
+      <h3>Espaço livre</h3>
+      <p>Revise downloads e mídias duplicadas. Evite aplicativos que prometem acelerar tudo com um toque.</p>
+      <a href="https://support.google.com/files/" target="_blank" rel="noopener">MANUAL FILES ↗</a>
+    </article>
 
-    <p id="adminError"></p>
+    <article class="resource-card">
+      <div class="tag">TELA</div>
+      <h3>Taxa de atualização</h3>
+      <p>Se o aparelho oferecer essa opção, ajuste a fluidez da tela conforme sua preferência e bateria.</p>
+      <button onclick="showNotice('O caminho varia conforme a marca e o modelo do celular.')">VER OBSERVAÇÃO</button>
+    </article>
 
+    <article class="resource-card">
+      <div class="tag">REDE</div>
+      <h3>Conectividade</h3>
+      <p>Confira Wi-Fi, modo avião e uso de dados. Reiniciar a conexão pode resolver falhas temporárias.</p>
+      <a href="https://support.google.com/android/" target="_blank" rel="noopener">AJUDA ANDROID ↗</a>
+    </article>
   </div>
-
-  <div class="card hidden" id="adminTools">
-
-    <h3>➕ Gerar KEY</h3>
-
-    <input class="field" id="tokenLabel"
-      value="Acesso ao painel"
-      placeholder="Identificação">
-
-    <input class="field" id="tokenDays"
-      type="number" min="1" max="365" value="30"
-      placeholder="Validade em dias">
-
-    <input class="field" id="tokenUses"
-      type="number" min="1" max="500" value="1"
-      placeholder="Número de utilizações">
-
-    <button class="primary" id="generateToken">GERAR KEY</button>
-
-    <div class="admin-output hidden" id="newToken"></div>
-
-    <button class="tool" id="copyToken">COPIAR KEY</button>
-
-    <hr style="border-color:var(--line);margin:20px 0">
-
-    <h3>📋 KEYS emitidas</h3>
-
-    <button class="tool" id="refreshTokens">ATUALIZAR LISTA</button>
-
-    <div id="tokenList"></div>
-
-  </div>
-
 </section>
 
-<!-- SUPORTE -->
+<section class="page" id="page-resources">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">KNOWLEDGE BASE</div>
+      <h1>Recursos e manuais</h1>
+      <p>Biblioteca de orientações para usar a WSAZ_777 e cuidar dos seus dispositivos.</p>
+    </div>
+  </div>
+
+  <div class="cards-3">
+    <article class="resource-card">
+      <div class="tag">MANUAL 01</div>
+      <h3>Começando no painel</h3>
+      <p>Use o menu para alternar entre chat, holograma e otimização. O painel se adapta à tela.</p>
+    </article>
+    <article class="resource-card">
+      <div class="tag">MANUAL 02</div>
+      <h3>Chat e imagens</h3>
+      <p>Faça perguntas, selecione o estilo de resposta e anexe até cinco imagens por mensagem.</p>
+    </article>
+    <article class="resource-card">
+      <div class="tag">MANUAL 03</div>
+      <h3>Boas práticas</h3>
+      <p>Baixe programas apenas de fontes oficiais. Evite scripts desconhecidos e promessas milagrosas de desempenho.</p>
+    </article>
+  </div>
+</section>
 
 <section class="page" id="page-contact">
-
   <div class="hero">
-    <h1>✉ Central de suporte</h1>
-    <p>Solicite ajuda ou o manual de utilização.</p>
+    <div>
+      <div class="eyebrow">STORE DE WALLACE</div>
+      <h1>Central de contato</h1>
+      <p>Fale com o atendimento da WSAZ_777.</p>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>Atendimento</h3>
-    <a href="https://wa.me/5587981368837" target="_blank">
-      ABRIR WHATSAPP ↗
-    </a>
+  <div class="grid">
+    <article class="card wide">
+      <h3>Atendimento pelo WhatsApp</h3>
+      <p class="muted">Dúvidas sobre a plataforma, acesso e suporte.</p>
+      <a class="primary" style="display:inline-block;margin-top:12px" href="https://wa.me/5587981368837" target="_blank" rel="noopener">ABRIR WHATSAPP ↗</a>
+    </article>
+    <article class="card narrow">
+      <h3>WSAZ_777</h3>
+      <p class="muted">Gaming · Technology · Artificial Intelligence.</p>
+      <a href="https://wsaz777.onrender.com">wsaz777.onrender.com ↗</a>
+    </article>
   </div>
-
 </section>
 
+<footer class="footer">WSAZ_777 · STORE DE WALLACE · ARTIFICIAL INTELLIGENCE · NEURAL CORE</footer>
 </div>
 </main>
 </div>
@@ -720,626 +460,536 @@ button { cursor:pointer; }
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
 const $ = id => document.getElementById(id);
+const chat = $("chat");
+const input = $("messageInput");
+const imageInput = $("imageInput");
+const previewList = $("previewList");
+const typing = $("typing");
+const sendBtn = $("sendBtn");
 
-let history = [];
 let selectedImages = [];
+let history = [];
 let busy = false;
-let adminKey = "";
-let latestToken = "";
-let recognition = null;
 
-/* ACESSO */
-
-async function checkAccess() {
+function enterSite() {
+  $("bootStatus").textContent = "INICIANDO NEURAL CORE...";
+  $("intro").classList.add("hide");
   try {
-    const r = await fetch("/api/access/status");
-    const d = await r.json();
-
-    if (d.authenticated) {
-      $("accessGate").classList.add("hidden");
-      $("app").style.display = "block";
-      health();
-    }
+    sessionStorage.setItem("wsazIntroSeen", "1");
   } catch {}
+  setTimeout(() => input.focus(), 450);
 }
 
-$("accessBtn").onclick = async () => {
-  const error = $("accessError");
-  error.textContent = "Validando KEY...";
-
-  try {
-    const r = await fetch("/api/access/validate", {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        token:$("accessKey").value
-      })
-    });
-
-    const d = await r.json();
-
-    if (!r.ok || !d.valid) throw Error(d.message);
-
-    error.textContent = "";
-    $("accessGate").classList.add("hidden");
-    $("app").style.display = "block";
-    health();
-
-  } catch(e) {
-    error.textContent = e.message || "KEY inválida.";
+try {
+  if (sessionStorage.getItem("wsazIntroSeen")) {
+    $("intro").classList.add("hide");
   }
-};
+} catch {}
 
-$("accessKey").addEventListener("keydown",e=>{
-  if(e.key==="Enter") $("accessBtn").click();
+function toggleSidebar() {
+  $("sidebar").classList.toggle("open");
+  $("overlay").classList.toggle("show");
+}
+
+function closeSidebar() {
+  $("sidebar").classList.remove("open");
+  $("overlay").classList.remove("show");
+}
+
+document.querySelectorAll(".nav-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".nav-btn").forEach(x => x.classList.remove("active"));
+    btn.classList.add("active");
+
+    document.querySelectorAll(".page").forEach(x => x.classList.remove("active"));
+    $("page-" + btn.dataset.page).classList.add("active");
+
+    closeSidebar();
+
+    if (btn.dataset.page === "cloud") {
+      setTimeout(resizeHolo, 80);
+    }
+  });
 });
 
-$("logoutBtn").onclick = async () => {
-  await fetch("/api/access/logout",{method:"POST"});
-  location.reload();
-};
+window.toggleSidebar = toggleSidebar;
+window.closeSidebar = closeSidebar;
+window.enterSite = enterSite;
 
-/* NAVEGAÇÃO */
+function addMessage(role, text, images = []) {
+  const wrap = document.createElement("div");
+  wrap.className = "message " + (role === "user" ? "user" : "");
 
-function showPage(name) {
-  document.querySelectorAll(".page").forEach(p=>{
-    p.classList.remove("active");
+  const avatar = document.createElement("div");
+  avatar.className = "avatar";
+  avatar.textContent = role === "user" ? "U" : "♛";
+
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = text;
+
+  images.forEach(src => {
+    const im = document.createElement("img");
+    im.src = src;
+    im.alt = "Imagem enviada";
+    bubble.appendChild(im);
   });
 
-  document.querySelectorAll(".nav button[data-page]").forEach(b=>{
-    b.classList.toggle("active",b.dataset.page===name);
-  });
+  if (role === "assistant" && "speechSynthesis" in window) {
+    const actions = document.createElement("div");
+    actions.className = "message-actions";
 
-  $("page-"+name).classList.add("active");
-}
+    const b = document.createElement("button");
+    b.textContent = "🔊 Ouvir";
+    b.onclick = () => speakText(text);
 
-document.querySelectorAll(".nav button[data-page]").forEach(b=>{
-  b.onclick=()=>showPage(b.dataset.page);
-});
+    actions.appendChild(b);
+    bubble.appendChild(actions);
+  }
 
-/* FORMATAÇÃO DA IA */
-
-function cleanAnswer(text) {
-  return String(text || "")
-    .replace(/\*\*(.*?)\*\*/gs,"$1")
-    .replace(/__(.*?)__/gs,"$1")
-    .replace(/(?<!\w)\*([^*\n]+)\*(?!\w)/g,"$1")
-    .replace(/(?<!\w)_([^_\n]+)_(?!\w)/g,"$1")
-    .replace(/^\s*#{1,6}\s*/gm,"")
-    .trim();
-}
-
-/* MENSAGENS */
-
-function addMessage(role,text,images=[]) {
-  const row=document.createElement("div");
-  row.className="message "+(role==="user"?"user":"");
-
-  const avatar=document.createElement("div");
-  avatar.className="avatar";
-  avatar.textContent=role==="user"?"EU":"AI";
-
-  const bubble=document.createElement("div");
-  bubble.className="bubble";
-  bubble.textContent=role==="assistant"?cleanAnswer(text):text;
-
-  images.forEach(src=>{
-    const img=document.createElement("img");
-    img.src=src;
-    img.alt="Imagem enviada";
-    bubble.appendChild(img);
-  });
-
-  row.append(avatar,bubble);
-  $("chat").appendChild(row);
-  $("chat").scrollTop=$("chat").scrollHeight;
-}
-
-/* IMAGENS */
-
-function resizeImage(file) {
-  return new Promise((resolve,reject)=>{
-    if(!/^image\/(jpeg|png|webp)$/.test(file.type))
-      return reject(Error("Use JPG, PNG ou WEBP."));
-
-    const reader=new FileReader();
-
-    reader.onload=()=>{
-      const img=new Image();
-
-      img.onload=()=>{
-        const scale=Math.min(1,1300/Math.max(img.width,img.height));
-        const canvas=document.createElement("canvas");
-
-        canvas.width=Math.round(img.width*scale);
-        canvas.height=Math.round(img.height*scale);
-
-        canvas.getContext("2d").drawImage(
-          img,0,0,canvas.width,canvas.height
-        );
-
-        resolve(canvas.toDataURL("image/jpeg",.72));
-      };
-
-      img.src=reader.result;
-    };
-
-    reader.onerror=()=>reject(Error("Falha ao ler imagem."));
-    reader.readAsDataURL(file);
-  });
+  wrap.append(avatar, bubble);
+  chat.appendChild(wrap);
+  chat.scrollTop = chat.scrollHeight;
 }
 
 function renderPreviews() {
-  $("previewList").replaceChildren();
+  previewList.replaceChildren();
 
-  selectedImages.forEach((src,i)=>{
-    const box=document.createElement("div");
-    box.className="preview-item";
+  selectedImages.forEach((item, i) => {
+    const box = document.createElement("div");
+    box.className = "preview-item";
 
-    const img=document.createElement("img");
-    img.src=src;
+    const im = document.createElement("img");
+    im.src = item.data;
 
-    const btn=document.createElement("button");
-    btn.textContent="×";
-
-    btn.onclick=()=>{
-      selectedImages.splice(i,1);
+    const b = document.createElement("button");
+    b.textContent = "×";
+    b.onclick = () => {
+      selectedImages.splice(i, 1);
       renderPreviews();
     };
 
-    box.append(img,btn);
-    $("previewList").appendChild(box);
+    box.append(im, b);
+    previewList.appendChild(box);
   });
 }
 
-async function addFiles(files) {
-  for(const file of Array.from(files).slice(0,5-selectedImages.length)) {
-    try {
-      selectedImages.push(await resizeImage(file));
-    } catch(e) {
-      alert(e.message);
+function resizeImage(file) {
+  return new Promise((resolve, reject) => {
+    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) {
+      return reject(Error("Formato não suportado."));
     }
-  }
 
-  renderPreviews();
+    const r = new FileReader();
+
+    r.onload = () => {
+      const im = new Image();
+
+      im.onload = () => {
+        const ratio = Math.min(1, 1400 / Math.max(im.width, im.height));
+        const c = document.createElement("canvas");
+
+        c.width = Math.round(im.width * ratio);
+        c.height = Math.round(im.height * ratio);
+
+        c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
+        resolve(c.toDataURL("image/jpeg", .72));
+      };
+
+      im.onerror = () => reject(Error("Falha ao ler imagem."));
+      im.src = r.result;
+    };
+
+    r.onerror = () => reject(Error("Falha no arquivo."));
+    r.readAsDataURL(file);
+  });
 }
 
-$("attachBtn").onclick=()=>$("imageInput").click();
+imageInput.addEventListener("change", async e => {
+  const files = Array.from(e.target.files || []);
+  const available = 5 - selectedImages.length;
 
-$("imageInput").onchange=async e=>{
-  await addFiles(e.target.files);
-  e.target.value="";
-};
+  if (files.length > available) {
+    alert(`Você pode adicionar mais ${available} imagem(ns).`);
+  }
 
-/* COLAR IMAGEM */
-
-$("pasteBtn").onclick=async()=>{
-  try {
-    const items=await navigator.clipboard.read();
-
-    for(const item of items) {
-      const type=item.types.find(t=>t.startsWith("image/"));
-
-      if(type) {
-        const blob=await item.getType(type);
-        await addFiles([new File([blob],"imagem.png",{type})]);
-        return;
-      }
+  for (const f of files.slice(0, available)) {
+    try {
+      selectedImages.push({ data: await resizeImage(f) });
+    } catch (err) {
+      alert(err.message);
     }
-
-    alert("Nenhuma imagem encontrada.");
-  } catch {
-    alert("Permita o acesso à área de transferência.");
   }
-};
 
-$("messageInput").addEventListener("paste",async e=>{
-  const files=Array.from(e.clipboardData?.items||[])
-    .filter(x=>x.type.startsWith("image/"))
-    .map(x=>x.getAsFile())
-    .filter(Boolean);
-
-  if(files.length) {
-    e.preventDefault();
-    await addFiles(files);
-  }
+  renderPreviews();
+  imageInput.value = "";
 });
 
-/* ENVIAR PARA IA */
-
 async function sendMessage() {
-  if(busy) return;
+  if (busy) return;
 
-  const message=$("messageInput").value.trim();
+  const message = input.value.trim();
 
-  if(!message&&!selectedImages.length) return;
+  if (!message && !selectedImages.length) return;
 
-  const images=[...selectedImages];
+  const imgs = selectedImages.map(x => x.data);
+  const userContent = message || "Analise estas imagens.";
 
-  addMessage("user",message||"Analise esta imagem.",images);
+  addMessage("user", userContent, imgs);
 
-  $("messageInput").value="";
-  selectedImages=[];
+  const prev = [...history];
+
+  input.value = "";
+  selectedImages = [];
   renderPreviews();
 
-  busy=true;
-  $("sendBtn").disabled=true;
-  $("typing").style.display="block";
+  busy = true;
+  sendBtn.disabled = true;
+  typing.style.display = "block";
 
   try {
-    const r=await fetch("/api/chat",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
+    const r = await fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
         message,
-        images,
-        history,
-        responseStyle:$("responseStyle").value
+        images: imgs,
+        history: prev,
+        responseStyle: $("responseStyle").value
       })
     });
 
-    const d=await r.json();
+    const data = await r.json().catch(() => ({}));
 
-    if(r.status===401) {
-      location.reload();
-      return;
+    if (!r.ok) {
+      throw Error(data.reply || "Falha ao consultar o servidor.");
     }
 
-    if(!r.ok) throw Error(d.reply||"Erro na IA.");
+    const answer = data.reply || "Não foi possível obter resposta.";
 
-    const answer=cleanAnswer(d.reply);
-
-    addMessage("assistant",answer);
+    addMessage("assistant", answer);
 
     history.push(
-      {role:"user",content:message||"Analise a imagem."},
-      {role:"assistant",content:answer}
+      { role: "user", content: userContent },
+      { role: "assistant", content: answer }
     );
 
-    history=history.slice(-12);
+    history = history.slice(-12);
 
-  } catch(e) {
-    addMessage("assistant","⚠️ "+e.message);
+    try {
+      sessionStorage.setItem(
+        "wsaz777_private_chat_history",
+        JSON.stringify(history)
+      );
+    } catch {}
+
+  } catch (e) {
+    addMessage("assistant", e.message || "Erro de conexão.");
   } finally {
-    busy=false;
-    $("sendBtn").disabled=false;
-    $("typing").style.display="none";
+    busy = false;
+    sendBtn.disabled = false;
+    typing.style.display = "none";
+    input.focus();
   }
 }
 
-$("sendBtn").onclick=sendMessage;
+window.sendMessage = sendMessage;
 
-$("messageInput").addEventListener("keydown",e=>{
-  if(e.key==="Enter"&&!e.shiftKey) {
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
     sendMessage();
   }
 });
 
-/* MICROFONE */
-
-$("voiceBtn").onclick=async()=>{
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-
-  if(!SR) {
-    alert("Ditado por voz indisponível neste navegador.");
-    return;
-  }
-
+function loadHistory() {
   try {
-    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-    stream.getTracks().forEach(t=>t.stop());
+    const saved = JSON.parse(
+      sessionStorage.getItem("wsaz777_private_chat_history") || "[]"
+    );
 
-    recognition=new SR();
-    recognition.lang="pt-BR";
-    recognition.interimResults=false;
+    if (!Array.isArray(saved)) return;
 
-    recognition.onresult=e=>{
-      $("messageInput").value +=
-        ($("messageInput").value?" ":"")+
-        e.results[0][0].transcript;
-    };
+    history = saved
+      .filter(x =>
+        x &&
+        ["user", "assistant"].includes(x.role) &&
+        typeof x.content === "string"
+      )
+      .slice(-12);
 
-    recognition.onerror=e=>{
-      alert("Erro no microfone: "+e.error);
-    };
+    if (history.length) {
+      chat.replaceChildren();
+      history.forEach(x => addMessage(x.role, x.content));
+    }
+  } catch {}
+}
 
-    recognition.start();
+window.startVoice = () => {
+  const R = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-  } catch {
-    alert("Permita o acesso ao microfone nas configurações do navegador.");
+  if (!R) {
+    return alert("Ditado não disponível neste navegador.");
   }
+
+  const rec = new R();
+  rec.lang = "pt-BR";
+
+  rec.onresult = e => {
+    input.value += (input.value ? " " : "") + e.results[0][0].transcript;
+    input.focus();
+  };
+
+  rec.onerror = () => alert("Verifique a permissão do microfone.");
+  rec.start();
 };
 
-/* SERVIDOR */
+function speakText(t) {
+  speechSynthesis.cancel();
+
+  const u = new SpeechSynthesisUtterance(
+    t.replace(/```[\s\S]*?```/g, "Código omitido.")
+  );
+
+  u.lang = "pt-BR";
+  u.rate = .96;
+  speechSynthesis.speak(u);
+}
 
 async function health() {
   try {
-    const r=await fetch("/api/health");
-    const d=await r.json();
+    const r = await fetch("/api/health");
+    const d = await r.json();
 
-    $("serverStatus").textContent=
-      r.ok?"● SISTEMA ONLINE":"● SERVIDOR INDISPONÍVEL";
+    $("systemStatus").textContent =
+      r.ok && d.status === "online"
+        ? "SISTEMA ONLINE"
+        : "SISTEMA INDISPONÍVEL";
 
   } catch {
-    $("serverStatus").textContent="● SEM CONEXÃO";
+    $("systemStatus").textContent = "SEM CONEXÃO";
   }
 }
 
-/* ADMINISTRAÇÃO */
+window.showNotice = t => alert(t);
 
-$("adminConnect").onclick=async()=>{
-  adminKey=$("adminSecret").value.trim();
+loadHistory();
+health();
 
-  try {
-    const r=await fetch("/api/admin/tokens",{
-      headers:{"x-admin-key":adminKey}
-    });
+// Holograma 3D procedural: cabeça abstrata wireframe/partículas.
+let scene, camera, renderer, head;
+let drag = false;
+let lastX = 0;
+let lastY = 0;
+let autoRotate = true;
+let zoom = 1;
 
-    const d=await r.json();
-
-    if(!r.ok) throw Error(d.error||"Acesso negado.");
-
-    $("adminTools").classList.remove("hidden");
-    renderTokenList(d.tokens||[]);
-
-  } catch(e) {
-    adminKey="";
-    $("adminError").textContent=e.message;
-  }
-};
-
-async function adminFetch(url,options={}) {
-  const r=await fetch(url,{
-    ...options,
-    headers:{
-      ...(options.headers||{}),
-      "x-admin-key":adminKey
-    }
-  });
-
-  const d=await r.json();
-
-  if(!r.ok) throw Error(d.error||"Ação não autorizada.");
-
-  return d;
-}
-
-$("generateToken").onclick=async()=>{
-  try {
-    const d=await adminFetch("/api/admin/tokens",{
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        label:$("tokenLabel").value,
-        days:Number($("tokenDays").value),
-        maxUses:Number($("tokenUses").value)
-      })
-    });
-
-    latestToken=d.token;
-
-    $("newToken").classList.remove("hidden");
-    $("newToken").textContent="KEY GERADA: "+d.token;
-
-    await refreshTokens();
-
-  } catch(e) {
-    $("adminError").textContent=e.message;
-  }
-};
-
-$("copyToken").onclick=async()=>{
-  if(!latestToken) return alert("Gere uma KEY primeiro.");
-
-  await navigator.clipboard.writeText(latestToken);
-  alert("KEY copiada!");
-};
-
-async function refreshTokens() {
-  const d=await adminFetch("/api/admin/tokens");
-  renderTokenList(d.tokens||[]);
-}
-
-$("refreshTokens").onclick=()=>{
-  refreshTokens().catch(e=>$("adminError").textContent=e.message);
-};
-
-function renderTokenList(tokens) {
-  const list=$("tokenList");
-  list.replaceChildren();
-
-  if(!tokens.length) {
-    list.textContent="Nenhuma KEY emitida.";
-    return;
-  }
-
-  tokens.forEach(t=>{
-    const row=document.createElement("div");
-    row.className="card";
-
-    const info=document.createElement("span");
-    info.textContent=
-      `#${t.id} · ${t.label} · ${t.uses}/${t.max_uses} usos · ${t.active?"ATIVA":"REVOGADA"}`;
-
-    row.appendChild(info);
-
-    if(t.active) {
-      const btn=document.createElement("button");
-      btn.className="tool";
-      btn.textContent="REVOGAR";
-
-      btn.onclick=async()=>{
-        if(!confirm("Revogar esta KEY?")) return;
-
-        await adminFetch(`/api/admin/tokens/${t.id}/revoke`,{
-          method:"POST"
-        });
-
-        await refreshTokens();
-      };
-
-      row.appendChild(btn);
-    }
-
-    list.appendChild(row);
-  });
-}
-
-/* HOLOGRAMA 3D */
-
-let scene,camera,renderer,head;
-let autoRotate=true;
-let drag=false;
-let lastX=0,lastY=0;
-
-const canvas=$("holoCanvas");
+const canvas = $("holoCanvas");
 
 function initHolo() {
-  scene=new THREE.Scene();
+  try {
+    scene = new THREE.Scene();
 
-  camera=new THREE.PerspectiveCamera(42,1,.1,100);
-  camera.position.z=5.5;
+    camera = new THREE.PerspectiveCamera(42, 1, .1, 100);
+    camera.position.set(0, 0, 6.2);
 
-  renderer=new THREE.WebGLRenderer({
-    canvas,
-    alpha:true,
-    antialias:true
-  });
+    renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true
+    });
 
-  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.7));
 
-  scene.add(new THREE.AmbientLight(0x7bdfff,1.6));
+    scene.add(new THREE.AmbientLight(0x55ccff, 1.5));
 
-  const light=new THREE.PointLight(0x22cfff,16);
-  light.position.set(3,3,4);
-  scene.add(light);
+    const light = new THREE.PointLight(0x4adfff, 18);
+    light.position.set(3, 3, 4);
+    scene.add(light);
 
-  head=new THREE.Group();
-  scene.add(head);
+    head = new THREE.Group();
+    scene.add(head);
 
-  const skull=new THREE.Mesh(
-    new THREE.IcosahedronGeometry(1.05,4),
-    new THREE.MeshBasicMaterial({
-      color:0x42dcff,
-      wireframe:true,
-      transparent:true,
-      opacity:.24
-    })
-  );
+    const coreGeo = new THREE.IcosahedronGeometry(1.22, 4);
 
-  skull.scale.set(.82,1.18,.78);
-  head.add(skull);
-
-  const points=[];
-
-  for(let i=0;i<2400;i++) {
-    const y=Math.random()*2.2-1.1;
-    const a=Math.random()*Math.PI*2;
-    const r=Math.sqrt(Math.max(0,1-(y/1.2)**2));
-
-    points.push(
-      Math.cos(a)*r*.82,
-      y,
-      Math.sin(a)*r*.68
-    );
-  }
-
-  const geo=new THREE.BufferGeometry();
-
-  geo.setAttribute(
-    "position",
-    new THREE.Float32BufferAttribute(points,3)
-  );
-
-  head.add(new THREE.Points(
-    geo,
-    new THREE.PointsMaterial({
-      color:0x9af3ff,
-      size:.014,
-      transparent:true,
-      opacity:.9
-    })
-  ));
-
-  for(let i=0;i<3;i++) {
-    const ring=new THREE.Mesh(
-      new THREE.TorusGeometry(1.35+i*.19,.006,6,140),
+    const wire = new THREE.Mesh(
+      coreGeo,
       new THREE.MeshBasicMaterial({
-        color:0x38dfff,
-        transparent:true,
-        opacity:.55-i*.1
+        color: 0x40dfff,
+        wireframe: true,
+        transparent: true,
+        opacity: .20
       })
     );
 
-    ring.rotation.x=1.1+i*.3;
-    ring.rotation.y=i*.7;
+    wire.scale.set(.82, 1.18, .72);
+    head.add(wire);
+
+    const pointsGeo = new THREE.BufferGeometry();
+    const pts = [];
+
+    for (let i = 0; i < 2600; i++) {
+      const y = Math.random() * 2.3 - 1.15;
+      const a = Math.random() * Math.PI * 2;
+      const radius = Math.sqrt(Math.max(0, 1 - (y / 1.25) ** 2));
+
+      pts.push(
+        Math.cos(a) * radius * (.82 + (Math.random() - .5) * .07),
+        y,
+        Math.sin(a) * radius * .72
+      );
+    }
+
+    pointsGeo.setAttribute(
+      "position",
+      new THREE.Float32BufferAttribute(pts, 3)
+    );
+
+    const particles = new THREE.Points(
+      pointsGeo,
+      new THREE.PointsMaterial({
+        color: 0x72eaff,
+        size: .014,
+        transparent: true,
+        opacity: .85
+      })
+    );
+
+    head.add(particles);
+
+    const face = new THREE.Group();
+    head.add(face);
+
+    const lineMat = new THREE.LineBasicMaterial({
+      color: 0x8beeff,
+      transparent: true,
+      opacity: .8
+    });
+
+    function line(points) {
+      const g = new THREE.BufferGeometry().setFromPoints(
+        points.map(p => new THREE.Vector3(...p))
+      );
+
+      face.add(new THREE.Line(g, lineMat));
+    }
+
+    line([[-.48,.25,.60],[-.24,.30,.68],[0,.26,.70],[.24,.30,.68],[.48,.25,.60]]);
+    line([[-.38,-.02,.66],[-.18,-.08,.70],[0,-.02,.73],[.18,-.08,.70],[.38,-.02,.66]]);
+    line([[0,.2,.72],[.03,-.12,.76],[-.08,-.24,.72],[0,-.29,.70]]);
+    line([[-.25,-.48,.56],[0,-.55,.64],[.25,-.48,.56]]);
+
+    for (const x of [-.29, .29]) {
+      const eye = new THREE.Mesh(
+        new THREE.SphereGeometry(.045, 10, 8),
+        new THREE.MeshBasicMaterial({ color: 0xb5f6ff })
+      );
+
+      eye.position.set(x, .17, .72);
+      face.add(eye);
+    }
+
+    const ring = new THREE.Mesh(
+      new THREE.TorusGeometry(1.7, .008, 8, 160),
+      new THREE.MeshBasicMaterial({
+        color: 0x43dfff,
+        transparent: true,
+        opacity: .65
+      })
+    );
+
+    ring.rotation.x = 1.18;
     head.add(ring);
+
+    const ring2 = ring.clone();
+    ring2.scale.set(.82, .82, .82);
+    ring2.rotation.y = 1.2;
+    head.add(ring2);
+
+    resizeHolo();
+    animate();
+
+    canvas.addEventListener("pointerdown", e => {
+      drag = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      canvas.setPointerCapture(e.pointerId);
+    });
+
+    canvas.addEventListener("pointermove", e => {
+      if (!drag) return;
+
+      head.rotation.y += (e.clientX - lastX) * .008;
+      head.rotation.x += (e.clientY - lastY) * .008;
+
+      lastX = e.clientX;
+      lastY = e.clientY;
+    });
+
+    canvas.addEventListener("pointerup", () => drag = false);
+    canvas.addEventListener("pointercancel", () => drag = false);
+
+    canvas.addEventListener("wheel", e => {
+      e.preventDefault();
+
+      zoom = Math.max(
+        .75,
+        Math.min(1.35, zoom - e.deltaY * .001)
+      );
+
+      camera.position.z = 6.2 / zoom;
+    }, { passive: false });
+
+    $("rotateBtn").onclick = () => {
+      autoRotate = !autoRotate;
+
+      $("rotateBtn").textContent = autoRotate
+        ? "Ⅱ Pausar rotação"
+        : "▶ Retomar rotação";
+    };
+
+    $("resetView").onclick = () => {
+      head.rotation.set(0, 0, 0);
+      zoom = 1;
+      camera.position.z = 6.2;
+    };
+
+  } catch (e) {
+    console.warn("WebGL indisponível", e);
+
+    canvas.insertAdjacentHTML(
+      "afterend",
+      '<p class="muted">Seu navegador não conseguiu iniciar o modo 3D. Atualize o navegador ou tente outro dispositivo.</p>'
+    );
   }
-
-  canvas.addEventListener("pointerdown",e=>{
-    drag=true;
-    lastX=e.clientX;
-    lastY=e.clientY;
-    canvas.setPointerCapture(e.pointerId);
-  });
-
-  canvas.addEventListener("pointermove",e=>{
-    if(!drag) return;
-
-    head.rotation.y+=(e.clientX-lastX)*.008;
-    head.rotation.x+=(e.clientY-lastY)*.008;
-
-    lastX=e.clientX;
-    lastY=e.clientY;
-  });
-
-  canvas.addEventListener("pointerup",()=>drag=false);
-  canvas.addEventListener("pointercancel",()=>drag=false);
-
-  $("rotateBtn").onclick=()=>{
-    autoRotate=!autoRotate;
-
-    $("rotateBtn").textContent=
-      autoRotate?"Ⅱ PAUSAR ROTAÇÃO":"▶ RETOMAR ROTAÇÃO";
-  };
-
-  $("resetView").onclick=()=>{
-    head.rotation.set(0,0,0);
-  };
-
-  resizeHolo();
-  animate();
 }
 
 function resizeHolo() {
-  if(!renderer) return;
+  if (!renderer || !canvas.parentElement) return;
 
-  const w=canvas.parentElement.clientWidth;
-  const h=canvas.parentElement.clientHeight;
+  const w = canvas.parentElement.clientWidth;
+  const h = canvas.parentElement.clientHeight;
 
-  renderer.setSize(w,h,false);
-
-  camera.aspect=w/h;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
   camera.updateProjectionMatrix();
 }
 
 function animate() {
   requestAnimationFrame(animate);
 
-  if(head&&autoRotate&&!drag) {
-    head.rotation.y+=.003;
-    head.rotation.x=Math.sin(Date.now()*.0003)*.06;
+  if (head && autoRotate && !drag) {
+    head.rotation.y += .003;
+    head.rotation.x = Math.sin(Date.now() * .00035) * .08;
   }
 
-  if(renderer) renderer.render(scene,camera);
+  if (renderer) {
+    renderer.render(scene, camera);
+  }
 }
 
-window.addEventListener("resize",resizeHolo);
-
-checkAccess();
 initHolo();
-
+window.addEventListener("resize", resizeHolo);
 </script>
 </body>
 </html>
