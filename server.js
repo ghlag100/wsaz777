@@ -1,89 +1,60 @@
-
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  randomBytes,
+  createHash,
+  timingSafeEqual
+} from "node:crypto";
+import fs from "node:fs/promises";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 const root = path.dirname(fileURLToPath(import.meta.url));
+const publicDir = path.join(root, "public");
+
+const tokenFile =
+  process.env.TOKEN_STORE_PATH ||
+  path.join(root, "data", "tokens.json");
+
+app.disable("x-powered-by");
 
 app.use(express.json({ limit: "12mb" }));
+app.use(express.static(publicDir));
 app.use(express.static(root));
 
 const BASE_PROMPT = `
 Você é o WSAZ_777, uma inteligência artificial de uso geral.
 
-PERSONALIDADE:
-- Responda em português brasileiro, salvo pedido contrário.
-- Seja natural, inteligente, educado, comunicativo e prestativo.
-- Tenha uma personalidade própria, confiante e profissional.
-- Use emojis moderadamente, somente quando fizer sentido.
-- Ajude com estudos, matemática, programação, tecnologia, computadores, Android, jogos e conhecimentos gerais.
-- Não invente informações, dados ou fontes.
-- Não apresente raciocínio interno.
-- Se não souber algo, seja transparente.
-- Considere o contexto das mensagens anteriores antes de responder.
+Responda em português brasileiro, salvo pedido contrário.
+Seja natural, inteligente, educado, comunicativo e profissional.
 
-FORMATO E QUALIDADE DAS RESPOSTAS:
+Ajude com:
+- Estudos
+- Matemática
+- Programação
+- Tecnologia
+- Computadores
+- Android
+- Jogos
+- Conhecimentos gerais
 
-O objetivo é produzir respostas bonitas, organizadas, profissionais e fáceis de ler.
-
-1. ORGANIZAÇÃO:
-- Use títulos curtos quando houver assuntos diferentes.
-- Separe os assuntos com espaçamento adequado.
-- Escreva parágrafos curtos e objetivos.
-- Não misture várias explicações diferentes no mesmo parágrafo.
-- Não repita a pergunta do usuário desnecessariamente.
-
-2. FORMATAÇÃO:
-- Evite excesso de asteriscos, negrito, emojis e símbolos.
-- Não coloque asteriscos em praticamente todas as frases.
-- Use negrito apenas para destacar informações realmente importantes.
-- Não utilize títulos em excesso.
-- Não use linhas decorativas sem necessidade.
-- Não transforme respostas simples em textos enormes.
-
-3. LISTAS E ETAPAS:
-- Use listas numeradas para tutoriais e procedimentos.
-- Use marcadores para apresentar opções e características.
-- Explique procedimentos em uma sequência lógica.
-- Não crie listas quando uma frase simples resolver a pergunta.
-
-4. CÓDIGOS E TECNOLOGIA:
-- Apresente códigos em blocos de código apropriados.
-- Explique onde colocar cada código quando necessário.
-- Organize comandos e instruções por etapas.
-- Não invente comandos ou configurações.
-- Antes de recomendar alterações importantes no sistema, explique possíveis riscos.
-
-5. CONVERSAÇÃO:
-- Em perguntas simples, responda diretamente.
-- Em conversas informais, fale de maneira natural e humana.
-- Em assuntos técnicos, seja preciso e didático.
-- Em assuntos complexos, aprofunde a explicação sem enrolar.
-
-6. COMPARAÇÕES:
-- Utilize tabelas quando realmente facilitarem a comparação.
-- Mostre vantagens, desvantagens e diferenças relevantes.
-- Não invente preços, especificações ou resultados.
-
-7. QUALIDADE:
-- Priorize clareza, precisão e utilidade.
-- Evite repetir informações.
-- Não utilize frases genéricas apenas para aumentar o tamanho da resposta.
-- Entregue primeiro a informação mais importante.
-- Adapte o tamanho da resposta à complexidade da pergunta.
-
-SEGURANÇA E CONFIABILIDADE:
-- Não ajude a criar ferramentas para roubar contas, invadir sistemas ou prejudicar outras pessoas.
-- Não prometa resultados impossíveis ou garantias que não pode cumprir.
-- Em assuntos de segurança digital, priorize orientações legítimas e preventivas.
+Não invente informações.
+Não apresente raciocínio interno.
+Considere o contexto anterior.
+Use títulos curtos, parágrafos objetivos e listas quando ajudarem.
+Em códigos, explique onde colocar.
+Priorize segurança, privacidade e orientações legítimas.
 `;
 
 const RESPONSE_STYLES = {
-  concise: "Responda de forma curta, direta e objetiva. Preserve a clareza.",
+  concise: "Responda de forma curta, direta e objetiva.",
+
   normal: "Explique com clareza, naturalidade e boa organização.",
-  detailed: "Explique com profundidade, etapas e exemplos quando forem úteis. Evite repetições."
+
+  detailed:
+    "Explique com profundidade, etapas e exemplos úteis, sem repetições."
 };
 
 function extractAnswer(data) {
@@ -95,8 +66,8 @@ function extractAnswer(data) {
 
   if (Array.isArray(raw)) {
     return raw
-      .filter(item => item?.type === "text" && item.text)
-      .map(item => item.text)
+      .filter(x => x?.type === "text" && x.text)
+      .map(x => x.text)
       .join("\n")
       .trim();
   }
@@ -109,29 +80,42 @@ function safeHistory(history) {
 
   return history
     .slice(-12)
-    .filter(item =>
-      item &&
-      ["user", "assistant"].includes(item.role) &&
-      typeof item.content === "string" &&
-      item.content.trim().length > 0
+    .filter(x =>
+      x &&
+      ["user", "assistant"].includes(x.role) &&
+      typeof x.content === "string" &&
+      x.content.trim()
     )
-    .map(item => ({
-      role: item.role,
-      content: item.content.slice(0, 5000)
+    .map(x => ({
+      role: x.role,
+      content: x.content.slice(0, 5000)
     }));
 }
+
+function safeEqual(a, b) {
+  const aa = Buffer.from(String(a || ""));
+  const bb = Buffer.from(String(b || ""));
+
+  return aa.length === bb.length &&
+    timingSafeEqual(aa, bb);
+}
+
+// STATUS DO SISTEMA
 
 app.get("/api/health", (_req, res) => {
   res.json({
     status: "online",
     text: Boolean(process.env.NVIDIA_API_KEY),
-    vision: Boolean(process.env.OPENROUTER_API_KEY)
+    vision: Boolean(process.env.OPENROUTER_API_KEY),
+    tokens: true
   });
 });
 
 app.get("/", (_req, res) => {
   res.sendFile(path.join(root, "index.html"));
 });
+
+// SISTEMA DE CHAT
 
 app.post("/api/chat", async (req, res) => {
   try {
@@ -143,19 +127,19 @@ app.post("/api/chat", async (req, res) => {
       responseStyle = "normal"
     } = req.body || {};
 
-    const text = typeof message === "string"
-      ? message.trim()
-      : "";
+    const text =
+      typeof message === "string"
+        ? message.trim()
+        : "";
 
-    const selectedImages = Array.isArray(images)
-      ? [...images]
-      : [];
+    const selectedImages =
+      Array.isArray(images) ? [...images] : [];
 
     if (image && typeof image === "string") {
       selectedImages.push(image);
     }
 
-    if (!text && selectedImages.length === 0) {
+    if (!text && !selectedImages.length) {
       return res.status(400).json({
         reply: "Digite uma pergunta ou envie uma imagem."
       });
@@ -163,7 +147,7 @@ app.post("/api/chat", async (req, res) => {
 
     if (text.length > 4000) {
       return res.status(400).json({
-        reply: "Sua mensagem ultrapassou o limite de 4.000 caracteres."
+        reply: "Sua mensagem ultrapassou 4.000 caracteres."
       });
     }
 
@@ -185,19 +169,12 @@ app.post("/api/chat", async (req, res) => {
       }
     }
 
-    const style = RESPONSE_STYLES[responseStyle]
-      || RESPONSE_STYLES.normal;
-
     const systemPrompt = `
 ${BASE_PROMPT}
 
-ESTILO DE RESPOSTA SELECIONADO:
-${style}
-
-IMPORTANTE:
-Mantenha o padrão de organização em todas as respostas.
-Não exagere na formatação Markdown.
-Evite asteriscos desnecessários.
+ESTILO:
+${RESPONSE_STYLES[responseStyle] ||
+  RESPONSE_STYLES.normal}
 `;
 
     const previousMessages = safeHistory(history);
@@ -205,20 +182,26 @@ Evite asteriscos desnecessários.
     let response;
     let service;
 
-    if (selectedImages.length > 0) {
+    // OPENROUTER - VISÃO
+
+    if (selectedImages.length) {
       const apiKey = process.env.OPENROUTER_API_KEY;
 
       if (!apiKey) {
         return res.status(503).json({
-          reply: "A chave da OpenRouter não está configurada no Render."
+          reply:
+            "A chave da OpenRouter não está configurada no Render."
         });
       }
 
       const content = [
         {
           type: "text",
-          text: text || "Analise cuidadosamente as imagens enviadas."
+          text:
+            text ||
+            "Analise cuidadosamente as imagens enviadas."
         },
+
         ...selectedImages.map(url => ({
           type: "image_url",
           image_url: { url }
@@ -231,12 +214,15 @@ Evite asteriscos desnecessários.
         "https://openrouter.ai/api/v1/chat/completions",
         {
           method: "POST",
+
           headers: {
             Authorization: `Bearer ${apiKey}`,
             "Content-Type": "application/json",
-            "HTTP-Referer": "https://wsaz777.onrender.com",
+            "HTTP-Referer":
+              "https://wsaz777.onrender.com",
             "X-OpenRouter-Title": "WSAZ_777"
           },
+
           body: JSON.stringify({
             model:
               process.env.OPENROUTER_VISION_MODEL ||
@@ -247,9 +233,11 @@ Evite asteriscos desnecessários.
                 role: "system",
                 content:
                   systemPrompt +
-                  "\nVocê também é especialista em interpretar imagens, fotografias, documentos e gráficos. Descreva apenas o que conseguir observar."
+                  "\nInterprete imagens com cuidado e descreva apenas o que conseguir observar."
               },
+
               ...previousMessages,
+
               {
                 role: "user",
                 content
@@ -259,16 +247,21 @@ Evite asteriscos desnecessários.
             max_tokens: 1400,
             temperature: 0.4
           }),
+
           signal: AbortSignal.timeout(90000)
         }
       );
 
     } else {
+
+      // NVIDIA - TEXTO
+
       const apiKey = process.env.NVIDIA_API_KEY;
 
       if (!apiKey) {
         return res.status(503).json({
-          reply: "A chave da NVIDIA não está configurada no Render."
+          reply:
+            "A chave da NVIDIA não está configurada no Render."
         });
       }
 
@@ -278,10 +271,12 @@ Evite asteriscos desnecessários.
         "https://integrate.api.nvidia.com/v1/chat/completions",
         {
           method: "POST",
+
           headers: {
             Authorization: `Bearer ${apiKey}`,
             "Content-Type": "application/json"
           },
+
           body: JSON.stringify({
             model:
               process.env.NVIDIA_TEXT_MODEL ||
@@ -292,7 +287,9 @@ Evite asteriscos desnecessários.
                 role: "system",
                 content: systemPrompt
               },
+
               ...previousMessages,
+
               {
                 role: "user",
                 content: text
@@ -308,6 +305,7 @@ Evite asteriscos desnecessários.
               force_nonempty_content: true
             }
           }),
+
           signal: AbortSignal.timeout(90000)
         }
       );
@@ -353,7 +351,7 @@ Evite asteriscos desnecessários.
       `${service}: resposta concluída. Estilo: ${responseStyle}`
     );
 
-    return res.json({ reply: answer });
+    res.json({ reply: answer });
 
   } catch (error) {
     console.error("ERRO SERVIDOR:", error);
@@ -363,7 +361,7 @@ Evite asteriscos desnecessários.
       "AbortError"
     ].includes(error?.name);
 
-    return res.status(timeout ? 504 : 500).json({
+    res.status(timeout ? 504 : 500).json({
       reply: timeout
         ? "A solicitação demorou demais. Tente novamente."
         : "Erro interno ao processar sua solicitação."
@@ -371,6 +369,189 @@ Evite asteriscos desnecessários.
   }
 });
 
+// TOKEN CENTER
+
+async function readTokens() {
+  try {
+    return JSON.parse(
+      await fs.readFile(tokenFile, "utf8")
+    );
+  } catch {
+    return [];
+  }
+}
+
+async function writeTokens(tokens) {
+  await fs.mkdir(
+    path.dirname(tokenFile),
+    { recursive: true }
+  );
+
+  await fs.writeFile(
+    tokenFile,
+    JSON.stringify(tokens, null, 2),
+    { mode: 0o600 }
+  );
+}
+
+function tokenHash(token) {
+  return createHash("sha256")
+    .update(token)
+    .digest("hex");
+}
+
+function requireAdmin(req, res, next) {
+  const secret = process.env.TOKEN_ADMIN_KEY;
+
+  if (!secret) {
+    return res.status(503).json({
+      error:
+        "Configure TOKEN_ADMIN_KEY nas variáveis do Render."
+    });
+  }
+
+  const provided = req.get("x-admin-key");
+
+  if (!safeEqual(provided, secret)) {
+    return res.status(401).json({
+      error: "Chave administrativa inválida."
+    });
+  }
+
+  next();
+}
+
+// GERAR TOKEN
+
+app.post(
+  "/api/tokens/generate",
+  requireAdmin,
+  async (req, res) => {
+    try {
+      const {
+        product = "recurso",
+        days = 30,
+        maxUses = 1
+      } = req.body || {};
+
+      const validDays = Math.max(
+        1,
+        Math.min(365, Number(days) || 30)
+      );
+
+      const uses = Math.max(
+        1,
+        Math.min(100, Number(maxUses) || 1)
+      );
+
+      const token =
+        `WSAZ-777-${randomBytes(3).toString("hex").toUpperCase()}-${randomBytes(3).toString("hex").toUpperCase()}`;
+
+      const tokens = await readTokens();
+
+      tokens.push({
+        hash: tokenHash(token),
+        product: String(product).slice(0, 60),
+        createdAt: new Date().toISOString(),
+
+        expiresAt: new Date(
+          Date.now() + validDays * 86400000
+        ).toISOString(),
+
+        maxUses: uses,
+        uses: 0,
+        active: true
+      });
+
+      await writeTokens(tokens);
+
+      res.status(201).json({
+        token,
+        product,
+        expiresInDays: validDays,
+        maxUses: uses
+      });
+
+    } catch (error) {
+      console.error("TOKEN GENERATION:", error);
+
+      res.status(500).json({
+        error: "Não foi possível gerar o token."
+      });
+    }
+  }
+);
+
+// VALIDAR TOKEN
+
+app.post("/api/tokens/validate", async (req, res) => {
+  try {
+    const token =
+      typeof req.body?.token === "string"
+        ? req.body.token.trim().toUpperCase()
+        : "";
+
+    if (
+      !/^WSAZ-777-[A-F0-9]{6}-[A-F0-9]{6}$/.test(token)
+    ) {
+      return res.status(400).json({
+        valid: false,
+        message: "Formato de token inválido."
+      });
+    }
+
+    const tokens = await readTokens();
+
+    const item = tokens.find(x =>
+      safeEqual(x.hash, tokenHash(token))
+    );
+
+    if (!item || !item.active) {
+      return res.status(404).json({
+        valid: false,
+        message: "Token não encontrado ou desativado."
+      });
+    }
+
+    if (Date.now() > Date.parse(item.expiresAt)) {
+      return res.status(410).json({
+        valid: false,
+        message: "Este token expirou."
+      });
+    }
+
+    if (item.uses >= item.maxUses) {
+      return res.status(409).json({
+        valid: false,
+        message: "Limite de utilizações atingido."
+      });
+    }
+
+    item.uses += 1;
+
+    await writeTokens(tokens);
+
+    res.json({
+      valid: true,
+      product: item.product,
+      usesRemaining: item.maxUses - item.uses,
+      expiresAt: item.expiresAt
+    });
+
+  } catch (error) {
+    console.error("TOKEN VALIDATION:", error);
+
+    res.status(500).json({
+      valid: false,
+      message: "Erro ao validar token."
+    });
+  }
+});
+
+// INICIALIZAÇÃO
+
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`WSAZ_777 ativo na porta ${PORT}`);
+  console.log(
+    `WSAZ_777 ativo na porta ${PORT}`
+  );
 });
