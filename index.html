@@ -4,9 +4,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#f5f5f7">
-<meta name="description" content="WSAZ_777 — Gaming, tecnologia, personalização e inteligência artificial.">
-<title>WSAZ_777 | Store de Wallace</title>
+<meta name="theme-color" content="#171717">
+<meta name="description" content="WSAZ_777 — Inteligência Artificial, tecnologia e gaming.">
+<title>WSAZ_777 | Artificial Intelligence</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap');
@@ -14,545 +14,586 @@
 :root{
   --red:#e32636;
   --red-dark:#b81425;
-  --ink:#17171b;
-  --muted:#777780;
-  --line:#e8e8ec;
+  --bg:#f4f4f6;
   --white:#fff;
-  --bg:#f5f5f7;
+  --ink:#17171b;
+  --muted:#85858d;
+  --line:#e8e8ec;
   --green:#20b875;
-  --shadow:0 15px 45px rgba(20,20,30,.07);
+  --sidebar:#17171b;
 }
-
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,sans-serif}
-button,input,textarea{font:inherit}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:Inter,sans-serif
+}
+button,input,textarea,select{font:inherit}
 button,a{-webkit-tap-highlight-color:transparent}
-a{color:inherit;text-decoration:none}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
 
 /* INTRO */
 #intro{
   position:fixed;inset:0;z-index:1000;
   display:grid;place-items:center;
   background:#101014;color:white;
-  transition:opacity .7s,visibility .7s
+  transition:.6s
 }
 #intro.hide{opacity:0;visibility:hidden;pointer-events:none}
-.intro-content{text-align:center;padding:24px;animation:appear 1s ease}
+.intro-content{text-align:center;padding:25px}
 .intro-photo{
-  width:115px;height:115px;object-fit:cover;
-  border-radius:25px;border:1px solid #ffffff35;
-  box-shadow:0 0 45px #e3263650;margin-bottom:25px
+  width:105px;height:105px;object-fit:cover;
+  border-radius:24px;border:1px solid #ffffff35;
+  box-shadow:0 0 40px #e3263650;margin-bottom:25px
 }
-.intro-kicker{color:#ff6572;font:11px Orbitron;letter-spacing:4px}
-.intro-content h1{font:800 clamp(38px,9vw,65px) Orbitron;margin:12px 0}
-.intro-content p{color:#aaa;font-size:11px;letter-spacing:3px}
-.intro-brand{margin-top:28px;font-size:12px;letter-spacing:3px;font-weight:800}
+.intro-kicker{
+  color:#ff6572;font:11px Orbitron;
+  letter-spacing:4px
+}
+.intro-content h1{
+  font:800 clamp(38px,9vw,65px) Orbitron;
+  margin:14px 0
+}
+.intro-content p{
+  color:#aaa;font-size:11px;letter-spacing:3px
+}
+.intro-brand{
+  margin-top:25px;font-size:12px;
+  letter-spacing:3px;font-weight:800
+}
 .intro-content button{
-  margin-top:30px;border:0;background:var(--red);color:white;
-  padding:15px 28px;border-radius:9px;font-weight:800;
-  letter-spacing:1px;cursor:pointer
+  margin-top:32px;border:0;background:var(--red);
+  color:white;padding:16px 32px;border-radius:9px;
+  font-weight:900;letter-spacing:1px;
+  box-shadow:0 8px 30px #e3263650
 }
-@keyframes appear{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.intro-content button:hover{background:var(--red-dark)}
+.intro-hint{font-size:10px!important;color:#777!important;margin-top:15px}
 
-/* HEADER */
-.topbar{
-  height:76px;background:white;border-bottom:1px solid var(--line);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 6%;position:sticky;top:0;z-index:50
+/* DASHBOARD */
+.dashboard{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:255px minmax(0,1fr)
 }
-.brand{display:flex;align-items:center;gap:12px}
+
+/* SIDEBAR */
+.sidebar{
+  background:var(--sidebar);color:white;
+  min-height:100vh;padding:24px 17px;
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;
+  z-index:100
+}
+.brand{
+  display:flex;align-items:center;gap:11px;
+  padding:3px 8px 25px;
+  border-bottom:1px solid #ffffff17
+}
 .brand-mark{
-  width:43px;height:43px;display:grid;place-items:center;
-  background:var(--ink);color:white;border-radius:12px;font-size:22px
+  width:42px;height:42px;border-radius:12px;
+  display:grid;place-items:center;
+  background:var(--red);font-size:22px
 }
-.brand-name{font:800 16px Orbitron}
-.brand-sub{font-size:9px;color:var(--muted);letter-spacing:1.4px;margin-top:4px}
-.nav{display:flex;gap:28px;align-items:center}
-.nav a{font-size:12px;font-weight:700;color:#555;transition:.2s}
-.nav a:hover{color:var(--red)}
-.status{font-size:10px;font-weight:800;color:var(--green);display:flex;align-items:center;gap:7px}
-.status i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px #20b87580}
-.menu-btn{display:none;border:0;background:transparent;font-size:25px}
+.brand-name{font:800 14px Orbitron}
+.brand-sub{
+  color:#999;font-size:8px;
+  letter-spacing:1px;margin-top:5px
+}
+.menu-label{
+  color:#777;font-size:9px;font-weight:800;
+  letter-spacing:1.7px;margin:27px 10px 12px
+}
+.side-btn{
+  width:100%;display:flex;align-items:center;
+  gap:12px;padding:13px 12px;
+  border:0;border-radius:9px;
+  background:transparent;color:#c7c7cc;
+  text-align:left;font-size:11px;font-weight:700;
+  margin:3px 0;transition:.2s
+}
+.side-btn .side-icon{
+  width:20px;text-align:center;font-size:17px
+}
+.side-btn:hover{background:#ffffff12;color:white}
+.side-btn.active{
+  color:white;background:var(--red);
+  box-shadow:0 5px 20px #e3263635
+}
+.side-spacer{flex:1}
+.sidebar-bottom{
+  border-top:1px solid #ffffff17;padding-top:17px
+}
+.profile{
+  display:flex;align-items:center;gap:10px;padding:8px
+}
+.profile-icon{
+  width:35px;height:35px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#ffffff17;color:white
+}
+.profile-name{font-size:10px;font-weight:800}
+.profile-sub{font-size:9px;color:#888;margin-top:4px}
 
 /* MAIN */
-main{max-width:1250px;margin:auto;padding:35px 25px 70px}
-.hero{
-  min-height:420px;display:grid;grid-template-columns:1.1fr .9fr;
-  align-items:center;gap:25px;background:white;
-  border:1px solid var(--line);border-radius:22px;
-  padding:45px;box-shadow:var(--shadow);overflow:hidden;position:relative
+.main-area{min-width:0;display:flex;flex-direction:column}
+.topbar{
+  height:68px;background:white;
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 30px;position:sticky;top:0;z-index:50
 }
-.hero::before{
-  content:"";position:absolute;width:350px;height:350px;
-  background:#e326360c;border-radius:50%;right:10%;top:10%;filter:blur(10px)
+.topbar-title{font-size:13px;font-weight:800}
+.topbar-sub{font-size:9px;color:var(--muted);margin-top:4px}
+.topbar-right{display:flex;align-items:center;gap:15px}
+.status{
+  display:flex;align-items:center;gap:7px;
+  color:var(--green);font-size:9px;font-weight:900
 }
-.eyebrow{font:700 10px Orbitron;letter-spacing:2px;color:var(--red)}
-.hero h2{font-size:clamp(36px,5vw,62px);line-height:1.04;letter-spacing:-3px;margin:20px 0;max-width:600px}
-.hero h2 span{color:var(--red)}
-.hero p{max-width:480px;color:var(--muted);font-size:14px;line-height:1.8}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.primary-btn,.secondary-btn{
-  padding:14px 20px;border-radius:9px;font-size:11px;
-  font-weight:800;cursor:pointer;border:1px solid var(--line)
+.status i{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 9px #20b87580
 }
-.primary-btn{background:var(--red);color:white;border-color:var(--red)}
-.secondary-btn{background:white}
-.primary-btn:hover{background:var(--red-dark)}
+.mobile-menu{
+  display:none;border:0;background:transparent;
+  font-size:23px;color:var(--ink)
+}
+.content{padding:25px 30px;max-width:1500px;width:100%;margin:auto}
 
-/* ROBÔ */
-.holo{
-  min-height:350px;display:grid;place-items:center;
-  position:relative;isolation:isolate;overflow:visible
+/* CHAT HEADER */
+.welcome{
+  display:flex;align-items:center;
+  justify-content:space-between;gap:15px;
+  margin-bottom:20px
 }
-.robot-stage{
-  width:270px;height:280px;position:relative;
-  display:flex;align-items:center;justify-content:center;
-  perspective:1000px;transform-style:preserve-3d;
-  animation:robotFloat 4s ease-in-out infinite
+.welcome h1{
+  font-size:clamp(20px,3vw,27px);
+  letter-spacing:-1px;margin:0
 }
-.robot-stage::before,.robot-stage::after{
-  content:"";position:absolute;border-radius:50%;pointer-events:none
+.welcome p{
+  color:var(--muted);font-size:11px;margin:7px 0 0
 }
-.robot-stage::before{
-  width:230px;height:230px;border:1px solid #e3263670;
-  box-shadow:0 0 25px #e3263620,inset 0 0 25px #e3263615;
-  animation:robotOrbit 9s linear infinite
+.new-chat{
+  background:var(--red);color:white;border:0;
+  border-radius:8px;padding:12px 16px;
+  font-size:10px;font-weight:900;
+  white-space:nowrap
 }
-.robot-stage::after{
-  width:190px;height:190px;border:1px dashed #e3263650;
-  animation:robotOrbit 14s linear infinite reverse
-}
-.robot-ring{
-  position:absolute;width:280px;height:95px;
-  border:1px solid #e3263650;border-radius:50%;
-  transform:rotate(-25deg);animation:robotOrbit 8s linear infinite
-}
-.robot-ring.ring-two{
-  width:245px;height:115px;transform:rotate(55deg);
-  border-color:#e3263630;animation-direction:reverse
-}
-.robot-head{
-  position:relative;width:132px;height:160px;
-  border-radius:48% 48% 42% 42%;
-  background:linear-gradient(135deg,#fff,#dce1e8 25%,#8c96a5 48%,#f7f8fa 70%,#9ba5b3);
-  border:2px solid #fff;
-  box-shadow:0 0 20px #ffffff70,0 0 45px #e3263640,
-  inset -12px -10px 20px #14192366,inset 8px 8px 18px #ffffffcc;
-  transform-style:preserve-3d;
-  animation:robotTurn 12s ease-in-out infinite
-}
-.robot-head::before{
-  content:"";position:absolute;inset:8px;border-radius:inherit;
-  border:1px solid #e32636aa;box-shadow:0 0 12px #e3263660
-}
-.robot-face{
-  position:absolute;inset:31px 12px 27px;border-radius:42%;
-  background:linear-gradient(145deg,#171c27,#05070c);
-  border:2px solid #aeb8c6;
-  box-shadow:inset 0 0 18px #000,0 0 12px #e3263650;
-  overflow:hidden
-}
-.robot-eyes{
-  position:absolute;top:35%;left:18%;right:18%;
-  display:flex;justify-content:space-between
-}
-.robot-eyes::before,.robot-eyes::after{
-  content:"";width:22px;height:7px;border-radius:50%;
-  background:#ff3030;box-shadow:0 0 8px #ff3030,0 0 18px #ff1515;
-  animation:eyePulse 2s ease-in-out infinite
-}
-.robot-mouth{
-  position:absolute;width:28px;height:3px;bottom:25%;left:50%;
-  transform:translateX(-50%);border-radius:10px;
-  background:#ff3434;box-shadow:0 0 10px #ff3434
-}
-.robot-side{
-  position:absolute;top:48px;width:17px;height:55px;
-  background:linear-gradient(90deg,#7e8998,#f5f6f8,#747e8b);
-  border:1px solid white;box-shadow:0 0 12px #e3263650
-}
-.robot-side.left{left:-14px;border-radius:8px 0 0 8px}
-.robot-side.right{right:-14px;border-radius:0 8px 8px 0}
-.robot-back{position:absolute;inset:15px 20px;border-radius:45%;border:2px solid #e3263670;pointer-events:none}
-.robot-glow{
-  position:absolute;width:170px;height:35px;bottom:0;
-  border-radius:50%;background:#ff191950;filter:blur(18px);
-  animation:robotPulse 3s ease-in-out infinite
-}
-.holo-caption{
-  position:absolute;bottom:5px;font:9px Orbitron;
-  letter-spacing:2px;color:var(--red);text-align:center
-}
-@keyframes robotFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes robotOrbit{from{transform:rotate(0)}to{transform:rotate(360deg)}}
-@keyframes robotTurn{0%,100%{transform:rotateY(-12deg)}50%{transform:rotateY(12deg)}}
-@keyframes robotPulse{0%,100%{opacity:.35;transform:scale(.85)}50%{opacity:.8;transform:scale(1.15)}}
-@keyframes eyePulse{0%,100%{opacity:1}50%{opacity:.55}}
+.new-chat:hover{background:var(--red-dark)}
 
-/* SERVIÇOS */
-.section-head{display:flex;justify-content:space-between;align-items:end;margin:55px 0 20px;gap:15px}
-.section-head h2{margin:8px 0 0;font-size:25px}
-.section-head p{color:var(--muted);font-size:12px;margin:0}
-.service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.product{
-  background:white;border:1px solid var(--line);padding:25px;
-  border-radius:15px;transition:.25s
-}
-.product:hover{transform:translateY(-5px);border-color:#e3263670;box-shadow:var(--shadow)}
-.product-icon{
-  width:45px;height:45px;border-radius:12px;display:grid;
-  place-items:center;background:#e3263610;color:var(--red);font-size:22px
-}
-.product h3{font-size:13px;margin:20px 0 10px}
-.product p{color:var(--muted);font-size:12px;line-height:1.7;min-height:42px}
-.product a{display:inline-block;margin-top:12px;color:var(--red);font-size:10px;font-weight:900;letter-spacing:1px}
-
-/* ASSISTENTE */
+/* CHAT PANEL */
 .ai-panel{
-  margin-top:65px;background:white;border:1px solid var(--line);
-  border-radius:20px;overflow:hidden;box-shadow:var(--shadow)
+  background:white;border:1px solid var(--line);
+  border-radius:16px;overflow:hidden;
+  box-shadow:0 12px 35px #17171b08
 }
 .ai-header{
-  background:#17171b;color:white;padding:22px 25px;
-  display:flex;justify-content:space-between;align-items:center;gap:15px
+  background:#202024;color:white;
+  padding:17px 21px;display:flex;
+  align-items:center;justify-content:space-between;
+  gap:12px
 }
-.ai-title{font:700 15px Orbitron}
-.ai-subtitle{color:#aaa;font-size:10px;margin-top:6px}
-.ai-header button{
-  background:#ffffff12;color:white;border:1px solid #ffffff25;
-  padding:10px 13px;border-radius:8px;font-size:10px;cursor:pointer
+.ai-identity{display:flex;align-items:center;gap:11px}
+.ai-logo{
+  width:38px;height:38px;border-radius:11px;
+  display:grid;place-items:center;
+  background:var(--red);font-size:19px
 }
-.ai-controls{
-  display:flex;align-items:center;gap:10px;padding:15px 20px;
-  border-bottom:1px solid var(--line);flex-wrap:wrap
+.ai-title{font:700 12px Orbitron}
+.ai-subtitle{color:#aaa;font-size:9px;margin-top:5px}
+.ai-header-right{display:flex;align-items:center;gap:10px}
+.ai-header select{
+  background:#ffffff12;color:white;
+  border:1px solid #ffffff25;border-radius:7px;
+  padding:9px;font-size:10px;outline:none
 }
-.ai-controls label{color:var(--muted);font-size:10px;font-weight:800}
-.ai-controls select{
-  border:1px solid var(--line);background:white;padding:9px;
-  border-radius:8px;font-size:11px
+.ai-header option{color:#171717}
+.chat{
+  height:calc(100vh - 340px);
+  min-height:370px;max-height:650px;
+  overflow-y:auto;padding:25px;
+  background:#fafafd
 }
-.chat{height:430px;overflow-y:auto;padding:22px;background:#fafafd}
-.message{display:flex;gap:10px;margin-bottom:18px;align-items:flex-start}
+.message{
+  display:flex;gap:10px;
+  margin-bottom:20px;align-items:flex-start
+}
 .message.user{flex-direction:row-reverse}
 .avatar{
-  width:31px;height:31px;flex:0 0 31px;display:grid;
-  place-items:center;background:#17171b;color:white;
+  width:32px;height:32px;flex:0 0 32px;
+  display:grid;place-items:center;
+  background:#202024;color:white;
   border-radius:9px;font-size:12px
 }
 .user .avatar{background:var(--red)}
 .bubble{
-  max-width:min(80%,650px);background:white;border:1px solid var(--line);
-  border-radius:4px 13px 13px 13px;padding:13px 15px;
-  font-size:13px;line-height:1.7;overflow-wrap:anywhere;white-space:pre-wrap
+  max-width:min(82%,720px);
+  background:white;border:1px solid var(--line);
+  border-radius:4px 13px 13px 13px;
+  padding:13px 16px;font-size:12px;
+  line-height:1.8;overflow-wrap:anywhere;
+  white-space:pre-wrap
 }
-.user .bubble{background:#fff0f1;border-color:#f5d4d8;border-radius:13px 4px 13px 13px}
-.bubble img{display:block;max-width:190px;max-height:160px;object-fit:cover;border-radius:8px;margin-top:8px}
-.typing{color:var(--muted);font-size:12px;padding:0 25px 15px;display:none}
-.composer{border-top:1px solid var(--line);padding:17px;background:white}
+.user .bubble{
+  background:#fff0f1;border-color:#f5d4d8;
+  border-radius:13px 4px 13px 13px
+}
+.bubble img{
+  display:block;max-width:220px;max-height:180px;
+  object-fit:cover;border-radius:8px;margin-top:9px
+}
+.message-actions{display:flex;gap:7px;margin-top:10px}
+.message-actions button{
+  border:1px solid var(--line);background:#f5f5f7;
+  border-radius:7px;padding:6px 9px;
+  cursor:pointer;font-size:10px
+}
+.typing{
+  color:var(--muted);font-size:11px;
+  padding:0 25px 12px;display:none
+}
+
+/* COMPOSER */
+.composer{
+  border-top:1px solid var(--line);
+  padding:17px 20px;background:white
+}
 .preview-list{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .preview-item{position:relative}
-.preview-item img{width:60px;height:60px;object-fit:cover;border-radius:8px}
+.preview-item img{
+  width:58px;height:58px;object-fit:cover;border-radius:8px
+}
 .preview-item button{
-  position:absolute;right:-5px;top:-5px;width:20px;height:20px;
-  border:0;background:var(--red);color:white;border-radius:50%;cursor:pointer
+  position:absolute;right:-5px;top:-5px;
+  width:20px;height:20px;border:0;
+  background:var(--red);color:white;border-radius:50%
 }
 .input-row{display:flex;gap:9px;align-items:end}
 #messageInput{
-  resize:none;min-height:45px;max-height:120px;flex:1;
-  border:1px solid var(--line);border-radius:10px;padding:13px;
-  outline:none;font-size:13px
+  resize:none;min-height:46px;max-height:130px;
+  flex:1;border:1px solid var(--line);
+  border-radius:10px;padding:14px;
+  outline:none;font-size:12px;background:#fafafd
 }
-#messageInput:focus{border-color:var(--red)}
+#messageInput:focus{border-color:var(--red);background:white}
 .tool-btn,.send-btn{
-  height:45px;min-width:45px;border:1px solid var(--line);
-  background:white;border-radius:10px;cursor:pointer;font-size:17px
+  height:46px;min-width:45px;
+  border:1px solid var(--line);background:white;
+  border-radius:10px;font-size:17px
 }
-.send-btn{background:var(--red);color:white;border-color:var(--red);font-size:20px}
+.tool-btn:hover{color:var(--red);border-color:var(--red)}
+.send-btn{
+  background:var(--red);color:white;
+  border-color:var(--red);font-size:20px
+}
+.send-btn:hover{background:var(--red-dark)}
 .send-btn:disabled{opacity:.5;cursor:not-allowed}
-.tool-btn:hover{color:var(--red)}
-.composer-note{color:#999;font-size:9px;margin:10px 3px 0}
-.message-actions{display:flex;gap:7px;margin-top:9px}
-.message-actions button{
-  border:1px solid var(--line);background:#f5f5f7;
-  border-radius:7px;padding:6px 9px;cursor:pointer;font-size:11px
+.composer-note{
+  color:#999;font-size:9px;margin:10px 3px 0
 }
 
-/* CONTATO */
-.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:20px}
-.contact-card,.gameplay-card{background:white;border:1px solid var(--line);border-radius:15px;padding:25px}
-.contact-card h3,.gameplay-card h3{font-size:14px}
-.contact-card p,.gameplay-card p{color:var(--muted);font-size:12px;line-height:1.7}
-.whatsapp{
-  display:inline-block;background:#1ba76a;color:white;border-radius:8px;
-  padding:13px 18px;font-size:11px;font-weight:800;margin-top:12px
+/* BOTTOM INFO */
+.bottom-info{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:13px;margin-top:17px
 }
-.gameplay-card img{width:100%;max-height:220px;object-fit:cover;border-radius:10px;margin-top:10px}
-footer{background:#17171b;color:white;padding:30px 20px;text-align:center}
-footer strong{font:700 14px Orbitron}
-footer p{color:#999;font-size:10px}
+.info-card{
+  background:white;border:1px solid var(--line);
+  border-radius:12px;padding:17px
+}
+.info-card h3{font-size:11px;margin:0 0 7px}
+.info-card p{
+  color:var(--muted);font-size:10px;
+  line-height:1.7;margin:0
+}
+.info-card a{
+  display:inline-block;margin-top:10px;
+  color:var(--red);font-size:9px;font-weight:900
+}
+.footer{
+  color:#999;font-size:9px;
+  text-align:center;padding:25px 10px
+}
 
+/* MOBILE */
 @media(max-width:850px){
+  .dashboard{grid-template-columns:220px minmax(0,1fr)}
+  .content{padding:20px}
   .topbar{padding:0 20px}
-  .nav{gap:15px}
-  .hero{padding:30px}
-  .service-grid{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:650px){
-  .topbar{height:65px}
-  .menu-btn{display:block}
-  .nav{
-    display:none;position:absolute;top:65px;left:0;right:0;
-    background:white;padding:20px;border-bottom:1px solid var(--line);
-    flex-direction:column;align-items:flex-start
+  .dashboard{display:block}
+  .sidebar{
+    position:fixed;left:-270px;top:0;bottom:0;
+    width:255px;height:100vh;min-height:100vh;
+    transition:left .25s;box-shadow:10px 0 35px #0003
   }
-  .nav.open{display:flex}
-  .status{display:none}
-  main{padding:18px 13px 45px}
-  .hero{grid-template-columns:1fr;padding:27px 22px}
-  .hero h2{letter-spacing:-2px}
-  .holo{min-height:290px}
-  .service-grid{grid-template-columns:1fr}
-  .section-head{align-items:flex-start;flex-direction:column}
-  .contact-grid{grid-template-columns:1fr}
-  .chat{height:390px;padding:14px}
-  .bubble{max-width:88%}
-  .ai-header{padding:17px}
-  .tool-btn{min-width:39px}
+  .sidebar.open{left:0}
+  .mobile-menu{display:block}
+  .topbar{height:62px;padding:0 14px;gap:10px}
+  .topbar-left{display:flex;align-items:center;gap:10px}
+  .topbar-title{font-size:11px}
+  .topbar-sub{font-size:8px}
+  .topbar-right{gap:8px}
+  .status{font-size:8px}
+  .content{padding:17px 12px}
+  .welcome{align-items:flex-start}
+  .welcome h1{font-size:21px}
+  .welcome p{font-size:10px;max-width:220px;line-height:1.6}
+  .new-chat{padding:11px;font-size:9px}
+  .ai-header{padding:13px}
+  .ai-title{font-size:10px}
+  .ai-subtitle{font-size:8px}
+  .ai-header select{max-width:105px;font-size:9px}
+  .chat{
+    height:calc(100dvh - 330px);
+    min-height:330px;max-height:none;
+    padding:15px 11px
+  }
+  .bubble{max-width:88%;font-size:12px;padding:11px}
+  .composer{padding:12px 10px}
   .input-row{gap:5px}
+  .tool-btn,.send-btn{min-width:38px;height:43px}
+  #messageInput{min-height:43px;padding:12px;font-size:12px}
+  .bottom-info{grid-template-columns:1fr}
+  .footer{padding:18px 5px}
 }
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;scroll-behavior:auto!important}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important
+  }
 }
 </style>
 </head>
 
 <body>
 
+<!-- TELA INICIAL -->
 <div id="intro">
   <div class="intro-content">
     <img class="intro-photo"
       src="/file_000000009618820e9a50407df0e56103.png"
       alt="WSAZ_777"
       onerror="this.style.display='none'">
-    <div class="intro-kicker">ELITE GAMING SYSTEM</div>
+
+    <div class="intro-kicker">ARTIFICIAL INTELLIGENCE</div>
     <h1>WSAZ_777</h1>
-    <p>GAMING · TECHNOLOGY · PERFORMANCE</p>
+    <p>YOUR AI. YOUR POSSIBILITIES.</p>
     <div class="intro-brand">STORE DE WALLACE</div>
-    <button onclick="enterSite()">ACESSAR PAINEL →</button>
+
+    <button type="button" onclick="enterSite()">
+      ABRIR IA →
+    </button>
+
+    <p class="intro-hint">ACESSE SEU PAINEL DE INTELIGÊNCIA ARTIFICIAL</p>
   </div>
 </div>
 
-<header class="topbar">
-  <a href="#inicio" class="brand">
-    <div class="brand-mark">♛</div>
-    <div>
-      <div class="brand-name">WSAZ_777</div>
-      <div class="brand-sub">STORE DE WALLACE · GAMING LAB</div>
-    </div>
-  </a>
+<!-- PAINEL PRINCIPAL -->
+<div class="dashboard">
 
-  <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menu">☰</button>
+  <!-- MENU LATERAL -->
+  <aside class="sidebar" id="sidebar">
 
-  <nav class="nav" id="nav">
-    <a href="#inicio" onclick="closeMenu()">⌂ INÍCIO</a>
-    <a href="#servicos" onclick="closeMenu()">▣ SERVIÇOS</a>
-    <a href="#assistente" onclick="closeMenu()">⌘ ASSISTENTE IA</a>
-    <a href="#contato" onclick="closeMenu()">◉ CONTATO</a>
-  </nav>
-
-  <div class="status"><i></i> PAINEL ATIVO</div>
-</header>
-
-<main id="inicio">
-
-  <section class="hero">
-    <div>
-      <div class="eyebrow">✦ WSAZ_777 / GAMING DIVISION</div>
-      <h2>LEVEL UP<br><span>YOUR GAME.</span></h2>
-      <p>Configurações personalizadas, otimização para PC e suporte para melhorar sua experiência nos jogos.</p>
-      <div class="hero-actions">
-        <a href="#servicos" class="primary-btn">EXPLORAR SERVIÇOS</a>
-        <a href="#assistente" class="secondary-btn">ABRIR ASSISTENTE IA</a>
+    <div class="brand">
+      <div class="brand-mark">♛</div>
+      <div>
+        <div class="brand-name">WSAZ_777</div>
+        <div class="brand-sub">ARTIFICIAL INTELLIGENCE</div>
       </div>
     </div>
 
-    <div class="holo">
-      <div class="robot-stage">
-        <div class="robot-ring"></div>
-        <div class="robot-ring ring-two"></div>
-        <div class="robot-glow"></div>
-        <div class="robot-back"></div>
-        <div class="robot-head">
-          <div class="robot-side left"></div>
-          <div class="robot-side right"></div>
-          <div class="robot-face">
-            <div class="robot-eyes"></div>
-            <div class="robot-mouth"></div>
+    <div class="menu-label">MENU PRINCIPAL</div>
+
+    <button class="side-btn active" type="button" onclick="goToChat()">
+      <span class="side-icon">⌘</span>
+      Assistente IA
+    </button>
+
+    <button class="side-btn" type="button" onclick="newChat();closeSidebar()">
+      <span class="side-icon">＋</span>
+      Nova conversa
+    </button>
+
+    <div class="menu-label">EXPLORAR</div>
+
+    <a class="side-btn" href="#recursos" onclick="closeSidebar()">
+      <span class="side-icon">✦</span>
+      Recursos da IA
+    </a>
+
+    <a class="side-btn" href="#contato" onclick="closeSidebar()">
+      <span class="side-icon">◉</span>
+      Contato
+    </a>
+
+    <div class="menu-label">PREFERÊNCIAS</div>
+
+    <button class="side-btn" type="button" onclick="focusInput();closeSidebar()">
+      <span class="side-icon">⚙</span>
+      Configurar conversa
+    </button>
+
+    <div class="side-spacer"></div>
+
+    <div class="sidebar-bottom">
+      <div class="profile">
+        <div class="profile-icon">♛</div>
+        <div>
+          <div class="profile-name">WSAZ_777</div>
+          <div class="profile-sub">Seu espaço de IA</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ÁREA DO CHAT -->
+  <div class="main-area">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" type="button"
+          onclick="toggleSidebar()" aria-label="Abrir menu">☰</button>
+
+        <div>
+          <div class="topbar-title">Painel de inteligência artificial</div>
+          <div class="topbar-sub">WSAZ_777 · NEURAL CORE</div>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="status"><i></i> SISTEMA ONLINE</div>
+      </div>
+    </header>
+
+    <main class="content" id="assistente">
+
+      <section class="welcome">
+        <div>
+          <h1>Olá! Como posso ajudar?</h1>
+          <p>Converse com sua inteligência artificial. Envie uma pergunta para começar.</p>
+        </div>
+
+        <button class="new-chat" type="button" onclick="newChat()">
+          ＋ NOVA CONVERSA
+        </button>
+      </section>
+
+      <!-- CHAT -->
+      <section class="ai-panel">
+
+        <div class="ai-header">
+          <div class="ai-identity">
+            <div class="ai-logo">♛</div>
+            <div>
+              <div class="ai-title">WSAZ_777 IA</div>
+              <div class="ai-subtitle">ASSISTENTE INTELIGENTE</div>
+            </div>
+          </div>
+
+          <div class="ai-header-right">
+            <select id="responseStyle" aria-label="Estilo das respostas">
+              <option value="concise">Resumida</option>
+              <option value="normal" selected>Normal</option>
+              <option value="detailed">Completa</option>
+            </select>
           </div>
         </div>
-      </div>
-      <div class="holo-caption">ARTIFICIAL INTELLIGENCE · WSAZ_777</div>
-    </div>
-  </section>
 
-  <div class="section-head" id="servicos">
-    <div>
-      <div class="eyebrow">✦ SOLUÇÕES WSAZ_777</div>
-      <h2>Serviços & soluções</h2>
-    </div>
-    <p>NO LIMITS // JUST PERFORMANCE</p>
-  </div>
+        <div class="chat" id="chat" aria-live="polite">
+          <div class="message">
+            <div class="avatar">♛</div>
+            <div class="bubble">Bem-vindo à WSAZ_777 IA!
 
-  <section class="service-grid">
-    <article class="product">
-      <div class="product-icon">⌖</div>
-      <h3>SENSIBILIDADE</h3>
-      <p>Configurações personalizadas de sensibilidade para seu estilo de jogo.</p>
-      <a href="#contato">CONSULTAR →</a>
-    </article>
+Posso ajudar com tecnologia, jogos, configurações de PC, estudos, programação, ideias e muito mais.
 
-    <article class="product">
-      <div class="product-icon">▦</div>
-      <h3>HUD PERSONALIZADO</h3>
-      <p>Organização de botões e layout para melhorar conforto e controle.</p>
-      <a href="#contato">CONSULTAR →</a>
-    </article>
-
-    <article class="product">
-      <div class="product-icon">ϟ</div>
-      <h3>OTIMIZAÇÃO PC</h3>
-      <p>Ajustes de desempenho, estabilidade e configurações do Windows.</p>
-      <a href="#contato">CONSULTAR →</a>
-    </article>
-
-    <article class="product">
-      <div class="product-icon">◎</div>
-      <h3>PRECISÃO</h3>
-      <p>Dicas e ajustes legítimos para controle, mira e consistência.</p>
-      <a href="#contato">CONSULTAR →</a>
-    </article>
-
-    <article class="product">
-      <div class="product-icon">▤</div>
-      <h3>CONFIGURAÇÃO EMULADOR</h3>
-      <p>Orientações para resolução, controles e desempenho no PC.</p>
-      <a href="#contato">CONSULTAR →</a>
-    </article>
-
-    <article class="product">
-      <div class="product-icon">⌘</div>
-      <h3>SUPORTE</h3>
-      <p>Atendimento para dúvidas e orientações sobre configurações.</p>
-      <a href="#contato">CONSULTAR →</a>
-    </article>
-  </section>
-
-  <section class="ai-panel" id="assistente">
-    <div class="ai-header">
-      <div>
-        <div class="ai-title">♛ WSAZ_777 IA</div>
-        <div class="ai-subtitle">NEURAL CORE · ASSISTENTE INTELIGENTE</div>
-      </div>
-      <button type="button" onclick="newChat()">＋ NOVA CONVERSA</button>
-    </div>
-
-    <div class="ai-controls">
-      <label for="responseStyle">ESTILO DAS RESPOSTAS</label>
-      <select id="responseStyle">
-        <option value="concise">RESUMIDA</option>
-        <option value="normal" selected>NORMAL</option>
-        <option value="detailed">COMPLETA</option>
-      </select>
-      <span class="status"><i></i> AI SYSTEM</span>
-    </div>
-
-    <div class="chat" id="chat" aria-live="polite">
-      <div class="message">
-        <div class="avatar">♛</div>
-        <div class="bubble">
-          Bem-vindo ao assistente WSAZ_777.
-
-          Posso ajudar com jogos, configurações de PC,
-          sensibilidade, HUD, estudos, tecnologia e muito mais.
-
-          Como posso ajudar?
+O que você gostaria de saber?</div>
+          </div>
         </div>
-      </div>
-    </div>
 
-    <div class="typing" id="typing">WSAZ_777 está pensando...</div>
+        <div class="typing" id="typing">
+          WSAZ_777 está pensando...
+        </div>
 
-    <div class="composer">
-      <div class="preview-list" id="previewList"></div>
+        <div class="composer">
+          <div class="preview-list" id="previewList"></div>
 
-      <div class="input-row">
-        <input type="file" id="imageInput"
-          accept="image/png,image/jpeg,image/webp" multiple hidden>
+          <div class="input-row">
+            <input type="file" id="imageInput"
+              accept="image/png,image/jpeg,image/webp"
+              multiple hidden>
 
-        <button class="tool-btn" id="attachBtn"
-          type="button"
-          onclick="document.getElementById('imageInput').click()"
-          title="Anexar imagens">＋</button>
+            <button class="tool-btn" id="attachBtn"
+              type="button"
+              onclick="document.getElementById('imageInput').click()"
+              title="Anexar imagens" aria-label="Anexar imagens">＋</button>
 
-        <button class="tool-btn" type="button"
-          onclick="startVoice()" title="Ditado por voz">◉</button>
+            <button class="tool-btn" type="button"
+              onclick="startVoice()"
+              title="Ditado por voz" aria-label="Ditado por voz">◉</button>
 
-        <textarea id="messageInput"
-          placeholder="Pergunte alguma coisa ao WSAZ_777..."
-          rows="1" maxlength="4000"></textarea>
+            <textarea id="messageInput"
+              placeholder="Digite sua mensagem para a WSAZ_777..."
+              rows="1" maxlength="4000"></textarea>
 
-        <button class="send-btn" id="sendBtn"
-          type="button" onclick="sendMessage()" title="Enviar">➤</button>
-      </div>
+            <button class="send-btn" id="sendBtn"
+              type="button" onclick="sendMessage()"
+              title="Enviar" aria-label="Enviar mensagem">➤</button>
+          </div>
 
-      <div class="composer-note">
-        ENTER para enviar · SHIFT + ENTER para nova linha · Máximo de 5 imagens
-      </div>
-    </div>
-  </section>
+          <div class="composer-note">
+            ENTER para enviar · SHIFT + ENTER para pular linha · Máximo de 5 imagens
+          </div>
+        </div>
+      </section>
 
-  <div class="section-head" id="contato">
-    <div>
-      <div class="eyebrow">✦ WSAZ_777 / SUPPORT</div>
-      <h2>Contato & atendimento</h2>
-    </div>
-    <p>STORE DE WALLACE</p>
+      <!-- RECURSOS -->
+      <section class="bottom-info" id="recursos">
+        <article class="info-card">
+          <h3>✦ Inteligência artificial</h3>
+          <p>Faça perguntas, peça explicações, desenvolva ideias e explore diferentes assuntos.</p>
+        </article>
+
+        <article class="info-card">
+          <h3>▧ Análise de imagens</h3>
+          <p>Envie imagens pelo botão de anexo para que a IA possa analisá-las.</p>
+        </article>
+      </section>
+
+      <section class="bottom-info" id="contato">
+        <article class="info-card">
+          <h3>◉ Atendimento WSAZ_777</h3>
+          <p>Precisa de informações ou suporte? Entre em contato com a Store de Wallace.</p>
+          <a href="https://wa.me/5587981368837"
+             target="_blank" rel="noopener">FALAR NO WHATSAPP ↗</a>
+        </article>
+
+        <article class="info-card">
+          <h3>♛ WSAZ_777</h3>
+          <p>Gaming · Technology · Artificial Intelligence.</p>
+          <a href="https://wsaz777.onrender.com"
+             target="_blank" rel="noopener">ACESSAR SITE ↗</a>
+        </article>
+      </section>
+
+      <footer class="footer">
+        WSAZ_777 · STORE DE WALLACE · ARTIFICIAL INTELLIGENCE
+      </footer>
+
+    </main>
   </div>
-
-  <section class="contact-grid">
-    <article class="contact-card">
-      <div class="eyebrow">◈ ATENDIMENTO</div>
-      <h3>Precisa de suporte?</h3>
-      <p>Entre em contato para consultar informações, disponibilidade e serviços da WSAZ_777.</p>
-      <a class="whatsapp" href="https://wa.me/5587981368837"
-        target="_blank" rel="noopener">FALAR NO WHATSAPP ↗</a>
-    </article>
-
-    <article class="gameplay-card">
-      <div class="eyebrow">◈ DEMONSTRAÇÃO</div>
-      <h3>Gameplay WSAZ_777</h3>
-      <p>Confira uma captura de gameplay apresentada pela Store de Wallace.</p>
-      <img src="./gameplay-print.jpg" alt="Captura de gameplay"
-        loading="lazy"
-        onerror="this.alt='Imagem gameplay-print.jpg não encontrada';this.style.display='none'">
-    </article>
-  </section>
-</main>
-
-<footer>
-  <strong>♛ WSAZ_777</strong>
-  <p>STORE DE WALLACE · GAMING · TECHNOLOGY · AI</p>
-  <p>Projeto feito por Wallace · @wsaz_777</p>
-</footer>
+</div>
 
 <script>
 "use strict";
 
 /*
-  HISTÓRICO INDIVIDUAL:
-  sessionStorage separa os dados por aba e origem.
-  Não utiliza armazenamento compartilhado no servidor.
+  HISTÓRICO:
+  sessionStorage mantém a conversa nesta aba.
+  O servidor não recebe uma identificação de usuário.
 */
 
 const chat = document.getElementById("chat");
@@ -568,6 +609,7 @@ let selectedImages = [];
 let history = [];
 let busy = false;
 
+/* ENTRAR NO PAINEL */
 function enterSite(){
   document.getElementById("intro").classList.add("hide");
 
@@ -576,8 +618,11 @@ function enterSite(){
   }catch(error){
     console.warn("Sessão indisponível.",error);
   }
+
+  setTimeout(()=>input.focus(),400);
 }
 
+/* NÃO MOSTRAR INTRO NOVAMENTE NESTA SESSÃO */
 try{
   if(sessionStorage.getItem("wsazIntroSeen")){
     document.getElementById("intro").classList.add("hide");
@@ -586,15 +631,26 @@ try{
   console.warn("Não foi possível verificar a sessão.",error);
 }
 
-function toggleMenu(){
-  document.getElementById("nav").classList.toggle("open");
+/* MENU MOBILE */
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("open");
 }
 
-function closeMenu(){
-  document.getElementById("nav").classList.remove("open");
+function closeSidebar(){
+  document.getElementById("sidebar").classList.remove("open");
 }
 
-/* CRIA MENSAGENS COM TEXTO SEGURO */
+function goToChat(){
+  closeSidebar();
+  document.getElementById("assistente").scrollIntoView({behavior:"smooth"});
+  input.focus();
+}
+
+function focusInput(){
+  goToChat();
+}
+
+/* MENSAGENS */
 function addMessage(role,text,images=[]){
   const wrapper=document.createElement("div");
   wrapper.className=`message ${role==="user"?"user":""}`;
@@ -621,7 +677,6 @@ function addMessage(role,text,images=[]){
     const speak=document.createElement("button");
     speak.type="button";
     speak.textContent="🔊 Ouvir";
-    speak.title="Ouvir resposta";
     speak.addEventListener("click",()=>speakText(text));
 
     actions.appendChild(speak);
@@ -646,8 +701,8 @@ function renderPreviews(){
     img.alt="Prévia da imagem";
 
     const remove=document.createElement("button");
-    remove.textContent="×";
     remove.type="button";
+    remove.textContent="×";
     remove.setAttribute("aria-label","Remover imagem");
 
     remove.onclick=()=>{
@@ -660,7 +715,7 @@ function renderPreviews(){
   });
 }
 
-/* REDIMENSIONAMENTO DE IMAGENS */
+/* REDIMENSIONAR IMAGENS */
 function resizeImage(file){
   return new Promise((resolve,reject)=>{
     if(!file.type.match(/^image\/(jpeg|png|webp)$/)){
@@ -701,6 +756,7 @@ function resizeImage(file){
   });
 }
 
+/* SELEÇÃO DE IMAGENS */
 imageInput.addEventListener("change",async event=>{
   const files=Array.from(event.target.files||[]);
   const available=5-selectedImages.length;
@@ -737,7 +793,7 @@ function newChat(){
 
   addMessage(
     "assistant",
-    "Nova conversa iniciada.\n\nComo posso ajudar?"
+    "Nova conversa iniciada!\n\nComo posso ajudar?"
   );
 
   try{
@@ -745,9 +801,12 @@ function newChat(){
   }catch(error){
     console.warn("Não foi possível limpar o histórico.",error);
   }
+
+  input.value="";
+  input.focus();
 }
 
-/* SALVAR HISTÓRICO SOMENTE NESTA ABA */
+/* SALVAR HISTÓRICO DA ABA */
 function saveHistory(){
   try{
     sessionStorage.setItem(
@@ -759,26 +818,24 @@ function saveHistory(){
   }
 }
 
-/* RECUPERAR HISTÓRICO SOMENTE DESTA ABA */
+/* CARREGAR HISTÓRICO */
 function loadHistory(){
   try{
     const saved=sessionStorage.getItem(HISTORY_KEY);
-
     if(!saved)return;
 
     const parsed=JSON.parse(saved);
-
     if(!Array.isArray(parsed))return;
 
     history=parsed
-      .filter(item =>
+      .filter(item=>
         item &&
         ["user","assistant"].includes(item.role) &&
         typeof item.content==="string"
       )
       .slice(-12);
 
-    if(history.length===0)return;
+    if(!history.length)return;
 
     chat.replaceChildren();
 
@@ -802,18 +859,11 @@ async function sendMessage(){
 
   const images=selectedImages.map(item=>item.data);
 
-  addMessage(
-    "user",
-    message||"Analise estas imagens.",
-    images
-  );
+  const userContent=message||"Analise estas imagens.";
+
+  addMessage("user",userContent,images);
 
   const previousHistory=[...history];
-
-  history.push({
-    role:"user",
-    content:message||"O usuário enviou imagens para análise."
-  });
 
   input.value="";
   selectedImages=[];
@@ -854,6 +904,11 @@ async function sendMessage(){
     addMessage("assistant",answer);
 
     history.push({
+      role:"user",
+      content:userContent
+    });
+
+    history.push({
       role:"assistant",
       content:answer
     });
@@ -864,14 +919,10 @@ async function sendMessage(){
   }catch(error){
     console.error("Erro ao enviar mensagem:",error);
 
-    history.pop();
-
     addMessage(
       "assistant",
       error.message||"Não consegui conectar ao servidor. Tente novamente."
     );
-
-    saveHistory();
 
   }finally{
     busy=false;
@@ -906,10 +957,8 @@ function startVoice(){
   recognition.maxAlternatives=1;
 
   recognition.onresult=event=>{
-    input.value+=
-      (input.value?" ":"")+
+    input.value+=(input.value?" ":"")+
       event.results[0][0].transcript;
-
     input.focus();
   };
 
@@ -920,7 +969,7 @@ function startVoice(){
   recognition.start();
 }
 
-/* LEITURA DE RESPOSTAS */
+/* OUVIR RESPOSTAS */
 function speakText(text){
   if(!("speechSynthesis" in window)){
     alert("Leitura de voz não disponível neste navegador.");
@@ -939,16 +988,13 @@ function speakText(text){
   utterance.lang="pt-BR";
   utterance.rate=0.96;
   utterance.pitch=0.9;
-  utterance.volume=1;
 
   const voices=speechSynthesis.getVoices();
-  const portugueseVoice=voices.find(voice=>
-    voice.lang.toLowerCase().startsWith("pt-br")
+  const voice=voices.find(v=>
+    v.lang.toLowerCase().startsWith("pt-br")
   );
 
-  if(portugueseVoice){
-    utterance.voice=portugueseVoice;
-  }
+  if(voice)utterance.voice=voice;
 
   speechSynthesis.speak(utterance);
 }
@@ -973,7 +1019,6 @@ async function checkServer(){
 /* INICIALIZAÇÃO */
 loadHistory();
 checkServer();
-
 </script>
 
 </body>
