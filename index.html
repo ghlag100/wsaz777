@@ -1,1024 +1,1098 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#171717">
-<meta name="description" content="WSAZ_777 — Inteligência Artificial, tecnologia e gaming.">
-<title>WSAZ_777 | Artificial Intelligence</title>
+<meta name="theme-color" content="#050914">
+<title>WSAZ_777 | AI SYSTEM</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap');
+:root {
+  --bg:#050914;
+  --panel:#0b1424;
+  --panel2:#101e32;
+  --cyan:#00eaff;
+  --blue:#287bff;
+  --purple:#9b5cff;
+  --text:#eaf7ff;
+  --muted:#8295aa;
+  --border:rgba(0,234,255,.2);
+}
 
-:root{
-  --red:#e32636;
-  --red-dark:#b81425;
-  --bg:#f4f4f6;
-  --white:#fff;
-  --ink:#17171b;
-  --muted:#85858d;
-  --line:#e8e8ec;
-  --green:#20b875;
-  --sidebar:#17171b;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;background:var(--bg);color:var(--ink);
-  font-family:Inter,sans-serif
-}
-button,input,textarea,select{font:inherit}
-button,a{-webkit-tap-highlight-color:transparent}
-button{cursor:pointer}
-a{text-decoration:none;color:inherit}
+*{box-sizing:border-box;margin:0;padding:0}
 
-/* INTRO */
-#intro{
-  position:fixed;inset:0;z-index:1000;
-  display:grid;place-items:center;
-  background:#101014;color:white;
-  transition:.6s
-}
-#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
-.intro-content{text-align:center;padding:25px}
-.intro-photo{
-  width:105px;height:105px;object-fit:cover;
-  border-radius:24px;border:1px solid #ffffff35;
-  box-shadow:0 0 40px #e3263650;margin-bottom:25px
-}
-.intro-kicker{
-  color:#ff6572;font:11px Orbitron;
-  letter-spacing:4px
-}
-.intro-content h1{
-  font:800 clamp(38px,9vw,65px) Orbitron;
-  margin:14px 0
-}
-.intro-content p{
-  color:#aaa;font-size:11px;letter-spacing:3px
-}
-.intro-brand{
-  margin-top:25px;font-size:12px;
-  letter-spacing:3px;font-weight:800
-}
-.intro-content button{
-  margin-top:32px;border:0;background:var(--red);
-  color:white;padding:16px 32px;border-radius:9px;
-  font-weight:900;letter-spacing:1px;
-  box-shadow:0 8px 30px #e3263650
-}
-.intro-content button:hover{background:var(--red-dark)}
-.intro-hint{font-size:10px!important;color:#777!important;margin-top:15px}
-
-/* DASHBOARD */
-.dashboard{
+body {
+  background:
+    radial-gradient(circle at 50% 0%,#10294a 0%,transparent 38%),
+    var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
   min-height:100vh;
+  overflow-x:hidden;
+}
+
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+
+body:before {
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.15;
+  background-image:
+    linear-gradient(rgba(0,234,255,.12) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,234,255,.12) 1px,transparent 1px);
+  background-size:35px 35px;
+  mask-image:linear-gradient(to bottom,black,transparent);
+}
+
+#intro {
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:#030711;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:20px;
+  transition:.7s;
+}
+
+#intro img {
+  width:min(260px,65vw);
+  height:260px;
+  object-fit:contain;
+  filter:drop-shadow(0 0 25px var(--cyan));
+  animation:float 3s infinite ease-in-out;
+}
+
+#intro h1 {
+  letter-spacing:7px;
+  color:var(--cyan);
+  text-shadow:0 0 20px var(--cyan);
+}
+
+.loader {
+  width:180px;
+  height:4px;
+  background:#18283a;
+  border-radius:20px;
+  overflow:hidden;
+}
+
+.loader:after {
+  content:"";
+  display:block;
+  width:40%;
+  height:100%;
+  background:var(--cyan);
+  box-shadow:0 0 15px var(--cyan);
+  animation:load 1.5s infinite;
+}
+
+@keyframes load {
+  from{transform:translateX(-100%)}
+  to{transform:translateX(350%)}
+}
+
+@keyframes float {
+  50%{transform:translateY(-12px)}
+}
+
+.app {
+  display:none;
+  min-height:100vh;
+}
+
+.sidebar {
+  position:fixed;
+  top:0;
+  left:0;
+  bottom:0;
+  width:250px;
+  padding:25px 17px;
+  background:rgba(5,12,25,.95);
+  border-right:1px solid var(--border);
+  z-index:20;
+  backdrop-filter:blur(20px);
+}
+
+.logo {
+  padding:12px 10px 28px;
+  color:var(--cyan);
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:3px;
+  text-shadow:0 0 15px var(--cyan);
+}
+
+.logo small {
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  letter-spacing:4px;
+  margin-top:7px;
+}
+
+.nav-title {
+  font-size:10px;
+  color:#657c94;
+  letter-spacing:2px;
+  margin:18px 10px 10px;
+}
+
+.nav button {
+  width:100%;
+  text-align:left;
+  padding:14px 13px;
+  margin:4px 0;
+  border:1px solid transparent;
+  border-radius:10px;
+  color:#a9bbcd;
+  background:transparent;
+  transition:.2s;
+}
+
+.nav button:hover,.nav button.active {
+  color:var(--cyan);
+  background:rgba(0,234,255,.08);
+  border-color:var(--border);
+  box-shadow:inset 3px 0 var(--cyan);
+}
+
+.sidebar-bottom {
+  position:absolute;
+  bottom:22px;
+  left:17px;
+  right:17px;
+}
+
+.status {
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:12px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.dot {
+  display:inline-block;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#ffb52e;
+  margin-right:7px;
+}
+
+.dot.online{background:#00ff9d;box-shadow:0 0 8px #00ff9d}
+
+.main {
+  margin-left:250px;
+  padding:25px;
+  min-height:100vh;
+  position:relative;
+  z-index:1;
+}
+
+.topbar {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:25px;
+}
+
+.topbar h2 {
+  font-size:19px;
+  letter-spacing:2px;
+}
+
+.topbar span {
+  color:var(--cyan);
+  font-size:11px;
+}
+
+.mobile-menu {
+  display:none;
+  border:1px solid var(--border);
+  background:var(--panel);
+  color:var(--cyan);
+  padding:9px 12px;
+  border-radius:8px;
+}
+
+.page{display:none}
+.page.active{display:block}
+
+.hero {
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:30px;
+  background:
+    radial-gradient(circle at 85% 40%,rgba(0,234,255,.12),transparent 35%),
+    linear-gradient(135deg,#101f35,#07101e);
+  position:relative;
+  overflow:hidden;
+}
+
+.hero:after {
+  content:"WSAZ";
+  position:absolute;
+  right:25px;
+  bottom:-30px;
+  font-size:100px;
+  font-weight:900;
+  color:rgba(0,234,255,.035);
+  pointer-events:none;
+}
+
+.hero h1 {
+  font-size:clamp(24px,4vw,38px);
+  margin-bottom:12px;
+}
+
+.hero h1 span{color:var(--cyan)}
+
+.hero p {
+  color:var(--muted);
+  max-width:600px;
+  line-height:1.6;
+}
+
+.hero-actions {
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  margin-top:22px;
+}
+
+.btn {
+  border:1px solid var(--cyan);
+  background:rgba(0,234,255,.1);
+  color:var(--cyan);
+  padding:12px 17px;
+  border-radius:9px;
+  font-weight:bold;
+  transition:.2s;
+}
+
+.btn:hover {
+  background:var(--cyan);
+  color:#03101a;
+  box-shadow:0 0 20px rgba(0,234,255,.3);
+}
+
+.btn.secondary {
+  border-color:#536b85;
+  color:#b6c8d9;
+  background:rgba(255,255,255,.04);
+}
+
+.grid {
   display:grid;
-  grid-template-columns:255px minmax(0,1fr)
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:15px;
+  margin-top:20px;
 }
 
-/* SIDEBAR */
-.sidebar{
-  background:var(--sidebar);color:white;
-  min-height:100vh;padding:24px 17px;
-  display:flex;flex-direction:column;
-  position:sticky;top:0;height:100vh;
-  z-index:100
-}
-.brand{
-  display:flex;align-items:center;gap:11px;
-  padding:3px 8px 25px;
-  border-bottom:1px solid #ffffff17
-}
-.brand-mark{
-  width:42px;height:42px;border-radius:12px;
-  display:grid;place-items:center;
-  background:var(--red);font-size:22px
-}
-.brand-name{font:800 14px Orbitron}
-.brand-sub{
-  color:#999;font-size:8px;
-  letter-spacing:1px;margin-top:5px
-}
-.menu-label{
-  color:#777;font-size:9px;font-weight:800;
-  letter-spacing:1.7px;margin:27px 10px 12px
-}
-.side-btn{
-  width:100%;display:flex;align-items:center;
-  gap:12px;padding:13px 12px;
-  border:0;border-radius:9px;
-  background:transparent;color:#c7c7cc;
-  text-align:left;font-size:11px;font-weight:700;
-  margin:3px 0;transition:.2s
-}
-.side-btn .side-icon{
-  width:20px;text-align:center;font-size:17px
-}
-.side-btn:hover{background:#ffffff12;color:white}
-.side-btn.active{
-  color:white;background:var(--red);
-  box-shadow:0 5px 20px #e3263635
-}
-.side-spacer{flex:1}
-.sidebar-bottom{
-  border-top:1px solid #ffffff17;padding-top:17px
-}
-.profile{
-  display:flex;align-items:center;gap:10px;padding:8px
-}
-.profile-icon{
-  width:35px;height:35px;border-radius:50%;
-  display:grid;place-items:center;
-  background:#ffffff17;color:white
-}
-.profile-name{font-size:10px;font-weight:800}
-.profile-sub{font-size:9px;color:#888;margin-top:4px}
-
-/* MAIN */
-.main-area{min-width:0;display:flex;flex-direction:column}
-.topbar{
-  height:68px;background:white;
-  border-bottom:1px solid var(--line);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 30px;position:sticky;top:0;z-index:50
-}
-.topbar-title{font-size:13px;font-weight:800}
-.topbar-sub{font-size:9px;color:var(--muted);margin-top:4px}
-.topbar-right{display:flex;align-items:center;gap:15px}
-.status{
-  display:flex;align-items:center;gap:7px;
-  color:var(--green);font-size:9px;font-weight:900
-}
-.status i{
-  width:7px;height:7px;border-radius:50%;
-  background:var(--green);box-shadow:0 0 9px #20b87580
-}
-.mobile-menu{
-  display:none;border:0;background:transparent;
-  font-size:23px;color:var(--ink)
-}
-.content{padding:25px 30px;max-width:1500px;width:100%;margin:auto}
-
-/* CHAT HEADER */
-.welcome{
-  display:flex;align-items:center;
-  justify-content:space-between;gap:15px;
-  margin-bottom:20px
-}
-.welcome h1{
-  font-size:clamp(20px,3vw,27px);
-  letter-spacing:-1px;margin:0
-}
-.welcome p{
-  color:var(--muted);font-size:11px;margin:7px 0 0
-}
-.new-chat{
-  background:var(--red);color:white;border:0;
-  border-radius:8px;padding:12px 16px;
-  font-size:10px;font-weight:900;
-  white-space:nowrap
-}
-.new-chat:hover{background:var(--red-dark)}
-
-/* CHAT PANEL */
-.ai-panel{
-  background:white;border:1px solid var(--line);
-  border-radius:16px;overflow:hidden;
-  box-shadow:0 12px 35px #17171b08
-}
-.ai-header{
-  background:#202024;color:white;
-  padding:17px 21px;display:flex;
-  align-items:center;justify-content:space-between;
-  gap:12px
-}
-.ai-identity{display:flex;align-items:center;gap:11px}
-.ai-logo{
-  width:38px;height:38px;border-radius:11px;
-  display:grid;place-items:center;
-  background:var(--red);font-size:19px
-}
-.ai-title{font:700 12px Orbitron}
-.ai-subtitle{color:#aaa;font-size:9px;margin-top:5px}
-.ai-header-right{display:flex;align-items:center;gap:10px}
-.ai-header select{
-  background:#ffffff12;color:white;
-  border:1px solid #ffffff25;border-radius:7px;
-  padding:9px;font-size:10px;outline:none
-}
-.ai-header option{color:#171717}
-.chat{
-  height:calc(100vh - 340px);
-  min-height:370px;max-height:650px;
-  overflow-y:auto;padding:25px;
-  background:#fafafd
-}
-.message{
-  display:flex;gap:10px;
-  margin-bottom:20px;align-items:flex-start
-}
-.message.user{flex-direction:row-reverse}
-.avatar{
-  width:32px;height:32px;flex:0 0 32px;
-  display:grid;place-items:center;
-  background:#202024;color:white;
-  border-radius:9px;font-size:12px
-}
-.user .avatar{background:var(--red)}
-.bubble{
-  max-width:min(82%,720px);
-  background:white;border:1px solid var(--line);
-  border-radius:4px 13px 13px 13px;
-  padding:13px 16px;font-size:12px;
-  line-height:1.8;overflow-wrap:anywhere;
-  white-space:pre-wrap
-}
-.user .bubble{
-  background:#fff0f1;border-color:#f5d4d8;
-  border-radius:13px 4px 13px 13px
-}
-.bubble img{
-  display:block;max-width:220px;max-height:180px;
-  object-fit:cover;border-radius:8px;margin-top:9px
-}
-.message-actions{display:flex;gap:7px;margin-top:10px}
-.message-actions button{
-  border:1px solid var(--line);background:#f5f5f7;
-  border-radius:7px;padding:6px 9px;
-  cursor:pointer;font-size:10px
-}
-.typing{
-  color:var(--muted);font-size:11px;
-  padding:0 25px 12px;display:none
+.card {
+  background:linear-gradient(145deg,#101e31,#091321);
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+  min-width:0;
 }
 
-/* COMPOSER */
-.composer{
-  border-top:1px solid var(--line);
-  padding:17px 20px;background:white
-}
-.preview-list{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.preview-item{position:relative}
-.preview-item img{
-  width:58px;height:58px;object-fit:cover;border-radius:8px
-}
-.preview-item button{
-  position:absolute;right:-5px;top:-5px;
-  width:20px;height:20px;border:0;
-  background:var(--red);color:white;border-radius:50%
-}
-.input-row{display:flex;gap:9px;align-items:end}
-#messageInput{
-  resize:none;min-height:46px;max-height:130px;
-  flex:1;border:1px solid var(--line);
-  border-radius:10px;padding:14px;
-  outline:none;font-size:12px;background:#fafafd
-}
-#messageInput:focus{border-color:var(--red);background:white}
-.tool-btn,.send-btn{
-  height:46px;min-width:45px;
-  border:1px solid var(--line);background:white;
-  border-radius:10px;font-size:17px
-}
-.tool-btn:hover{color:var(--red);border-color:var(--red)}
-.send-btn{
-  background:var(--red);color:white;
-  border-color:var(--red);font-size:20px
-}
-.send-btn:hover{background:var(--red-dark)}
-.send-btn:disabled{opacity:.5;cursor:not-allowed}
-.composer-note{
-  color:#999;font-size:9px;margin:10px 3px 0
+.card .symbol {
+  font-size:25px;
+  margin-bottom:13px;
 }
 
-/* BOTTOM INFO */
-.bottom-info{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:13px;margin-top:17px
-}
-.info-card{
-  background:white;border:1px solid var(--line);
-  border-radius:12px;padding:17px
-}
-.info-card h3{font-size:11px;margin:0 0 7px}
-.info-card p{
-  color:var(--muted);font-size:10px;
-  line-height:1.7;margin:0
-}
-.info-card a{
-  display:inline-block;margin-top:10px;
-  color:var(--red);font-size:9px;font-weight:900
-}
-.footer{
-  color:#999;font-size:9px;
-  text-align:center;padding:25px 10px
+.card h3{font-size:15px;margin-bottom:9px}
+.card p{font-size:12px;color:var(--muted);line-height:1.6}
+
+.card button{margin-top:16px;width:100%}
+
+.section-title {
+  margin:28px 0 14px;
+  font-size:15px;
+  letter-spacing:2px;
+  color:var(--cyan);
 }
 
-/* MOBILE */
-@media(max-width:850px){
-  .dashboard{grid-template-columns:220px minmax(0,1fr)}
-  .content{padding:20px}
-  .topbar{padding:0 20px}
+.chat-box {
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:rgba(7,17,31,.88);
+  overflow:hidden;
 }
-@media(max-width:650px){
-  .dashboard{display:block}
-  .sidebar{
-    position:fixed;left:-270px;top:0;bottom:0;
-    width:255px;height:100vh;min-height:100vh;
-    transition:left .25s;box-shadow:10px 0 35px #0003
+
+.chat-head {
+  padding:16px;
+  border-bottom:1px solid var(--border);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.chat-head small{color:var(--muted)}
+
+.messages {
+  height:430px;
+  overflow-y:auto;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  gap:13px;
+}
+
+.message {
+  max-width:85%;
+  padding:13px 15px;
+  border-radius:12px;
+  line-height:1.55;
+  font-size:13px;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+}
+
+.message.bot {
+  align-self:flex-start;
+  background:#12243a;
+  border:1px solid rgba(0,234,255,.18);
+}
+
+.message.user {
+  align-self:flex-end;
+  background:#073d58;
+  border:1px solid rgba(0,234,255,.3);
+}
+
+.chat-input {
+  display:flex;
+  gap:9px;
+  padding:13px;
+  border-top:1px solid var(--border);
+}
+
+.chat-input textarea {
+  flex:1;
+  resize:none;
+  min-width:0;
+  height:48px;
+  padding:14px;
+  border-radius:9px;
+  color:white;
+  background:#081323;
+  border:1px solid #203c55;
+  outline:none;
+}
+
+.chat-input textarea:focus{border-color:var(--cyan)}
+
+.chat-input button {
+  border:0;
+  background:var(--cyan);
+  color:#03101a;
+  padding:0 18px;
+  border-radius:9px;
+  font-weight:bold;
+}
+
+.file-label {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:0 12px;
+  color:var(--cyan);
+  cursor:pointer;
+}
+
+#imageInput{display:none}
+
+.tool-list {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:15px;
+}
+
+.tool {
+  background:#0c192a;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:17px;
+}
+
+.tool h3{font-size:14px;margin-bottom:8px}
+.tool p{font-size:12px;color:var(--muted);line-height:1.5}
+.tool button{margin-top:13px}
+
+.key-area {
+  max-width:650px;
+  margin:20px auto;
+}
+
+.key-area input {
+  width:100%;
+  padding:14px;
+  margin:10px 0;
+  border-radius:9px;
+  border:1px solid var(--border);
+  background:#071323;
+  color:white;
+  outline:none;
+}
+
+.key-result {
+  margin-top:15px;
+  padding:15px;
+  border:1px dashed var(--cyan);
+  border-radius:10px;
+  color:var(--cyan);
+  word-break:break-all;
+  display:none;
+}
+
+.notice {
+  color:#9aafc2;
+  font-size:11px;
+  line-height:1.6;
+  margin-top:15px;
+}
+
+footer {
+  margin-top:35px;
+  padding:20px 0;
+  text-align:center;
+  color:#536a80;
+  font-size:10px;
+  letter-spacing:2px;
+}
+
+@media(max-width:900px) {
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+@media(max-width:700px) {
+  .sidebar {
+    transform:translateX(-105%);
+    transition:.3s;
+    box-shadow:15px 0 40px #000;
   }
-  .sidebar.open{left:0}
+
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:17px}
   .mobile-menu{display:block}
-  .topbar{height:62px;padding:0 14px;gap:10px}
-  .topbar-left{display:flex;align-items:center;gap:10px}
-  .topbar-title{font-size:11px}
-  .topbar-sub{font-size:8px}
-  .topbar-right{gap:8px}
-  .status{font-size:8px}
-  .content{padding:17px 12px}
-  .welcome{align-items:flex-start}
-  .welcome h1{font-size:21px}
-  .welcome p{font-size:10px;max-width:220px;line-height:1.6}
-  .new-chat{padding:11px;font-size:9px}
-  .ai-header{padding:13px}
-  .ai-title{font-size:10px}
-  .ai-subtitle{font-size:8px}
-  .ai-header select{max-width:105px;font-size:9px}
-  .chat{
-    height:calc(100dvh - 330px);
-    min-height:330px;max-height:none;
-    padding:15px 11px
-  }
-  .bubble{max-width:88%;font-size:12px;padding:11px}
-  .composer{padding:12px 10px}
-  .input-row{gap:5px}
-  .tool-btn,.send-btn{min-width:38px;height:43px}
-  #messageInput{min-height:43px;padding:12px;font-size:12px}
-  .bottom-info{grid-template-columns:1fr}
-  .footer{padding:18px 5px}
-}
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    animation-duration:.01ms!important;
-    scroll-behavior:auto!important;
-    transition-duration:.01ms!important
-  }
+  .topbar h2{font-size:14px}
+  .hero{padding:23px 18px}
+  .grid{grid-template-columns:1fr}
+  .tool-list{grid-template-columns:1fr}
+  .messages{height:390px}
+  .message{max-width:94%}
+  .chat-input{flex-wrap:wrap}
+  .chat-input textarea{flex-basis:100%}
+  .chat-input button{height:45px;flex:1}
+  .file-label{height:45px}
 }
 </style>
 </head>
 
 <body>
 
-<!-- TELA INICIAL -->
 <div id="intro">
-  <div class="intro-content">
-    <img class="intro-photo"
-      src="/file_000000009618820e9a50407df0e56103.png"
-      alt="WSAZ_777"
-      onerror="this.style.display='none'">
-
-    <div class="intro-kicker">ARTIFICIAL INTELLIGENCE</div>
-    <h1>WSAZ_777</h1>
-    <p>YOUR AI. YOUR POSSIBILITIES.</p>
-    <div class="intro-brand">STORE DE WALLACE</div>
-
-    <button type="button" onclick="enterSite()">
-      ABRIR IA →
-    </button>
-
-    <p class="intro-hint">ACESSE SEU PAINEL DE INTELIGÊNCIA ARTIFICIAL</p>
-  </div>
+  <img src="/file_000000009618820e9a50407df0e56103.png"
+       alt="WSAZ 777">
+  <h1>WSAZ_777</h1>
+  <p style="color:#8295aa;font-size:10px;letter-spacing:4px">
+    INITIALIZING SYSTEM
+  </p>
+  <div class="loader"></div>
 </div>
 
-<!-- PAINEL PRINCIPAL -->
-<div class="dashboard">
+<div class="app" id="app">
 
-  <!-- MENU LATERAL -->
-  <aside class="sidebar" id="sidebar">
-
-    <div class="brand">
-      <div class="brand-mark">♛</div>
-      <div>
-        <div class="brand-name">WSAZ_777</div>
-        <div class="brand-sub">ARTIFICIAL INTELLIGENCE</div>
-      </div>
-    </div>
-
-    <div class="menu-label">MENU PRINCIPAL</div>
-
-    <button class="side-btn active" type="button" onclick="goToChat()">
-      <span class="side-icon">⌘</span>
-      Assistente IA
-    </button>
-
-    <button class="side-btn" type="button" onclick="newChat();closeSidebar()">
-      <span class="side-icon">＋</span>
-      Nova conversa
-    </button>
-
-    <div class="menu-label">EXPLORAR</div>
-
-    <a class="side-btn" href="#recursos" onclick="closeSidebar()">
-      <span class="side-icon">✦</span>
-      Recursos da IA
-    </a>
-
-    <a class="side-btn" href="#contato" onclick="closeSidebar()">
-      <span class="side-icon">◉</span>
-      Contato
-    </a>
-
-    <div class="menu-label">PREFERÊNCIAS</div>
-
-    <button class="side-btn" type="button" onclick="focusInput();closeSidebar()">
-      <span class="side-icon">⚙</span>
-      Configurar conversa
-    </button>
-
-    <div class="side-spacer"></div>
-
-    <div class="sidebar-bottom">
-      <div class="profile">
-        <div class="profile-icon">♛</div>
-        <div>
-          <div class="profile-name">WSAZ_777</div>
-          <div class="profile-sub">Seu espaço de IA</div>
-        </div>
-      </div>
-    </div>
-  </aside>
-
-  <!-- ÁREA DO CHAT -->
-  <div class="main-area">
-
-    <header class="topbar">
-      <div class="topbar-left">
-        <button class="mobile-menu" type="button"
-          onclick="toggleSidebar()" aria-label="Abrir menu">☰</button>
-
-        <div>
-          <div class="topbar-title">Painel de inteligência artificial</div>
-          <div class="topbar-sub">WSAZ_777 · NEURAL CORE</div>
-        </div>
-      </div>
-
-      <div class="topbar-right">
-        <div class="status"><i></i> SISTEMA ONLINE</div>
-      </div>
-    </header>
-
-    <main class="content" id="assistente">
-
-      <section class="welcome">
-        <div>
-          <h1>Olá! Como posso ajudar?</h1>
-          <p>Converse com sua inteligência artificial. Envie uma pergunta para começar.</p>
-        </div>
-
-        <button class="new-chat" type="button" onclick="newChat()">
-          ＋ NOVA CONVERSA
-        </button>
-      </section>
-
-      <!-- CHAT -->
-      <section class="ai-panel">
-
-        <div class="ai-header">
-          <div class="ai-identity">
-            <div class="ai-logo">♛</div>
-            <div>
-              <div class="ai-title">WSAZ_777 IA</div>
-              <div class="ai-subtitle">ASSISTENTE INTELIGENTE</div>
-            </div>
-          </div>
-
-          <div class="ai-header-right">
-            <select id="responseStyle" aria-label="Estilo das respostas">
-              <option value="concise">Resumida</option>
-              <option value="normal" selected>Normal</option>
-              <option value="detailed">Completa</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="chat" id="chat" aria-live="polite">
-          <div class="message">
-            <div class="avatar">♛</div>
-            <div class="bubble">Bem-vindo à WSAZ_777 IA!
-
-Posso ajudar com tecnologia, jogos, configurações de PC, estudos, programação, ideias e muito mais.
-
-O que você gostaria de saber?</div>
-          </div>
-        </div>
-
-        <div class="typing" id="typing">
-          WSAZ_777 está pensando...
-        </div>
-
-        <div class="composer">
-          <div class="preview-list" id="previewList"></div>
-
-          <div class="input-row">
-            <input type="file" id="imageInput"
-              accept="image/png,image/jpeg,image/webp"
-              multiple hidden>
-
-            <button class="tool-btn" id="attachBtn"
-              type="button"
-              onclick="document.getElementById('imageInput').click()"
-              title="Anexar imagens" aria-label="Anexar imagens">＋</button>
-
-            <button class="tool-btn" type="button"
-              onclick="startVoice()"
-              title="Ditado por voz" aria-label="Ditado por voz">◉</button>
-
-            <textarea id="messageInput"
-              placeholder="Digite sua mensagem para a WSAZ_777..."
-              rows="1" maxlength="4000"></textarea>
-
-            <button class="send-btn" id="sendBtn"
-              type="button" onclick="sendMessage()"
-              title="Enviar" aria-label="Enviar mensagem">➤</button>
-          </div>
-
-          <div class="composer-note">
-            ENTER para enviar · SHIFT + ENTER para pular linha · Máximo de 5 imagens
-          </div>
-        </div>
-      </section>
-
-      <!-- RECURSOS -->
-      <section class="bottom-info" id="recursos">
-        <article class="info-card">
-          <h3>✦ Inteligência artificial</h3>
-          <p>Faça perguntas, peça explicações, desenvolva ideias e explore diferentes assuntos.</p>
-        </article>
-
-        <article class="info-card">
-          <h3>▧ Análise de imagens</h3>
-          <p>Envie imagens pelo botão de anexo para que a IA possa analisá-las.</p>
-        </article>
-      </section>
-
-      <section class="bottom-info" id="contato">
-        <article class="info-card">
-          <h3>◉ Atendimento WSAZ_777</h3>
-          <p>Precisa de informações ou suporte? Entre em contato com a Store de Wallace.</p>
-          <a href="https://wa.me/5587981368837"
-             target="_blank" rel="noopener">FALAR NO WHATSAPP ↗</a>
-        </article>
-
-        <article class="info-card">
-          <h3>♛ WSAZ_777</h3>
-          <p>Gaming · Technology · Artificial Intelligence.</p>
-          <a href="https://wsaz777.onrender.com"
-             target="_blank" rel="noopener">ACESSAR SITE ↗</a>
-        </article>
-      </section>
-
-      <footer class="footer">
-        WSAZ_777 · STORE DE WALLACE · ARTIFICIAL INTELLIGENCE
-      </footer>
-
-    </main>
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    WSAZ_777
+    <small>ADVANCED AI SYSTEM</small>
   </div>
+
+  <div class="nav-title">MENU PRINCIPAL</div>
+
+  <nav class="nav">
+    <button class="active" data-page="home">⌂ &nbsp; Dashboard</button>
+    <button data-page="chat">◈ &nbsp; Inteligência Artificial</button>
+    <button data-page="mobile">▣ &nbsp; Otimizar celular</button>
+    <button data-page="pc">▤ &nbsp; Otimizar PC</button>
+    <button data-page="keys">⌘ &nbsp; Sistema de Keys</button>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <div class="status">
+      <span class="dot" id="statusDot"></span>
+      <span id="statusText">Verificando conexão...</span>
+    </div>
+  </div>
+</aside>
+
+<main class="main">
+
+  <header class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="mobile-menu" id="menuButton">☰</button>
+      <h2>WSAZ <span>CONTROL CENTER</span></h2>
+    </div>
+    <span>● SYSTEM ONLINE</span>
+  </header>
+
+  <!-- DASHBOARD -->
+  <section class="page active" id="home">
+
+    <div class="hero">
+      <h1>WELCOME TO <span>WSAZ_777</span></h1>
+      <p>
+        Central de inteligência artificial, ferramentas e otimização.
+        Seu sistema está pronto para receber comandos.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn" onclick="showPage('chat')">
+          ACESSAR IA
+        </button>
+        <button class="btn secondary" onclick="showPage('mobile')">
+          OTIMIZAR DISPOSITIVO
+        </button>
+      </div>
+    </div>
+
+    <h3 class="section-title">SYSTEM MODULES</h3>
+
+    <div class="grid">
+      <div class="card">
+        <div class="symbol">◈</div>
+        <h3>INTELIGÊNCIA ARTIFICIAL</h3>
+        <p>Converse com a IA WSAZ_777 através da conexão com seu servidor.</p>
+        <button class="btn" onclick="showPage('chat')">ABRIR IA</button>
+      </div>
+
+      <div class="card">
+        <div class="symbol">▣</div>
+        <h3>MOBILE OPTIMIZER</h3>
+        <p>Recomendações para melhorar o desempenho e a organização do celular.</p>
+        <button class="btn" onclick="showPage('mobile')">ACESSAR</button>
+      </div>
+
+      <div class="card">
+        <div class="symbol">▤</div>
+        <h3>PC OPTIMIZER</h3>
+        <p>Ferramentas e orientações para manutenção do computador.</p>
+        <button class="btn" onclick="showPage('pc')">ACESSAR</button>
+      </div>
+
+      <div class="card">
+        <div class="symbol">⌘</div>
+        <h3>KEY SYSTEM</h3>
+        <p>Gere uma chave demonstrativa ou insira uma chave de acesso.</p>
+        <button class="btn" onclick="showPage('keys')">ACESSAR</button>
+      </div>
+
+      <div class="card">
+        <div class="symbol">◉</div>
+        <h3>SERVER STATUS</h3>
+        <p>Verifique a comunicação entre o painel e o servidor da inteligência artificial.</p>
+        <button class="btn secondary" onclick="checkServer()">VERIFICAR</button>
+      </div>
+
+      <div class="card">
+        <div class="symbol">✉</div>
+        <h3>SUPORTE</h3>
+        <p>Entre em contato para solicitar o manual de utilização.</p>
+        <button class="btn secondary" onclick="requestManual('WSAZ_777')">SOLICITAR MANUAL</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHAT -->
+  <section class="page" id="chat">
+    <h2 class="section-title">◈ WSAZ ARTIFICIAL INTELLIGENCE</h2>
+
+    <div class="chat-box">
+      <div class="chat-head">
+        <div>
+          <strong>WSAZ_777 AI</strong><br>
+          <small id="chatStatus">Conectando ao servidor...</small>
+        </div>
+        <span style="color:var(--cyan)">● AI</span>
+      </div>
+
+      <div class="messages" id="messages">
+        <div class="message bot">
+          Olá! Eu sou a WSAZ_777 AI. Como posso ajudar?
+        </div>
+      </div>
+
+      <div class="chat-input">
+        <label class="file-label" for="imageInput" title="Enviar imagem">＋ IMG</label>
+        <input type="file" id="imageInput" accept="image/*">
+
+        <textarea id="userMessage"
+          placeholder="Digite sua mensagem para a IA..."></textarea>
+
+        <button id="sendButton" onclick="sendMessage()">ENVIAR ➤</button>
+      </div>
+    </div>
+
+    <p class="notice">
+      A IA utiliza o servidor configurado no seu projeto Node.js.
+      Não coloque chaves secretas diretamente nesta página.
+    </p>
+  </section>
+
+  <!-- CELULAR -->
+  <section class="page" id="mobile">
+    <h2 class="section-title">▣ MOBILE OPTIMIZER</h2>
+
+    <div class="hero">
+      <h1>OTIMIZAÇÃO <span>MOBILE</span></h1>
+      <p>
+        Confira recomendações para cuidar do desempenho do seu celular.
+        As ações abaixo mostram configurações que você pode revisar manualmente.
+      </p>
+    </div>
+
+    <div class="tool-list">
+      <div class="tool">
+        <h3>⚡ Desempenho</h3>
+        <p>Revise os aplicativos em segundo plano e feche os que não estiver usando.</p>
+        <button class="btn" onclick="showTip('Desempenho','Feche aplicativos que não estão sendo utilizados e mantenha o sistema atualizado.')">OTIMIZAR</button>
+      </div>
+
+      <div class="tool">
+        <h3>▣ Armazenamento</h3>
+        <p>Confira arquivos grandes, downloads e aplicativos que ocupam espaço.</p>
+        <button class="btn" onclick="showTip('Armazenamento','Revise seus downloads e arquivos duplicados antes de apagar qualquer conteúdo.')">ANALISAR</button>
+      </div>
+
+      <div class="tool">
+        <h3>🔋 Bateria</h3>
+        <p>Confira quais aplicativos estão consumindo mais bateria.</p>
+        <button class="btn" onclick="showTip('Bateria','Verifique o consumo de bateria nas configurações do Android e ajuste os aplicativos que você não usa.')">VER DICAS</button>
+      </div>
+
+      <div class="tool">
+        <h3>⚙ Atualizações</h3>
+        <p>Confira atualizações disponíveis para o Android e seus aplicativos.</p>
+        <button class="btn" onclick="showTip('Atualizações','Abra as configurações do aparelho e procure a seção Atualização de software.')">VER DICAS</button>
+      </div>
+
+      <div class="tool">
+        <h3>📱 Aplicativos</h3>
+        <p>Revise permissões e notificações dos aplicativos instalados.</p>
+        <button class="btn" onclick="showTip('Aplicativos','Revise as permissões de cada aplicativo e desative apenas as que não são necessárias.')">ANALISAR</button>
+      </div>
+
+      <div class="tool">
+        <h3>📖 Manual mobile</h3>
+        <p>Solicite o manual de otimização para celular.</p>
+        <button class="btn" onclick="requestManual('Otimização de celular')">OBTER MANUAL</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PC -->
+  <section class="page" id="pc">
+    <h2 class="section-title">▤ PC OPTIMIZER</h2>
+
+    <div class="hero">
+      <h1>OTIMIZAÇÃO <span>PC</span></h1>
+      <p>
+        Ferramentas e orientações para manutenção, organização e desempenho
+        do seu computador Windows.
+      </p>
+    </div>
+
+    <div class="tool-list">
+      <div class="tool">
+        <h3>⚡ Inicialização</h3>
+        <p>Revise os programas que iniciam junto com o Windows.</p>
+        <button class="btn" onclick="showTip('Inicialização','Abra o Gerenciador de Tarefas e revise a aba Aplicativos de Inicialização. Desative somente o que reconhecer e não precisar.')">VER ORIENTAÇÃO</button>
+      </div>
+
+      <div class="tool">
+        <h3>▤ Armazenamento</h3>
+        <p>Confira o espaço disponível e os arquivos temporários.</p>
+        <button class="btn" onclick="showTip('Armazenamento','Use as configurações de Armazenamento do Windows para analisar arquivos temporários antes de removê-los.')">ANALISAR</button>
+      </div>
+
+      <div class="tool">
+        <h3>🛡 Segurança</h3>
+        <p>Confira atualizações e verificações de segurança do Windows.</p>
+        <button class="btn" onclick="showTip('Segurança','Abra a Segurança do Windows e confira se a proteção contra ameaças está ativa.')">VER DICAS</button>
+      </div>
+
+      <div class="tool">
+        <h3>⚙ Atualizações</h3>
+        <p>Confira atualizações do sistema e dos drivers.</p>
+        <button class="btn" onclick="showTip('Atualizações','Abra Configurações > Windows Update e verifique atualizações disponíveis.')">VER DICAS</button>
+      </div>
+
+      <div class="tool">
+        <h3>📊 Desempenho</h3>
+        <p>Confira o uso de memória, processador e disco.</p>
+        <button class="btn" onclick="showTip('Desempenho','Use o Gerenciador de Tarefas para identificar quais programas estão utilizando mais recursos.')">ANALISAR</button>
+      </div>
+
+      <div class="tool">
+        <h3>📖 Manual PC</h3>
+        <p>Solicite o manual de otimização para computador.</p>
+        <button class="btn" onclick="requestManual('Otimização de PC')">OBTER MANUAL</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- KEYS -->
+  <section class="page" id="keys">
+    <h2 class="section-title">⌘ WSAZ KEY SYSTEM</h2>
+
+    <div class="card key-area">
+      <div style="text-align:center">
+        <div style="font-size:35px">🔐</div>
+        <h2 style="color:var(--cyan);margin:10px">KEY GENERATOR</h2>
+        <p>Gere uma chave demonstrativa para identificar sua solicitação.</p>
+      </div>
+
+      <button class="btn" style="width:100%;margin-top:20px"
+        onclick="generateKey()">GERAR KEY</button>
+
+      <div class="key-result" id="generatedKey"></div>
+
+      <button class="btn secondary" style="width:100%;margin-top:10px"
+        onclick="copyKey()">COPIAR KEY</button>
+
+      <hr style="border-color:var(--border);margin:25px 0">
+
+      <h3>INSERIR KEY</h3>
+      <input id="keyInput" placeholder="Digite sua KEY aqui">
+
+      <button class="btn" style="width:100%"
+        onclick="insertKey()">VALIDAR KEY</button>
+
+      <p id="keyStatus" class="notice"></p>
+
+      <button class="btn secondary" style="width:100%;margin-top:15px"
+        onclick="requestManual('Sistema de Keys')">
+        OBTER MANUAL PELO WHATSAPP
+      </button>
+
+      <p class="notice">
+        Atenção: as chaves geradas nesta versão são demonstrativas e ficam
+        salvas somente neste navegador. Elas não são licenças seguras nem
+        validam compras ou acessos no servidor.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    WSAZ_777 · ADVANCED AI SYSTEM · 2026
+  </footer>
+
+</main>
 </div>
 
 <script>
-"use strict";
+/* INICIALIZAÇÃO */
 
-/*
-  HISTÓRICO:
-  sessionStorage mantém a conversa nesta aba.
-  O servidor não recebe uma identificação de usuário.
-*/
+const intro = document.getElementById("intro");
+const app = document.getElementById("app");
 
-const chat = document.getElementById("chat");
-const input = document.getElementById("messageInput");
-const imageInput = document.getElementById("imageInput");
-const previewList = document.getElementById("previewList");
-const typing = document.getElementById("typing");
-const sendBtn = document.getElementById("sendBtn");
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    intro.style.opacity = "0";
+    setTimeout(() => {
+      intro.style.display = "none";
+      app.style.display = "block";
+    }, 700);
+  }, 1700);
 
-const HISTORY_KEY = "wsaz777_private_chat_history";
-
-let selectedImages = [];
-let history = [];
-let busy = false;
-
-/* ENTRAR NO PAINEL */
-function enterSite(){
-  document.getElementById("intro").classList.add("hide");
-
-  try{
-    sessionStorage.setItem("wsazIntroSeen","1");
-  }catch(error){
-    console.warn("Sessão indisponível.",error);
-  }
-
-  setTimeout(()=>input.focus(),400);
-}
-
-/* NÃO MOSTRAR INTRO NOVAMENTE NESTA SESSÃO */
-try{
-  if(sessionStorage.getItem("wsazIntroSeen")){
-    document.getElementById("intro").classList.add("hide");
-  }
-}catch(error){
-  console.warn("Não foi possível verificar a sessão.",error);
-}
-
-/* MENU MOBILE */
-function toggleSidebar(){
-  document.getElementById("sidebar").classList.toggle("open");
-}
-
-function closeSidebar(){
-  document.getElementById("sidebar").classList.remove("open");
-}
-
-function goToChat(){
-  closeSidebar();
-  document.getElementById("assistente").scrollIntoView({behavior:"smooth"});
-  input.focus();
-}
-
-function focusInput(){
-  goToChat();
-}
-
-/* MENSAGENS */
-function addMessage(role,text,images=[]){
-  const wrapper=document.createElement("div");
-  wrapper.className=`message ${role==="user"?"user":""}`;
-
-  const avatar=document.createElement("div");
-  avatar.className="avatar";
-  avatar.textContent=role==="user"?"U":"♛";
-
-  const bubble=document.createElement("div");
-  bubble.className="bubble";
-  bubble.textContent=text;
-
-  images.forEach(src=>{
-    const img=document.createElement("img");
-    img.src=src;
-    img.alt="Imagem enviada";
-    bubble.appendChild(img);
-  });
-
-  if(role==="assistant" && "speechSynthesis" in window){
-    const actions=document.createElement("div");
-    actions.className="message-actions";
-
-    const speak=document.createElement("button");
-    speak.type="button";
-    speak.textContent="🔊 Ouvir";
-    speak.addEventListener("click",()=>speakText(text));
-
-    actions.appendChild(speak);
-    bubble.appendChild(actions);
-  }
-
-  wrapper.append(avatar,bubble);
-  chat.appendChild(wrapper);
-  chat.scrollTop=chat.scrollHeight;
-}
-
-/* PRÉVIA DAS IMAGENS */
-function renderPreviews(){
-  previewList.replaceChildren();
-
-  selectedImages.forEach((item,index)=>{
-    const box=document.createElement("div");
-    box.className="preview-item";
-
-    const img=document.createElement("img");
-    img.src=item.data;
-    img.alt="Prévia da imagem";
-
-    const remove=document.createElement("button");
-    remove.type="button";
-    remove.textContent="×";
-    remove.setAttribute("aria-label","Remover imagem");
-
-    remove.onclick=()=>{
-      selectedImages.splice(index,1);
-      renderPreviews();
-    };
-
-    box.append(img,remove);
-    previewList.appendChild(box);
-  });
-}
-
-/* REDIMENSIONAR IMAGENS */
-function resizeImage(file){
-  return new Promise((resolve,reject)=>{
-    if(!file.type.match(/^image\/(jpeg|png|webp)$/)){
-      reject(new Error("Formato de imagem não suportado."));
-      return;
-    }
-
-    const reader=new FileReader();
-
-    reader.onload=()=>{
-      const img=new Image();
-
-      img.onload=()=>{
-        const max=1400;
-        const ratio=Math.min(1,max/Math.max(img.width,img.height));
-        const canvas=document.createElement("canvas");
-
-        canvas.width=Math.round(img.width*ratio);
-        canvas.height=Math.round(img.height*ratio);
-
-        const ctx=canvas.getContext("2d");
-
-        if(!ctx){
-          reject(new Error("Não foi possível processar a imagem."));
-          return;
-        }
-
-        ctx.drawImage(img,0,0,canvas.width,canvas.height);
-        resolve(canvas.toDataURL("image/jpeg",0.72));
-      };
-
-      img.onerror=()=>reject(new Error("Não foi possível ler a imagem."));
-      img.src=reader.result;
-    };
-
-    reader.onerror=()=>reject(new Error("Falha ao carregar imagem."));
-    reader.readAsDataURL(file);
-  });
-}
-
-/* SELEÇÃO DE IMAGENS */
-imageInput.addEventListener("change",async event=>{
-  const files=Array.from(event.target.files||[]);
-  const available=5-selectedImages.length;
-
-  if(files.length>available){
-    alert(`Você ainda pode selecionar ${available} imagem(ns).`);
-  }
-
-  for(const file of files.slice(0,available)){
-    try{
-      const data=await resizeImage(file);
-      selectedImages.push({data});
-    }catch(error){
-      alert(error.message);
-    }
-  }
-
-  renderPreviews();
-  imageInput.value="";
+  checkServer();
 });
 
-/* NOVA CONVERSA */
-function newChat(){
-  if(busy)return;
+/* NAVEGAÇÃO */
 
-  if("speechSynthesis" in window){
-    speechSynthesis.cancel();
-  }
+function showPage(page) {
+  document.querySelectorAll(".page").forEach(p => {
+    p.classList.remove("active");
+  });
 
-  history=[];
-  selectedImages=[];
-  renderPreviews();
-  chat.replaceChildren();
+  document.querySelectorAll(".nav button").forEach(b => {
+    b.classList.remove("active");
+  });
 
-  addMessage(
-    "assistant",
-    "Nova conversa iniciada!\n\nComo posso ajudar?"
+  const selected = document.getElementById(page);
+  if (selected) selected.classList.add("active");
+
+  const button = document.querySelector(
+    `.nav button[data-page="${page}"]`
   );
 
-  try{
-    sessionStorage.removeItem(HISTORY_KEY);
-  }catch(error){
-    console.warn("Não foi possível limpar o histórico.",error);
-  }
+  if (button) button.classList.add("active");
 
-  input.value="";
-  input.focus();
+  document.getElementById("sidebar").classList.remove("open");
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
-/* SALVAR HISTÓRICO DA ABA */
-function saveHistory(){
-  try{
-    sessionStorage.setItem(
-      HISTORY_KEY,
-      JSON.stringify(history.slice(-12))
-    );
-  }catch(error){
-    console.warn("Não foi possível salvar o histórico.",error);
-  }
-}
+document.querySelectorAll(".nav button").forEach(button => {
+  button.addEventListener("click", () => {
+    showPage(button.dataset.page);
+  });
+});
 
-/* CARREGAR HISTÓRICO */
-function loadHistory(){
-  try{
-    const saved=sessionStorage.getItem(HISTORY_KEY);
-    if(!saved)return;
+document.getElementById("menuButton").addEventListener("click", () => {
+  document.getElementById("sidebar").classList.toggle("open");
+});
 
-    const parsed=JSON.parse(saved);
-    if(!Array.isArray(parsed))return;
+/* STATUS DO SERVIDOR */
 
-    history=parsed
-      .filter(item=>
-        item &&
-        ["user","assistant"].includes(item.role) &&
-        typeof item.content==="string"
-      )
-      .slice(-12);
+async function checkServer() {
+  const dot = document.getElementById("statusDot");
+  const status = document.getElementById("statusText");
+  const chatStatus = document.getElementById("chatStatus");
 
-    if(!history.length)return;
-
-    chat.replaceChildren();
-
-    history.forEach(item=>{
-      addMessage(item.role,item.content);
+  try {
+    const response = await fetch("/api/health", {
+      method:"GET",
+      cache:"no-store"
     });
 
-  }catch(error){
-    console.warn("Não foi possível recuperar o histórico.",error);
-    history=[];
+    if (!response.ok) throw new Error("Servidor indisponível");
+
+    dot.classList.add("online");
+    status.textContent = "Servidor conectado";
+    chatStatus.textContent = "Servidor conectado";
+  } catch (error) {
+    dot.classList.remove("online");
+    status.textContent = "Servidor não respondeu";
+    chatStatus.textContent = "Não foi possível verificar o servidor";
   }
 }
 
-/* ENVIAR MENSAGEM */
-async function sendMessage(){
-  if(busy)return;
+/* CHAT COM IA */
 
-  const message=input.value.trim();
+const messages = document.getElementById("messages");
+const input = document.getElementById("userMessage");
+const sendButton = document.getElementById("sendButton");
 
-  if(!message && selectedImages.length===0)return;
+let conversationHistory = [];
+let selectedImage = null;
 
-  const images=selectedImages.map(item=>item.data);
+function addMessage(text, type) {
+  const div = document.createElement("div");
+  div.className = "message " + type;
+  div.textContent = text;
+  messages.appendChild(div);
+  messages.scrollTop = messages.scrollHeight;
+}
 
-  const userContent=message||"Analise estas imagens.";
+document.getElementById("imageInput").addEventListener("change", event => {
+  const file = event.target.files[0];
 
-  addMessage("user",userContent,images);
+  if (!file) {
+    selectedImage = null;
+    return;
+  }
 
-  const previousHistory=[...history];
+  if (!file.type.startsWith("image/")) {
+    alert("Selecione um arquivo de imagem.");
+    event.target.value = "";
+    return;
+  }
 
-  input.value="";
-  selectedImages=[];
-  renderPreviews();
+  if (file.size > 5 * 1024 * 1024) {
+    alert("A imagem deve ter no máximo 5 MB.");
+    event.target.value = "";
+    return;
+  }
 
-  busy=true;
-  sendBtn.disabled=true;
-  typing.style.display="block";
+  const reader = new FileReader();
 
-  try{
-    const response=await fetch("/api/chat",{
+  reader.onload = () => {
+    selectedImage = reader.result;
+    addMessage("Imagem selecionada: " + file.name, "user");
+  };
+
+  reader.readAsDataURL(file);
+});
+
+async function sendMessage() {
+  const message = input.value.trim();
+
+  if (!message && !selectedImage) return;
+
+  addMessage(message || "Analise esta imagem, por favor.", "user");
+
+  input.value = "";
+  sendButton.disabled = true;
+  sendButton.textContent = "...";
+
+  const imageToSend = selectedImage;
+  selectedImage = null;
+  document.getElementById("imageInput").value = "";
+
+  addMessage("WSAZ_777 está processando sua mensagem...", "bot");
+  const loadingMessage = messages.lastElementChild;
+
+  try {
+    const payload = {
+      message: message || "Analise esta imagem, por favor.",
+      history: conversationHistory
+    };
+
+    if (imageToSend) {
+      payload.image = imageToSend;
+    }
+
+    const response = await fetch("/api/chat", {
       method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({
-        message,
-        images,
-        history:previousHistory,
-        responseStyle:document.getElementById("responseStyle").value
-      })
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(payload)
     });
 
-    let data;
+    const data = await response.json().catch(() => ({}));
 
-    try{
-      data=await response.json();
-    }catch{
-      throw new Error("O servidor retornou uma resposta inválida.");
+    if (!response.ok) {
+      throw new Error(data.error || data.message || "Erro na comunicação com a IA.");
     }
 
-    if(!response.ok){
-      throw new Error(
-        data.reply||data.error||"Falha ao consultar o servidor."
-      );
-    }
+    const reply =
+      data.reply ||
+      data.response ||
+      data.content ||
+      data.message ||
+      data.choices?.[0]?.message?.content ||
+      "A IA respondeu, mas não foi possível identificar o formato da resposta.";
 
-    const answer=data.reply||"Não foi possível obter uma resposta.";
+    loadingMessage.textContent = reply;
 
-    addMessage("assistant",answer);
-
-    history.push({
-      role:"user",
-      content:userContent
-    });
-
-    history.push({
-      role:"assistant",
-      content:answer
-    });
-
-    history=history.slice(-12);
-    saveHistory();
-
-  }catch(error){
-    console.error("Erro ao enviar mensagem:",error);
-
-    addMessage(
-      "assistant",
-      error.message||"Não consegui conectar ao servidor. Tente novamente."
+    conversationHistory.push(
+      {role:"user",content:message || "Analise esta imagem, por favor."},
+      {role:"assistant",content:reply}
     );
 
-  }finally{
-    busy=false;
-    sendBtn.disabled=false;
-    typing.style.display="none";
-    input.focus();
+    if (conversationHistory.length > 20) {
+      conversationHistory = conversationHistory.slice(-20);
+    }
+
+  } catch (error) {
+    loadingMessage.textContent =
+      "Não consegui conectar com a IA.\n\n" +
+      error.message +
+      "\n\nConfira o server.js e as variáveis de ambiente no Render.";
+  } finally {
+    sendButton.disabled = false;
+    sendButton.textContent = "ENVIAR ➤";
+    messages.scrollTop = messages.scrollHeight;
   }
 }
 
-/* ENTER ENVIA / SHIFT + ENTER QUEBRA LINHA */
-input.addEventListener("keydown",event=>{
-  if(event.key==="Enter"&&!event.shiftKey){
+input.addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey) {
     event.preventDefault();
     sendMessage();
   }
 });
 
-/* DITADO POR VOZ */
-function startVoice(){
-  const Recognition=
-    window.SpeechRecognition||window.webkitSpeechRecognition;
+/* OTIMIZAÇÃO */
 
-  if(!Recognition){
-    alert("Seu navegador não oferece suporte ao ditado por voz.");
-    return;
-  }
-
-  const recognition=new Recognition();
-
-  recognition.lang="pt-BR";
-  recognition.interimResults=false;
-  recognition.maxAlternatives=1;
-
-  recognition.onresult=event=>{
-    input.value+=(input.value?" ":"")+
-      event.results[0][0].transcript;
-    input.focus();
-  };
-
-  recognition.onerror=()=>{
-    alert("Não foi possível usar o microfone. Verifique a permissão.");
-  };
-
-  recognition.start();
+function showTip(title, message) {
+  alert(title + "\n\n" + message);
 }
 
-/* OUVIR RESPOSTAS */
-function speakText(text){
-  if(!("speechSynthesis" in window)){
-    alert("Leitura de voz não disponível neste navegador.");
-    return;
-  }
+/* SISTEMA DE KEYS DEMONSTRATIVO */
 
-  speechSynthesis.cancel();
+let currentGeneratedKey = "";
 
-  const cleanText=String(text)
-    .replace(/```[\s\S]*?```/g,"Código omitido.")
-    .replace(/https?:\/\/\S+/g,"link")
-    .replace(/[*_#>`~]/g,"")
-    .trim();
+function generateKey() {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
 
-  const utterance=new SpeechSynthesisUtterance(cleanText);
-  utterance.lang="pt-BR";
-  utterance.rate=0.96;
-  utterance.pitch=0.9;
-
-  const voices=speechSynthesis.getVoices();
-  const voice=voices.find(v=>
-    v.lang.toLowerCase().startsWith("pt-br")
-  );
-
-  if(voice)utterance.voice=voice;
-
-  speechSynthesis.speak(utterance);
-}
-
-/* VERIFICAR SERVIDOR */
-async function checkServer(){
-  try{
-    const response=await fetch("/api/health");
-
-    if(!response.ok){
-      throw new Error("Servidor indisponível.");
+  function part() {
+    let result = "";
+    for (let i = 0; i < 4; i++) {
+      result += chars[Math.floor(Math.random() * chars.length)];
     }
+    return result;
+  }
 
-    const data=await response.json();
-    console.log("WSAZ_777 status:",data);
+  currentGeneratedKey =
+    "WSAZ-" + part() + "-" + part() + "-" + part();
 
-  }catch(error){
-    console.warn("Não foi possível verificar o servidor.");
+  localStorage.setItem("wsaz_demo_key", currentGeneratedKey);
+
+  const result = document.getElementById("generatedKey");
+  result.style.display = "block";
+  result.textContent = currentGeneratedKey;
+
+  document.getElementById("keyStatus").textContent =
+    "KEY demonstrativa gerada neste navegador.";
+}
+
+function copyKey() {
+  if (!currentGeneratedKey) {
+    currentGeneratedKey = localStorage.getItem("wsaz_demo_key") || "";
+  }
+
+  if (!currentGeneratedKey) {
+    alert("Gere uma KEY primeiro.");
+    return;
+  }
+
+  navigator.clipboard.writeText(currentGeneratedKey)
+    .then(() => alert("KEY copiada!"))
+    .catch(() => alert("Não foi possível copiar automaticamente."));
+}
+
+function insertKey() {
+  const key = document.getElementById("keyInput").value.trim();
+  const status = document.getElementById("keyStatus");
+
+  const savedKey = localStorage.getItem("wsaz_demo_key");
+
+  if (!key) {
+    status.textContent = "Digite uma KEY.";
+    return;
+  }
+
+  if (savedKey && key === savedKey) {
+    status.textContent =
+      "KEY demonstrativa reconhecida neste navegador.";
+  } else {
+    status.textContent =
+      "KEY não reconhecida. Confira o código ou solicite o manual.";
   }
 }
 
-/* INICIALIZAÇÃO */
-loadHistory();
-checkServer();
+/* WHATSAPP */
+
+function requestManual(subject) {
+  const phone = "5587981368837";
+
+  const message =
+    "Olá! Gostaria de solicitar o manual do WSAZ_777.\n\n" +
+    "Assunto: " + subject + "\n\n" +
+    "Pode me enviar as instruções, por favor?";
+
+  const url =
+    "https://wa.me/" + phone +
+    "?text=" + encodeURIComponent(message);
+
+  window.open(url, "_blank");
+}
 </script>
 
 </body>
