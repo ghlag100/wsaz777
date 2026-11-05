@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -17,6 +18,7 @@
  --white:#f5f5f5;
  --muted:#999;
  --border:#303030;
+ --cyan:#5ffcff;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;overflow-anchor:none}
@@ -64,10 +66,32 @@ a{color:inherit;text-decoration:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes scan{to{top:110%}}
 @keyframes load{to{width:100%}}
-@keyframes ringRotate{
+@keyframes float{50%{translate:0 -9px}}
+@keyframes headFloat{
+ 0%,100%{transform:translateY(0) rotate(-2deg)}
+ 50%{transform:translateY(-8px) rotate(2deg)}
+}
+@keyframes orbit{
+ from{transform:translate(-50%,-50%) rotate(0deg)}
  to{transform:translate(-50%,-50%) rotate(360deg)}
 }
-@keyframes float{50%{transform:translateY(-9px)}}
+@keyframes orbitReverse{
+ from{transform:translate(-50%,-50%) rotate(360deg)}
+ to{transform:translate(-50%,-50%) rotate(0deg)}
+}
+@keyframes trail{
+ 0%{transform:translateX(-15px) scaleX(.3);opacity:0}
+ 50%{opacity:.9}
+ 100%{transform:translateX(25px) scaleX(1);opacity:0}
+}
+@keyframes pulse{
+ 0%,100%{opacity:.45}
+ 50%{opacity:1}
+}
+@keyframes eyeGlow{
+ 0%,100%{opacity:.55;filter:drop-shadow(0 0 3px var(--cyan))}
+ 50%{opacity:1;filter:drop-shadow(0 0 10px var(--cyan))}
+}
 
 .boot{
  position:fixed;
@@ -201,26 +225,12 @@ header{
  border:1px solid var(--border);
  background:#101010ef;
 }
-.brand{
- display:flex;
- align-items:center;
- gap:12px;
-}
-.brand-icon{
- font-size:32px;
- color:var(--green);
-}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-icon{font-size:32px;color:var(--green)}
 .logo{font:900 19px Orbitron}
 .logo span{color:var(--green)}
-.subtitle{
- font-size:9px;
- color:var(--muted);
- margin-top:5px;
-}
-.status{
- color:var(--green);
- font:700 9px Orbitron;
-}
+.subtitle{font-size:9px;color:var(--muted);margin-top:5px}
+.status{color:var(--green);font:700 9px Orbitron}
 
 .layout{
  width:95%;
@@ -259,10 +269,7 @@ header{
  border:1px dashed #555;
  text-align:center;
 }
-.side-note b{
- font:800 12px Orbitron;
- color:var(--green);
-}
+.side-note b{font:800 12px Orbitron;color:var(--green)}
 .side-note p{
  font-size:9px;
  color:var(--muted);
@@ -270,29 +277,12 @@ header{
  margin-top:8px;
 }
 
-.main{
- min-width:0;
- display:flex;
- flex-direction:column;
- gap:18px;
-}
+.main{min-width:0;display:flex;flex-direction:column;gap:18px}
 .hero{padding:18px 8px}
-.kicker{
- color:var(--green);
- font:700 10px Orbitron;
- letter-spacing:3px;
-}
-.hero h2{
- font:900 clamp(24px,4vw,42px) Orbitron;
- margin-top:12px;
-}
+.kicker{color:var(--green);font:700 10px Orbitron;letter-spacing:3px}
+.hero h2{font:900 clamp(24px,4vw,42px) Orbitron;margin-top:12px}
 .hero h2 span{color:var(--green)}
-.hero p{
- font-size:12px;
- color:#aaa;
- margin-top:10px;
- line-height:1.7;
-}
+.hero p{font-size:12px;color:#aaa;margin-top:10px;line-height:1.7}
 .spray{
  color:var(--red);
  font:900 11px Orbitron;
@@ -311,20 +301,17 @@ header{
  border-bottom:1px solid var(--border);
 }
 .panel-head b{font:800 12px Orbitron}
-.panel-head span{
- font:700 8px Orbitron;
- color:var(--green);
- letter-spacing:2px;
-}
+.panel-head span{font:700 8px Orbitron;color:var(--green);letter-spacing:2px}
 
-/* CENTRAL DE OPERAÇÕES */
+/* CENTRAL HOLOGRÁFICA */
 .visual{
- min-height:330px;
+ min-height:390px;
  position:relative;
  display:grid;
  place-items:center;
  overflow:hidden;
- background:radial-gradient(ellipse at center,#263313 0%,#101010 48%,#080808);
+ background:
+ radial-gradient(ellipse at center,#12343a 0%,#10191a 32%,#101010 68%,#080808);
 }
 .visual:after{
  content:"";
@@ -333,7 +320,7 @@ header{
  right:0;
  top:-30%;
  height:30%;
- background:linear-gradient(transparent,#a6ff0022,transparent);
+ background:linear-gradient(transparent,#5ffcff22,transparent);
  animation:scan 5s linear infinite;
  pointer-events:none;
 }
@@ -342,8 +329,8 @@ header{
  inset:0;
  opacity:.2;
  background-image:
- linear-gradient(#a6ff0025 1px,transparent 1px),
- linear-gradient(90deg,#a6ff0025 1px,transparent 1px);
+ linear-gradient(#5ffcff25 1px,transparent 1px),
+ linear-gradient(90deg,#5ffcff25 1px,transparent 1px);
  background-size:25px 25px;
 }
 .visual-corner{
@@ -352,115 +339,147 @@ header{
  left:17px;
  font:700 8px Orbitron;
  color:#aaa;
- z-index:3;
+ z-index:4;
 }
-.visual-corner.right{
- left:auto;
- right:17px;
- color:var(--red);
-}
-.ai-frame{
+.visual-corner.right{left:auto;right:17px;color:var(--red)}
+
+.holo-stage{
+ width:min(100%,460px);
+ height:330px;
  position:relative;
- width:260px;
- height:260px;
  display:grid;
  place-items:center;
+ perspective:900px;
 }
-.ai-ring{
+.holo-head{
+ width:230px;
+ height:270px;
+ position:relative;
+ z-index:2;
+ animation:headFloat 5s ease-in-out infinite;
+ transform-style:preserve-3d;
+ filter:drop-shadow(0 0 15px #5ffcff55);
+}
+.holo-head svg{
+ width:100%;
+ height:100%;
+ overflow:visible;
+}
+.holo-head .metal{
+ fill:#12343b;
+ fill-opacity:.28;
+ stroke:#70ffff;
+ stroke-width:1.5;
+}
+.holo-head .detail{
+ fill:none;
+ stroke:#5ffcff;
+ stroke-width:1.4;
+ stroke-linecap:round;
+ stroke-linejoin:round;
+}
+.holo-head .soft{
+ fill:none;
+ stroke:#5ffcff;
+ stroke-width:.8;
+ opacity:.55;
+}
+.holo-head .eye{
+ fill:#baffff;
+ animation:eyeGlow 2s ease-in-out infinite;
+}
+.holo-head .shadow{
+ fill:#061518;
+ stroke:#5ffcff;
+ stroke-width:1;
+}
+.orbit-ring{
  position:absolute;
  left:50%;
  top:50%;
- width:230px;
- height:230px;
- border:1px solid #a6ff0080;
+ border:1px solid #5ffcff75;
  border-radius:50%;
  transform:translate(-50%,-50%);
- box-shadow:0 0 25px #a6ff0022;
+ pointer-events:none;
 }
-.ai-ring.one{animation:ringRotate 12s linear infinite}
-.ai-ring.two{
- width:190px;
- height:190px;
+.orbit-ring.r1{
+ width:310px;height:115px;
+ animation:orbit 8s linear infinite;
+}
+.orbit-ring.r2{
+ width:340px;height:145px;
  border-style:dashed;
- border-color:#ff234866;
- animation:ringRotate 18s linear infinite reverse;
+ animation:orbitReverse 13s linear infinite;
 }
-.ai-ring.three{
- width:250px;
- height:250px;
- border-color:#a6ff0030;
- border-style:dotted;
+.orbit-ring.r3{
+ width:260px;height:300px;
+ border-color:#a6ff0055;
+ animation:orbit 17s linear infinite;
 }
-.particle-core{
- position:relative;
- width:150px;
- height:150px;
- border:1px solid #a6ff0080;
+.orbit-dot{
+ position:absolute;
+ width:7px;height:7px;
  border-radius:50%;
- display:grid;
- place-items:center;
- background:radial-gradient(circle,#a6ff0022,transparent 70%);
- animation:float 4s ease-in-out infinite;
- box-shadow:0 0 35px #a6ff0033;
+ background:var(--cyan);
+ box-shadow:0 0 13px var(--cyan);
+ top:50%;left:50%;
 }
-.particle-core strong{
- font:900 38px Orbitron;
- color:var(--green);
- text-shadow:0 0 20px #a6ff00;
-}
-.particle-core small{
+.r1 .orbit-dot{transform:translate(153px,-4px)}
+.r2 .orbit-dot{transform:translate(-170px,-4px)}
+.r3 .orbit-dot{transform:translate(126px,-4px);background:var(--green);box-shadow:0 0 13px var(--green)}
+
+.particle-field{
  position:absolute;
- bottom:28px;
- font:700 8px Orbitron;
- letter-spacing:3px;
- color:#ddd;
+ inset:0;
+ pointer-events:none;
+ overflow:hidden;
 }
-.particle{
+.trail{
  position:absolute;
- width:5px;
- height:5px;
- background:var(--green);
+ height:1px;
+ width:120px;
+ background:linear-gradient(90deg,transparent,#5ffcff,transparent);
+ box-shadow:0 0 8px #5ffcff;
+ animation:trail 3s ease-in-out infinite;
+}
+.trail.t1{top:22%;left:2%;width:145px}
+.trail.t2{top:36%;right:1%;width:170px;animation-delay:.7s}
+.trail.t3{top:70%;left:0;width:190px;animation-delay:1.3s}
+.trail.t4{top:82%;right:3%;width:130px;animation-delay:1.8s}
+.trail.t5{top:15%;right:18%;width:80px;animation-delay:2.1s}
+.trail.t6{top:58%;left:15%;width:100px;animation-delay:1s}
+.spark{
+ position:absolute;
+ width:3px;height:3px;
  border-radius:50%;
- box-shadow:0 0 12px var(--green);
- animation:float 2s ease-in-out infinite;
+ background:#baffff;
+ box-shadow:0 0 9px #5ffcff;
+ animation:pulse 1.5s ease-in-out infinite;
 }
-.p1{top:20px;left:45px}
-.p2{top:55px;right:12px;animation-delay:.4s}
-.p3{bottom:35px;left:12px;animation-delay:.8s}
-.p4{bottom:15px;right:48px;animation-delay:1s}
-.p5{top:5px;right:70px;animation-delay:.6s}
-.p6{bottom:90px;right:0;animation-delay:1.2s}
-.visual-label{
+.s1{top:20%;left:22%}.s2{top:30%;right:15%;animation-delay:.3s}
+.s3{top:65%;left:12%;animation-delay:.6s}.s4{top:80%;right:25%;animation-delay:.9s}
+.s5{top:12%;left:65%;animation-delay:1.2s}.s6{top:52%;right:8%;animation-delay:.5s}
+.holo-label{
  position:absolute;
- bottom:17px;
- z-index:3;
+ bottom:10px;
+ z-index:4;
  font:700 9px Orbitron;
- color:var(--green);
+ color:var(--cyan);
  letter-spacing:3px;
  text-align:center;
+ text-shadow:0 0 10px #5ffcff;
 }
-.ai-data{
+.ai-status,.ai-data{
  position:absolute;
  bottom:45px;
- right:18px;
- color:#a6ff0080;
- font:700 7px Orbitron;
- line-height:2;
- text-align:right;
-}
-.ai-status{
- position:absolute;
- bottom:45px;
- left:18px;
- color:#ff2348aa;
+ z-index:4;
  font:700 7px Orbitron;
  line-height:2;
 }
+.ai-status{left:18px;color:#5ffcffaa}
+.ai-data{right:18px;color:#a6ff0080;text-align:right}
 
-.section-title{
- font:800 14px Orbitron;
- margin:22px 0 13px;
-}
+.section-title{font:800 14px Orbitron;margin:22px 0 13px}
 .products{
  display:grid;
  grid-template-columns:repeat(3,minmax(0,1fr));
@@ -476,26 +495,13 @@ header{
 .product:before{
  content:"";
  position:absolute;
- top:0;
- left:0;
- width:45px;
- height:2px;
+ top:0;left:0;
+ width:45px;height:2px;
  background:var(--green);
 }
-.product-icon{
- font-size:27px;
- color:var(--green);
-}
-.product h3{
- font:800 11px Orbitron;
- margin:12px 0 8px;
-}
-.product p{
- font-size:10px;
- color:#aaa;
- line-height:1.7;
- min-height:50px;
-}
+.product-icon{font-size:27px;color:var(--green)}
+.product h3{font:800 11px Orbitron;margin:12px 0 8px}
+.product p{font-size:10px;color:#aaa;line-height:1.7;min-height:50px}
 .product a{
  display:block;
  margin-top:14px;
@@ -516,37 +522,12 @@ header{
  background:#181818;
 }
 .chat-top b{font:800 12px Orbitron}
-.action{
- padding:9px 12px;
- border:1px solid #444;
- background:#222;
- color:white;
- font-size:10px;
-}
-.style-selector{
- padding:14px;
- border-bottom:1px solid #333;
-}
-.style-selector p{
- font-size:11px;
- margin-bottom:10px;
-}
-.style-options{
- display:flex;
- gap:8px;
- flex-wrap:wrap;
-}
-.style-option{
- padding:9px 12px;
- background:#202020;
- color:#ddd;
- border:1px solid #444;
- font-size:10px;
-}
-.style-option.selected{
- border-color:var(--green);
- color:var(--green);
-}
+.action{padding:9px 12px;border:1px solid #444;background:#222;color:white;font-size:10px}
+.style-selector{padding:14px;border-bottom:1px solid #333}
+.style-selector p{font-size:11px;margin-bottom:10px}
+.style-options{display:flex;gap:8px;flex-wrap:wrap}
+.style-option{padding:9px 12px;background:#202020;color:#ddd;border:1px solid #444;font-size:10px}
+.style-option.selected{border-color:var(--green);color:var(--green)}
 .messages{
  height:360px;
  min-height:260px;
@@ -568,178 +549,53 @@ header{
  overflow-wrap:anywhere;
  animation:rise .2s;
 }
-.bot{
- align-self:flex-start;
- background:#191919;
- border-left:3px solid var(--green);
-}
-.user{
- align-self:flex-end;
- background:#202a13;
- border-right:3px solid var(--green);
-}
-.message img{
- max-width:220px;
- max-height:180px;
- object-fit:contain;
- display:block;
- margin-bottom:8px;
-}
-.preview{
- display:none;
- align-items:center;
- gap:10px;
- padding:10px;
- border-top:1px solid #333;
-}
-.preview img{
- width:55px;
- height:55px;
- object-fit:cover;
-}
+.bot{align-self:flex-start;background:#191919;border-left:3px solid var(--green)}
+.user{align-self:flex-end;background:#202a13;border-right:3px solid var(--green)}
+.message img{max-width:220px;max-height:180px;object-fit:contain;display:block;margin-bottom:8px}
+.preview{display:none;align-items:center;gap:10px;padding:10px;border-top:1px solid #333}
+.preview img{width:55px;height:55px;object-fit:cover}
 .preview span{font-size:10px;flex:1}
-.preview button{
- background:none;
- color:var(--red);
- border:0;
-}
-.composer{
- display:flex;
- gap:7px;
- padding:10px;
- border-top:1px solid #333;
-}
+.preview button{background:none;color:var(--red);border:0}
+.composer{display:flex;gap:7px;padding:10px;border-top:1px solid #333}
 .composer input[type=text]{
- flex:1;
- min-width:0;
- height:45px;
- padding:0 12px;
- background:#1b1b1b;
- border:1px solid #444;
- color:white;
- outline:none;
- border-radius:3px;
- font-size:16px;
+ flex:1;min-width:0;height:45px;padding:0 12px;
+ background:#1b1b1b;border:1px solid #444;color:white;
+ outline:none;border-radius:3px;font-size:16px;
 }
 .composer input:focus{border-color:var(--green)}
-.icon-btn,.send{
- min-width:43px;
- height:45px;
- border:1px solid #444;
- background:#222;
- color:white;
-}
-.send{
- background:var(--green);
- color:#080808;
- border:0;
- font-weight:900;
-}
-.shortcuts{
- display:flex;
- gap:8px;
- padding:0 10px 12px;
-}
-.shortcut{
- background:none;
- border:1px solid #333;
- color:#bbb;
- padding:8px 11px;
- font-size:9px;
-}
+.icon-btn,.send{min-width:43px;height:45px;border:1px solid #444;background:#222;color:white}
+.send{background:var(--green);color:#080808;border:0;font-weight:900}
+.shortcuts{display:flex;gap:8px;padding:0 10px 12px}
+.shortcut{background:none;border:1px solid #333;color:#bbb;padding:8px 11px;font-size:9px}
 
-/* CONTATO E FOTO DE GAMEPLAY */
+/* CONTATO */
 .demo-wrap{padding:20px}
-.demo-heading{
- font:800 12px Orbitron;
- color:var(--green);
- letter-spacing:2px;
- margin-bottom:10px;
-}
-.demo-description{
- font-size:11px;
- color:#aaa;
- line-height:1.7;
- margin-bottom:15px;
-}
-.gameplay-image{
- width:100%;
- overflow:hidden;
- border:1px solid #3a3a3a;
- background:#050505;
- border-radius:5px;
-}
-.gameplay-image img{
- display:block;
- width:100%;
- max-height:520px;
- object-fit:contain;
- margin:0 auto;
-}
-.demo-caption{
- font-size:9px;
- color:#777;
- margin-top:10px;
- line-height:1.6;
-}
+.demo-heading{font:800 12px Orbitron;color:var(--green);letter-spacing:2px;margin-bottom:10px}
+.demo-description{font-size:11px;color:#aaa;line-height:1.7;margin-bottom:15px}
+.gameplay-image{width:100%;overflow:hidden;border:1px solid #3a3a3a;background:#050505;border-radius:5px}
+.gameplay-image img{display:block;width:100%;max-height:520px;object-fit:contain;margin:0 auto}
+.demo-caption{font-size:9px;color:#777;margin-top:10px;line-height:1.6}
 .info-area{padding:0 20px 20px}
-.info-grid{
- display:grid;
- grid-template-columns:repeat(2,minmax(0,1fr));
- gap:10px;
-}
-.info-item{
- padding:14px;
- background:#171717;
- border:1px solid #333;
-}
-.info-item strong{
- display:block;
- color:var(--green);
- font:800 10px Orbitron;
- margin-bottom:8px;
-}
-.info-item span{
- display:block;
- color:#aaa;
- font-size:10px;
- line-height:1.7;
-}
-.contact-description{
- padding:0 20px 20px;
-}
-.contact-description p{
- font-size:12px;
- color:#bbb;
- line-height:1.8;
-}
+.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.info-item{padding:14px;background:#171717;border:1px solid #333}
+.info-item strong{display:block;color:var(--green);font:800 10px Orbitron;margin-bottom:8px}
+.info-item span{display:block;color:#aaa;font-size:10px;line-height:1.7}
+.contact-description{padding:0 20px 20px}
+.contact-description p{font-size:12px;color:#bbb;line-height:1.8}
 .whatsapp-button{
- display:block;
- margin-top:15px;
- padding:14px;
- text-align:center;
- background:var(--green);
- color:#080808;
- font:900 11px Orbitron;
+ display:block;margin-top:15px;padding:14px;text-align:center;
+ background:var(--green);color:#080808;font:900 11px Orbitron;
 }
-
 footer{
  padding:20px 5px 30px;
- display:flex;
- justify-content:space-between;
- gap:10px;
- color:#888;
- font-size:9px;
+ display:flex;justify-content:space-between;gap:10px;
+ color:#888;font-size:9px;
 }
 footer strong{color:var(--green)}
 
 @media(max-width:850px){
  .layout{grid-template-columns:1fr}
- .sidebar{
-  min-height:auto;
-  flex-direction:row;
-  overflow-x:auto;
- }
+ .sidebar{min-height:auto;flex-direction:row;overflow-x:auto}
  .menu{white-space:nowrap}
  .side-note{display:none}
 }
@@ -754,50 +610,40 @@ footer strong{color:var(--green)}
  .messages{height:42vh;min-height:250px}
  .message{max-width:95%}
  footer{flex-direction:column;text-align:center}
- .visual{min-height:300px}
- .ai-frame{transform:scale(.9)}
+ .visual{min-height:350px}
+ .holo-stage{transform:scale(.83)}
  .ai-data,.ai-status{font-size:6px}
  .info-grid{grid-template-columns:1fr}
  .gameplay-image img{max-height:420px}
 }
 @media(max-width:390px){
  .products{grid-template-columns:1fr}
+ .holo-stage{transform:scale(.72)}
 }
 @media(prefers-reduced-motion:reduce){
- *,*::before,*::after{
-  animation:none!important;
-  transition:none!important;
- }
+ *,*::before,*::after{animation:none!important;transition:none!important}
 }
 </style>
 </head>
 
 <body>
-
 <div class="background"></div>
 <div class="grain"></div>
 
 <!-- TELA DE INICIALIZAÇÃO -->
 <div class="boot" id="boot">
  <div class="boot-grid"></div>
-
  <div class="boot-content">
   <div class="photo-frame">
-   <img
-    src="./file_000000009618820e9a50407df0e56103.png"
-    alt="Foto de inicialização WSAZ_777"
-   >
+   <img src="./file_000000009618820e9a50407df0e56103.png" alt="Foto de inicialização WSAZ_777">
   </div>
-
   <div class="boot-tag">ELITE GAMING SYSTEM</div>
   <h1>WSAZ_<span>777</span></h1>
   <p>GAMING · TECHNOLOGY · PERFORMANCE</p>
-
   <div class="boot-store">
    <strong>STORE DE WALLACE</strong>
    <small>TECNOLOGIA • PERSONALIZAÇÃO • IA</small>
   </div>
-
   <div class="boot-bar"><i></i></div>
   <div class="boot-status" id="bootStatus">INICIALIZANDO SISTEMA...</div>
   <button id="enterButton" type="button">ACESSAR PAINEL</button>
@@ -816,13 +662,11 @@ footer strong{color:var(--green)}
 </header>
 
 <div class="layout">
-
  <aside class="sidebar">
   <a class="menu active" href="#inicio">⌂ &nbsp; INÍCIO</a>
   <a class="menu" href="#servicos">▣ &nbsp; SERVIÇOS</a>
   <a class="menu" href="#chat">⌘ &nbsp; ASSISTENTE IA</a>
   <a class="menu" href="#contato">◉ &nbsp; CONTATO</a>
-
   <div class="side-note">
    <b>STORE DE WALLACE</b>
    <p>Configurações, desempenho e suporte para jogadores.</p>
@@ -831,7 +675,6 @@ footer strong{color:var(--green)}
 
  <main class="main">
 
-  <!-- INÍCIO -->
   <section class="hero" id="inicio">
    <div class="kicker">✦ WSAZ_777 / GAMING DIVISION</div>
    <h2>LEVEL UP YOUR <span>GAME.</span></h2>
@@ -839,7 +682,7 @@ footer strong{color:var(--green)}
    <div class="spray">NO LIMITS // JUST PERFORMANCE</div>
   </section>
 
-  <!-- CENTRAL DE OPERAÇÕES -->
+  <!-- CENTRAL HOLOGRÁFICA -->
   <section class="panel">
    <div class="panel-head">
     <b>◈ CENTRAL DE OPERAÇÕES</b>
@@ -848,36 +691,107 @@ footer strong{color:var(--green)}
 
    <div class="visual">
     <div class="visual-grid"></div>
-    <div class="visual-corner">WSAZ_777 // AI CORE</div>
-    <div class="visual-corner right">WALLACE SYSTEM</div>
+    <div class="visual-corner">WSAZ_777 // NEURAL CORE</div>
+    <div class="visual-corner right">HOLOGRAPHIC SYSTEM</div>
 
-    <div class="ai-frame">
-     <div class="ai-ring one"></div>
-     <div class="ai-ring two"></div>
-     <div class="ai-ring three"></div>
+    <div class="particle-field">
+     <i class="trail t1"></i><i class="trail t2"></i>
+     <i class="trail t3"></i><i class="trail t4"></i>
+     <i class="trail t5"></i><i class="trail t6"></i>
+     <i class="spark s1"></i><i class="spark s2"></i>
+     <i class="spark s3"></i><i class="spark s4"></i>
+     <i class="spark s5"></i><i class="spark s6"></i>
+    </div>
 
-     <div class="particle-core">
-      <strong>777</strong>
-      <small>AI CORE</small>
-      <i class="particle p1"></i>
-      <i class="particle p2"></i>
-      <i class="particle p3"></i>
-      <i class="particle p4"></i>
-      <i class="particle p5"></i>
-      <i class="particle p6"></i>
+    <div class="holo-stage">
+     <div class="orbit-ring r1"><i class="orbit-dot"></i></div>
+     <div class="orbit-ring r2"><i class="orbit-dot"></i></div>
+     <div class="orbit-ring r3"><i class="orbit-dot"></i></div>
+
+     <div class="holo-head">
+      <svg viewBox="0 0 240 280" role="img" aria-label="Cabeça robótica holográfica futurista">
+       <defs>
+        <linearGradient id="helmet" x1="0" y1="0" x2="1" y2="1">
+         <stop offset="0" stop-color="#baffff" stop-opacity=".48"/>
+         <stop offset=".5" stop-color="#147d88" stop-opacity=".2"/>
+         <stop offset="1" stop-color="#5ffcff" stop-opacity=".38"/>
+        </linearGradient>
+        <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+         <stop offset="0" stop-color="#5ffcff" stop-opacity=".35"/>
+         <stop offset="1" stop-color="#061518" stop-opacity=".85"/>
+        </linearGradient>
+       </defs>
+
+       <!-- Silhueta externa do capacete -->
+       <path class="metal" fill="url(#helmet)"
+        d="M120 12 C65 12 34 51 31 108 L22 151 L42 170 L48 211 L77 246 L92 266 L148 266 L163 246 L192 211 L198 170 L218 151 L209 108 C206 51 175 12 120 12Z"/>
+
+       <!-- Placas laterais -->
+       <path class="detail" d="M42 91 L24 112 L37 151 L53 157 L58 117Z"/>
+       <path class="detail" d="M198 91 L216 112 L203 151 L187 157 L182 117Z"/>
+       <path class="soft" d="M33 118 L47 135 L40 148"/>
+       <path class="soft" d="M207 118 L193 135 L200 148"/>
+
+       <!-- Face frontal -->
+       <path class="shadow" fill="url(#face)"
+        d="M69 76 Q120 48 171 76 L179 143 L160 205 L139 238 L101 238 L80 205 L61 143Z"/>
+
+       <!-- Testa e linhas de energia -->
+       <path class="detail" d="M77 74 Q120 53 163 74"/>
+       <path class="soft" d="M87 82 L120 69 L153 82"/>
+       <path class="detail" d="M120 28 L120 61"/>
+       <path class="soft" d="M107 34 L120 45 L133 34"/>
+
+       <!-- Olhos luminosos -->
+       <path class="detail" d="M72 119 L92 105 L111 116 L99 130 L77 130Z"/>
+       <path class="detail" d="M168 119 L148 105 L129 116 L141 130 L163 130Z"/>
+       <path class="eye" d="M78 119 L94 110 L105 117 L96 123 L80 123Z"/>
+       <path class="eye" d="M162 119 L146 110 L135 117 L144 123 L160 123Z"/>
+
+       <!-- Nariz e estrutura central -->
+       <path class="detail" d="M120 105 L111 151 L120 163 L129 151Z"/>
+       <path class="soft" d="M120 112 L120 157"/>
+       <path class="detail" d="M102 169 L120 178 L138 169"/>
+
+       <!-- Boca mecânica -->
+       <path class="detail" d="M94 190 L108 185 L120 190 L132 185 L146 190"/>
+       <path class="detail" d="M101 201 L139 201 L132 216 L120 221 L108 216Z"/>
+       <path class="soft" d="M108 207 L132 207"/>
+       <path class="soft" d="M114 214 L126 214"/>
+
+       <!-- Mandíbula e placas -->
+       <path class="detail" d="M64 151 L77 185 L91 224 L105 245"/>
+       <path class="detail" d="M176 151 L163 185 L149 224 L135 245"/>
+       <path class="soft" d="M78 179 L94 191"/>
+       <path class="soft" d="M162 179 L146 191"/>
+       <path class="detail" d="M92 239 L120 252 L148 239"/>
+
+       <!-- Pescoço robótico -->
+       <path class="metal" d="M91 242 L96 267 L144 267 L149 242 L120 255Z"/>
+       <path class="detail" d="M104 250 L104 264 M120 255 L120 266 M136 250 L136 264"/>
+       <path class="soft" d="M95 259 L145 259"/>
+
+       <!-- Linhas técnicas -->
+       <path class="soft" d="M53 90 L65 69 L78 60"/>
+       <path class="soft" d="M187 90 L175 69 L162 60"/>
+       <path class="detail" d="M48 175 L62 184 L67 203"/>
+       <path class="detail" d="M192 175 L178 184 L173 203"/>
+       <circle cx="48" cy="161" r="3" fill="#a6ff00"/>
+       <circle cx="192" cy="161" r="3" fill="#a6ff00"/>
+       <circle cx="120" cy="184" r="3" fill="#baffff"/>
+      </svg>
      </div>
     </div>
 
-    <div class="ai-status">CORE: ACTIVE<br>PARTICLES: ONLINE</div>
-    <div class="ai-data">SYSTEM 777<br>NEURAL LINK<br>STATUS: READY</div>
-    <div class="visual-label">ARTIFICIAL INTELLIGENCE · WSAZ_777</div>
+    <div class="ai-status">CORE: ACTIVE<br>NEURAL LINK: ONLINE<br>HOLOGRAM: STABLE</div>
+    <div class="ai-data">WSAZ_777 SYSTEM<br>360° ORBITAL SCAN<br>STATUS: READY</div>
+    <div class="holo-label">ARTIFICIAL INTELLIGENCE · WSAZ_777</div>
    </div>
   </section>
 
   <!-- SERVIÇOS -->
   <section id="servicos">
    <div class="section-title">✦ SERVIÇOS & SOLUÇÕES</div>
-
    <div class="products">
 
     <article class="product">
@@ -927,7 +841,6 @@ footer strong{color:var(--green)}
 
   <!-- ASSISTENTE IA -->
   <section class="panel" id="chat">
-
    <div class="chat-top">
     <b>♛ WSAZ_777 IA</b>
     <button class="action" id="clearChat" type="button">LIMPAR CHAT</button>
@@ -967,90 +880,72 @@ Como posso ajudar?</div>
     <button class="shortcut" id="imageShortcut" type="button">＋ IMAGEM</button>
     <button class="shortcut" id="focusShortcut" type="button">◉ PERGUNTAR</button>
    </div>
-
   </section>
 
-  <!-- CONTATO E FOTO DE GAMEPLAY -->
+  <!-- CONTATO, PRINT E INFORMAÇÕES -->
   <section id="contato" class="panel">
-
    <div class="panel-head">
     <b>CONTATO & ATENDIMENTO</b>
     <span>WHATSAPP</span>
    </div>
 
    <div class="demo-wrap">
-
     <div class="demo-heading">◈ DEMONSTRAÇÃO DE GAMEPLAY</div>
-
     <p class="demo-description">
      Confira uma captura de gameplay apresentada pela Store de Wallace.
     </p>
 
     <div class="gameplay-image">
      <img
-      src="./gameplay-print.jpg"
+      src="./gameplay-print.png"
       alt="Captura de gameplay de Free Fire"
       loading="lazy"
+      onerror="this.alt='Imagem de gameplay não encontrada'; this.style.display='none';"
      >
     </div>
 
     <p class="demo-caption">
      WSAZ_777 · STORE DE WALLACE · GAMEPLAY
     </p>
-
    </div>
 
    <div class="info-area">
-
     <div class="demo-heading">◈ INFORMAÇÕES DO SERVIÇO</div>
-
     <div class="info-grid">
-
      <div class="info-item">
       <strong>INTERNAL</strong>
       <span>Informações sobre o tipo de ferramenta.</span>
      </div>
-
      <div class="info-item">
       <strong>COMPATIBILIDADE</strong>
       <span>Consulte os dispositivos e versões compatíveis.</span>
      </div>
-
      <div class="info-item">
       <strong>SUPORTE</strong>
       <span>Atendimento para dúvidas e orientações.</span>
      </div>
-
      <div class="info-item">
       <strong>SEGURANÇA</strong>
       <span>Não existe garantia de ausência de banimento.</span>
      </div>
-
     </div>
    </div>
 
    <div class="contact-description">
-    <p>
-     Entre em contato para consultar informações, disponibilidade e serviços.
-    </p>
-
+    <p>Entre em contato para consultar informações, disponibilidade e serviços.</p>
     <a
      class="whatsapp-button"
      href="https://wa.me/5587981368837"
      target="_blank"
      rel="noopener noreferrer"
-    >
-     FALAR COM WSAZ_777 NO WHATSAPP
-    </a>
+    >FALAR COM WSAZ_777 NO WHATSAPP</a>
    </div>
-
   </section>
 
   <footer>
    <div><strong>♛ WSAZ_777</strong> · STORE DE WALLACE</div>
    <div>Projeto independente · 2026</div>
   </footer>
-
  </main>
 </div>
 
@@ -1133,7 +1028,6 @@ function addMessage(text,type,imageUrl=null){
 
  messages.appendChild(element);
  scrollMessages();
-
  return element;
 }
 
@@ -1150,15 +1044,9 @@ function updateStyle(){
 document.querySelectorAll(".style-option").forEach(button=>{
  button.addEventListener("click",()=>{
   responseStyle=button.dataset.style;
-
-  localStorage.setItem(
-   "wsaz_response_style",
-   responseStyle
-  );
-
+  localStorage.setItem("wsaz_response_style",responseStyle);
   updateStyle();
   styleSelector.style.display="none";
-
   addMessage(
    "Estilo de resposta definido: "+styleNames[responseStyle]+".",
    "bot"
@@ -1181,14 +1069,8 @@ function clearSelectedImage(){
 
 function resetChat(){
  if(busy)return;
-
  messages.replaceChildren();
-
- addMessage(
-  "Conversa reiniciada. Como posso ajudar?",
-  "bot"
- );
-
+ addMessage("Conversa reiniciada. Como posso ajudar?","bot");
  clearSelectedImage();
 }
 
@@ -1210,7 +1092,6 @@ removeImage.addEventListener("click",clearSelectedImage);
 
 imageInput.addEventListener("change",async()=>{
  const file=imageInput.files?.[0];
-
  if(!file)return;
 
  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
@@ -1228,16 +1109,13 @@ imageInput.addEventListener("change",async()=>{
  try{
   const dataUrl=await new Promise((resolve,reject)=>{
    const reader=new FileReader();
-
    reader.onload=()=>resolve(reader.result);
    reader.onerror=reject;
-
    reader.readAsDataURL(file);
   });
 
   const image=new Image();
   image.src=dataUrl;
-
   await image.decode();
 
   const scale=Math.min(
@@ -1246,20 +1124,14 @@ imageInput.addEventListener("change",async()=>{
   );
 
   const canvas=document.createElement("canvas");
-
   canvas.width=Math.round(image.width*scale);
   canvas.height=Math.round(image.height*scale);
 
   canvas.getContext("2d").drawImage(
-   image,
-   0,
-   0,
-   canvas.width,
-   canvas.height
+   image,0,0,canvas.width,canvas.height
   );
 
   selectedImage=canvas.toDataURL("image/jpeg",.78);
-
   previewImage.src=selectedImage;
   preview.style.display="flex";
 
@@ -1273,12 +1145,10 @@ imageInput.addEventListener("change",async()=>{
 /* ENVIO AO ASSISTENTE */
 form.addEventListener("submit",async event=>{
  event.preventDefault();
-
  if(busy)return;
 
  const message=input.value.trim();
  const image=selectedImage;
-
  if(!message&&!image)return;
 
  if(!responseStyle){
@@ -1299,17 +1169,12 @@ form.addEventListener("submit",async event=>{
  input.value="";
  clearSelectedImage();
 
- const loading=addMessage(
-  "WSAZ_777 está processando...",
-  "bot"
- );
+ const loading=addMessage("WSAZ_777 está processando...","bot");
 
  try{
   const response=await fetch("/api/chat",{
    method:"POST",
-   headers:{
-    "Content-Type":"application/json"
-   },
+   headers:{"Content-Type":"application/json"},
    body:JSON.stringify({
     message,
     image,
@@ -1318,10 +1183,7 @@ form.addEventListener("submit",async event=>{
   });
 
   let data={};
-
-  try{
-   data=await response.json();
-  }catch{}
+  try{data=await response.json()}catch{}
 
   loading.remove();
 
@@ -1339,9 +1201,7 @@ form.addEventListener("submit",async event=>{
 
  }catch(error){
   console.error("ERRO NO CHAT:",error);
-
   loading.remove();
-
   addMessage(
    "Falha na conexão. Verifique sua internet e tente novamente.",
    "bot"
@@ -1351,11 +1211,9 @@ form.addEventListener("submit",async event=>{
   busy=false;
   sendButton.disabled=false;
   attachButton.disabled=false;
-
   input.focus({preventScroll:true});
  }
 });
 </script>
-
 </body>
 </html>
