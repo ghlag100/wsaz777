@@ -3,57 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#0b0c11">
-<meta name="description" content="WSAZ_777 — Neural Core, inteligência artificial e otimização.">
+<meta name="theme-color" content="#090a0f">
 <title>WSAZ_777 | Neural Core</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-:root{--bg:#090a0f;--panel:#11131b;--panel2:#171a24;--line:#252a38;--red:#e32636;--red2:#ff5362;--text:#f4f5fa;--muted:#9298aa;--green:#37d69a;--cyan:#54dfff;--gold:#e8c56b}
+:root{
+--bg:#090a0f;--panel:#11131b;--line:#252a38;
+--red:#e32636;--red2:#ff5362;--text:#f4f5fa;
+--muted:#9298aa;--green:#37d69a;--cyan:#54dfff
+}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;background:radial-gradient(ellipse at 80% 0%,#271018 0,transparent 32%),var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 a{color:inherit;text-decoration:none}
-#intro{position:fixed;inset:0;z-index:1000;background:#08090e;display:grid;place-items:center;transition:.65s;padding:24px}
+
+/* INICIALIZAÇÃO */
+#intro{
+position:fixed;inset:0;z-index:1000;background:#08090e;
+display:grid;place-items:center;transition:.65s;padding:20px
+}
 #intro.hide{opacity:0;visibility:hidden;pointer-events:none}
-.boot-grid{position:absolute;inset:0;opacity:.15;background-image:linear-gradient(#e3263618 1px,transparent 1px),linear-gradient(90deg,#e3263618 1px,transparent 1px);background-size:42px 42px;mask-image:linear-gradient(transparent,#000,transparent)}
-.intro-content{position:relative;text-align:center;width:min(100%,520px)}
-.intro-photo{width:112px;height:112px;object-fit:cover;object-position:center 28%;border-radius:27px;border:1px solid #ffffff35;box-shadow:0 0 55px #e3263650;margin-bottom:22px}
-.kicker{font:11px Orbitron;letter-spacing:5px;color:#ff6977}
-.intro-content h1{font:800 clamp(35px,9vw,66px) Orbitron;margin:14px 0;text-shadow:0 0 28px #e3263650}
-.intro-content p{color:#9397a5;font-size:11px;letter-spacing:3px}
-.intro-brand{margin:25px 0;font-weight:900;letter-spacing:4px}
-.primary{border:0;border-radius:12px;padding:16px 28px;background:linear-gradient(135deg,var(--red),#a80e23);color:white;font-weight:900;letter-spacing:1px;box-shadow:0 10px 35px #e3263640}
-.primary:hover{filter:brightness(1.12);transform:translateY(-1px)}
-.boot-status{font:10px Orbitron;color:#858b9b;margin-top:22px;letter-spacing:2px}
-.shell{min-height:100vh;display:grid;grid-template-columns:260px minmax(0,1fr)}
-.sidebar{height:100vh;position:sticky;top:0;background:#101117;border-right:1px solid var(--line);padding:22px 16px;display:flex;flex-direction:column;z-index:80}
-.brand{display:flex;gap:12px;align-items:center;padding:4px 8px 23px;border-bottom:1px solid var(--line)}
-.brand-mark,.ai-logo{width:44px;height:44px;border-radius:13px;background:linear-gradient(145deg,#fa3448,#a90e24);display:grid;place-items:center;font-size:23px;box-shadow:0 8px 24px #e3263630}
+.boot-grid{
+position:absolute;inset:0;opacity:.15;
+background-image:linear-gradient(#e3263618 1px,transparent 1px),linear-gradient(90deg,#e3263618 1px,transparent 1px);
+background-size:42px 42px
+}
+.intro-content{
+position:relative;text-align:center;width:min(100%,390px);
+padding:25px;background:#11131bcc;border:1px solid #34303b;
+border-radius:22px;box-shadow:0 0 60px #e3263620
+}
+.intro-photo{
+width:78px;height:78px;object-fit:cover;object-position:center 28%;
+border-radius:22px;border:1px solid #ffffff35;
+box-shadow:0 0 35px #e3263650;margin-bottom:12px
+}
+.kicker{font:9px Orbitron;letter-spacing:3px;color:#ff6977}
+.intro-content h1{font:800 clamp(28px,8vw,43px) Orbitron;margin:12px 0;text-shadow:0 0 28px #e3263650}
+.intro-content p{color:#9397a5;font-size:9px;letter-spacing:2px}
+.intro-brand{margin:17px 0;font-size:12px;font-weight:900;letter-spacing:3px}
+.primary{
+border:0;border-radius:12px;padding:14px 22px;
+background:linear-gradient(135deg,var(--red),#a80e23);
+color:white;font-weight:900;letter-spacing:1px;
+box-shadow:0 0 18px #e3263660,0 0 38px #e3263630;
+transition:.2s
+}
+.primary:hover{filter:brightness(1.2);transform:translateY(-2px)}
+.boot-status{font:9px Orbitron;color:#858b9b;margin-top:15px;letter-spacing:1px}
+
+/* ESTRUTURA */
+.shell{min-height:100vh;display:grid;grid-template-columns:250px minmax(0,1fr)}
+.sidebar{
+height:100vh;position:sticky;top:0;background:#101117;
+border-right:1px solid var(--line);padding:20px 15px;
+display:flex;flex-direction:column;z-index:80
+}
+.brand{display:flex;gap:12px;align-items:center;padding:4px 8px 22px;border-bottom:1px solid var(--line)}
+.brand-mark,.ai-logo{
+width:43px;height:43px;border-radius:13px;
+background:linear-gradient(145deg,#fa3448,#a90e24);
+display:grid;place-items:center;font-size:22px;
+box-shadow:0 8px 24px #e3263630
+}
 .brand-name{font:800 14px Orbitron}
-.brand-sub{font-size:8px;color:#8b91a1;letter-spacing:1.6px;margin-top:5px}
-.nav-label{font-size:9px;letter-spacing:2px;color:#73798a;font-weight:900;margin:27px 10px 10px}
-.nav-btn{width:100%;border:0;background:transparent;color:#b7bdca;padding:13px 12px;border-radius:10px;text-align:left;display:flex;align-items:center;gap:12px;font-size:11px;font-weight:750;margin:3px 0;transition:.2s}
+.brand-sub{font-size:8px;color:#8b91a1;letter-spacing:1.5px;margin-top:5px}
+.nav-label{font-size:9px;letter-spacing:2px;color:#73798a;font-weight:900;margin:25px 10px 10px}
+.nav-btn{
+width:100%;border:0;background:transparent;color:#b7bdca;
+padding:13px 12px;border-radius:10px;text-align:left;
+display:flex;align-items:center;gap:12px;font-size:11px;
+font-weight:750;margin:3px 0;transition:.2s
+}
 .nav-btn span:first-child{width:21px;text-align:center;font-size:17px}
-.nav-btn:hover,.nav-btn.active{background:#e32636;color:#fff;box-shadow:0 8px 24px #e326362b}
+.nav-btn:hover,.nav-btn.active{background:#e32636;color:white;box-shadow:0 8px 24px #e326362b}
 .nav-spacer{flex:1}
-.profile{border-top:1px solid var(--line);padding:17px 7px 5px;display:flex;align-items:center;gap:10px}
-.profile img{width:36px;height:36px;object-fit:cover;object-position:center 25%;border-radius:50%}
+.profile{border-top:1px solid var(--line);padding:16px 7px 5px;display:flex;align-items:center;gap:10px}
+.profile img{width:36px;height:36px;object-fit:cover;border-radius:50%}
 .profile b{font-size:10px}
 .profile small{display:block;color:#83899a;font-size:9px;margin-top:4px}
+
 .main{min-width:0}
-.topbar{height:72px;position:sticky;top:0;z-index:50;background:#0c0e14eF;backdrop-filter:blur(18px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 30px}
+.topbar{
+height:70px;position:sticky;top:0;z-index:50;
+background:#0c0e14ef;backdrop-filter:blur(18px);
+border-bottom:1px solid var(--line);
+display:flex;align-items:center;justify-content:space-between;padding:0 25px
+}
 .top-left{display:flex;align-items:center;gap:13px}
 .menu-toggle{display:none;background:none;color:white;border:0;font-size:24px}
 .top-title{font-size:13px;font-weight:850}
 .top-sub{font-size:9px;color:#7f8798;margin-top:4px}
 .status{color:var(--green);font-size:9px;font-weight:900;display:flex;align-items:center;gap:8px}
 .status i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
-.content{max-width:1500px;margin:auto;padding:28px 30px 50px}
+.content{max-width:1500px;margin:auto;padding:26px 28px 45px}
 .page{display:none;animation:appear .35s ease}
 .page.active{display:block}
 @keyframes appear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -63,37 +111,63 @@ a{color:inherit;text-decoration:none}
 .hero p{color:var(--muted);font-size:12px;line-height:1.7;margin:0}
 .pill{border:1px solid #34394a;color:#b7bdca;background:#171a23;padding:9px 12px;border-radius:30px;font-size:9px;white-space:nowrap}
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:15px}
-.card{background:linear-gradient(145deg,#171a24,#10121a);border:1px solid var(--line);border-radius:17px;padding:19px;min-width:0;box-shadow:0 12px 40px #0002}
+.card{background:linear-gradient(145deg,#171a24,#10121a);border:1px solid var(--line);border-radius:17px;padding:19px;min-width:0}
 .card h3{font-size:13px;margin:0 0 8px}
 .muted{color:var(--muted);font-size:11px;line-height:1.75}
-.stat{grid-column:span 3}
-.stat strong{font:700 23px Orbitron;display:block;margin:9px 0 5px}
-.stat small{font-size:9px;color:#8991a3}
 .wide{grid-column:span 8}
 .narrow{grid-column:span 4}
 .full{grid-column:1/-1}
-.feature{display:flex;align-items:center;gap:13px}
-.feature-icon{width:42px;height:42px;flex:0 0 42px;border-radius:13px;background:#e326361b;color:#ff7180;display:grid;place-items:center;font-size:20px}
-.feature h3{margin:0 0 5px}
-.feature p{margin:0;color:var(--muted);font-size:10px;line-height:1.6}
+
+/* BOTÕES COM BRILHO */
+.glow-btn{
+display:inline-flex;align-items:center;justify-content:center;gap:10px;
+padding:15px 23px;border:1px solid #ff6674;border-radius:12px;
+background:linear-gradient(135deg,#fa263b,#9d071c);
+color:white;font-size:11px;font-weight:900;letter-spacing:1px;
+box-shadow:0 0 12px #ff263b90,0 0 30px #ff263b45;
+animation:buttonGlow 2s infinite alternate;
+transition:.2s
+}
+.glow-btn:hover{transform:translateY(-3px);filter:brightness(1.2)}
+@keyframes buttonGlow{
+from{box-shadow:0 0 8px #ff263b70,0 0 18px #ff263b30}
+to{box-shadow:0 0 18px #ff263b,0 0 42px #ff263b70,0 0 65px #ff263b30}
+}
+.glow-btn:disabled{opacity:.5;cursor:not-allowed;animation:none}
+
+/* CHAT IA */
 .ai-panel{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#10121a}
-.ai-head{padding:16px 19px;background:#191c27;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ai-head{padding:15px 18px;background:#191c27;display:flex;justify-content:space-between;align-items:center;gap:12px}
 .ai-identity{display:flex;align-items:center;gap:11px}
 .ai-logo{width:39px;height:39px}
 .ai-title{font:700 12px Orbitron}
 .ai-sub{font-size:9px;color:#969cac;margin-top:4px}
 .ai-head select{background:#242835;color:white;border:1px solid #3a4051;border-radius:8px;padding:9px;font-size:10px}
-.chat{height:min(55vh,570px);min-height:340px;overflow:auto;padding:22px;background:#0d0f16}
+.chat-stage{position:relative;isolation:isolate;background:#0d0f16;overflow:hidden}
+.ai-holo-bg{
+position:absolute;inset:0;z-index:-1;opacity:.25;pointer-events:none;
+background:radial-gradient(ellipse at center,#12344855,transparent 65%)
+}
+.ai-holo-bg canvas{width:100%;height:100%;display:block}
+.chat{
+height:min(55vh,570px);min-height:340px;overflow:auto;
+padding:22px;background:#0d0f16a8;
+backdrop-filter:blur(1px)
+}
 .message{display:flex;gap:10px;margin-bottom:18px;align-items:flex-start}
 .message.user{flex-direction:row-reverse}
 .avatar{width:31px;height:31px;flex:0 0 31px;border-radius:9px;background:#282d3b;display:grid;place-items:center;font-size:12px}
 .user .avatar{background:var(--red)}
-.bubble{max-width:min(84%,760px);white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.8;font-size:12px;background:#181c27;border:1px solid #2a3040;border-radius:4px 13px 13px 13px;padding:12px 15px}
-.user .bubble{background:#351920;border-color:#62303a;border-radius:13px 4px 13px 13px}
+.bubble{
+max-width:min(84%,760px);white-space:pre-wrap;overflow-wrap:anywhere;
+line-height:1.8;font-size:12px;background:#181c27ed;
+border:1px solid #2a3040;border-radius:4px 13px 13px 13px;padding:12px 15px
+}
+.user .bubble{background:#351920ed;border-color:#62303a;border-radius:13px 4px 13px 13px}
 .bubble img{max-width:210px;max-height:170px;display:block;border-radius:9px;margin-top:8px}
 .message-actions{margin-top:9px}
 .message-actions button{background:#252a38;border:1px solid #353c4e;color:#cbd0dc;padding:6px 9px;border-radius:7px;font-size:10px}
-.typing{display:none;color:#9aa2b5;font-size:10px;padding:0 20px 12px}
+.typing{display:none;color:#9aa2b5;font-size:10px;padding:0 20px 12px;background:#0d0f16}
 .composer{border-top:1px solid var(--line);padding:14px;background:#141720}
 .preview-list{display:flex;gap:8px;margin-bottom:9px;flex-wrap:wrap}
 .preview-item{position:relative}
@@ -106,36 +180,94 @@ a{color:inherit;text-decoration:none}
 #messageInput{flex:1;min-width:0;resize:vertical;min-height:45px;max-height:130px;background:#0e1119;color:white;border:1px solid #343a4a;border-radius:10px;padding:13px;outline:none;font-size:12px}
 #messageInput:focus{border-color:var(--red)}
 .note{font-size:9px;color:#788093;margin:9px 3px 0}
+
+/* CARDS E IMAGENS */
 .cards-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .resource-card{background:linear-gradient(145deg,#171b27,#10121a);border:1px solid var(--line);border-radius:15px;padding:17px}
 .resource-card .tag{font:9px Orbitron;color:#ff7180;letter-spacing:1.4px}
 .resource-card h3{font-size:14px;margin:11px 0 7px}
-.resource-card p{font-size:10px;line-height:1.7;color:var(--muted);min-height:52px}
+.resource-card p{font-size:10px;line-height:1.7;color:var(--muted);min-height:45px}
 .resource-card a{color:#ff7581;font-size:10px;font-weight:800}
-.resource-card button{border:1px solid #41485a;color:#fff;background:#252a38;border-radius:8px;padding:9px 11px;font-size:10px}
-.holo-wrap{position:relative;min-height:430px;border:1px solid #28394b;border-radius:20px;overflow:hidden;background:radial-gradient(ellipse at center,#112b3c 0,#0b121c 40%,#090b12 75%);display:grid;place-items:center}
-.holo-wrap:before,.holo-wrap:after{content:"";position:absolute;width:310px;height:310px;border:1px solid #50dfff35;border-radius:50%;box-shadow:0 0 50px #28cfff14,inset 0 0 50px #28cfff12}
+.promo-image{
+width:100%;display:block;object-fit:cover;border-radius:15px;
+border:1px solid #38313b;box-shadow:0 10px 35px #0007;margin-bottom:18px
+}
+.promo-box{
+border:1px solid #57232e;background:linear-gradient(135deg,#241018,#11131b);
+padding:20px;border-radius:17px;margin-bottom:18px
+}
+.promo-box h2{font:700 17px Orbitron;margin:0 0 10px}
+.promo-box p{font-size:11px;color:#b5b8c4;line-height:1.8}
+.promo-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
+.coming-btn{
+display:inline-flex;align-items:center;justify-content:center;
+padding:14px 18px;border:1px solid #454b5a;border-radius:11px;
+background:#202431;color:#aab0be;font-size:10px;font-weight:800
+}
+
+/* CLOUD 3D */
+.holo-wrap{
+position:relative;min-height:430px;border:1px solid #28394b;
+border-radius:20px;overflow:hidden;
+background:radial-gradient(ellipse at center,#112b3c 0,#0b121c 48%,#090b12 80%);
+display:grid;place-items:center
+}
+.holo-wrap:before,.holo-wrap:after{
+content:"";position:absolute;width:310px;height:310px;
+border:1px solid #50dfff35;border-radius:50%;
+box-shadow:0 0 50px #28cfff14,inset 0 0 50px #28cfff12;pointer-events:none
+}
 .holo-wrap:after{width:390px;height:390px;border-style:dashed;animation:spin 35s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-#holoCanvas{position:absolute;inset:0;width:100%;height:100%}
+#holoCanvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none}
 .holo-label{position:absolute;bottom:18px;left:20px;right:20px;display:flex;justify-content:space-between;color:#65dcf4;font:9px Orbitron;letter-spacing:1.5px;pointer-events:none}
 .holo-copy{position:absolute;top:18px;left:20px;color:#a8d9e7;font:9px Orbitron;letter-spacing:1.5px;pointer-events:none}
 .holo-controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
 .ghost-btn{background:#1b2230;border:1px solid #344254;color:#ccebf4;padding:10px 13px;border-radius:9px;font-size:10px}
-.form-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.field{flex:1;min-width:140px;background:#0c0f17;border:1px solid #343a4b;color:white;border-radius:9px;padding:12px;outline:none;font-size:11px}
-.result{margin-top:13px;padding:13px;border:1px solid #2d394b;border-radius:10px;color:#b8c5d5;font-size:11px;line-height:1.7;overflow-wrap:anywhere}
-.hidden{display:none!important}
+
 .footer{text-align:center;color:#687083;font-size:9px;padding:28px 10px}
 .overlay{display:none;position:fixed;inset:0;background:#0009;z-index:70}
 .overlay.show{display:block}
-@media(max-width:950px){.shell{grid-template-columns:225px 1fr}.stat{grid-column:span 6}.wide,.narrow{grid-column:span 12}.cards-3{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:680px){.shell{display:block}.sidebar{position:fixed;left:-280px;top:0;bottom:0;width:260px;height:100dvh;transition:left .25s;box-shadow:12px 0 40px #0008}.sidebar.open{left:0}.menu-toggle{display:block}.overlay.show{display:block}.topbar{height:62px;padding:0 13px}.top-title{font-size:11px}.top-sub{font-size:8px}.status{font-size:8px}.content{padding:20px 12px 35px}.hero{align-items:flex-start;flex-direction:column}.hero h1{font-size:25px}.stat{grid-column:span 6;padding:14px}.stat strong{font-size:19px}.cards-3{grid-template-columns:1fr}.chat{height:52dvh;min-height:320px;padding:14px 10px}.bubble{max-width:88%;font-size:12px;padding:10px}.ai-head{padding:12px}.ai-head select{max-width:100px}.composer{padding:10px 8px}.input-row{gap:5px}.tool-btn,.send-btn{min-width:37px;height:42px}#messageInput{font-size:12px;padding:11px}.holo-wrap{min-height:350px}.holo-wrap:before{width:230px;height:230px}.holo-wrap:after{width:285px;height:285px}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+
+@media(max-width:950px){
+.shell{grid-template-columns:220px 1fr}
+.wide,.narrow{grid-column:span 12}
+.cards-3{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:680px){
+.shell{display:block}
+.sidebar{position:fixed;left:-280px;top:0;bottom:0;width:260px;height:100dvh;transition:left .25s;box-shadow:12px 0 40px #0008}
+.sidebar.open{left:0}
+.menu-toggle{display:block}
+.topbar{height:62px;padding:0 13px}
+.top-title{font-size:11px}
+.top-sub{font-size:8px}
+.status{font-size:8px}
+.content{padding:18px 12px 30px}
+.hero{align-items:flex-start;flex-direction:column}
+.hero h1{font-size:25px}
+.cards-3{grid-template-columns:1fr}
+.chat{height:52dvh;min-height:320px;padding:14px 10px}
+.bubble{max-width:88%;font-size:12px;padding:10px}
+.ai-head{padding:12px}
+.ai-head select{max-width:100px}
+.composer{padding:10px 8px}
+.input-row{gap:5px}
+.tool-btn,.send-btn{min-width:37px;height:42px}
+#messageInput{font-size:12px;padding:11px}
+.holo-wrap{min-height:350px}
+.holo-wrap:before{width:230px;height:230px}
+.holo-wrap:after{width:285px;height:285px}
+.intro-content{padding:20px}
+}
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
+}
 </style>
 </head>
 
 <body>
+
 <div id="intro">
   <div class="boot-grid"></div>
   <div class="intro-content">
@@ -144,7 +276,7 @@ a{color:inherit;text-decoration:none}
     <h1>WSAZ_777</h1>
     <p>YOUR AI. YOUR POSSIBILITIES.</p>
     <div class="intro-brand">STORE DE WALLACE</div>
-    <button class="primary" onclick="enterSite()">INICIALIZAR SISTEMA&nbsp; →</button>
+    <button class="primary" onclick="enterSite()">INICIALIZAR SISTEMA →</button>
     <div class="boot-status" id="bootStatus">NEURAL CORE · AGUARDANDO AUTORIZAÇÃO</div>
   </div>
 </div>
@@ -155,10 +287,7 @@ a{color:inherit;text-decoration:none}
 <aside class="sidebar" id="sidebar">
   <div class="brand">
     <div class="brand-mark">♛</div>
-    <div>
-      <div class="brand-name">WSAZ_777</div>
-      <div class="brand-sub">ARTIFICIAL INTELLIGENCE</div>
-    </div>
+    <div><div class="brand-name">WSAZ_777</div><div class="brand-sub">ARTIFICIAL INTELLIGENCE</div></div>
   </div>
 
   <div class="nav-label">MENU PRINCIPAL</div>
@@ -183,17 +312,15 @@ a{color:inherit;text-decoration:none}
 <main class="main">
 <header class="topbar">
   <div class="top-left">
-    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Abrir menu">☰</button>
-    <div>
-      <div class="top-title">Painel de inteligência artificial</div>
-      <div class="top-sub">WSAZ_777 · NEURAL CORE</div>
-    </div>
+    <button class="menu-toggle" onclick="toggleSidebar()">☰</button>
+    <div><div class="top-title">Painel de inteligência artificial</div><div class="top-sub">WSAZ_777 · NEURAL CORE</div></div>
   </div>
   <div class="status"><i></i><span id="systemStatus">VERIFICANDO SISTEMA</span></div>
 </header>
 
 <div class="content">
 
+<!-- ASSISTENTE IA -->
 <section class="page active" id="page-assistant">
   <div class="hero">
     <div>
@@ -208,235 +335,199 @@ a{color:inherit;text-decoration:none}
     <div class="ai-head">
       <div class="ai-identity">
         <div class="ai-logo">♛</div>
-        <div>
-          <div class="ai-title">WSAZ_777 IA</div>
-          <div class="ai-sub">ASSISTENTE INTELIGENTE</div>
-        </div>
+        <div><div class="ai-title">WSAZ_777 IA</div><div class="ai-sub">ASSISTENTE INTELIGENTE</div></div>
       </div>
-      <select id="responseStyle" aria-label="Estilo da resposta">
+      <select id="responseStyle">
         <option value="concise">Resumida</option>
         <option value="normal" selected>Normal</option>
         <option value="detailed">Completa</option>
       </select>
     </div>
 
-    <div class="chat" id="chat" aria-live="polite">
-      <div class="message">
-        <div class="avatar">♛</div>
-        <div class="bubble">Bem-vindo à WSAZ_777 IA!
+    <div class="chat-stage">
+      <div class="ai-holo-bg" id="aiHoloBg"></div>
+      <div class="chat" id="chat" aria-live="polite">
+        <div class="message">
+          <div class="avatar">♛</div>
+          <div class="bubble">Bem-vindo à WSAZ_777 IA!
 
 Posso ajudar com tecnologia, jogos, configurações de PC, Android, estudos, programação e muito mais.
 
 O que você gostaria de saber?</div>
+        </div>
       </div>
     </div>
 
     <div class="typing" id="typing">WSAZ_777 está processando...</div>
-
     <div class="composer">
       <div class="preview-list" id="previewList"></div>
       <div class="input-row">
         <input type="file" id="imageInput" accept="image/png,image/jpeg,image/webp" multiple hidden>
-        <button class="tool-btn" id="attachBtn" onclick="imageInput.click()" title="Anexar imagem">＋</button>
+        <button class="tool-btn" id="attachBtn" title="Anexar imagem">＋</button>
         <button class="tool-btn" onclick="startVoice()" title="Ditado por voz">◉</button>
         <textarea id="messageInput" rows="1" maxlength="4000" placeholder="Digite sua mensagem para a WSAZ_777..."></textarea>
-        <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Enviar">➤</button>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">➤</button>
       </div>
       <div class="note">ENTER para enviar · SHIFT + ENTER para quebrar linha · Até 5 imagens</div>
     </div>
   </div>
-
-  <div class="grid" style="margin-top:15px">
-    <article class="card wide">
-      <div class="feature">
-        <div class="feature-icon">✦</div>
-        <div>
-          <h3>Inteligência artificial multimodal</h3>
-          <p>Chat com NVIDIA e análise de imagens pela OpenRouter, mantendo suas integrações atuais.</p>
-        </div>
-      </div>
-    </article>
-    <article class="card narrow">
-      <h3>Central WSAZ</h3>
-      <p class="muted">Acesse ferramentas, guias e recursos da plataforma.</p>
-    </article>
-  </div>
 </section>
 
+<!-- CLOUD -->
 <section class="page" id="page-cloud">
   <div class="hero">
     <div>
       <div class="eyebrow">HOLOGRAPHIC INTERFACE / 360°</div>
       <h1>WSAZ Neural Cloud</h1>
-      <p>Visualização holográfica interativa com partículas e malha digital.</p>
+      <p>Avatar digital 3D com aparência mais humana e rotação interativa.</p>
     </div>
     <span class="pill">REAL-TIME 3D</span>
   </div>
 
-  <div class="holo-wrap">
+  <div class="holo-wrap" id="holoWrap">
     <div class="holo-copy">NEURAL AVATAR · LIVE RENDER</div>
-    <canvas id="holoCanvas"></canvas>
-    <div class="holo-label">
-      <span>WSAZ_777 / CORE</span>
-      <span>360° ROTATION · WEBGL</span>
-    </div>
+    <div class="holo-label"><span>WSAZ_777 / CORE</span><span>360° ROTATION</span></div>
   </div>
 
   <div class="holo-controls">
     <button class="ghost-btn" id="rotateBtn">Ⅱ Pausar rotação</button>
     <button class="ghost-btn" id="resetView">↻ Reiniciar visão</button>
-    <span class="pill">Arraste para girar · Pinça/scroll para zoom</span>
+    <span class="pill">Arraste para girar · Scroll para zoom</span>
   </div>
-  <p class="muted">O avatar é uma representação digital abstrata criada em tempo real no navegador. O render 3D pode reduzir automaticamente a qualidade em celulares mais simples.</p>
+  <p class="muted">O avatar também aparece discretamente no fundo do chat enquanto você conversa com a IA.</p>
 </section>
 
+<!-- PC -->
 <section class="page" id="page-pc">
   <div class="hero">
     <div>
       <div class="eyebrow">PERFORMANCE LAB / WINDOWS</div>
       <h1>Otimização para PC</h1>
-      <p>Programas e guias para manutenção, desempenho e organização do Windows.</p>
+      <p>Manual, programas e recursos para cuidar do desempenho do seu computador.</p>
     </div>
     <span class="pill">PC WORKSTATION</span>
   </div>
 
+  <img class="promo-image" src="/imagens/pc.png" alt="WSAZ 777 - Otimização PC">
+
+  <div class="promo-box">
+    <h2>🚀 PREPARE SEU PC!</h2>
+    <p>⚙️ Aprenda configurações que fazem a diferença.<br>
+    🎮 Melhore a experiência nos seus jogos.<br>
+    💻 Conheça programas para manutenção e desempenho.<br>
+    🔥 Tenha seu manual e pack de ferramentas em um só lugar!</p>
+
+    <div class="promo-actions">
+      <button class="glow-btn" onclick="openPcPack()">🔥 QUERO OTIMIZAR MEU PC</button>
+      <span class="coming-btn">📦 PACK PC · EM PREPARAÇÃO</span>
+    </div>
+    <p id="pcPackStatus" class="muted">O link do pack será liberado assim que você adicionar o endereço do MediaFire.</p>
+  </div>
+
   <div class="cards-3">
     <article class="resource-card">
-      <div class="tag">DIAGNÓSTICO</div>
-      <h3>Monitoramento do sistema</h3>
-      <p>Aprenda a conferir CPU, memória, armazenamento, temperatura e processos no Gerenciador de Tarefas.</p>
-      <a href="https://support.microsoft.com/windows" target="_blank" rel="noopener">GUIAS MICROSOFT ↗</a>
+      <div class="tag">MEMÓRIA RAM</div>
+      <h3>Mem Reduct</h3>
+      <p>Ferramenta para acompanhar e gerenciar o uso da memória RAM.</p>
+      <a href="https://github.com/henrypp/memreduct" target="_blank" rel="noopener">SITE DO PROJETO ↗</a>
     </article>
-
     <article class="resource-card">
-      <div class="tag">ARMAZENAMENTO</div>
-      <h3>Limpeza segura</h3>
-      <p>Use o Sensor de Armazenamento e a Limpeza de Disco para remover arquivos temporários com segurança.</p>
-      <a href="https://support.microsoft.com/windows" target="_blank" rel="noopener">VER SUPORTE ↗</a>
+      <div class="tag">MONITORAMENTO</div>
+      <h3>MSI Afterburner</h3>
+      <p>Monitore informações da placa de vídeo e do computador.</p>
+      <a href="https://www.msi.com/Landing/afterburner" target="_blank" rel="noopener">SITE OFICIAL ↗</a>
     </article>
-
     <article class="resource-card">
-      <div class="tag">DRIVERS</div>
-      <h3>Atualização de drivers</h3>
-      <p>Priorize Windows Update e páginas oficiais do fabricante da placa de vídeo e do computador.</p>
-      <a href="https://www.nvidia.com/Download/index.aspx" target="_blank" rel="noopener">NVIDIA DRIVERS ↗</a>
+      <div class="tag">LIMPEZA</div>
+      <h3>CCleaner</h3>
+      <p>Conheça recursos de limpeza e gerenciamento do sistema.</p>
+      <a href="https://www.ccleaner.com/" target="_blank" rel="noopener">SITE OFICIAL ↗</a>
     </article>
-
-    <article class="resource-card">
-      <div class="tag">FERRAMENTA</div>
-      <h3>Microsoft PC Manager</h3>
-      <p>Ferramenta oficial para manutenção básica e gerenciamento do computador, quando disponível na região.</p>
-      <a href="https://pcmanager.microsoft.com/" target="_blank" rel="noopener">SITE OFICIAL ↗</a>
-    </article>
-
     <article class="resource-card">
       <div class="tag">DESEMPENHO</div>
-      <h3>Inicialização do Windows</h3>
-      <p>Revise os aplicativos iniciados com o Windows e desative apenas o que reconhecer e não precisar.</p>
-      <a href="https://support.microsoft.com/windows" target="_blank" rel="noopener">MANUAL ↗</a>
+      <h3>Razer Cortex</h3>
+      <p>Ferramenta com recursos voltados à experiência de jogos no PC.</p>
+      <a href="https://www.razer.com/cortex" target="_blank" rel="noopener">SITE OFICIAL ↗</a>
     </article>
-
     <article class="resource-card">
-      <div class="tag">SEGURANÇA</div>
-      <h3>Restauração e proteção</h3>
-      <p>Crie ponto de restauração antes de mudanças importantes e mantenha a proteção do sistema ativa.</p>
-      <a href="https://support.microsoft.com/windows" target="_blank" rel="noopener">APRENDER ↗</a>
+      <div class="tag">DRIVERS</div>
+      <h3>NVIDIA Drivers</h3>
+      <p>Encontre atualizações de drivers para placas de vídeo compatíveis.</p>
+      <a href="https://www.nvidia.com/Download/index.aspx" target="_blank" rel="noopener">DOWNLOAD OFICIAL ↗</a>
+    </article>
+    <article class="resource-card">
+      <div class="tag">WINDOWS</div>
+      <h3>Microsoft PC Manager</h3>
+      <p>Ferramenta da Microsoft para manutenção básica do computador.</p>
+      <a href="https://pcmanager.microsoft.com/" target="_blank" rel="noopener">SITE OFICIAL ↗</a>
     </article>
   </div>
 </section>
 
+<!-- MOBILE -->
 <section class="page" id="page-mobile">
   <div class="hero">
     <div>
       <div class="eyebrow">MOBILE PERFORMANCE / ANDROID</div>
       <h1>Otimização mobile</h1>
-      <p>Aplicativos confiáveis e configurações para cuidar do desempenho do celular.</p>
+      <p>Manual e configurações para aproveitar melhor o seu celular.</p>
     </div>
-    <span class="pill">ANDROID · RESPONSIVE</span>
+    <span class="pill">ANDROID</span>
+  </div>
+
+  <img class="promo-image" src="/imagens/mobile.png" alt="WSAZ 777 - Otimização Mobile">
+
+  <div class="promo-box">
+    <h2>📱 DEIXE SEU CELULAR MAIS FLUIDO!</h2>
+    <p>🚀 Aprenda a otimizar celulares fracos ou potentes.<br>
+    ⚙️ Descubra configurações que fazem diferença.<br>
+    🎮 Melhore sua experiência nos jogos e aplicativos.<br>
+    💎 Aproveite melhor os recursos do seu aparelho!</p>
+    <div class="promo-actions">
+      <button class="glow-btn" onclick="showNotice('O pack mobile será disponibilizado em breve!')">🔥 QUERO OTIMIZAR MEU CELULAR</button>
+      <span class="coming-btn">📦 PACK MOBILE · EM BREVE</span>
+    </div>
   </div>
 
   <div class="cards-3">
     <article class="resource-card">
       <div class="tag">ARMAZENAMENTO</div>
       <h3>Files by Google</h3>
-      <p>Organize arquivos e identifique itens que podem ser removidos após sua conferência.</p>
+      <p>Organize arquivos e confira itens que podem ser removidos.</p>
       <a href="https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.files" target="_blank" rel="noopener">GOOGLE PLAY ↗</a>
     </article>
-
     <article class="resource-card">
-      <div class="tag">DIAGNÓSTICO</div>
-      <h3>Configurações da bateria</h3>
-      <p>Confira o consumo por aplicativo e restrinja atividade em segundo plano somente quando fizer sentido.</p>
-      <a href="https://support.google.com/android/" target="_blank" rel="noopener">GUIA ANDROID ↗</a>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">ATUALIZAÇÃO</div>
-      <h3>Sistema e aplicativos</h3>
-      <p>Mantenha Android, aplicativos e atualizações de segurança em dia.</p>
+      <div class="tag">SISTEMA</div>
+      <h3>Atualizações Android</h3>
+      <p>Mantenha seu sistema e aplicativos atualizados.</p>
       <a href="https://support.google.com/android/" target="_blank" rel="noopener">SUPORTE GOOGLE ↗</a>
     </article>
-
     <article class="resource-card">
-      <div class="tag">DESEMPENHO</div>
-      <h3>Espaço livre</h3>
-      <p>Revise downloads e mídias duplicadas. Evite aplicativos que prometem acelerar tudo com um toque.</p>
-      <a href="https://support.google.com/files/" target="_blank" rel="noopener">MANUAL FILES ↗</a>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">TELA</div>
-      <h3>Taxa de atualização</h3>
-      <p>Se o aparelho oferecer essa opção, ajuste a fluidez da tela conforme sua preferência e bateria.</p>
-      <button onclick="showNotice('O caminho varia conforme a marca e o modelo do celular.')">VER OBSERVAÇÃO</button>
-    </article>
-
-    <article class="resource-card">
-      <div class="tag">REDE</div>
-      <h3>Conectividade</h3>
-      <p>Confira Wi-Fi, modo avião e uso de dados. Reiniciar a conexão pode resolver falhas temporárias.</p>
-      <a href="https://support.google.com/android/" target="_blank" rel="noopener">AJUDA ANDROID ↗</a>
+      <div class="tag">BATERIA</div>
+      <h3>Consumo de energia</h3>
+      <p>Confira quais aplicativos utilizam mais bateria.</p>
+      <a href="https://support.google.com/android/" target="_blank" rel="noopener">GUIA ANDROID ↗</a>
     </article>
   </div>
 </section>
 
+<!-- RECURSOS -->
 <section class="page" id="page-resources">
   <div class="hero">
-    <div>
-      <div class="eyebrow">KNOWLEDGE BASE</div>
-      <h1>Recursos e manuais</h1>
-      <p>Biblioteca de orientações para usar a WSAZ_777 e cuidar dos seus dispositivos.</p>
-    </div>
+    <div><div class="eyebrow">KNOWLEDGE BASE</div><h1>Recursos e manuais</h1><p>Biblioteca de orientações da WSAZ_777.</p></div>
   </div>
-
   <div class="cards-3">
-    <article class="resource-card">
-      <div class="tag">MANUAL 01</div>
-      <h3>Começando no painel</h3>
-      <p>Use o menu para alternar entre chat, holograma e otimização. O painel se adapta à tela.</p>
-    </article>
-    <article class="resource-card">
-      <div class="tag">MANUAL 02</div>
-      <h3>Chat e imagens</h3>
-      <p>Faça perguntas, selecione o estilo de resposta e anexe até cinco imagens por mensagem.</p>
-    </article>
-    <article class="resource-card">
-      <div class="tag">MANUAL 03</div>
-      <h3>Boas práticas</h3>
-      <p>Baixe programas apenas de fontes oficiais. Evite scripts desconhecidos e promessas milagrosas de desempenho.</p>
-    </article>
+    <article class="resource-card"><div class="tag">MANUAL 01</div><h3>Começando no painel</h3><p>Use o menu para alternar entre chat, holograma e otimização.</p></article>
+    <article class="resource-card"><div class="tag">MANUAL 02</div><h3>Chat e imagens</h3><p>Faça perguntas, escolha o estilo de resposta e anexe imagens.</p></article>
+    <article class="resource-card"><div class="tag">MANUAL 03</div><h3>Boas práticas</h3><p>Baixe programas de fontes oficiais e evite ferramentas desconhecidas.</p></article>
   </div>
 </section>
 
+<!-- CONTATO -->
 <section class="page" id="page-contact">
   <div class="hero">
-    <div>
-      <div class="eyebrow">STORE DE WALLACE</div>
-      <h1>Central de contato</h1>
-      <p>Fale com o atendimento da WSAZ_777.</p>
-    </div>
+    <div><div class="eyebrow">STORE DE WALLACE</div><h1>Central de contato</h1><p>Fale com o atendimento da WSAZ_777.</p></div>
   </div>
-
   <div class="grid">
     <article class="card wide">
       <h3>Atendimento pelo WhatsApp</h3>
@@ -471,525 +562,495 @@ let selectedImages = [];
 let history = [];
 let busy = false;
 
-function enterSite() {
+/* COLOQUE AQUI O LINK DO SEU PACK DO MEDIAFIRE */
+const PC_PACK_URL = "";
+
+window.openPcPack = function(){
+  if(!PC_PACK_URL){
+    $("pcPackStatus").textContent =
+      "📦 O pack ainda está sendo preparado. O botão será liberado quando o link do MediaFire for adicionado.";
+    return;
+  }
+  window.open(PC_PACK_URL,"_blank","noopener");
+};
+
+/* INICIALIZAÇÃO */
+window.enterSite = function(){
   $("bootStatus").textContent = "INICIANDO NEURAL CORE...";
   $("intro").classList.add("hide");
-  try {
-    sessionStorage.setItem("wsazIntroSeen", "1");
-  } catch {}
-  setTimeout(() => input.focus(), 450);
-}
+  try{sessionStorage.setItem("wsazIntroSeen","1")}catch{}
+  setTimeout(()=>input.focus(),450);
+};
 
-try {
-  if (sessionStorage.getItem("wsazIntroSeen")) {
+try{
+  if(sessionStorage.getItem("wsazIntroSeen")){
     $("intro").classList.add("hide");
   }
-} catch {}
+}catch{}
 
-function toggleSidebar() {
+/* MENU */
+window.toggleSidebar = function(){
   $("sidebar").classList.toggle("open");
   $("overlay").classList.toggle("show");
-}
+};
 
-function closeSidebar() {
+window.closeSidebar = function(){
   $("sidebar").classList.remove("open");
   $("overlay").classList.remove("show");
-}
+};
 
-document.querySelectorAll(".nav-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".nav-btn").forEach(x => x.classList.remove("active"));
+document.querySelectorAll(".nav-btn").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    document.querySelectorAll(".nav-btn").forEach(x=>x.classList.remove("active"));
     btn.classList.add("active");
 
-    document.querySelectorAll(".page").forEach(x => x.classList.remove("active"));
-    $("page-" + btn.dataset.page).classList.add("active");
+    document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+    $("page-"+btn.dataset.page).classList.add("active");
 
     closeSidebar();
 
-    if (btn.dataset.page === "cloud") {
-      setTimeout(resizeHolo, 80);
+    if(btn.dataset.page==="cloud"){
+      moveHoloToCloud();
+      setTimeout(resizeHolo,80);
+    }else if(btn.dataset.page==="assistant"){
+      moveHoloToChat();
+      setTimeout(resizeHolo,80);
     }
   });
 });
 
-window.toggleSidebar = toggleSidebar;
-window.closeSidebar = closeSidebar;
-window.enterSite = enterSite;
+/* CHAT */
+function addMessage(role,text,images=[]){
+  const wrap=document.createElement("div");
+  wrap.className="message "+(role==="user"?"user":"");
 
-function addMessage(role, text, images = []) {
-  const wrap = document.createElement("div");
-  wrap.className = "message " + (role === "user" ? "user" : "");
+  const avatar=document.createElement("div");
+  avatar.className="avatar";
+  avatar.textContent=role==="user"?"U":"♛";
 
-  const avatar = document.createElement("div");
-  avatar.className = "avatar";
-  avatar.textContent = role === "user" ? "U" : "♛";
+  const bubble=document.createElement("div");
+  bubble.className="bubble";
+  bubble.textContent=text;
 
-  const bubble = document.createElement("div");
-  bubble.className = "bubble";
-  bubble.textContent = text;
-
-  images.forEach(src => {
-    const im = document.createElement("img");
-    im.src = src;
-    im.alt = "Imagem enviada";
+  images.forEach(src=>{
+    const im=document.createElement("img");
+    im.src=src;
+    im.alt="Imagem enviada";
     bubble.appendChild(im);
   });
 
-  if (role === "assistant" && "speechSynthesis" in window) {
-    const actions = document.createElement("div");
-    actions.className = "message-actions";
-
-    const b = document.createElement("button");
-    b.textContent = "🔊 Ouvir";
-    b.onclick = () => speakText(text);
-
+  if(role==="assistant" && "speechSynthesis" in window){
+    const actions=document.createElement("div");
+    actions.className="message-actions";
+    const b=document.createElement("button");
+    b.textContent="🔊 Ouvir";
+    b.onclick=()=>speakText(text);
     actions.appendChild(b);
     bubble.appendChild(actions);
   }
 
-  wrap.append(avatar, bubble);
+  wrap.append(avatar,bubble);
   chat.appendChild(wrap);
-  chat.scrollTop = chat.scrollHeight;
+  chat.scrollTop=chat.scrollHeight;
 }
 
-function renderPreviews() {
+function renderPreviews(){
   previewList.replaceChildren();
 
-  selectedImages.forEach((item, i) => {
-    const box = document.createElement("div");
-    box.className = "preview-item";
-
-    const im = document.createElement("img");
-    im.src = item.data;
-
-    const b = document.createElement("button");
-    b.textContent = "×";
-    b.onclick = () => {
-      selectedImages.splice(i, 1);
+  selectedImages.forEach((item,i)=>{
+    const box=document.createElement("div");
+    box.className="preview-item";
+    const im=document.createElement("img");
+    im.src=item.data;
+    const b=document.createElement("button");
+    b.textContent="×";
+    b.onclick=()=>{
+      selectedImages.splice(i,1);
       renderPreviews();
     };
-
-    box.append(im, b);
+    box.append(im,b);
     previewList.appendChild(box);
   });
 }
 
-function resizeImage(file) {
-  return new Promise((resolve, reject) => {
-    if (!/^image\/(jpeg|png|webp)$/.test(file.type)) {
+function resizeImage(file){
+  return new Promise((resolve,reject)=>{
+    if(!/^image\/(jpeg|png|webp)$/.test(file.type)){
       return reject(Error("Formato não suportado."));
     }
-
-    const r = new FileReader();
-
-    r.onload = () => {
-      const im = new Image();
-
-      im.onload = () => {
-        const ratio = Math.min(1, 1400 / Math.max(im.width, im.height));
-        const c = document.createElement("canvas");
-
-        c.width = Math.round(im.width * ratio);
-        c.height = Math.round(im.height * ratio);
-
-        c.getContext("2d").drawImage(im, 0, 0, c.width, c.height);
-        resolve(c.toDataURL("image/jpeg", .72));
+    const r=new FileReader();
+    r.onload=()=>{
+      const im=new Image();
+      im.onload=()=>{
+        const ratio=Math.min(1,1400/Math.max(im.width,im.height));
+        const c=document.createElement("canvas");
+        c.width=Math.round(im.width*ratio);
+        c.height=Math.round(im.height*ratio);
+        c.getContext("2d").drawImage(im,0,0,c.width,c.height);
+        resolve(c.toDataURL("image/jpeg",.72));
       };
-
-      im.onerror = () => reject(Error("Falha ao ler imagem."));
-      im.src = r.result;
+      im.onerror=()=>reject(Error("Falha ao ler imagem."));
+      im.src=r.result;
     };
-
-    r.onerror = () => reject(Error("Falha no arquivo."));
+    r.onerror=()=>reject(Error("Falha no arquivo."));
     r.readAsDataURL(file);
   });
 }
 
-imageInput.addEventListener("change", async e => {
-  const files = Array.from(e.target.files || []);
-  const available = 5 - selectedImages.length;
+$("attachBtn").onclick=()=>imageInput.click();
 
-  if (files.length > available) {
-    alert(`Você pode adicionar mais ${available} imagem(ns).`);
+imageInput.addEventListener("change",async e=>{
+  const files=Array.from(e.target.files||[]);
+  const available=5-selectedImages.length;
+
+  if(files.length>available)alert(`Você pode adicionar mais ${available} imagem(ns).`);
+
+  for(const f of files.slice(0,available)){
+    try{selectedImages.push({data:await resizeImage(f)})}
+    catch(err){alert(err.message)}
   }
-
-  for (const f of files.slice(0, available)) {
-    try {
-      selectedImages.push({ data: await resizeImage(f) });
-    } catch (err) {
-      alert(err.message);
-    }
-  }
-
   renderPreviews();
-  imageInput.value = "";
+  imageInput.value="";
 });
 
-async function sendMessage() {
-  if (busy) return;
+window.sendMessage=async function(){
+  if(busy)return;
+  const message=input.value.trim();
+  if(!message&&!selectedImages.length)return;
 
-  const message = input.value.trim();
+  const imgs=selectedImages.map(x=>x.data);
+  const userContent=message||"Analise estas imagens.";
+  addMessage("user",userContent,imgs);
 
-  if (!message && !selectedImages.length) return;
-
-  const imgs = selectedImages.map(x => x.data);
-  const userContent = message || "Analise estas imagens.";
-
-  addMessage("user", userContent, imgs);
-
-  const prev = [...history];
-
-  input.value = "";
-  selectedImages = [];
+  const prev=[...history];
+  input.value="";
+  selectedImages=[];
   renderPreviews();
 
-  busy = true;
-  sendBtn.disabled = true;
-  typing.style.display = "block";
+  busy=true;
+  sendBtn.disabled=true;
+  typing.style.display="block";
 
-  try {
-    const r = await fetch("/api/chat", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+  try{
+    const r=await fetch("/api/chat",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
         message,
-        images: imgs,
-        history: prev,
-        responseStyle: $("responseStyle").value
+        images:imgs,
+        history:prev,
+        responseStyle:$("responseStyle").value
       })
     });
 
-    const data = await r.json().catch(() => ({}));
+    const data=await r.json().catch(()=>({}));
+    if(!r.ok)throw Error(data.reply||"Falha ao consultar o servidor.");
 
-    if (!r.ok) {
-      throw Error(data.reply || "Falha ao consultar o servidor.");
-    }
-
-    const answer = data.reply || "Não foi possível obter resposta.";
-
-    addMessage("assistant", answer);
+    const answer=data.reply||"Não foi possível obter resposta.";
+    addMessage("assistant",answer);
 
     history.push(
-      { role: "user", content: userContent },
-      { role: "assistant", content: answer }
+      {role:"user",content:userContent},
+      {role:"assistant",content:answer}
     );
+    history=history.slice(-12);
 
-    history = history.slice(-12);
+    try{
+      sessionStorage.setItem("wsaz777_private_chat_history",JSON.stringify(history));
+    }catch{}
 
-    try {
-      sessionStorage.setItem(
-        "wsaz777_private_chat_history",
-        JSON.stringify(history)
-      );
-    } catch {}
-
-  } catch (e) {
-    addMessage("assistant", e.message || "Erro de conexão.");
-  } finally {
-    busy = false;
-    sendBtn.disabled = false;
-    typing.style.display = "none";
+  }catch(e){
+    addMessage("assistant",e.message||"Erro de conexão.");
+  }finally{
+    busy=false;
+    sendBtn.disabled=false;
+    typing.style.display="none";
     input.focus();
   }
-}
+};
 
-window.sendMessage = sendMessage;
-
-input.addEventListener("keydown", e => {
-  if (e.key === "Enter" && !e.shiftKey) {
+input.addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&!e.shiftKey){
     e.preventDefault();
     sendMessage();
   }
 });
 
-function loadHistory() {
-  try {
-    const saved = JSON.parse(
-      sessionStorage.getItem("wsaz777_private_chat_history") || "[]"
-    );
+function loadHistory(){
+  try{
+    const saved=JSON.parse(sessionStorage.getItem("wsaz777_private_chat_history")||"[]");
+    if(!Array.isArray(saved))return;
 
-    if (!Array.isArray(saved)) return;
+    history=saved.filter(x=>
+      x&&["user","assistant"].includes(x.role)&&typeof x.content==="string"
+    ).slice(-12);
 
-    history = saved
-      .filter(x =>
-        x &&
-        ["user", "assistant"].includes(x.role) &&
-        typeof x.content === "string"
-      )
-      .slice(-12);
-
-    if (history.length) {
+    if(history.length){
       chat.replaceChildren();
-      history.forEach(x => addMessage(x.role, x.content));
+      history.forEach(x=>addMessage(x.role,x.content));
     }
-  } catch {}
+  }catch{}
 }
 
-window.startVoice = () => {
-  const R = window.SpeechRecognition || window.webkitSpeechRecognition;
+window.startVoice=function(){
+  const R=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!R)return alert("Ditado não disponível neste navegador.");
 
-  if (!R) {
-    return alert("Ditado não disponível neste navegador.");
-  }
-
-  const rec = new R();
-  rec.lang = "pt-BR";
-
-  rec.onresult = e => {
-    input.value += (input.value ? " " : "") + e.results[0][0].transcript;
+  const rec=new R();
+  rec.lang="pt-BR";
+  rec.onresult=e=>{
+    input.value+=(input.value?" ":"")+e.results[0][0].transcript;
     input.focus();
   };
-
-  rec.onerror = () => alert("Verifique a permissão do microfone.");
+  rec.onerror=()=>alert("Verifique a permissão do microfone.");
   rec.start();
 };
 
-function speakText(t) {
+function speakText(t){
   speechSynthesis.cancel();
-
-  const u = new SpeechSynthesisUtterance(
-    t.replace(/```[\s\S]*?```/g, "Código omitido.")
-  );
-
-  u.lang = "pt-BR";
-  u.rate = .96;
+  const u=new SpeechSynthesisUtterance(t.replace(/```[\s\S]*?```/g,"Código omitido."));
+  u.lang="pt-BR";
+  u.rate=.96;
   speechSynthesis.speak(u);
 }
 
-async function health() {
-  try {
-    const r = await fetch("/api/health");
-    const d = await r.json();
-
-    $("systemStatus").textContent =
-      r.ok && d.status === "online"
-        ? "SISTEMA ONLINE"
-        : "SISTEMA INDISPONÍVEL";
-
-  } catch {
-    $("systemStatus").textContent = "SEM CONEXÃO";
+async function health(){
+  try{
+    const r=await fetch("/api/health");
+    const d=await r.json();
+    $("systemStatus").textContent=r.ok&&d.status==="online"?"SISTEMA ONLINE":"SISTEMA INDISPONÍVEL";
+  }catch{
+    $("systemStatus").textContent="SEM CONEXÃO";
   }
 }
 
-window.showNotice = t => alert(t);
-
+window.showNotice=t=>alert(t);
 loadHistory();
 health();
 
-// Holograma 3D procedural: cabeça abstrata wireframe/partículas.
-let scene, camera, renderer, head;
-let drag = false;
-let lastX = 0;
-let lastY = 0;
-let autoRotate = true;
-let zoom = 1;
+/* AVATAR 3D MAIS HUMANO */
+let scene,camera,renderer,head;
+let drag=false,lastX=0,lastY=0,autoRotate=true,zoom=1;
+let holoCanvas;
 
-const canvas = $("holoCanvas");
+function makeMaterial(color,roughness=.6){
+  return new THREE.MeshStandardMaterial({color,roughness,metalness:.12});
+}
 
-function initHolo() {
-  try {
-    scene = new THREE.Scene();
+function addSphere(parent,geometry,material,x,y,z,sx=1,sy=1,sz=1){
+  const mesh=new THREE.Mesh(geometry,material);
+  mesh.position.set(x,y,z);
+  mesh.scale.set(sx,sy,sz);
+  parent.add(mesh);
+  return mesh;
+}
 
-    camera = new THREE.PerspectiveCamera(42, 1, .1, 100);
-    camera.position.set(0, 0, 6.2);
+function initHolo(){
+  try{
+    scene=new THREE.Scene();
+    camera=new THREE.PerspectiveCamera(40,1,.1,100);
+    camera.position.set(0,0,6.5);
 
-    renderer = new THREE.WebGLRenderer({
-      canvas,
-      alpha: true,
-      antialias: true
+    holoCanvas=document.createElement("canvas");
+    holoCanvas.id="holoCanvas";
+
+    renderer=new THREE.WebGLRenderer({
+      canvas:holoCanvas,
+      alpha:true,
+      antialias:true
     });
+    renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));
+    renderer.setClearColor(0x000000,0);
 
-    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 1.7));
+    scene.add(new THREE.AmbientLight(0x9bdfff,2));
 
-    scene.add(new THREE.AmbientLight(0x55ccff, 1.5));
-
-    const light = new THREE.PointLight(0x4adfff, 18);
-    light.position.set(3, 3, 4);
+    const light=new THREE.PointLight(0x53dfff,35);
+    light.position.set(3,3,5);
     scene.add(light);
 
-    head = new THREE.Group();
+    const redLight=new THREE.PointLight(0xe32636,12);
+    redLight.position.set(-3,-1,2);
+    scene.add(redLight);
+
+    head=new THREE.Group();
     scene.add(head);
 
-    const coreGeo = new THREE.IcosahedronGeometry(1.22, 4);
+    const skin=makeMaterial(0x9ccbd6,.48);
+    const skinDark=makeMaterial(0x477d8e,.55);
+    const hair=makeMaterial(0x142433,.35);
+    const eyeWhite=makeMaterial(0xd9f5ff,.3);
+    const iris=new THREE.MeshBasicMaterial({color:0x36dfff});
+    const dark=new THREE.MeshBasicMaterial({color:0x07121d});
 
-    const wire = new THREE.Mesh(
-      coreGeo,
+    /* PESCOÇO E ROSTO */
+    addSphere(head,new THREE.SphereGeometry(1,40,32),skin,0,.05,0,.77,1.12,.66);
+    addSphere(head,new THREE.SphereGeometry(.5,24,20),skin,0,-.92,-.02,.48,.75,.48);
+
+    /* MAXILAR */
+    addSphere(head,new THREE.SphereGeometry(.65,32,24),skin,0,-.32,.08,.88,.70,.67);
+
+    /* ORELHAS */
+    for(const x of [-.72,.72]){
+      addSphere(head,new THREE.SphereGeometry(.18,20,16),skin,x,-.03,0,.55,1,.5);
+      addSphere(head,new THREE.SphereGeometry(.09,16,12),skinDark,x,-.03,.08,.5,1,.5);
+    }
+
+    /* CABELO */
+    const hairCap=addSphere(head,new THREE.SphereGeometry(.79,36,24),hair,0,.48,-.04,1, .72,.86);
+    hairCap.rotation.z=-.08;
+
+    addSphere(head,new THREE.SphereGeometry(.32,24,18),hair,-.48,.63,.05,1,.55,.8);
+    addSphere(head,new THREE.SphereGeometry(.32,24,18),hair,.48,.63,.05,1,.55,.8);
+
+    /* OLHOS E SOBRANCELHAS */
+    for(const x of [-.29,.29]){
+      addSphere(head,new THREE.SphereGeometry(.13,20,16),skinDark,x,.17,.57,1.35,.75,.45);
+      addSphere(head,new THREE.SphereGeometry(.085,20,16),eyeWhite,x,.15,.62,1.2,.85,.55);
+      addSphere(head,new THREE.SphereGeometry(.045,16,12),iris,x,.15,.67,1,1,.7);
+      addSphere(head,new THREE.SphereGeometry(.022,12,8),dark,x,.15,.70,1,1,1);
+      const brow=addSphere(head,new THREE.SphereGeometry(.15,16,12),hair,x,.34,.59,1.3,.25,.4);
+      brow.rotation.z=x<0?-.1:.1;
+    }
+
+    /* NARIZ */
+    addSphere(head,new THREE.SphereGeometry(.13,20,16),skin,0,-.03,.65,.72,1.3,.8);
+    addSphere(head,new THREE.SphereGeometry(.10,20,16),skin,0,-.16,.68,1.1,.55,.8);
+
+    /* BOCA */
+    const mouth=addSphere(head,new THREE.SphereGeometry(.16,20,12),skinDark,0,-.40,.59,1.2,.22,.35);
+    addSphere(head,new THREE.SphereGeometry(.13,20,12),skin,0,-.36,.62,1.2,.12,.35);
+
+    /* MALHA DIGITAL POR CIMA DO ROSTO */
+    const wire=new THREE.Mesh(
+      new THREE.SphereGeometry(1.01,28,22),
       new THREE.MeshBasicMaterial({
-        color: 0x40dfff,
-        wireframe: true,
-        transparent: true,
-        opacity: .20
+        color:0x55ddff,wireframe:true,transparent:true,opacity:.10
       })
     );
-
-    wire.scale.set(.82, 1.18, .72);
+    wire.scale.set(.79,1.13,.68);
+    wire.position.y=.04;
     head.add(wire);
 
-    const pointsGeo = new THREE.BufferGeometry();
-    const pts = [];
-
-    for (let i = 0; i < 2600; i++) {
-      const y = Math.random() * 2.3 - 1.15;
-      const a = Math.random() * Math.PI * 2;
-      const radius = Math.sqrt(Math.max(0, 1 - (y / 1.25) ** 2));
-
-      pts.push(
-        Math.cos(a) * radius * (.82 + (Math.random() - .5) * .07),
-        y,
-        Math.sin(a) * radius * .72
-      );
+    /* PARTÍCULAS */
+    const pts=[];
+    for(let i=0;i<900;i++){
+      const y=Math.random()*2.6-1.3;
+      const a=Math.random()*Math.PI*2;
+      const r=Math.sqrt(Math.max(0,1-(y/1.4)**2));
+      pts.push(Math.cos(a)*r*.88,y,Math.sin(a)*r*.72);
     }
-
-    pointsGeo.setAttribute(
-      "position",
-      new THREE.Float32BufferAttribute(pts, 3)
-    );
-
-    const particles = new THREE.Points(
-      pointsGeo,
-      new THREE.PointsMaterial({
-        color: 0x72eaff,
-        size: .014,
-        transparent: true,
-        opacity: .85
-      })
-    );
-
+    const pg=new THREE.BufferGeometry();
+    pg.setAttribute("position",new THREE.Float32BufferAttribute(pts,3));
+    const particles=new THREE.Points(pg,new THREE.PointsMaterial({
+      color:0x76eaff,size:.012,transparent:true,opacity:.65
+    }));
     head.add(particles);
 
-    const face = new THREE.Group();
-    head.add(face);
-
-    const lineMat = new THREE.LineBasicMaterial({
-      color: 0x8beeff,
-      transparent: true,
-      opacity: .8
-    });
-
-    function line(points) {
-      const g = new THREE.BufferGeometry().setFromPoints(
-        points.map(p => new THREE.Vector3(...p))
-      );
-
-      face.add(new THREE.Line(g, lineMat));
-    }
-
-    line([[-.48,.25,.60],[-.24,.30,.68],[0,.26,.70],[.24,.30,.68],[.48,.25,.60]]);
-    line([[-.38,-.02,.66],[-.18,-.08,.70],[0,-.02,.73],[.18,-.08,.70],[.38,-.02,.66]]);
-    line([[0,.2,.72],[.03,-.12,.76],[-.08,-.24,.72],[0,-.29,.70]]);
-    line([[-.25,-.48,.56],[0,-.55,.64],[.25,-.48,.56]]);
-
-    for (const x of [-.29, .29]) {
-      const eye = new THREE.Mesh(
-        new THREE.SphereGeometry(.045, 10, 8),
-        new THREE.MeshBasicMaterial({ color: 0xb5f6ff })
-      );
-
-      eye.position.set(x, .17, .72);
-      face.add(eye);
-    }
-
-    const ring = new THREE.Mesh(
-      new THREE.TorusGeometry(1.7, .008, 8, 160),
-      new THREE.MeshBasicMaterial({
-        color: 0x43dfff,
-        transparent: true,
-        opacity: .65
-      })
+    /* ANÉIS */
+    const ring=new THREE.Mesh(
+      new THREE.TorusGeometry(1.55,.009,8,140),
+      new THREE.MeshBasicMaterial({color:0x43dfff,transparent:true,opacity:.6})
     );
-
-    ring.rotation.x = 1.18;
+    ring.rotation.x=1.2;
     head.add(ring);
 
-    const ring2 = ring.clone();
-    ring2.scale.set(.82, .82, .82);
-    ring2.rotation.y = 1.2;
+    const ring2=ring.clone();
+    ring2.scale.set(.82,.82,.82);
+    ring2.rotation.y=1.1;
     head.add(ring2);
 
-    resizeHolo();
+    /* OMBROS DIGITAIS */
+    const shoulders=addSphere(
+      head,new THREE.SphereGeometry(.8,32,20),
+      new THREE.MeshBasicMaterial({color:0x123449,wireframe:true,transparent:true,opacity:.2}),
+      0,-1.25,-.1,1.3,.48,.55
+    );
+
+    moveHoloToChat();
     animate();
 
-    canvas.addEventListener("pointerdown", e => {
-      drag = true;
-      lastX = e.clientX;
-      lastY = e.clientY;
-      canvas.setPointerCapture(e.pointerId);
+    holoCanvas.addEventListener("pointerdown",e=>{
+      drag=true;lastX=e.clientX;lastY=e.clientY;
+      holoCanvas.setPointerCapture(e.pointerId);
     });
 
-    canvas.addEventListener("pointermove", e => {
-      if (!drag) return;
-
-      head.rotation.y += (e.clientX - lastX) * .008;
-      head.rotation.x += (e.clientY - lastY) * .008;
-
-      lastX = e.clientX;
-      lastY = e.clientY;
+    holoCanvas.addEventListener("pointermove",e=>{
+      if(!drag)return;
+      head.rotation.y+=(e.clientX-lastX)*.008;
+      head.rotation.x+=(e.clientY-lastY)*.008;
+      lastX=e.clientX;lastY=e.clientY;
     });
 
-    canvas.addEventListener("pointerup", () => drag = false);
-    canvas.addEventListener("pointercancel", () => drag = false);
+    holoCanvas.addEventListener("pointerup",()=>drag=false);
+    holoCanvas.addEventListener("pointercancel",()=>drag=false);
 
-    canvas.addEventListener("wheel", e => {
+    holoCanvas.addEventListener("wheel",e=>{
       e.preventDefault();
+      zoom=Math.max(.75,Math.min(1.35,zoom-e.deltaY*.001));
+      camera.position.z=6.5/zoom;
+    },{passive:false});
 
-      zoom = Math.max(
-        .75,
-        Math.min(1.35, zoom - e.deltaY * .001)
-      );
-
-      camera.position.z = 6.2 / zoom;
-    }, { passive: false });
-
-    $("rotateBtn").onclick = () => {
-      autoRotate = !autoRotate;
-
-      $("rotateBtn").textContent = autoRotate
-        ? "Ⅱ Pausar rotação"
-        : "▶ Retomar rotação";
+    $("rotateBtn").onclick=()=>{
+      autoRotate=!autoRotate;
+      $("rotateBtn").textContent=autoRotate?"Ⅱ Pausar rotação":"▶ Retomar rotação";
     };
 
-    $("resetView").onclick = () => {
-      head.rotation.set(0, 0, 0);
-      zoom = 1;
-      camera.position.z = 6.2;
+    $("resetView").onclick=()=>{
+      head.rotation.set(0,0,0);
+      zoom=1;
+      camera.position.z=6.5;
     };
 
-  } catch (e) {
-    console.warn("WebGL indisponível", e);
-
-    canvas.insertAdjacentHTML(
-      "afterend",
-      '<p class="muted">Seu navegador não conseguiu iniciar o modo 3D. Atualize o navegador ou tente outro dispositivo.</p>'
-    );
+  }catch(e){
+    console.warn("WebGL indisponível",e);
+    $("holoWrap").insertAdjacentHTML("beforeend",
+      '<p class="muted">Seu navegador não conseguiu iniciar o modo 3D.</p>');
   }
 }
 
-function resizeHolo() {
-  if (!renderer || !canvas.parentElement) return;
+/* O MESMO AVATAR MUDA DE LUGAR ENTRE CHAT E CLOUD */
+function moveHoloToChat(){
+  if(!holoCanvas)return;
+  $("aiHoloBg").appendChild(holoCanvas);
+  if(renderer){
+    renderer.setClearColor(0x000000,0);
+    resizeHolo();
+  }
+}
 
-  const w = canvas.parentElement.clientWidth;
-  const h = canvas.parentElement.clientHeight;
+function moveHoloToCloud(){
+  if(!holoCanvas)return;
+  $("holoWrap").appendChild(holoCanvas);
+  if(renderer){
+    renderer.setClearColor(0x000000,0);
+    resizeHolo();
+  }
+}
 
-  renderer.setSize(w, h, false);
-  camera.aspect = w / h;
+function resizeHolo(){
+  if(!renderer||!holoCanvas||!holoCanvas.parentElement)return;
+  const w=holoCanvas.parentElement.clientWidth;
+  const h=holoCanvas.parentElement.clientHeight;
+  if(!w||!h)return;
+  renderer.setSize(w,h,false);
+  camera.aspect=w/h;
   camera.updateProjectionMatrix();
 }
 
-function animate() {
+function animate(){
   requestAnimationFrame(animate);
 
-  if (head && autoRotate && !drag) {
-    head.rotation.y += .003;
-    head.rotation.x = Math.sin(Date.now() * .00035) * .08;
+  if(head&&autoRotate&&!drag){
+    head.rotation.y+=.0025;
+    head.rotation.x=Math.sin(Date.now()*.00035)*.045;
+    head.position.y=Math.sin(Date.now()*.001)*.025;
   }
 
-  if (renderer) {
-    renderer.render(scene, camera);
-  }
+  if(renderer)renderer.render(scene,camera);
 }
 
 initHolo();
-window.addEventListener("resize", resizeHolo);
+window.addEventListener("resize",resizeHolo);
 </script>
 </body>
 </html>
