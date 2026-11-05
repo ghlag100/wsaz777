@@ -1,17 +1,19 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#050b08">
+<meta name="theme-color" content="#080609">
 <title>WSAZ_777 | AI SYSTEM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-:root{--green:#19e68c;--green2:#00ffc3;--white:#f2fff8;--muted:#91aa9b;--bg:#050b08;--panel:rgba(8,20,13,.91);--border:rgba(25,230,140,.22)}
+:root{--green:#19e68c;--green2:#00ffc3;--red:#ed263f;--red2:#ff4056;--white:#f2fff8;--muted:#91aa9b;--bg:#050b08;--panel:rgba(8,20,13,.91);--border:rgba(25,230,140,.22)}
 *{box-sizing:border-box;margin:0;padding:0}
-body{min-height:100vh;background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif;overflow-x:hidden}
+html{overflow-anchor:none;scroll-behavior:auto}
+body{min-height:100vh;background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif;overflow-x:hidden;overflow-anchor:none}
 button,input{font:inherit}
 button{outline:none}
 .background{position:fixed;inset:0;z-index:-5;background:radial-gradient(ellipse at 15% 15%,#073c25,transparent 42%),radial-gradient(ellipse at 85% 85%,#06452b,transparent 38%),linear-gradient(135deg,#030906,#08150e 55%,#020805)}
@@ -22,30 +24,30 @@ button{outline:none}
 .glow.two{bottom:-230px;right:-170px;animation-delay:2s}
 @keyframes floatGlow{to{transform:translate(60px,50px) scale(1.2);opacity:.23}}
 
-/* INICIALIZAÇÃO */
-.boot-screen{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at center,#10291d 0%,#061109 48%,#020604 100%);transition:opacity .7s,visibility .7s}
+/* INICIALIZAÇÃO RED & GREEN */
+.boot-screen{position:fixed;inset:0;z-index:99999;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 45%,#351015 0%,#11140e 45%,#020604 100%);transition:opacity .7s,visibility .7s}
 .boot-screen.hide{opacity:0;visibility:hidden;pointer-events:none}
-.boot-grid{position:absolute;inset:0;background-image:linear-gradient(#19e68c0b 1px,transparent 1px),linear-gradient(90deg,#19e68c0b 1px,transparent 1px);background-size:35px 35px;mask-image:radial-gradient(ellipse,black,transparent 75%)}
+.boot-grid{position:absolute;inset:0;background-image:linear-gradient(#19e68c12 1px,transparent 1px),linear-gradient(90deg,#19e68c12 1px,transparent 1px);background-size:35px 35px;mask-image:radial-gradient(ellipse,black,transparent 75%)}
 .boot-content{position:relative;z-index:2;text-align:center;width:min(90%,390px);animation:bootEnter .9s ease both}
 .boot-core{width:190px;height:190px;margin:0 auto 30px;position:relative;display:grid;place-items:center;isolation:isolate}
-.boot-core:before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(145deg,#fff0b0,#d9a441 18%,#8e2525 38%,#e5b957 58%,#681b20 78%,#f4d17a);clip-path:polygon(50% 0,88% 13%,100% 29%,100% 76%,76% 100%,24% 100%,0 76%,0 29%,12% 13%);filter:drop-shadow(0 0 9px #d9a44170)}
-.boot-core:after{content:"";position:absolute;inset:3px;z-index:0;background:linear-gradient(145deg,#14271b,#050b07 65%,#24110d);clip-path:polygon(50% 1%,87% 14%,97% 30%,97% 75%,75% 97%,25% 97%,3% 75%,3% 30%,13% 14%)}
-.boot-ring{position:absolute;inset:13px;z-index:1;border:1px solid #19e68c70;border-radius:50%;border-top-color:#fff1c5;animation:spin 5s linear infinite}
-.boot-ring.r2{inset:25px;border-color:#d9a441a0;border-bottom-color:#fff0b0;animation:spinReverse 7s linear infinite}
-.boot-ring.r3{inset:38px;border-style:dashed;border-color:#e34b4b75;animation:spin 14s linear infinite}
-.boot-photo{width:104px;height:104px;object-fit:cover;position:relative;z-index:2;clip-path:polygon(50% 0,90% 15%,100% 30%,100% 75%,75% 100%,25% 100%,0 75%,0 30%,10% 15%);filter:drop-shadow(0 0 10px #00ff9d70)}
-.boot-dot{position:absolute;z-index:3;width:8px;height:8px;background:#fff2c5;border-radius:50%;box-shadow:0 0 12px #ffca62;top:19px;right:37px}
-.boot-title{font-family:Orbitron,sans-serif;font-size:29px;font-weight:900;letter-spacing:4px}
-.boot-title span{color:var(--green)}
-.boot-description{margin-top:10px;color:#b6cdbd;font-size:10px;letter-spacing:3px;text-transform:uppercase}
+.boot-core:before{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(145deg,#ff9a9a,#ed263f 18%,#8e1028 38%,#19e68c 58%,#075c38 78%,#ff4056);clip-path:polygon(50% 0,88% 13%,100% 29%,100% 76%,76% 100%,24% 100%,0 76%,0 29%,12% 13%);filter:drop-shadow(0 0 12px #ed263f70)}
+.boot-core:after{content:"";position:absolute;inset:3px;z-index:0;background:linear-gradient(145deg,#14271b,#050b07 65%,#241014);clip-path:polygon(50% 1%,87% 14%,97% 30%,97% 75%,75% 97%,25% 97%,3% 75%,3% 30%,13% 14%)}
+.boot-ring{position:absolute;inset:13px;z-index:1;border:1px solid #19e68c90;border-radius:50%;border-top-color:#ff4056;box-shadow:0 0 15px #19e68c30;animation:spin 5s linear infinite}
+.boot-ring.r2{inset:25px;border-color:#ed263f90;border-bottom-color:#19e68c;animation:spinReverse 7s linear infinite}
+.boot-ring.r3{inset:38px;border-style:dashed;border-color:#19e68c80;animation:spin 14s linear infinite}
+.boot-photo{width:104px;height:104px;object-fit:cover;position:relative;z-index:2;clip-path:polygon(50% 0,90% 15%,100% 30%,100% 75%,75% 100%,25% 100%,0 75%,0 30%,10% 15%);filter:drop-shadow(0 0 10px #19e68c70)}
+.boot-dot{position:absolute;z-index:3;width:8px;height:8px;background:#ff4056;border-radius:50%;box-shadow:0 0 12px #ff263f;top:19px;right:37px}
+.boot-title{font-family:Orbitron,sans-serif;font-size:29px;font-weight:900;letter-spacing:4px;text-shadow:0 0 15px #19e68c25}
+.boot-title span{color:var(--green);text-shadow:0 0 15px #19e68c80}
+.boot-description{margin-top:10px;color:#c5e8d3;font-size:10px;letter-spacing:3px;text-transform:uppercase}
 .boot-loading{height:3px;width:210px;margin:27px auto 13px;background:#ffffff20;border-radius:10px;overflow:hidden}
-.boot-progress{height:100%;width:0;background:linear-gradient(90deg,#8e2525,#d9a441,#00ffc3);box-shadow:0 0 15px #d9a441;animation:progress 3s linear forwards}
-.boot-status{color:#a9c5b3;font-size:9px;letter-spacing:2px}
-.boot-enter{display:none;margin:28px auto 0;padding:14px 48px;min-width:190px;color:#fff3d1;font-family:Orbitron,sans-serif;font-size:12px;font-weight:800;letter-spacing:3px;background:linear-gradient(120deg,#641b20,#a52c2c 48%,#542018);border:1px solid #e5b957;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);box-shadow:0 0 18px #c43c3c45,inset 0 0 15px #e5b95720;cursor:pointer;transition:.25s}
-.boot-enter:hover{filter:brightness(1.3);transform:translateY(-2px);box-shadow:0 0 28px #e5b95780}
+.boot-progress{height:100%;width:0;background:linear-gradient(90deg,#ed263f,#a80d28,#19e68c,#00ffc3);box-shadow:0 0 15px #19e68c;animation:progress 3s linear forwards}
+.boot-status{color:#c5e8d3;font-size:9px;letter-spacing:2px}
+.boot-enter{display:none;margin:28px auto 0;padding:14px 48px;min-width:190px;color:#fff;font-family:Orbitron,sans-serif;font-size:12px;font-weight:800;letter-spacing:3px;background:linear-gradient(120deg,#8c1020,#d51e36 48%,#075c38);border:1px solid #19e68c;clip-path:polygon(12px 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%,0 12px);box-shadow:0 0 18px #19e68c35,inset 0 0 15px #ed263f20;cursor:pointer;transition:.25s}
+.boot-enter:hover{filter:brightness(1.3);transform:translateY(-2px);box-shadow:0 0 28px #19e68c70}
 .boot-screen.ready .boot-loading,.boot-screen.ready .boot-status{display:none}
 .boot-screen.ready .boot-enter{display:block;animation:bootEnter .5s ease both}
-.boot-footer{position:absolute;bottom:27px;color:#718b79;font-size:9px;letter-spacing:3px}
+.boot-footer{position:absolute;bottom:27px;color:#19e68c;font-size:9px;letter-spacing:3px}
 @keyframes progress{to{width:100%}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes spinReverse{to{transform:rotate(-360deg)}}
@@ -143,7 +145,7 @@ button:disabled{opacity:.5;cursor:wait}
 .style-change{border:0;background:none;color:var(--green);cursor:pointer;font-size:10px;margin-left:5px}
 
 /* MENSAGENS */
-.messages{height:410px;min-height:280px;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;overscroll-behavior:contain;scrollbar-gutter:stable}
+.messages{height:410px;min-height:280px;overflow-y:auto;padding:14px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth;overscroll-behavior:contain;scrollbar-gutter:stable;overflow-anchor:none}
 .messages::-webkit-scrollbar{width:6px}
 .messages::-webkit-scrollbar-thumb{background:#168c58;border-radius:20px}
 .message{max-width:85%;padding:14px 17px;border-radius:14px;font-size:13px;line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;backdrop-filter:blur(10px);animation:messageEnter .25s ease both}
@@ -167,8 +169,8 @@ button:disabled{opacity:.5;cursor:wait}
 .preview span{font-size:12px;color:#d5f5e2;flex:1}
 .preview button{border:0;background:none;color:var(--green);cursor:pointer;font-size:18px}
 
-/* CAMPO DE TEXTO COMPACTO */
-.composer{border-top:1px solid var(--border);padding:8px 12px;display:flex;align-items:center;gap:8px;background:rgba(3,12,7,.96)}
+/* CAMPO DE TEXTO */
+.composer{border-top:1px solid var(--border);padding:8px 12px;display:flex;align-items:center;gap:8px;background:rgba(3,12,7,.96);overflow-anchor:none}
 .composer input[type=text]{flex:1;min-width:0;height:44px;padding:0 13px;background:#0b1b11;border:1px solid #19e68c40;border-radius:12px;outline:none;color:white;font-size:13px}
 .composer input::placeholder{color:#789585}
 .composer input:focus{border-color:var(--green);box-shadow:0 0 0 3px #00ff9d12}
@@ -440,7 +442,10 @@ let responseStyle=localStorage.getItem("wsaz_response_style");
 if(!["concise","normal","detailed"].includes(responseStyle))responseStyle=null;
 
 function scrollToBottom(){
-  messages.scrollTop=messages.scrollHeight;
+  messages.scrollTo({
+    top:messages.scrollHeight,
+    behavior:"smooth"
+  });
 }
 
 function addMessage(text,type,imageUrl=null){
@@ -556,12 +561,7 @@ document.getElementById("newChatButton").addEventListener("click",(event)=>{
   addMessage("✦ Nova conversa iniciada!\n\nSou a WSAZ_777. O que vamos descobrir hoje?","bot");
   clearSelectedImage();
   input.value="";
-  input.focus();
-
-  document.getElementById("chat").scrollIntoView({
-    behavior:"smooth",
-    block:"start"
-  });
+  input.focus({preventScroll:true});
 });
 
 attachButton.addEventListener("click",()=>{
@@ -573,7 +573,7 @@ document.getElementById("imageShortcut").addEventListener("click",()=>{
 });
 
 document.getElementById("focusShortcut").addEventListener("click",()=>{
-  input.focus();
+  input.focus({preventScroll:true});
 });
 
 document.getElementById("clearShortcut").addEventListener("click",resetChat);
@@ -682,7 +682,7 @@ form.addEventListener("submit",async(event)=>{
     sendButton.disabled=false;
     attachButton.disabled=false;
     clearChat.disabled=false;
-    input.focus();
+    input.focus({preventScroll:true});
     scrollToBottom();
   }
 });
