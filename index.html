@@ -1,1219 +1,1256 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080808">
-<title>WSAZ_777 | STORE DE WALLACE</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f5f5f7">
+<meta name="description" content="WSAZ_777 — Gaming, tecnologia, personalização e inteligência artificial.">
+<title>WSAZ_777 | Store de Wallace</title>
 
 <style>
-:root{
- --bg:#080808;
- --panel:#111;
- --green:#a6ff00;
- --red:#ff2348;
- --white:#f5f5f5;
- --muted:#999;
- --border:#303030;
- --cyan:#5ffcff;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;overflow-anchor:none}
-body{
- background:var(--bg);
- color:var(--white);
- font-family:Inter,Arial,sans-serif;
- overflow-x:hidden;
-}
-button,input{font:inherit}
-button{cursor:pointer}
-a{color:inherit;text-decoration:none}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap');
 
-.background{
- position:fixed;
- inset:0;
- z-index:-3;
- background:
- radial-gradient(ellipse at 10% 10%,#a6ff0017,transparent 40%),
- radial-gradient(ellipse at 90% 85%,#ff234817,transparent 38%),
- #080808;
-}
-.background:after{
- content:"";
- position:absolute;
- inset:0;
- opacity:.08;
- background-image:
- linear-gradient(#a6ff00 1px,transparent 1px),
- linear-gradient(90deg,#a6ff00 1px,transparent 1px);
- background-size:35px 35px;
-}
-.grain{
- position:fixed;
- inset:0;
- z-index:-1;
- pointer-events:none;
- background:radial-gradient(ellipse,transparent 25%,#000b);
+:root {
+  --red: #e32636;
+  --red-dark: #b81425;
+  --ink: #17171b;
+  --muted: #777780;
+  --line: #e8e8ec;
+  --white: #fff;
+  --bg: #f5f5f7;
+  --green: #20b875;
+  --shadow: 0 15px 45px rgba(20,20,30,.07);
 }
 
-@keyframes rise{
- from{opacity:0;transform:translateY(14px)}
- to{opacity:1;transform:translateY(0)}
-}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes scan{to{top:110%}}
-@keyframes load{to{width:100%}}
-@keyframes float{50%{translate:0 -9px}}
-@keyframes headFloat{
- 0%,100%{transform:translateY(0) rotate(-2deg)}
- 50%{transform:translateY(-8px) rotate(2deg)}
-}
-@keyframes orbit{
- from{transform:translate(-50%,-50%) rotate(0deg)}
- to{transform:translate(-50%,-50%) rotate(360deg)}
-}
-@keyframes orbitReverse{
- from{transform:translate(-50%,-50%) rotate(360deg)}
- to{transform:translate(-50%,-50%) rotate(0deg)}
-}
-@keyframes trail{
- 0%{transform:translateX(-15px) scaleX(.3);opacity:0}
- 50%{opacity:.9}
- 100%{transform:translateX(25px) scaleX(1);opacity:0}
-}
-@keyframes pulse{
- 0%,100%{opacity:.45}
- 50%{opacity:1}
-}
-@keyframes eyeGlow{
- 0%,100%{opacity:.55;filter:drop-shadow(0 0 3px var(--cyan))}
- 50%{opacity:1;filter:drop-shadow(0 0 10px var(--cyan))}
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Inter, sans-serif;
 }
 
-.boot{
- position:fixed;
- inset:0;
- z-index:9999;
- display:grid;
- place-items:center;
- background:radial-gradient(circle,#19200b,#080808 65%);
- transition:.7s;
-}
-.boot.hide{
- opacity:0;
- visibility:hidden;
- pointer-events:none;
-}
-.boot-grid{
- position:absolute;
- inset:0;
- opacity:.16;
- background-image:
- linear-gradient(#a6ff0030 1px,transparent 1px),
- linear-gradient(90deg,#a6ff0030 1px,transparent 1px);
- background-size:32px 32px;
-}
-.boot-content{
- position:relative;
- text-align:center;
- width:min(90%,390px);
- animation:rise .8s;
-}
-.photo-frame{
- width:210px;
- height:210px;
- margin:0 auto 27px;
- position:relative;
- padding:7px;
- background:#090909;
- clip-path:polygon(12% 0,88% 0,100% 12%,100% 88%,88% 100%,12% 100%,0 88%,0 12%);
-}
-.photo-frame:before{
- content:"";
- position:absolute;
- inset:0;
- background:linear-gradient(135deg,var(--green),#222,var(--red),var(--green));
- animation:spin 7s linear infinite;
-}
-.photo-frame img{
- position:absolute;
- inset:5px;
- width:calc(100% - 10px);
- height:calc(100% - 10px);
- object-fit:cover;
-}
-.boot-tag{
- font:800 10px Orbitron;
- letter-spacing:4px;
- color:var(--green);
-}
-.boot h1{
- font:900 30px Orbitron;
- margin-top:10px;
-}
-.boot h1 span{color:var(--green)}
-.boot p{
- font-size:10px;
- color:#aaa;
- letter-spacing:3px;
- margin-top:10px;
-}
-.boot-store{
- margin:17px auto 0;
- padding:12px 15px;
- width:min(100%,285px);
- border:1px solid #a6ff0066;
- background:#a6ff0012;
-}
-.boot-store strong{
- display:block;
- font:900 13px Orbitron;
- letter-spacing:3px;
- color:var(--green);
-}
-.boot-store small{
- display:block;
- margin-top:7px;
- color:#888;
- font-size:8px;
- letter-spacing:2px;
-}
-.boot-bar{
- height:3px;
- background:#333;
- width:210px;
- margin:25px auto 15px;
- overflow:hidden;
-}
-.boot-bar i{
- display:block;
- height:100%;
- width:0;
- background:var(--green);
- animation:load 2.5s forwards;
-}
-.boot button{
- display:none;
- margin:20px auto;
- padding:13px 40px;
- background:var(--green);
- color:#080808;
- border:0;
- font:900 12px Orbitron;
-}
-.boot.ready button{display:block}
-.boot.ready .boot-bar,
-.boot.ready .boot-status{display:none}
-.boot-status{
- font-size:9px;
- color:var(--green);
- letter-spacing:2px;
+button, input, textarea { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+a { color: inherit; text-decoration: none; }
+
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: #101014;
+  color: white;
+  transition: opacity .7s, visibility .7s;
 }
 
-header{
- width:95%;
- max-width:1500px;
- margin:17px auto;
- padding:14px 20px;
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:15px;
- border:1px solid var(--border);
- background:#101010ef;
-}
-.brand{display:flex;align-items:center;gap:12px}
-.brand-icon{font-size:32px;color:var(--green)}
-.logo{font:900 19px Orbitron}
-.logo span{color:var(--green)}
-.subtitle{font-size:9px;color:var(--muted);margin-top:5px}
-.status{color:var(--green);font:700 9px Orbitron}
-
-.layout{
- width:95%;
- max-width:1500px;
- margin:25px auto;
- display:grid;
- grid-template-columns:175px minmax(0,1fr);
- gap:18px;
-}
-.sidebar,.panel{
- background:#101010ed;
- border:1px solid var(--border);
-}
-.sidebar{
- padding:12px;
- display:flex;
- flex-direction:column;
- gap:7px;
- min-height:600px;
-}
-.menu{
- display:block;
- padding:13px 10px;
- font-size:11px;
- color:#ccc;
- border-left:2px solid transparent;
-}
-.menu:hover,.menu.active{
- background:#a6ff0014;
- border-left-color:var(--green);
- color:var(--green);
-}
-.side-note{
- margin-top:auto;
- padding:14px 7px;
- border:1px dashed #555;
- text-align:center;
-}
-.side-note b{font:800 12px Orbitron;color:var(--green)}
-.side-note p{
- font-size:9px;
- color:var(--muted);
- line-height:1.7;
- margin-top:8px;
+#intro.hide {
+  opacity: 0;
+  visibility: hidden;
 }
 
-.main{min-width:0;display:flex;flex-direction:column;gap:18px}
-.hero{padding:18px 8px}
-.kicker{color:var(--green);font:700 10px Orbitron;letter-spacing:3px}
-.hero h2{font:900 clamp(24px,4vw,42px) Orbitron;margin-top:12px}
-.hero h2 span{color:var(--green)}
-.hero p{font-size:12px;color:#aaa;margin-top:10px;line-height:1.7}
-.spray{
- color:var(--red);
- font:900 11px Orbitron;
- letter-spacing:3px;
- display:inline-block;
- margin-top:14px;
-}
-.panel{overflow:hidden}
-.panel-head{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
- padding:15px 17px;
- background:#181818;
- border-bottom:1px solid var(--border);
-}
-.panel-head b{font:800 12px Orbitron}
-.panel-head span{font:700 8px Orbitron;color:var(--green);letter-spacing:2px}
-
-/* CENTRAL HOLOGRÁFICA */
-.visual{
- min-height:390px;
- position:relative;
- display:grid;
- place-items:center;
- overflow:hidden;
- background:
- radial-gradient(ellipse at center,#12343a 0%,#10191a 32%,#101010 68%,#080808);
-}
-.visual:after{
- content:"";
- position:absolute;
- left:0;
- right:0;
- top:-30%;
- height:30%;
- background:linear-gradient(transparent,#5ffcff22,transparent);
- animation:scan 5s linear infinite;
- pointer-events:none;
-}
-.visual-grid{
- position:absolute;
- inset:0;
- opacity:.2;
- background-image:
- linear-gradient(#5ffcff25 1px,transparent 1px),
- linear-gradient(90deg,#5ffcff25 1px,transparent 1px);
- background-size:25px 25px;
-}
-.visual-corner{
- position:absolute;
- top:16px;
- left:17px;
- font:700 8px Orbitron;
- color:#aaa;
- z-index:4;
-}
-.visual-corner.right{left:auto;right:17px;color:var(--red)}
-
-.holo-stage{
- width:min(100%,460px);
- height:330px;
- position:relative;
- display:grid;
- place-items:center;
- perspective:900px;
-}
-.holo-head{
- width:230px;
- height:270px;
- position:relative;
- z-index:2;
- animation:headFloat 5s ease-in-out infinite;
- transform-style:preserve-3d;
- filter:drop-shadow(0 0 15px #5ffcff55);
-}
-.holo-head svg{
- width:100%;
- height:100%;
- overflow:visible;
-}
-.holo-head .metal{
- fill:#12343b;
- fill-opacity:.28;
- stroke:#70ffff;
- stroke-width:1.5;
-}
-.holo-head .detail{
- fill:none;
- stroke:#5ffcff;
- stroke-width:1.4;
- stroke-linecap:round;
- stroke-linejoin:round;
-}
-.holo-head .soft{
- fill:none;
- stroke:#5ffcff;
- stroke-width:.8;
- opacity:.55;
-}
-.holo-head .eye{
- fill:#baffff;
- animation:eyeGlow 2s ease-in-out infinite;
-}
-.holo-head .shadow{
- fill:#061518;
- stroke:#5ffcff;
- stroke-width:1;
-}
-.orbit-ring{
- position:absolute;
- left:50%;
- top:50%;
- border:1px solid #5ffcff75;
- border-radius:50%;
- transform:translate(-50%,-50%);
- pointer-events:none;
-}
-.orbit-ring.r1{
- width:310px;height:115px;
- animation:orbit 8s linear infinite;
-}
-.orbit-ring.r2{
- width:340px;height:145px;
- border-style:dashed;
- animation:orbitReverse 13s linear infinite;
-}
-.orbit-ring.r3{
- width:260px;height:300px;
- border-color:#a6ff0055;
- animation:orbit 17s linear infinite;
-}
-.orbit-dot{
- position:absolute;
- width:7px;height:7px;
- border-radius:50%;
- background:var(--cyan);
- box-shadow:0 0 13px var(--cyan);
- top:50%;left:50%;
-}
-.r1 .orbit-dot{transform:translate(153px,-4px)}
-.r2 .orbit-dot{transform:translate(-170px,-4px)}
-.r3 .orbit-dot{transform:translate(126px,-4px);background:var(--green);box-shadow:0 0 13px var(--green)}
-
-.particle-field{
- position:absolute;
- inset:0;
- pointer-events:none;
- overflow:hidden;
-}
-.trail{
- position:absolute;
- height:1px;
- width:120px;
- background:linear-gradient(90deg,transparent,#5ffcff,transparent);
- box-shadow:0 0 8px #5ffcff;
- animation:trail 3s ease-in-out infinite;
-}
-.trail.t1{top:22%;left:2%;width:145px}
-.trail.t2{top:36%;right:1%;width:170px;animation-delay:.7s}
-.trail.t3{top:70%;left:0;width:190px;animation-delay:1.3s}
-.trail.t4{top:82%;right:3%;width:130px;animation-delay:1.8s}
-.trail.t5{top:15%;right:18%;width:80px;animation-delay:2.1s}
-.trail.t6{top:58%;left:15%;width:100px;animation-delay:1s}
-.spark{
- position:absolute;
- width:3px;height:3px;
- border-radius:50%;
- background:#baffff;
- box-shadow:0 0 9px #5ffcff;
- animation:pulse 1.5s ease-in-out infinite;
-}
-.s1{top:20%;left:22%}.s2{top:30%;right:15%;animation-delay:.3s}
-.s3{top:65%;left:12%;animation-delay:.6s}.s4{top:80%;right:25%;animation-delay:.9s}
-.s5{top:12%;left:65%;animation-delay:1.2s}.s6{top:52%;right:8%;animation-delay:.5s}
-.holo-label{
- position:absolute;
- bottom:10px;
- z-index:4;
- font:700 9px Orbitron;
- color:var(--cyan);
- letter-spacing:3px;
- text-align:center;
- text-shadow:0 0 10px #5ffcff;
-}
-.ai-status,.ai-data{
- position:absolute;
- bottom:45px;
- z-index:4;
- font:700 7px Orbitron;
- line-height:2;
-}
-.ai-status{left:18px;color:#5ffcffaa}
-.ai-data{right:18px;color:#a6ff0080;text-align:right}
-
-.section-title{font:800 14px Orbitron;margin:22px 0 13px}
-.products{
- display:grid;
- grid-template-columns:repeat(3,minmax(0,1fr));
- gap:12px;
-}
-.product{
- background:linear-gradient(145deg,#191919,#0c0c0c);
- border:1px solid #333;
- padding:17px;
- position:relative;
- overflow:hidden;
-}
-.product:before{
- content:"";
- position:absolute;
- top:0;left:0;
- width:45px;height:2px;
- background:var(--green);
-}
-.product-icon{font-size:27px;color:var(--green)}
-.product h3{font:800 11px Orbitron;margin:12px 0 8px}
-.product p{font-size:10px;color:#aaa;line-height:1.7;min-height:50px}
-.product a{
- display:block;
- margin-top:14px;
- padding:10px;
- text-align:center;
- background:#a6ff00;
- color:#090909;
- font:900 9px Orbitron;
+.intro-content {
+  text-align: center;
+  padding: 24px;
+  animation: appear 1s ease;
 }
 
-/* CHAT */
-.chat-top{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:10px;
- padding:14px 16px;
- background:#181818;
+.intro-photo {
+  width: 115px;
+  height: 115px;
+  object-fit: cover;
+  border-radius: 25px;
+  border: 1px solid #ffffff35;
+  box-shadow: 0 0 45px #e3263650;
+  margin-bottom: 25px;
 }
-.chat-top b{font:800 12px Orbitron}
-.action{padding:9px 12px;border:1px solid #444;background:#222;color:white;font-size:10px}
-.style-selector{padding:14px;border-bottom:1px solid #333}
-.style-selector p{font-size:11px;margin-bottom:10px}
-.style-options{display:flex;gap:8px;flex-wrap:wrap}
-.style-option{padding:9px 12px;background:#202020;color:#ddd;border:1px solid #444;font-size:10px}
-.style-option.selected{border-color:var(--green);color:var(--green)}
-.messages{
- height:360px;
- min-height:260px;
- overflow-y:auto;
- padding:15px;
- display:flex;
- flex-direction:column;
- gap:12px;
- overscroll-behavior:contain;
- overflow-anchor:none;
-}
-.message{
- max-width:88%;
- padding:12px 14px;
- border:1px solid #333;
- font-size:12px;
- line-height:1.7;
- white-space:pre-wrap;
- overflow-wrap:anywhere;
- animation:rise .2s;
-}
-.bot{align-self:flex-start;background:#191919;border-left:3px solid var(--green)}
-.user{align-self:flex-end;background:#202a13;border-right:3px solid var(--green)}
-.message img{max-width:220px;max-height:180px;object-fit:contain;display:block;margin-bottom:8px}
-.preview{display:none;align-items:center;gap:10px;padding:10px;border-top:1px solid #333}
-.preview img{width:55px;height:55px;object-fit:cover}
-.preview span{font-size:10px;flex:1}
-.preview button{background:none;color:var(--red);border:0}
-.composer{display:flex;gap:7px;padding:10px;border-top:1px solid #333}
-.composer input[type=text]{
- flex:1;min-width:0;height:45px;padding:0 12px;
- background:#1b1b1b;border:1px solid #444;color:white;
- outline:none;border-radius:3px;font-size:16px;
-}
-.composer input:focus{border-color:var(--green)}
-.icon-btn,.send{min-width:43px;height:45px;border:1px solid #444;background:#222;color:white}
-.send{background:var(--green);color:#080808;border:0;font-weight:900}
-.shortcuts{display:flex;gap:8px;padding:0 10px 12px}
-.shortcut{background:none;border:1px solid #333;color:#bbb;padding:8px 11px;font-size:9px}
 
-/* CONTATO */
-.demo-wrap{padding:20px}
-.demo-heading{font:800 12px Orbitron;color:var(--green);letter-spacing:2px;margin-bottom:10px}
-.demo-description{font-size:11px;color:#aaa;line-height:1.7;margin-bottom:15px}
-.gameplay-image{width:100%;overflow:hidden;border:1px solid #3a3a3a;background:#050505;border-radius:5px}
-.gameplay-image img{display:block;width:100%;max-height:520px;object-fit:contain;margin:0 auto}
-.demo-caption{font-size:9px;color:#777;margin-top:10px;line-height:1.6}
-.info-area{padding:0 20px 20px}
-.info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.info-item{padding:14px;background:#171717;border:1px solid #333}
-.info-item strong{display:block;color:var(--green);font:800 10px Orbitron;margin-bottom:8px}
-.info-item span{display:block;color:#aaa;font-size:10px;line-height:1.7}
-.contact-description{padding:0 20px 20px}
-.contact-description p{font-size:12px;color:#bbb;line-height:1.8}
-.whatsapp-button{
- display:block;margin-top:15px;padding:14px;text-align:center;
- background:var(--green);color:#080808;font:900 11px Orbitron;
+.intro-kicker {
+  color: #ff6572;
+  font: 11px Orbitron;
+  letter-spacing: 4px;
 }
-footer{
- padding:20px 5px 30px;
- display:flex;justify-content:space-between;gap:10px;
- color:#888;font-size:9px;
-}
-footer strong{color:var(--green)}
 
-@media(max-width:850px){
- .layout{grid-template-columns:1fr}
- .sidebar{min-height:auto;flex-direction:row;overflow-x:auto}
- .menu{white-space:nowrap}
- .side-note{display:none}
+.intro-content h1 {
+  font: 800 clamp(38px, 9vw, 65px) Orbitron;
+  margin: 12px 0;
 }
-@media(max-width:600px){
- header{padding:12px}
- .logo{font-size:15px}
- .subtitle{font-size:8px}
- .status{font-size:7px}
- .products{grid-template-columns:repeat(2,minmax(0,1fr))}
- .product{padding:13px}
- .product p{min-height:65px}
- .messages{height:42vh;min-height:250px}
- .message{max-width:95%}
- footer{flex-direction:column;text-align:center}
- .visual{min-height:350px}
- .holo-stage{transform:scale(.83)}
- .ai-data,.ai-status{font-size:6px}
- .info-grid{grid-template-columns:1fr}
- .gameplay-image img{max-height:420px}
+
+.intro-content p {
+  color: #aaa;
+  font-size: 11px;
+  letter-spacing: 3px;
 }
-@media(max-width:390px){
- .products{grid-template-columns:1fr}
- .holo-stage{transform:scale(.72)}
+
+.intro-brand {
+  margin-top: 28px;
+  font-size: 12px;
+  letter-spacing: 3px;
+  font-weight: 800;
 }
-@media(prefers-reduced-motion:reduce){
- *,*::before,*::after{animation:none!important;transition:none!important}
+
+.intro-content button {
+  margin-top: 30px;
+  border: 0;
+  background: var(--red);
+  color: white;
+  padding: 15px 28px;
+  border-radius: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.topbar {
+  height: 76px;
+  background: white;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6%;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: white;
+  border-radius: 12px;
+  font-size: 22px;
+}
+
+.brand-name {
+  font: 800 16px Orbitron;
+}
+
+.brand-sub {
+  font-size: 9px;
+  color: var(--muted);
+  letter-spacing: 1.4px;
+  margin-top: 4px;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.nav a {
+  font-size: 12px;
+  font-weight: 700;
+  color: #555;
+  transition: .2s;
+}
+
+.nav a:hover { color: var(--red); }
+
+.status {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--green);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.status i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 10px #20b87580;
+}
+
+.menu-btn {
+  display: none;
+  border: 0;
+  background: transparent;
+  font-size: 25px;
+}
+
+main {
+  max-width: 1250px;
+  margin: auto;
+  padding: 35px 25px 70px;
+}
+
+.hero {
+  min-height: 420px;
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  align-items: center;
+  gap: 25px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 45px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  background: #e326360c;
+  border-radius: 50%;
+  right: 10%;
+  top: 10%;
+  filter: blur(10px);
+}
+
+.eyebrow {
+  font: 700 10px Orbitron;
+  letter-spacing: 2px;
+  color: var(--red);
+}
+
+.hero h2 {
+  font-size: clamp(36px, 5vw, 62px);
+  line-height: 1.04;
+  letter-spacing: -3px;
+  margin: 20px 0;
+  max-width: 600px;
+}
+
+.hero h2 span { color: var(--red); }
+
+.hero p {
+  max-width: 480px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.primary-btn, .secondary-btn {
+  padding: 14px 20px;
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  border: 1px solid var(--line);
+}
+
+.primary-btn {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+}
+
+.secondary-btn {
+  background: white;
+}
+
+.primary-btn:hover { background: var(--red-dark); }
+
+.holo {
+  min-height: 330px;
+  display: grid;
+  place-items: center;
+  position: relative;
+}
+
+.holo svg {
+  width: min(100%, 260px);
+  filter: drop-shadow(0 0 18px #e3263650);
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.orbit {
+  position: absolute;
+  width: 290px;
+  height: 110px;
+  border: 1px solid #e3263660;
+  border-radius: 50%;
+  transform: rotate(-20deg);
+  animation: spin 12s linear infinite;
+}
+
+.orbit.two {
+  transform: rotate(65deg);
+  width: 240px;
+  height: 130px;
+  border-color: #e3263625;
+  animation-direction: reverse;
+}
+
+@keyframes spin { to { rotate: 360deg; } }
+
+.holo-caption {
+  position: absolute;
+  bottom: 5px;
+  font: 9px Orbitron;
+  letter-spacing: 2px;
+  color: var(--red);
+}
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin: 55px 0 20px;
+  gap: 15px;
+}
+
+.section-head h2 {
+  margin: 8px 0 0;
+  font-size: 25px;
+}
+
+.section-head p {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.product {
+  background: white;
+  border: 1px solid var(--line);
+  padding: 25px;
+  border-radius: 15px;
+  transition: .25s;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  border-color: #e3263670;
+  box-shadow: var(--shadow);
+}
+
+.product-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: #e3263610;
+  color: var(--red);
+  font-size: 22px;
+}
+
+.product h3 {
+  font-size: 13px;
+  margin: 20px 0 10px;
+}
+
+.product p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+  min-height: 42px;
+}
+
+.product a {
+  display: inline-block;
+  margin-top: 12px;
+  color: var(--red);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.ai-panel {
+  margin-top: 65px;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.ai-header {
+  background: #17171b;
+  color: white;
+  padding: 22px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.ai-title {
+  font: 700 15px Orbitron;
+}
+
+.ai-subtitle {
+  color: #aaa;
+  font-size: 10px;
+  margin-top: 6px;
+}
+
+.ai-header button {
+  background: #ffffff12;
+  color: white;
+  border: 1px solid #ffffff25;
+  padding: 10px 13px;
+  border-radius: 8px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.ai-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+
+.ai-controls label {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.ai-controls select {
+  border: 1px solid var(--line);
+  background: white;
+  padding: 9px;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+.chat {
+  height: 430px;
+  overflow-y: auto;
+  padding: 22px;
+  background: #fafafd;
+}
+
+.message {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 18px;
+  align-items: flex-start;
+}
+
+.message.user { flex-direction: row-reverse; }
+
+.avatar {
+  width: 31px;
+  height: 31px;
+  flex: 0 0 31px;
+  display: grid;
+  place-items: center;
+  background: #17171b;
+  color: white;
+  border-radius: 9px;
+  font-size: 12px;
+}
+
+.user .avatar { background: var(--red); }
+
+.bubble {
+  max-width: min(80%, 650px);
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 4px 13px 13px 13px;
+  padding: 13px 15px;
+  font-size: 13px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.user .bubble {
+  background: #fff0f1;
+  border-color: #f5d4d8;
+  border-radius: 13px 4px 13px 13px;
+}
+
+.bubble img {
+  display: block;
+  max-width: 190px;
+  max-height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-top: 8px;
+}
+
+.typing {
+  color: var(--muted);
+  font-size: 12px;
+  padding: 0 25px 15px;
+  display: none;
+}
+
+.composer {
+  border-top: 1px solid var(--line);
+  padding: 17px;
+  background: white;
+}
+
+.preview-list {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.preview-item { position: relative; }
+
+.preview-item img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.preview-item button {
+  position: absolute;
+  right: -5px;
+  top: -5px;
+  width: 20px;
+  height: 20px;
+  border: 0;
+  background: var(--red);
+  color: white;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.input-row {
+  display: flex;
+  gap: 9px;
+  align-items: end;
+}
+
+#messageInput {
+  resize: none;
+  min-height: 45px;
+  max-height: 120px;
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 13px;
+  outline: none;
+  font-size: 13px;
+}
+
+#messageInput:focus { border-color: var(--red); }
+
+.tool-btn, .send-btn {
+  height: 45px;
+  min-width: 45px;
+  border: 1px solid var(--line);
+  background: white;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.send-btn {
+  background: var(--red);
+  color: white;
+  border-color: var(--red);
+  font-size: 20px;
+}
+
+.tool-btn:hover { color: var(--red); }
+
+.composer-note {
+  color: #999;
+  font-size: 9px;
+  margin: 10px 3px 0;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 17px;
+  margin-top: 20px;
+}
+
+.contact-card, .gameplay-card {
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 15px;
+  padding: 25px;
+}
+
+.contact-card h3, .gameplay-card h3 { font-size: 14px; }
+
+.contact-card p, .gameplay-card p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.whatsapp {
+  display: inline-block;
+  background: #1ba76a;
+  color: white;
+  border-radius: 8px;
+  padding: 13px 18px;
+  font-size: 11px;
+  font-weight: 800;
+  margin-top: 12px;
+}
+
+.gameplay-card img {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+footer {
+  background: #17171b;
+  color: white;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+footer strong { font: 700 14px Orbitron; }
+footer p { color: #999; font-size: 10px; }
+
+@media(max-width:850px) {
+  .topbar { padding: 0 20px; }
+  .nav { gap: 15px; }
+  .hero { padding: 30px; }
+  .service-grid { grid-template-columns: repeat(2,1fr); }
+}
+
+@media(max-width:650px) {
+  .topbar { height: 65px; }
+  .menu-btn { display: block; }
+  .nav {
+    display: none;
+    position: absolute;
+    top: 65px;
+    left: 0;
+    right: 0;
+    background: white;
+    padding: 20px;
+    border-bottom: 1px solid var(--line);
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .nav.open { display: flex; }
+  .status { display: none; }
+  main { padding: 18px 13px 45px; }
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 27px 22px;
+  }
+  .hero h2 { letter-spacing: -2px; }
+  .holo { min-height: 270px; }
+  .service-grid { grid-template-columns: 1fr; }
+  .section-head { align-items: flex-start; flex-direction: column; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .chat { height: 390px; padding: 14px; }
+  .bubble { max-width: 88%; }
+  .ai-header { padding: 17px; }
+  .tool-btn { min-width: 39px; }
+  .input-row { gap: 5px; }
 }
 </style>
 </head>
 
 <body>
-<div class="background"></div>
-<div class="grain"></div>
 
-<!-- TELA DE INICIALIZAÇÃO -->
-<div class="boot" id="boot">
- <div class="boot-grid"></div>
- <div class="boot-content">
-  <div class="photo-frame">
-   <img src="./file_000000009618820e9a50407df0e56103.png" alt="Foto de inicialização WSAZ_777">
+<div id="intro">
+  <div class="intro-content">
+    <img
+      class="intro-photo"
+      src="/file_000000009618820e9a50407df0e56103.png"
+      alt="WSAZ_777"
+      onerror="this.style.display='none'"
+    >
+    <div class="intro-kicker">ELITE GAMING SYSTEM</div>
+    <h1>WSAZ_777</h1>
+    <p>GAMING · TECHNOLOGY · PERFORMANCE</p>
+    <div class="intro-brand">STORE DE WALLACE</div>
+    <button onclick="enterSite()">ACESSAR PAINEL →</button>
   </div>
-  <div class="boot-tag">ELITE GAMING SYSTEM</div>
-  <h1>WSAZ_<span>777</span></h1>
-  <p>GAMING · TECHNOLOGY · PERFORMANCE</p>
-  <div class="boot-store">
-   <strong>STORE DE WALLACE</strong>
-   <small>TECNOLOGIA • PERSONALIZAÇÃO • IA</small>
-  </div>
-  <div class="boot-bar"><i></i></div>
-  <div class="boot-status" id="bootStatus">INICIALIZANDO SISTEMA...</div>
-  <button id="enterButton" type="button">ACESSAR PAINEL</button>
- </div>
 </div>
 
-<header>
- <div class="brand">
-  <div class="brand-icon">♛</div>
-  <div>
-   <div class="logo">WSAZ_777 <span>ELITE</span></div>
-   <div class="subtitle">STORE DE WALLACE · GAMING LAB</div>
-  </div>
- </div>
- <div class="status">● PAINEL ATIVO</div>
+<header class="topbar">
+  <a href="#inicio" class="brand">
+    <div class="brand-mark">♛</div>
+    <div>
+      <div class="brand-name">WSAZ_777</div>
+      <div class="brand-sub">STORE DE WALLACE · GAMING LAB</div>
+    </div>
+  </a>
+
+  <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menu">☰</button>
+
+  <nav class="nav" id="nav">
+    <a href="#inicio" onclick="closeMenu()">⌂ INÍCIO</a>
+    <a href="#servicos" onclick="closeMenu()">▣ SERVIÇOS</a>
+    <a href="#assistente" onclick="closeMenu()">⌘ ASSISTENTE IA</a>
+    <a href="#contato" onclick="closeMenu()">◉ CONTATO</a>
+  </nav>
+
+  <div class="status"><i></i> PAINEL ATIVO</div>
 </header>
 
-<div class="layout">
- <aside class="sidebar">
-  <a class="menu active" href="#inicio">⌂ &nbsp; INÍCIO</a>
-  <a class="menu" href="#servicos">▣ &nbsp; SERVIÇOS</a>
-  <a class="menu" href="#chat">⌘ &nbsp; ASSISTENTE IA</a>
-  <a class="menu" href="#contato">◉ &nbsp; CONTATO</a>
-  <div class="side-note">
-   <b>STORE DE WALLACE</b>
-   <p>Configurações, desempenho e suporte para jogadores.</p>
-  </div>
- </aside>
+<main id="inicio">
 
- <main class="main">
-
-  <section class="hero" id="inicio">
-   <div class="kicker">✦ WSAZ_777 / GAMING DIVISION</div>
-   <h2>LEVEL UP YOUR <span>GAME.</span></h2>
-   <p>Configurações personalizadas, otimização para PC e suporte para melhorar sua experiência no Free Fire.</p>
-   <div class="spray">NO LIMITS // JUST PERFORMANCE</div>
-  </section>
-
-  <!-- CENTRAL HOLOGRÁFICA -->
-  <section class="panel">
-   <div class="panel-head">
-    <b>◈ CENTRAL DE OPERAÇÕES</b>
-    <span>● AI SYSTEM ONLINE</span>
-   </div>
-
-   <div class="visual">
-    <div class="visual-grid"></div>
-    <div class="visual-corner">WSAZ_777 // NEURAL CORE</div>
-    <div class="visual-corner right">HOLOGRAPHIC SYSTEM</div>
-
-    <div class="particle-field">
-     <i class="trail t1"></i><i class="trail t2"></i>
-     <i class="trail t3"></i><i class="trail t4"></i>
-     <i class="trail t5"></i><i class="trail t6"></i>
-     <i class="spark s1"></i><i class="spark s2"></i>
-     <i class="spark s3"></i><i class="spark s4"></i>
-     <i class="spark s5"></i><i class="spark s6"></i>
+  <section class="hero">
+    <div>
+      <div class="eyebrow">✦ WSAZ_777 / GAMING DIVISION</div>
+      <h2>LEVEL UP<br><span>YOUR GAME.</span></h2>
+      <p>
+        Configurações personalizadas, otimização para PC e suporte
+        para melhorar sua experiência nos jogos.
+      </p>
+      <div class="hero-actions">
+        <a href="#servicos" class="primary-btn">EXPLORAR SERVIÇOS</a>
+        <a href="#assistente" class="secondary-btn">ABRIR ASSISTENTE IA</a>
+      </div>
     </div>
 
-    <div class="holo-stage">
-     <div class="orbit-ring r1"><i class="orbit-dot"></i></div>
-     <div class="orbit-ring r2"><i class="orbit-dot"></i></div>
-     <div class="orbit-ring r3"><i class="orbit-dot"></i></div>
+    <div class="holo">
+      <div class="orbit"></div>
+      <div class="orbit two"></div>
 
-     <div class="holo-head">
-      <svg viewBox="0 0 240 280" role="img" aria-label="Cabeça robótica holográfica futurista">
-       <defs>
-        <linearGradient id="helmet" x1="0" y1="0" x2="1" y2="1">
-         <stop offset="0" stop-color="#baffff" stop-opacity=".48"/>
-         <stop offset=".5" stop-color="#147d88" stop-opacity=".2"/>
-         <stop offset="1" stop-color="#5ffcff" stop-opacity=".38"/>
-        </linearGradient>
-        <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
-         <stop offset="0" stop-color="#5ffcff" stop-opacity=".35"/>
-         <stop offset="1" stop-color="#061518" stop-opacity=".85"/>
-        </linearGradient>
-       </defs>
+      <svg viewBox="0 0 240 280" role="img" aria-label="Robô holográfico WSAZ">
+        <defs>
+          <linearGradient id="helmet" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#ffb8bd" stop-opacity=".8"/>
+            <stop offset=".5" stop-color="#e32636" stop-opacity=".2"/>
+            <stop offset="1" stop-color="#e32636" stop-opacity=".6"/>
+          </linearGradient>
+          <linearGradient id="face" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ff6572" stop-opacity=".3"/>
+            <stop offset="1" stop-color="#17171b" stop-opacity=".9"/>
+          </linearGradient>
+        </defs>
 
-       <!-- Silhueta externa do capacete -->
-       <path class="metal" fill="url(#helmet)"
-        d="M120 12 C65 12 34 51 31 108 L22 151 L42 170 L48 211 L77 246 L92 266 L148 266 L163 246 L192 211 L198 170 L218 151 L209 108 C206 51 175 12 120 12Z"/>
+        <path fill="url(#helmet)" stroke="#e32636" stroke-width="2"
+          d="M120 12 C65 12 34 51 31 108 L22 151 L42 170 L48 211 L77 246 L92 266 L148 266 L163 246 L192 211 L198 170 L218 151 L209 108 C206 51 175 12 120 12Z"/>
 
-       <!-- Placas laterais -->
-       <path class="detail" d="M42 91 L24 112 L37 151 L53 157 L58 117Z"/>
-       <path class="detail" d="M198 91 L216 112 L203 151 L187 157 L182 117Z"/>
-       <path class="soft" d="M33 118 L47 135 L40 148"/>
-       <path class="soft" d="M207 118 L193 135 L200 148"/>
+        <path fill="url(#face)" stroke="#ff6572" stroke-width="2"
+          d="M69 76 Q120 48 171 76 L179 143 L160 205 L139 238 L101 238 L80 205 L61 143Z"/>
 
-       <!-- Face frontal -->
-       <path class="shadow" fill="url(#face)"
-        d="M69 76 Q120 48 171 76 L179 143 L160 205 L139 238 L101 238 L80 205 L61 143Z"/>
+        <g fill="none" stroke="#ff6572" stroke-width="3" stroke-linecap="round">
+          <path d="M42 91 L24 112 L37 151 L53 157"/>
+          <path d="M198 91 L216 112 L203 151 L187 157"/>
+          <path d="M77 74 Q120 53 163 74"/>
+          <path d="M120 28 L120 61"/>
+          <path d="M72 119 L92 105 L111 116 L99 130 L77 130Z"/>
+          <path d="M168 119 L148 105 L129 116 L141 130 L163 130Z"/>
+          <path d="M120 105 L111 151 L120 163 L129 151Z"/>
+          <path d="M94 190 L108 185 L120 190 L132 185 L146 190"/>
+          <path d="M101 201 L139 201 L132 216 L120 221 L108 216Z"/>
+          <path d="M64 151 L77 185 L91 224 L105 245"/>
+          <path d="M176 151 L163 185 L149 224 L135 245"/>
+          <path d="M92 239 L120 252 L148 239"/>
+          <path d="M91 242 L96 267 L144 267 L149 242"/>
+          <path d="M104 250 L104 264 M120 255 L120 266 M136 250 L136 264"/>
+        </g>
 
-       <!-- Testa e linhas de energia -->
-       <path class="detail" d="M77 74 Q120 53 163 74"/>
-       <path class="soft" d="M87 82 L120 69 L153 82"/>
-       <path class="detail" d="M120 28 L120 61"/>
-       <path class="soft" d="M107 34 L120 45 L133 34"/>
-
-       <!-- Olhos luminosos -->
-       <path class="detail" d="M72 119 L92 105 L111 116 L99 130 L77 130Z"/>
-       <path class="detail" d="M168 119 L148 105 L129 116 L141 130 L163 130Z"/>
-       <path class="eye" d="M78 119 L94 110 L105 117 L96 123 L80 123Z"/>
-       <path class="eye" d="M162 119 L146 110 L135 117 L144 123 L160 123Z"/>
-
-       <!-- Nariz e estrutura central -->
-       <path class="detail" d="M120 105 L111 151 L120 163 L129 151Z"/>
-       <path class="soft" d="M120 112 L120 157"/>
-       <path class="detail" d="M102 169 L120 178 L138 169"/>
-
-       <!-- Boca mecânica -->
-       <path class="detail" d="M94 190 L108 185 L120 190 L132 185 L146 190"/>
-       <path class="detail" d="M101 201 L139 201 L132 216 L120 221 L108 216Z"/>
-       <path class="soft" d="M108 207 L132 207"/>
-       <path class="soft" d="M114 214 L126 214"/>
-
-       <!-- Mandíbula e placas -->
-       <path class="detail" d="M64 151 L77 185 L91 224 L105 245"/>
-       <path class="detail" d="M176 151 L163 185 L149 224 L135 245"/>
-       <path class="soft" d="M78 179 L94 191"/>
-       <path class="soft" d="M162 179 L146 191"/>
-       <path class="detail" d="M92 239 L120 252 L148 239"/>
-
-       <!-- Pescoço robótico -->
-       <path class="metal" d="M91 242 L96 267 L144 267 L149 242 L120 255Z"/>
-       <path class="detail" d="M104 250 L104 264 M120 255 L120 266 M136 250 L136 264"/>
-       <path class="soft" d="M95 259 L145 259"/>
-
-       <!-- Linhas técnicas -->
-       <path class="soft" d="M53 90 L65 69 L78 60"/>
-       <path class="soft" d="M187 90 L175 69 L162 60"/>
-       <path class="detail" d="M48 175 L62 184 L67 203"/>
-       <path class="detail" d="M192 175 L178 184 L173 203"/>
-       <circle cx="48" cy="161" r="3" fill="#a6ff00"/>
-       <circle cx="192" cy="161" r="3" fill="#a6ff00"/>
-       <circle cx="120" cy="184" r="3" fill="#baffff"/>
+        <g fill="#ff3548">
+          <path d="M78 119 L94 110 L105 117 L96 123 L80 123Z"/>
+          <path d="M162 119 L146 110 L135 117 L144 123 L160 123Z"/>
+          <circle cx="48" cy="161" r="4"/>
+          <circle cx="192" cy="161" r="4"/>
+        </g>
       </svg>
-     </div>
-    </div>
 
-    <div class="ai-status">CORE: ACTIVE<br>NEURAL LINK: ONLINE<br>HOLOGRAM: STABLE</div>
-    <div class="ai-data">WSAZ_777 SYSTEM<br>360° ORBITAL SCAN<br>STATUS: READY</div>
-    <div class="holo-label">ARTIFICIAL INTELLIGENCE · WSAZ_777</div>
-   </div>
+      <div class="holo-caption">ARTIFICIAL INTELLIGENCE · WSAZ_777</div>
+    </div>
   </section>
 
-  <!-- SERVIÇOS -->
-  <section id="servicos">
-   <div class="section-title">✦ SERVIÇOS & SOLUÇÕES</div>
-   <div class="products">
+  <div class="section-head" id="servicos">
+    <div>
+      <div class="eyebrow">✦ SOLUÇÕES WSAZ_777</div>
+      <h2>Serviços & soluções</h2>
+    </div>
+    <p>NO LIMITS // JUST PERFORMANCE</p>
+  </div>
 
+  <section class="service-grid">
     <article class="product">
-     <div class="product-icon">⌖</div>
-     <h3>SENSIBILIDADE</h3>
-     <p>Configurações personalizadas de sensibilidade para seu estilo de jogo.</p>
-     <a href="#contato">CONSULTAR</a>
+      <div class="product-icon">⌖</div>
+      <h3>SENSIBILIDADE</h3>
+      <p>Configurações personalizadas de sensibilidade para seu estilo de jogo.</p>
+      <a href="#contato">CONSULTAR →</a>
     </article>
 
     <article class="product">
-     <div class="product-icon">▦</div>
-     <h3>HUD PERSONALIZADO</h3>
-     <p>Organização de botões e layout para melhorar conforto e controle.</p>
-     <a href="#contato">CONSULTAR</a>
+      <div class="product-icon">▦</div>
+      <h3>HUD PERSONALIZADO</h3>
+      <p>Organização de botões e layout para melhorar conforto e controle.</p>
+      <a href="#contato">CONSULTAR →</a>
     </article>
 
     <article class="product">
-     <div class="product-icon">ϟ</div>
-     <h3>OTIMIZAÇÃO PC</h3>
-     <p>Ajustes de desempenho, estabilidade e configurações do Windows.</p>
-     <a href="#contato">CONSULTAR</a>
+      <div class="product-icon">ϟ</div>
+      <h3>OTIMIZAÇÃO PC</h3>
+      <p>Ajustes de desempenho, estabilidade e configurações do Windows.</p>
+      <a href="#contato">CONSULTAR →</a>
     </article>
 
     <article class="product">
-     <div class="product-icon">◎</div>
-     <h3>PRECISÃO</h3>
-     <p>Dicas e ajustes legítimos para controle, mira e consistência.</p>
-     <a href="#contato">CONSULTAR</a>
+      <div class="product-icon">◎</div>
+      <h3>PRECISÃO</h3>
+      <p>Dicas e ajustes legítimos para controle, mira e consistência.</p>
+      <a href="#contato">CONSULTAR →</a>
     </article>
 
     <article class="product">
-     <div class="product-icon">▤</div>
-     <h3>CONFIGURAÇÃO EMULADOR</h3>
-     <p>Orientações para resolução, controles e desempenho no PC.</p>
-     <a href="#contato">CONSULTAR</a>
+      <div class="product-icon">▤</div>
+      <h3>CONFIGURAÇÃO EMULADOR</h3>
+      <p>Orientações para resolução, controles e desempenho no PC.</p>
+      <a href="#contato">CONSULTAR →</a>
     </article>
 
     <article class="product">
-     <div class="product-icon">⌘</div>
-     <h3>SUPORTE</h3>
-     <p>Atendimento para dúvidas e orientações sobre configurações.</p>
-     <a href="#contato">CONSULTAR</a>
+      <div class="product-icon">⌘</div>
+      <h3>SUPORTE</h3>
+      <p>Atendimento para dúvidas e orientações sobre configurações.</p>
+      <a href="#contato">CONSULTAR →</a>
     </article>
-
-   </div>
   </section>
 
-  <!-- ASSISTENTE IA -->
-  <section class="panel" id="chat">
-   <div class="chat-top">
-    <b>♛ WSAZ_777 IA</b>
-    <button class="action" id="clearChat" type="button">LIMPAR CHAT</button>
-   </div>
-
-   <div class="style-selector" id="styleSelector">
-    <p>ESTILO DAS RESPOSTAS</p>
-    <div class="style-options">
-     <button class="style-option" data-style="concise" type="button">RESUMIDA</button>
-     <button class="style-option" data-style="normal" type="button">NORMAL</button>
-     <button class="style-option" data-style="detailed" type="button">COMPLETA</button>
+  <section class="ai-panel" id="assistente">
+    <div class="ai-header">
+      <div>
+        <div class="ai-title">♛ WSAZ_777 IA</div>
+        <div class="ai-subtitle">NEURAL CORE · ASSISTENTE INTELIGENTE</div>
+      </div>
+      <button onclick="newChat()">＋ NOVA CONVERSA</button>
     </div>
-   </div>
 
-   <div class="messages" id="messages">
-    <div class="message bot">✦ Bem-vindo ao assistente WSAZ_777.
+    <div class="ai-controls">
+      <label for="responseStyle">ESTILO DAS RESPOSTAS</label>
+      <select id="responseStyle">
+        <option value="concise">RESUMIDA</option>
+        <option value="normal" selected>NORMAL</option>
+        <option value="detailed">COMPLETA</option>
+      </select>
+      <span class="status"><i></i> AI SYSTEM</span>
+    </div>
 
-Posso ajudar com Free Fire, configurações de PC, sensibilidade, HUD, estudos, tecnologia e muito mais.
+    <div class="chat" id="chat">
+      <div class="message">
+        <div class="avatar">♛</div>
+        <div class="bubble">
+          ✦ Bem-vindo ao assistente WSAZ_777.<br><br>
+          Posso ajudar com Free Fire, configurações de PC,
+          sensibilidade, HUD, estudos, tecnologia e muito mais.<br><br>
+          Como posso ajudar?
+        </div>
+      </div>
+    </div>
 
-Como posso ajudar?</div>
-   </div>
+    <div class="typing" id="typing">WSAZ_777 está pensando...</div>
 
-   <div class="preview" id="preview">
-    <img id="previewImage" alt="Imagem selecionada">
-    <span>Imagem selecionada</span>
-    <button id="removeImage" type="button">✕</button>
-   </div>
+    <div class="composer">
+      <div class="preview-list" id="previewList"></div>
 
-   <form class="composer" id="chatForm">
-    <input type="file" id="imageInput" accept="image/jpeg,image/png,image/webp" hidden>
-    <button class="icon-btn" id="attachButton" type="button">＋</button>
-    <input type="text" id="messageInput" placeholder="Digite sua mensagem..." maxlength="2000" autocomplete="off">
-    <button class="send" id="sendButton" type="submit">➤</button>
-   </form>
+      <div class="input-row">
+        <input
+          type="file"
+          id="imageInput"
+          accept="image/png,image/jpeg,image/webp"
+          multiple
+          hidden
+        >
 
-   <div class="shortcuts">
-    <button class="shortcut" id="imageShortcut" type="button">＋ IMAGEM</button>
-    <button class="shortcut" id="focusShortcut" type="button">◉ PERGUNTAR</button>
-   </div>
+        <button class="tool-btn" onclick="document.getElementById('imageInput').click()" title="Anexar imagens">＋</button>
+        <button class="tool-btn" onclick="startVoice()" title="Ditado por voz">◉</button>
+
+        <textarea
+          id="messageInput"
+          placeholder="Pergunte alguma coisa ao WSAZ_777..."
+          rows="1"
+          maxlength="4000"
+        ></textarea>
+
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="Enviar">➤</button>
+      </div>
+
+      <div class="composer-note">
+        ENTER para enviar · SHIFT + ENTER para nova linha · Máximo de 5 imagens
+      </div>
+    </div>
   </section>
 
-  <!-- CONTATO, PRINT E INFORMAÇÕES -->
-  <section id="contato" class="panel">
-   <div class="panel-head">
-    <b>CONTATO & ATENDIMENTO</b>
-    <span>WHATSAPP</span>
-   </div>
-
-   <div class="demo-wrap">
-    <div class="demo-heading">◈ DEMONSTRAÇÃO DE GAMEPLAY</div>
-    <p class="demo-description">
-     Confira uma captura de gameplay apresentada pela Store de Wallace.
-    </p>
-
-    <div class="gameplay-image">
-     <img
-      src="./gameplay-print.png"
-      alt="Captura de gameplay de Free Fire"
-      loading="lazy"
-      onerror="this.alt='Imagem de gameplay não encontrada'; this.style.display='none';"
-     >
+  <div class="section-head" id="contato">
+    <div>
+      <div class="eyebrow">✦ WSAZ_777 / SUPPORT</div>
+      <h2>Contato & atendimento</h2>
     </div>
+    <p>STORE DE WALLACE</p>
+  </div>
 
-    <p class="demo-caption">
-     WSAZ_777 · STORE DE WALLACE · GAMEPLAY
-    </p>
-   </div>
+  <section class="contact-grid">
+    <article class="contact-card">
+      <div class="eyebrow">◈ ATENDIMENTO</div>
+      <h3>Precisa de suporte?</h3>
+      <p>
+        Entre em contato para consultar informações,
+        disponibilidade e serviços da WSAZ_777.
+      </p>
+      <a
+        class="whatsapp"
+        href="https://wa.me/5587981368837"
+        target="_blank"
+        rel="noopener"
+      >FALAR NO WHATSAPP ↗</a>
+    </article>
 
-   <div class="info-area">
-    <div class="demo-heading">◈ INFORMAÇÕES DO SERVIÇO</div>
-    <div class="info-grid">
-     <div class="info-item">
-      <strong>INTERNAL</strong>
-      <span>Informações sobre o tipo de ferramenta.</span>
-     </div>
-     <div class="info-item">
-      <strong>COMPATIBILIDADE</strong>
-      <span>Consulte os dispositivos e versões compatíveis.</span>
-     </div>
-     <div class="info-item">
-      <strong>SUPORTE</strong>
-      <span>Atendimento para dúvidas e orientações.</span>
-     </div>
-     <div class="info-item">
-      <strong>SEGURANÇA</strong>
-      <span>Não existe garantia de ausência de banimento.</span>
-     </div>
-    </div>
-   </div>
-
-   <div class="contact-description">
-    <p>Entre em contato para consultar informações, disponibilidade e serviços.</p>
-    <a
-     class="whatsapp-button"
-     href="https://wa.me/5587981368837"
-     target="_blank"
-     rel="noopener noreferrer"
-    >FALAR COM WSAZ_777 NO WHATSAPP</a>
-   </div>
+    <article class="gameplay-card">
+      <div class="eyebrow">◈ DEMONSTRAÇÃO</div>
+      <h3>Gameplay WSAZ_777</h3>
+      <p>Confira uma captura de gameplay apresentada pela Store de Wallace.</p>
+      <img
+        src="./gameplay-print.jpg"
+        alt="Captura de gameplay"
+        loading="lazy"
+        onerror="this.alt='Imagem gameplay-print.jpg não encontrada'; this.style.display='none'"
+      >
+    </article>
   </section>
+</main>
 
-  <footer>
-   <div><strong>♛ WSAZ_777</strong> · STORE DE WALLACE</div>
-   <div>Projeto independente · 2026</div>
-  </footer>
- </main>
-</div>
+<footer>
+  <strong>♛ WSAZ_777</strong>
+  <p>STORE DE WALLACE · GAMING · TECHNOLOGY · AI</p>
+  <p>Projeto feito por Wallace · @wsaz_777</p>
+</footer>
 
 <script>
-"use strict";
+const chat = document.getElementById("chat");
+const input = document.getElementById("messageInput");
+const imageInput = document.getElementById("imageInput");
+const previewList = document.getElementById("previewList");
+const typing = document.getElementById("typing");
+const sendBtn = document.getElementById("sendBtn");
 
-/* INICIALIZAÇÃO */
-const boot=document.getElementById("boot");
-const enterButton=document.getElementById("enterButton");
-const bootStatus=document.getElementById("bootStatus");
+let selectedImages = [];
+let history = [];
+let busy = false;
 
-setTimeout(()=>{
- bootStatus.textContent="SISTEMA PRONTO.";
- boot.classList.add("ready");
-},2600);
-
-enterButton.addEventListener("click",()=>{
- boot.classList.add("hide");
- setTimeout(()=>boot.remove(),750);
-});
-
-/* MENU */
-document.querySelectorAll(".menu").forEach(link=>{
- link.addEventListener("click",()=>{
-  document.querySelectorAll(".menu").forEach(item=>{
-   item.classList.remove("active");
-  });
-  link.classList.add("active");
- });
-});
-
-/* ELEMENTOS DO CHAT */
-const form=document.getElementById("chatForm");
-const input=document.getElementById("messageInput");
-const messages=document.getElementById("messages");
-const sendButton=document.getElementById("sendButton");
-const attachButton=document.getElementById("attachButton");
-const imageInput=document.getElementById("imageInput");
-const preview=document.getElementById("preview");
-const previewImage=document.getElementById("previewImage");
-const removeImage=document.getElementById("removeImage");
-const styleSelector=document.getElementById("styleSelector");
-
-let selectedImage=null;
-let busy=false;
-
-let responseStyle=localStorage.getItem("wsaz_response_style");
-
-if(!["concise","normal","detailed"].includes(responseStyle)){
- responseStyle=null;
+function enterSite() {
+  document.getElementById("intro").classList.add("hide");
+  sessionStorage.setItem("wsazIntroSeen", "1");
 }
 
-const styleNames={
- concise:"Resumida",
- normal:"Normal",
- detailed:"Completa"
-};
-
-/* MENSAGENS */
-function scrollMessages(){
- messages.scrollTop=messages.scrollHeight;
+if (sessionStorage.getItem("wsazIntroSeen")) {
+  document.getElementById("intro").classList.add("hide");
 }
 
-function addMessage(text,type,imageUrl=null){
- const element=document.createElement("div");
- element.className="message "+type;
-
- if(imageUrl){
-  const image=document.createElement("img");
-  image.src=imageUrl;
-  image.alt="Imagem enviada";
-  element.appendChild(image);
- }
-
- if(text){
-  const content=document.createElement("div");
-  content.textContent=text;
-  element.appendChild(content);
- }
-
- messages.appendChild(element);
- scrollMessages();
- return element;
+function toggleMenu() {
+  document.getElementById("nav").classList.toggle("open");
 }
 
-/* ESTILO DAS RESPOSTAS */
-function updateStyle(){
- document.querySelectorAll(".style-option").forEach(button=>{
-  button.classList.toggle(
-   "selected",
-   button.dataset.style===responseStyle
-  );
- });
+function closeMenu() {
+  document.getElementById("nav").classList.remove("open");
 }
 
-document.querySelectorAll(".style-option").forEach(button=>{
- button.addEventListener("click",()=>{
-  responseStyle=button.dataset.style;
-  localStorage.setItem("wsaz_response_style",responseStyle);
-  updateStyle();
-  styleSelector.style.display="none";
-  addMessage(
-   "Estilo de resposta definido: "+styleNames[responseStyle]+".",
-   "bot"
-  );
- });
-});
+function addMessage(role, text, images = []) {
+  const wrapper = document.createElement("div");
+  wrapper.className = `message ${role === "user" ? "user" : ""}`;
 
-if(responseStyle){
- updateStyle();
- styleSelector.style.display="none";
-}
+  const avatar = document.createElement("div");
+  avatar.className = "avatar";
+  avatar.textContent = role === "user" ? "U" : "♛";
 
-/* IMAGENS DO CHAT */
-function clearSelectedImage(){
- selectedImage=null;
- imageInput.value="";
- preview.style.display="none";
- previewImage.removeAttribute("src");
-}
+  const bubble = document.createElement("div");
+  bubble.className = "bubble";
+  bubble.textContent = text;
 
-function resetChat(){
- if(busy)return;
- messages.replaceChildren();
- addMessage("Conversa reiniciada. Como posso ajudar?","bot");
- clearSelectedImage();
-}
-
-document.getElementById("clearChat").addEventListener("click",resetChat);
-
-attachButton.addEventListener("click",()=>{
- if(!busy)imageInput.click();
-});
-
-document.getElementById("imageShortcut").addEventListener("click",()=>{
- if(!busy)imageInput.click();
-});
-
-document.getElementById("focusShortcut").addEventListener("click",()=>{
- input.focus({preventScroll:true});
-});
-
-removeImage.addEventListener("click",clearSelectedImage);
-
-imageInput.addEventListener("change",async()=>{
- const file=imageInput.files?.[0];
- if(!file)return;
-
- if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
-  alert("Escolha uma imagem JPG, PNG ou WEBP.");
-  imageInput.value="";
-  return;
- }
-
- if(file.size>10*1024*1024){
-  alert("A imagem deve ter até 10 MB.");
-  imageInput.value="";
-  return;
- }
-
- try{
-  const dataUrl=await new Promise((resolve,reject)=>{
-   const reader=new FileReader();
-   reader.onload=()=>resolve(reader.result);
-   reader.onerror=reject;
-   reader.readAsDataURL(file);
+  images.forEach(src => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "Imagem enviada";
+    bubble.appendChild(img);
   });
 
-  const image=new Image();
-  image.src=dataUrl;
-  await image.decode();
+  wrapper.append(avatar, bubble);
+  chat.appendChild(wrapper);
+  chat.scrollTop = chat.scrollHeight;
+}
 
-  const scale=Math.min(
-   1,
-   1280/Math.max(image.width,image.height)
-  );
+function renderPreviews() {
+  previewList.replaceChildren();
 
-  const canvas=document.createElement("canvas");
-  canvas.width=Math.round(image.width*scale);
-  canvas.height=Math.round(image.height*scale);
+  selectedImages.forEach((item, index) => {
+    const box = document.createElement("div");
+    box.className = "preview-item";
 
-  canvas.getContext("2d").drawImage(
-   image,0,0,canvas.width,canvas.height
-  );
+    const img = document.createElement("img");
+    img.src = item.data;
 
-  selectedImage=canvas.toDataURL("image/jpeg",.78);
-  previewImage.src=selectedImage;
-  preview.style.display="flex";
+    const remove = document.createElement("button");
+    remove.textContent = "×";
+    remove.type = "button";
+    remove.onclick = () => {
+      selectedImages.splice(index, 1);
+      renderPreviews();
+    };
 
- }catch(error){
-  console.error(error);
-  alert("Não foi possível carregar a imagem.");
-  clearSelectedImage();
- }
-});
-
-/* ENVIO AO ASSISTENTE */
-form.addEventListener("submit",async event=>{
- event.preventDefault();
- if(busy)return;
-
- const message=input.value.trim();
- const image=selectedImage;
- if(!message&&!image)return;
-
- if(!responseStyle){
-  styleSelector.style.display="block";
-  return;
- }
-
- busy=true;
- sendButton.disabled=true;
- attachButton.disabled=true;
-
- addMessage(
-  message||"Analise esta imagem, por favor.",
-  "user",
-  image
- );
-
- input.value="";
- clearSelectedImage();
-
- const loading=addMessage("WSAZ_777 está processando...","bot");
-
- try{
-  const response=await fetch("/api/chat",{
-   method:"POST",
-   headers:{"Content-Type":"application/json"},
-   body:JSON.stringify({
-    message,
-    image,
-    responseStyle
-   })
+    box.append(img, remove);
+    previewList.appendChild(box);
   });
+}
 
-  let data={};
-  try{data=await response.json()}catch{}
+function resizeImage(file) {
+  return new Promise((resolve, reject) => {
+    if (!file.type.startsWith("image/")) {
+      reject(new Error("Arquivo não é uma imagem."));
+      return;
+    }
 
-  loading.remove();
+    const reader = new FileReader();
 
-  if(!response.ok){
-   addMessage(
-    data.error||data.reply||"O servidor não conseguiu processar sua solicitação.",
-    "bot"
-   );
-  }else{
-   addMessage(
-    data.reply||"Não consegui gerar uma resposta.",
-    "bot"
-   );
+    reader.onload = () => {
+      const img = new Image();
+
+      img.onload = () => {
+        const max = 1400;
+        const ratio = Math.min(1, max / Math.max(img.width, img.height));
+
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(img.width * ratio);
+        canvas.height = Math.round(img.height * ratio);
+
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        resolve(canvas.toDataURL("image/jpeg", 0.72));
+      };
+
+      img.onerror = () => reject(new Error("Não foi possível ler a imagem."));
+      img.src = reader.result;
+    };
+
+    reader.onerror = () => reject(new Error("Falha ao carregar imagem."));
+    reader.readAsDataURL(file);
+  });
+}
+
+imageInput.addEventListener("change", async event => {
+  const files = Array.from(event.target.files || []);
+
+  if (selectedImages.length + files.length > 5) {
+    alert("Você pode enviar no máximo 5 imagens por mensagem.");
+    event.target.value = "";
+    return;
   }
 
- }catch(error){
-  console.error("ERRO NO CHAT:",error);
-  loading.remove();
-  addMessage(
-   "Falha na conexão. Verifique sua internet e tente novamente.",
-   "bot"
-  );
+  for (const file of files) {
+    try {
+      const data = await resizeImage(file);
+      selectedImages.push({ data });
+    } catch (error) {
+      alert(error.message);
+    }
+  }
 
- }finally{
-  busy=false;
-  sendButton.disabled=false;
-  attachButton.disabled=false;
-  input.focus({preventScroll:true});
- }
+  renderPreviews();
+  imageInput.value = "";
 });
+
+function newChat() {
+  if (busy) return;
+
+  history = [];
+  selectedImages = [];
+  renderPreviews();
+
+  chat.replaceChildren();
+
+  addMessage(
+    "assistant",
+    "✦ Nova conversa iniciada.\n\nComo posso ajudar?"
+  );
+}
+
+async function sendMessage() {
+  if (busy) return;
+
+  const message = input.value.trim();
+
+  if (!message && selectedImages.length === 0) return;
+
+  const images = selectedImages.map(item => item.data);
+
+  addMessage("user", message || "Analise estas imagens.", images);
+
+  const previousHistory = [...history];
+
+  history.push({
+    role: "user",
+    content: message || "O usuário enviou imagens para análise."
+  });
+
+  input.value = "";
+  selectedImages = [];
+  renderPreviews();
+
+  busy = true;
+  sendBtn.disabled = true;
+  typing.style.display = "block";
+
+  try {
+    const response = await fetch("/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        message,
+        images,
+        history: previousHistory,
+        responseStyle: document.getElementById("responseStyle").value
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok && !data.reply) {
+      throw new Error("Falha ao consultar o servidor.");
+    }
+
+    const answer = data.reply || "Não foi possível obter uma resposta.";
+
+    addMessage("assistant", answer);
+
+    history.push({
+      role: "assistant",
+      content: answer
+    });
+
+    history = history.slice(-12);
+
+    saveHistory();
+
+  } catch (error) {
+    addMessage(
+      "assistant",
+      "Não consegui conectar ao servidor. Verifique sua conexão e tente novamente."
+    );
+
+    console.error(error);
+
+  } finally {
+    busy = false;
+    sendBtn.disabled = false;
+    typing.style.display = "none";
+    input.focus();
+  }
+}
+
+function saveHistory() {
+  try {
+    localStorage.setItem("wsaz777_last_history", JSON.stringify(history));
+  } catch (error) {
+    console.warn("Não foi possível salvar o histórico.", error);
+  }
+}
+
+input.addEventListener("keydown", event => {
+  if (event.key === "Enter" && !event.shiftKey) {
+    event.preventDefault();
+    sendMessage();
+  }
+});
+
+function startVoice() {
+  const Recognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!Recognition) {
+    alert("Seu navegador não oferece suporte ao ditado por voz.");
+    return;
+  }
+
+  const recognition = new Recognition();
+  recognition.lang = "pt-BR";
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onresult = event => {
+    input.value += (input.value ? " " : "") +
+      event.results[0][0].transcript;
+    input.focus();
+  };
+
+  recognition.onerror = () => {
+    alert("Não foi possível usar o microfone. Verifique a permissão.");
+  };
+
+  recognition.start();
+}
+
+function speakText(text) {
+  if (!("speechSynthesis" in window)) {
+    alert("Leitura de voz não disponível neste navegador.");
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "pt-BR";
+  utterance.rate = 1;
+
+  speechSynthesis.speak(utterance);
+}
+
+async function checkServer() {
+  try {
+    const response = await fetch("/api/health");
+    const data = await response.json();
+
+    console.log("WSAZ_777 status:", data);
+  } catch (error) {
+    console.warn("Não foi possível verificar o servidor.");
+  }
+}
+
+checkServer();
 </script>
+
 </body>
 </html>
