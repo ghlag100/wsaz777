@@ -1,5 +1,600 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#171717">
+<meta name="description" content="WSAZ_777 — Inteligência Artificial, tecnologia e gaming.">
+<title>WSAZ_777 | Artificial Intelligence</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap');
+
+:root{
+  --red:#e32636;
+  --red-dark:#b81425;
+  --bg:#f4f4f6;
+  --white:#fff;
+  --ink:#17171b;
+  --muted:#85858d;
+  --line:#e8e8ec;
+  --green:#20b875;
+  --sidebar:#17171b;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--ink);
+  font-family:Inter,sans-serif
+}
+button,input,textarea,select{font:inherit}
+button,a{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+
+/* INTRO */
+#intro{
+  position:fixed;inset:0;z-index:1000;
+  display:grid;place-items:center;
+  background:#101014;color:white;
+  transition:.6s
+}
+#intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+.intro-content{text-align:center;padding:25px}
+.intro-photo{
+  width:105px;height:105px;object-fit:cover;
+  border-radius:24px;border:1px solid #ffffff35;
+  box-shadow:0 0 40px #e3263650;margin-bottom:25px
+}
+.intro-kicker{
+  color:#ff6572;font:11px Orbitron;
+  letter-spacing:4px
+}
+.intro-content h1{
+  font:800 clamp(38px,9vw,65px) Orbitron;
+  margin:14px 0
+}
+.intro-content p{
+  color:#aaa;font-size:11px;letter-spacing:3px
+}
+.intro-brand{
+  margin-top:25px;font-size:12px;
+  letter-spacing:3px;font-weight:800
+}
+.intro-content button{
+  margin-top:32px;border:0;background:var(--red);
+  color:white;padding:16px 32px;border-radius:9px;
+  font-weight:900;letter-spacing:1px;
+  box-shadow:0 8px 30px #e3263650
+}
+.intro-content button:hover{background:var(--red-dark)}
+.intro-hint{font-size:10px!important;color:#777!important;margin-top:15px}
+
+/* DASHBOARD */
+.dashboard{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:255px minmax(0,1fr)
+}
+
+/* SIDEBAR */
+.sidebar{
+  background:var(--sidebar);color:white;
+  min-height:100vh;padding:24px 17px;
+  display:flex;flex-direction:column;
+  position:sticky;top:0;height:100vh;
+  z-index:100
+}
+.brand{
+  display:flex;align-items:center;gap:11px;
+  padding:3px 8px 25px;
+  border-bottom:1px solid #ffffff17
+}
+.brand-mark{
+  width:42px;height:42px;border-radius:12px;
+  display:grid;place-items:center;
+  background:var(--red);font-size:22px
+}
+.brand-name{font:800 14px Orbitron}
+.brand-sub{
+  color:#999;font-size:8px;
+  letter-spacing:1px;margin-top:5px
+}
+.menu-label{
+  color:#777;font-size:9px;font-weight:800;
+  letter-spacing:1.7px;margin:27px 10px 12px
+}
+.side-btn{
+  width:100%;display:flex;align-items:center;
+  gap:12px;padding:13px 12px;
+  border:0;border-radius:9px;
+  background:transparent;color:#c7c7cc;
+  text-align:left;font-size:11px;font-weight:700;
+  margin:3px 0;transition:.2s
+}
+.side-btn .side-icon{
+  width:20px;text-align:center;font-size:17px
+}
+.side-btn:hover{background:#ffffff12;color:white}
+.side-btn.active{
+  color:white;background:var(--red);
+  box-shadow:0 5px 20px #e3263635
+}
+.side-spacer{flex:1}
+.sidebar-bottom{
+  border-top:1px solid #ffffff17;padding-top:17px
+}
+.profile{
+  display:flex;align-items:center;gap:10px;padding:8px
+}
+.profile-icon{
+  width:35px;height:35px;border-radius:50%;
+  display:grid;place-items:center;
+  background:#ffffff17;color:white
+}
+.profile-name{font-size:10px;font-weight:800}
+.profile-sub{font-size:9px;color:#888;margin-top:4px}
+
+/* MAIN */
+.main-area{min-width:0;display:flex;flex-direction:column}
+.topbar{
+  height:68px;background:white;
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 30px;position:sticky;top:0;z-index:50
+}
+.topbar-title{font-size:13px;font-weight:800}
+.topbar-sub{font-size:9px;color:var(--muted);margin-top:4px}
+.topbar-right{display:flex;align-items:center;gap:15px}
+.status{
+  display:flex;align-items:center;gap:7px;
+  color:var(--green);font-size:9px;font-weight:900
+}
+.status i{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 9px #20b87580
+}
+.mobile-menu{
+  display:none;border:0;background:transparent;
+  font-size:23px;color:var(--ink)
+}
+.content{padding:25px 30px;max-width:1500px;width:100%;margin:auto}
+
+/* CHAT HEADER */
+.welcome{
+  display:flex;align-items:center;
+  justify-content:space-between;gap:15px;
+  margin-bottom:20px
+}
+.welcome h1{
+  font-size:clamp(20px,3vw,27px);
+  letter-spacing:-1px;margin:0
+}
+.welcome p{
+  color:var(--muted);font-size:11px;margin:7px 0 0
+}
+.new-chat{
+  background:var(--red);color:white;border:0;
+  border-radius:8px;padding:12px 16px;
+  font-size:10px;font-weight:900;
+  white-space:nowrap
+}
+.new-chat:hover{background:var(--red-dark)}
+
+/* CHAT PANEL */
+.ai-panel{
+  background:white;border:1px solid var(--line);
+  border-radius:16px;overflow:hidden;
+  box-shadow:0 12px 35px #17171b08
+}
+.ai-header{
+  background:#202024;color:white;
+  padding:17px 21px;display:flex;
+  align-items:center;justify-content:space-between;
+  gap:12px
+}
+.ai-identity{display:flex;align-items:center;gap:11px}
+.ai-logo{
+  width:38px;height:38px;border-radius:11px;
+  display:grid;place-items:center;
+  background:var(--red);font-size:19px
+}
+.ai-title{font:700 12px Orbitron}
+.ai-subtitle{color:#aaa;font-size:9px;margin-top:5px}
+.ai-header-right{display:flex;align-items:center;gap:10px}
+.ai-header select{
+  background:#ffffff12;color:white;
+  border:1px solid #ffffff25;border-radius:7px;
+  padding:9px;font-size:10px;outline:none
+}
+.ai-header option{color:#171717}
+.chat{
+  height:calc(100vh - 340px);
+  min-height:370px;max-height:650px;
+  overflow-y:auto;padding:25px;
+  background:#fafafd
+}
+.message{
+  display:flex;gap:10px;
+  margin-bottom:20px;align-items:flex-start
+}
+.message.user{flex-direction:row-reverse}
+.avatar{
+  width:32px;height:32px;flex:0 0 32px;
+  display:grid;place-items:center;
+  background:#202024;color:white;
+  border-radius:9px;font-size:12px
+}
+.user .avatar{background:var(--red)}
+.bubble{
+  max-width:min(82%,720px);
+  background:white;border:1px solid var(--line);
+  border-radius:4px 13px 13px 13px;
+  padding:13px 16px;font-size:12px;
+  line-height:1.8;overflow-wrap:anywhere;
+  white-space:pre-wrap
+}
+.user .bubble{
+  background:#fff0f1;border-color:#f5d4d8;
+  border-radius:13px 4px 13px 13px
+}
+.bubble img{
+  display:block;max-width:220px;max-height:180px;
+  object-fit:cover;border-radius:8px;margin-top:9px
+}
+.message-actions{display:flex;gap:7px;margin-top:10px}
+.message-actions button{
+  border:1px solid var(--line);background:#f5f5f7;
+  border-radius:7px;padding:6px 9px;
+  cursor:pointer;font-size:10px
+}
+.typing{
+  color:var(--muted);font-size:11px;
+  padding:0 25px 12px;display:none
+}
+
+/* COMPOSER */
+.composer{
+  border-top:1px solid var(--line);
+  padding:17px 20px;background:white
+}
+.preview-list{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.preview-item{position:relative}
+.preview-item img{
+  width:58px;height:58px;object-fit:cover;border-radius:8px
+}
+.preview-item button{
+  position:absolute;right:-5px;top:-5px;
+  width:20px;height:20px;border:0;
+  background:var(--red);color:white;border-radius:50%
+}
+.input-row{display:flex;gap:9px;align-items:end}
+#messageInput{
+  resize:none;min-height:46px;max-height:130px;
+  flex:1;border:1px solid var(--line);
+  border-radius:10px;padding:14px;
+  outline:none;font-size:12px;background:#fafafd
+}
+#messageInput:focus{border-color:var(--red);background:white}
+.tool-btn,.send-btn{
+  height:46px;min-width:45px;
+  border:1px solid var(--line);background:white;
+  border-radius:10px;font-size:17px
+}
+.tool-btn:hover{color:var(--red);border-color:var(--red)}
+.send-btn{
+  background:var(--red);color:white;
+  border-color:var(--red);font-size:20px
+}
+.send-btn:hover{background:var(--red-dark)}
+.send-btn:disabled{opacity:.5;cursor:not-allowed}
+.composer-note{
+  color:#999;font-size:9px;margin:10px 3px 0
+}
+
+/* BOTTOM INFO */
+.bottom-info{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:13px;margin-top:17px
+}
+.info-card{
+  background:white;border:1px solid var(--line);
+  border-radius:12px;padding:17px
+}
+.info-card h3{font-size:11px;margin:0 0 7px}
+.info-card p{
+  color:var(--muted);font-size:10px;
+  line-height:1.7;margin:0
+}
+.info-card a{
+  display:inline-block;margin-top:10px;
+  color:var(--red);font-size:9px;font-weight:900
+}
+.footer{
+  color:#999;font-size:9px;
+  text-align:center;padding:25px 10px
+}
+
+/* MOBILE */
+@media(max-width:850px){
+  .dashboard{grid-template-columns:220px minmax(0,1fr)}
+  .content{padding:20px}
+  .topbar{padding:0 20px}
+}
+@media(max-width:650px){
+  .dashboard{display:block}
+  .sidebar{
+    position:fixed;left:-270px;top:0;bottom:0;
+    width:255px;height:100vh;min-height:100vh;
+    transition:left .25s;box-shadow:10px 0 35px #0003
+  }
+  .sidebar.open{left:0}
+  .mobile-menu{display:block}
+  .topbar{height:62px;padding:0 14px;gap:10px}
+  .topbar-left{display:flex;align-items:center;gap:10px}
+  .topbar-title{font-size:11px}
+  .topbar-sub{font-size:8px}
+  .topbar-right{gap:8px}
+  .status{font-size:8px}
+  .content{padding:17px 12px}
+  .welcome{align-items:flex-start}
+  .welcome h1{font-size:21px}
+  .welcome p{font-size:10px;max-width:220px;line-height:1.6}
+  .new-chat{padding:11px;font-size:9px}
+  .ai-header{padding:13px}
+  .ai-title{font-size:10px}
+  .ai-subtitle{font-size:8px}
+  .ai-header select{max-width:105px;font-size:9px}
+  .chat{
+    height:calc(100dvh - 330px);
+    min-height:330px;max-height:none;
+    padding:15px 11px
+  }
+  .bubble{max-width:88%;font-size:12px;padding:11px}
+  .composer{padding:12px 10px}
+  .input-row{gap:5px}
+  .tool-btn,.send-btn{min-width:38px;height:43px}
+  #messageInput{min-height:43px;padding:12px;font-size:12px}
+  .bottom-info{grid-template-columns:1fr}
+  .footer{padding:18px 5px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    scroll-behavior:auto!important;
+    transition-duration:.01ms!important
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- TELA INICIAL -->
+<div id="intro">
+  <div class="intro-content">
+    <img class="intro-photo"
+      src="/file_000000009618820e9a50407df0e56103.png"
+      alt="WSAZ_777"
+      onerror="this.style.display='none'">
+
+    <div class="intro-kicker">ARTIFICIAL INTELLIGENCE</div>
+    <h1>WSAZ_777</h1>
+    <p>YOUR AI. YOUR POSSIBILITIES.</p>
+    <div class="intro-brand">STORE DE WALLACE</div>
+
+    <button type="button" onclick="enterSite()">
+      ABRIR IA →
+    </button>
+
+    <p class="intro-hint">ACESSE SEU PAINEL DE INTELIGÊNCIA ARTIFICIAL</p>
+  </div>
+</div>
+
+<!-- PAINEL PRINCIPAL -->
+<div class="dashboard">
+
+  <!-- MENU LATERAL -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+      <div class="brand-mark">♛</div>
+      <div>
+        <div class="brand-name">WSAZ_777</div>
+        <div class="brand-sub">ARTIFICIAL INTELLIGENCE</div>
+      </div>
+    </div>
+
+    <div class="menu-label">MENU PRINCIPAL</div>
+
+    <button class="side-btn active" type="button" onclick="goToChat()">
+      <span class="side-icon">⌘</span>
+      Assistente IA
+    </button>
+
+    <button class="side-btn" type="button" onclick="newChat();closeSidebar()">
+      <span class="side-icon">＋</span>
+      Nova conversa
+    </button>
+
+    <div class="menu-label">EXPLORAR</div>
+
+    <a class="side-btn" href="#recursos" onclick="closeSidebar()">
+      <span class="side-icon">✦</span>
+      Recursos da IA
+    </a>
+
+    <a class="side-btn" href="#contato" onclick="closeSidebar()">
+      <span class="side-icon">◉</span>
+      Contato
+    </a>
+
+    <div class="menu-label">PREFERÊNCIAS</div>
+
+    <button class="side-btn" type="button" onclick="focusInput();closeSidebar()">
+      <span class="side-icon">⚙</span>
+      Configurar conversa
+    </button>
+
+    <div class="side-spacer"></div>
+
+    <div class="sidebar-bottom">
+      <div class="profile">
+        <div class="profile-icon">♛</div>
+        <div>
+          <div class="profile-name">WSAZ_777</div>
+          <div class="profile-sub">Seu espaço de IA</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ÁREA DO CHAT -->
+  <div class="main-area">
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu" type="button"
+          onclick="toggleSidebar()" aria-label="Abrir menu">☰</button>
+
+        <div>
+          <div class="topbar-title">Painel de inteligência artificial</div>
+          <div class="topbar-sub">WSAZ_777 · NEURAL CORE</div>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="status"><i></i> SISTEMA ONLINE</div>
+      </div>
+    </header>
+
+    <main class="content" id="assistente">
+
+      <section class="welcome">
+        <div>
+          <h1>Olá! Como posso ajudar?</h1>
+          <p>Converse com sua inteligência artificial. Envie uma pergunta para começar.</p>
+        </div>
+
+        <button class="new-chat" type="button" onclick="newChat()">
+          ＋ NOVA CONVERSA
+        </button>
+      </section>
+
+      <!-- CHAT -->
+      <section class="ai-panel">
+
+        <div class="ai-header">
+          <div class="ai-identity">
+            <div class="ai-logo">♛</div>
+            <div>
+              <div class="ai-title">WSAZ_777 IA</div>
+              <div class="ai-subtitle">ASSISTENTE INTELIGENTE</div>
+            </div>
+          </div>
+
+          <div class="ai-header-right">
+            <select id="responseStyle" aria-label="Estilo das respostas">
+              <option value="concise">Resumida</option>
+              <option value="normal" selected>Normal</option>
+              <option value="detailed">Completa</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="chat" id="chat" aria-live="polite">
+          <div class="message">
+            <div class="avatar">♛</div>
+            <div class="bubble">Bem-vindo à WSAZ_777 IA!
+
+Posso ajudar com tecnologia, jogos, configurações de PC, estudos, programação, ideias e muito mais.
+
+O que você gostaria de saber?</div>
+          </div>
+        </div>
+
+        <div class="typing" id="typing">
+          WSAZ_777 está pensando...
+        </div>
+
+        <div class="composer">
+          <div class="preview-list" id="previewList"></div>
+
+          <div class="input-row">
+            <input type="file" id="imageInput"
+              accept="image/png,image/jpeg,image/webp"
+              multiple hidden>
+
+            <button class="tool-btn" id="attachBtn"
+              type="button"
+              onclick="document.getElementById('imageInput').click()"
+              title="Anexar imagens" aria-label="Anexar imagens">＋</button>
+
+            <button class="tool-btn" type="button"
+              onclick="startVoice()"
+              title="Ditado por voz" aria-label="Ditado por voz">◉</button>
+
+            <textarea id="messageInput"
+              placeholder="Digite sua mensagem para a WSAZ_777..."
+              rows="1" maxlength="4000"></textarea>
+
+            <button class="send-btn" id="sendBtn"
+              type="button" onclick="sendMessage()"
+              title="Enviar" aria-label="Enviar mensagem">➤</button>
+          </div>
+
+          <div class="composer-note">
+            ENTER para enviar · SHIFT + ENTER para pular linha · Máximo de 5 imagens
+          </div>
+        </div>
+      </section>
+
+      <!-- RECURSOS -->
+      <section class="bottom-info" id="recursos">
+        <article class="info-card">
+          <h3>✦ Inteligência artificial</h3>
+          <p>Faça perguntas, peça explicações, desenvolva ideias e explore diferentes assuntos.</p>
+        </article>
+
+        <article class="info-card">
+          <h3>▧ Análise de imagens</h3>
+          <p>Envie imagens pelo botão de anexo para que a IA possa analisá-las.</p>
+        </article>
+      </section>
+
+      <section class="bottom-info" id="contato">
+        <article class="info-card">
+          <h3>◉ Atendimento WSAZ_777</h3>
+          <p>Precisa de informações ou suporte? Entre em contato com a Store de Wallace.</p>
+          <a href="https://wa.me/5587981368837"
+             target="_blank" rel="noopener">FALAR NO WHATSAPP ↗</a>
+        </article>
+
+        <article class="info-card">
+          <h3>♛ WSAZ_777</h3>
+          <p>Gaming · Technology · Artificial Intelligence.</p>
+          <a href="https://wsaz777.onrender.com"
+             target="_blank" rel="noopener">ACESSAR SITE ↗</a>
+        </article>
+      </section>
+
+      <footer class="footer">
+        WSAZ_777 · STORE DE WALLACE · ARTIFICIAL INTELLIGENCE
+      </footer>
+
+    </main>
+  </div>
+</div>
+
 <script>
 "use strict";
+
+/*
+  HISTÓRICO:
+  sessionStorage mantém a conversa nesta aba.
+  O servidor não recebe uma identificação de usuário.
+*/
 
 const chat = document.getElementById("chat");
 const input = document.getElementById("messageInput");
@@ -7,714 +602,424 @@ const imageInput = document.getElementById("imageInput");
 const previewList = document.getElementById("previewList");
 const typing = document.getElementById("typing");
 const sendBtn = document.getElementById("sendBtn");
-const conversationList = document.getElementById("conversationList");
-const voiceModeBtn = document.getElementById("voiceModeBtn");
 
-const STORAGE_KEY = "wsaz777_device_conversations_v1";
-const ACTIVE_KEY = "wsaz777_device_active_conversation_v1";
+const HISTORY_KEY = "wsaz777_private_chat_history";
 
-let conversations = [];
-let activeConversationId = null;
 let selectedImages = [];
+let history = [];
 let busy = false;
-let voiceMode = false;
-let recognition = null;
-let shouldSendVoiceText = false;
 
-/* IDENTIFICADOR */
-function makeId() {
-  return window.crypto?.randomUUID
-    ? crypto.randomUUID()
-    : Date.now().toString(36) + Math.random().toString(36).slice(2);
-}
-
-/* INTRO */
-function enterSite() {
+/* ENTRAR NO PAINEL */
+function enterSite(){
   document.getElementById("intro").classList.add("hide");
 
-  try {
-    sessionStorage.setItem("wsazIntroSeen", "1");
-  } catch (error) {}
+  try{
+    sessionStorage.setItem("wsazIntroSeen","1");
+  }catch(error){
+    console.warn("Sessão indisponível.",error);
+  }
 
-  setTimeout(() => input.focus(), 400);
+  setTimeout(()=>input.focus(),400);
 }
 
-try {
-  if (sessionStorage.getItem("wsazIntroSeen")) {
+/* NÃO MOSTRAR INTRO NOVAMENTE NESTA SESSÃO */
+try{
+  if(sessionStorage.getItem("wsazIntroSeen")){
     document.getElementById("intro").classList.add("hide");
   }
-} catch (error) {}
-
-/* MENU MOBILE */
-function toggleSidebar() {
-  const sidebar = document.getElementById("sidebar");
-  sidebar.classList.toggle("open");
+}catch(error){
+  console.warn("Não foi possível verificar a sessão.",error);
 }
 
-function closeSidebar() {
+/* MENU MOBILE */
+function toggleSidebar(){
+  document.getElementById("sidebar").classList.toggle("open");
+}
+
+function closeSidebar(){
   document.getElementById("sidebar").classList.remove("open");
 }
 
-function goToChat() {
+function goToChat(){
   closeSidebar();
-  document.getElementById("assistente").scrollIntoView({
-    behavior: "smooth"
-  });
+  document.getElementById("assistente").scrollIntoView({behavior:"smooth"});
   input.focus();
 }
 
-function focusInput() {
+function focusInput(){
   goToChat();
 }
 
-/* GESTOS DE DESLIZAR */
-let touchStartX = 0;
-let touchStartY = 0;
-
-document.addEventListener("touchstart", event => {
-  if (!event.touches.length) return;
-
-  touchStartX = event.touches[0].clientX;
-  touchStartY = event.touches[0].clientY;
-}, { passive: true });
-
-document.addEventListener("touchend", event => {
-  if (!event.changedTouches.length) return;
-
-  const endX = event.changedTouches[0].clientX;
-  const endY = event.changedTouches[0].clientY;
-
-  const deltaX = endX - touchStartX;
-  const deltaY = endY - touchStartY;
-
-  if (Math.abs(deltaX) < 65) return;
-  if (Math.abs(deltaX) < Math.abs(deltaY) * 1.3) return;
-
-  const sidebar = document.getElementById("sidebar");
-
-  if (deltaX < 0 && sidebar.classList.contains("open")) {
-    closeSidebar();
-  } else if (deltaX > 0 && !sidebar.classList.contains("open") && touchStartX < 45) {
-    toggleSidebar();
-  }
-}, { passive: true });
-
-/* CONVERSAS */
-function getActiveConversation() {
-  return conversations.find(c => c.id === activeConversationId) || null;
-}
-
-function saveConversations() {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(conversations));
-
-    if (activeConversationId) {
-      localStorage.setItem(ACTIVE_KEY, activeConversationId);
-    } else {
-      localStorage.removeItem(ACTIVE_KEY);
-    }
-  } catch (error) {
-    console.error("Erro ao salvar conversas:", error);
-    alert("O armazenamento do aparelho está cheio ou indisponível.");
-  }
-}
-
-function createConversation() {
-  const conversation = {
-    id: makeId(),
-    title: "Nova conversa",
-    messages: [],
-    updatedAt: Date.now()
-  };
-
-  conversations.unshift(conversation);
-  activeConversationId = conversation.id;
-
-  saveConversations();
-  renderConversationList();
-  renderConversation();
-
-  input.focus();
-}
-
-function updateConversationTitle(conversation) {
-  if (conversation.title !== "Nova conversa") return;
-
-  const firstUserMessage = conversation.messages.find(
-    message => message.role === "user"
-  );
-
-  if (!firstUserMessage) return;
-
-  const title = firstUserMessage.content
-    .replace(/\s+/g, " ")
-    .trim();
-
-  conversation.title = title.length > 34
-    ? title.slice(0, 34) + "…"
-    : title;
-}
-
-function renderConversationList() {
-  conversationList.replaceChildren();
-
-  if (!conversations.length) {
-    const empty = document.createElement("div");
-    empty.className = "history-empty";
-    empty.textContent = "Nenhuma conversa salva.";
-    conversationList.appendChild(empty);
-    return;
-  }
-
-  conversations
-    .slice()
-    .sort((a, b) => b.updatedAt - a.updatedAt)
-    .forEach(conversation => {
-      const row = document.createElement("div");
-      row.className = "conversation-item";
-
-      const open = document.createElement("button");
-      open.type = "button";
-      open.className = "conversation-open";
-
-      if (conversation.id === activeConversationId) {
-        open.classList.add("selected");
-      }
-
-      open.textContent = "▤ " + conversation.title;
-      open.title = conversation.title;
-      open.onclick = () => openConversation(conversation.id);
-
-      const remove = document.createElement("button");
-      remove.type = "button";
-      remove.className = "conversation-delete";
-      remove.textContent = "×";
-      remove.title = "Excluir conversa";
-      remove.setAttribute("aria-label", "Excluir conversa");
-      remove.onclick = () => deleteConversation(conversation.id);
-
-      row.append(open, remove);
-      conversationList.appendChild(row);
-    });
-}
-
-function renderConversation() {
-  chat.replaceChildren();
-
-  const conversation = getActiveConversation();
-
-  if (!conversation || !conversation.messages.length) {
-    addMessage(
-      "assistant",
-      "Bem-vindo à WSAZ_777 IA!\n\nPosso ajudar com tecnologia, jogos, estudos, programação e muito mais.\n\nComo posso ajudar?"
-    );
-    return;
-  }
-
-  conversation.messages.forEach(message => {
-    addMessage(
-      message.role,
-      message.content,
-      message.images || []
-    );
-  });
-}
-
-function openConversation(id) {
-  if (busy) return;
-
-  activeConversationId = id;
-
-  saveConversations();
-  renderConversationList();
-  renderConversation();
-  closeSidebar();
-}
-
-function deleteConversation(id) {
-  if (busy) return;
-
-  if (!confirm("Deseja excluir esta conversa?")) return;
-
-  conversations = conversations.filter(c => c.id !== id);
-
-  if (activeConversationId === id) {
-    activeConversationId = null;
-  }
-
-  if (!conversations.length) {
-    createConversation();
-    return;
-  }
-
-  if (!activeConversationId) {
-    activeConversationId = conversations[0].id;
-  }
-
-  saveConversations();
-  renderConversationList();
-  renderConversation();
-}
-
-function newChat() {
-  if (busy) return;
-
-  stopSpeech();
-  stopRecognition();
-
-  selectedImages = [];
-  renderPreviews();
-
-  createConversation();
-  closeSidebar();
-}
-
-function loadConversations() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    const parsed = saved ? JSON.parse(saved) : [];
-
-    conversations = Array.isArray(parsed)
-      ? parsed.filter(c =>
-          c &&
-          typeof c.id === "string" &&
-          Array.isArray(c.messages)
-        )
-      : [];
-
-    const savedActive = localStorage.getItem(ACTIVE_KEY);
-
-    if (conversations.some(c => c.id === savedActive)) {
-      activeConversationId = savedActive;
-    } else if (conversations.length) {
-      activeConversationId = conversations[0].id;
-    } else {
-      createConversation();
-      return;
-    }
-
-    renderConversationList();
-    renderConversation();
-
-  } catch (error) {
-    console.error("Erro ao carregar histórico:", error);
-    conversations = [];
-    createConversation();
-  }
-}
-
 /* MENSAGENS */
-function addMessage(role, text, images = []) {
-  const wrapper = document.createElement("div");
-  wrapper.className = `message ${role === "user" ? "user" : ""}`;
+function addMessage(role,text,images=[]){
+  const wrapper=document.createElement("div");
+  wrapper.className=`message ${role==="user"?"user":""}`;
 
-  const avatar = document.createElement("div");
-  avatar.className = "avatar";
-  avatar.textContent = role === "user" ? "U" : "♛";
+  const avatar=document.createElement("div");
+  avatar.className="avatar";
+  avatar.textContent=role==="user"?"U":"♛";
 
-  const bubble = document.createElement("div");
-  bubble.className = "bubble";
-  bubble.textContent = text;
+  const bubble=document.createElement("div");
+  bubble.className="bubble";
+  bubble.textContent=text;
 
-  images.forEach(src => {
-    const img = document.createElement("img");
-    img.src = src;
-    img.alt = "Imagem enviada";
+  images.forEach(src=>{
+    const img=document.createElement("img");
+    img.src=src;
+    img.alt="Imagem enviada";
     bubble.appendChild(img);
   });
 
-  if (role === "assistant") {
-    const actions = document.createElement("div");
-    actions.className = "message-actions";
+  if(role==="assistant" && "speechSynthesis" in window){
+    const actions=document.createElement("div");
+    actions.className="message-actions";
 
-    const speak = document.createElement("button");
-    speak.type = "button";
-    speak.textContent = "🔊 Ouvir";
-    speak.onclick = () => speakText(text);
+    const speak=document.createElement("button");
+    speak.type="button";
+    speak.textContent="🔊 Ouvir";
+    speak.addEventListener("click",()=>speakText(text));
 
     actions.appendChild(speak);
     bubble.appendChild(actions);
   }
 
-  wrapper.append(avatar, bubble);
+  wrapper.append(avatar,bubble);
   chat.appendChild(wrapper);
-  chat.scrollTop = chat.scrollHeight;
+  chat.scrollTop=chat.scrollHeight;
 }
 
-/* IMAGENS */
-function renderPreviews() {
+/* PRÉVIA DAS IMAGENS */
+function renderPreviews(){
   previewList.replaceChildren();
 
-  selectedImages.forEach((item, index) => {
-    const box = document.createElement("div");
-    box.className = "preview-item";
+  selectedImages.forEach((item,index)=>{
+    const box=document.createElement("div");
+    box.className="preview-item";
 
-    const img = document.createElement("img");
-    img.src = item.data;
-    img.alt = "Prévia da imagem";
+    const img=document.createElement("img");
+    img.src=item.data;
+    img.alt="Prévia da imagem";
 
-    const remove = document.createElement("button");
-    remove.type = "button";
-    remove.textContent = "×";
-    remove.onclick = () => {
-      selectedImages.splice(index, 1);
+    const remove=document.createElement("button");
+    remove.type="button";
+    remove.textContent="×";
+    remove.setAttribute("aria-label","Remover imagem");
+
+    remove.onclick=()=>{
+      selectedImages.splice(index,1);
       renderPreviews();
     };
 
-    box.append(img, remove);
+    box.append(img,remove);
     previewList.appendChild(box);
   });
 }
 
-function resizeImage(file) {
-  return new Promise((resolve, reject) => {
-    if (!file.type.match(/^image\/(jpeg|png|webp)$/)) {
+/* REDIMENSIONAR IMAGENS */
+function resizeImage(file){
+  return new Promise((resolve,reject)=>{
+    if(!file.type.match(/^image\/(jpeg|png|webp)$/)){
       reject(new Error("Formato de imagem não suportado."));
       return;
     }
 
-    const reader = new FileReader();
+    const reader=new FileReader();
 
-    reader.onload = () => {
-      const img = new Image();
+    reader.onload=()=>{
+      const img=new Image();
 
-      img.onload = () => {
-        const max = 1400;
-        const ratio = Math.min(
-          1,
-          max / Math.max(img.width, img.height)
-        );
+      img.onload=()=>{
+        const max=1400;
+        const ratio=Math.min(1,max/Math.max(img.width,img.height));
+        const canvas=document.createElement("canvas");
 
-        const canvas = document.createElement("canvas");
-        canvas.width = Math.round(img.width * ratio);
-        canvas.height = Math.round(img.height * ratio);
+        canvas.width=Math.round(img.width*ratio);
+        canvas.height=Math.round(img.height*ratio);
 
-        const ctx = canvas.getContext("2d");
+        const ctx=canvas.getContext("2d");
 
-        if (!ctx) {
+        if(!ctx){
           reject(new Error("Não foi possível processar a imagem."));
           return;
         }
 
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL("image/jpeg", 0.72));
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        resolve(canvas.toDataURL("image/jpeg",0.72));
       };
 
-      img.onerror = () => reject(new Error("Não foi possível ler a imagem."));
-      img.src = reader.result;
+      img.onerror=()=>reject(new Error("Não foi possível ler a imagem."));
+      img.src=reader.result;
     };
 
-    reader.onerror = () => reject(new Error("Falha ao carregar imagem."));
+    reader.onerror=()=>reject(new Error("Falha ao carregar imagem."));
     reader.readAsDataURL(file);
   });
 }
 
-imageInput.addEventListener("change", async event => {
-  const files = Array.from(event.target.files || []);
-  const available = 5 - selectedImages.length;
+/* SELEÇÃO DE IMAGENS */
+imageInput.addEventListener("change",async event=>{
+  const files=Array.from(event.target.files||[]);
+  const available=5-selectedImages.length;
 
-  if (files.length > available) {
+  if(files.length>available){
     alert(`Você ainda pode selecionar ${available} imagem(ns).`);
   }
 
-  for (const file of files.slice(0, available)) {
-    try {
-      const data = await resizeImage(file);
-      selectedImages.push({ data });
-    } catch (error) {
+  for(const file of files.slice(0,available)){
+    try{
+      const data=await resizeImage(file);
+      selectedImages.push({data});
+    }catch(error){
       alert(error.message);
     }
   }
 
   renderPreviews();
-  imageInput.value = "";
+  imageInput.value="";
 });
 
-/* ENVIO PARA A IA */
-async function sendMessage() {
-  if (busy) return;
+/* NOVA CONVERSA */
+function newChat(){
+  if(busy)return;
 
-  const message = input.value.trim();
-
-  if (!message && selectedImages.length === 0) return;
-
-  let conversation = getActiveConversation();
-
-  if (!conversation) {
-    createConversation();
-    conversation = getActiveConversation();
+  if("speechSynthesis" in window){
+    speechSynthesis.cancel();
   }
 
-  const images = selectedImages.map(item => item.data);
-  const userContent = message || "Analise estas imagens.";
+  history=[];
+  selectedImages=[];
+  renderPreviews();
+  chat.replaceChildren();
 
-  const previousHistory = conversation.messages
-    .slice(-12)
-    .map(m => ({
-      role: m.role,
-      content: m.content
-    }));
+  addMessage(
+    "assistant",
+    "Nova conversa iniciada!\n\nComo posso ajudar?"
+  );
 
-  conversation.messages.push({
-    role: "user",
-    content: userContent,
-    images
-  });
+  try{
+    sessionStorage.removeItem(HISTORY_KEY);
+  }catch(error){
+    console.warn("Não foi possível limpar o histórico.",error);
+  }
 
-  updateConversationTitle(conversation);
-  conversation.updatedAt = Date.now();
+  input.value="";
+  input.focus();
+}
 
-  addMessage("user", userContent, images);
+/* SALVAR HISTÓRICO DA ABA */
+function saveHistory(){
+  try{
+    sessionStorage.setItem(
+      HISTORY_KEY,
+      JSON.stringify(history.slice(-12))
+    );
+  }catch(error){
+    console.warn("Não foi possível salvar o histórico.",error);
+  }
+}
 
-  input.value = "";
-  selectedImages = [];
+/* CARREGAR HISTÓRICO */
+function loadHistory(){
+  try{
+    const saved=sessionStorage.getItem(HISTORY_KEY);
+    if(!saved)return;
+
+    const parsed=JSON.parse(saved);
+    if(!Array.isArray(parsed))return;
+
+    history=parsed
+      .filter(item=>
+        item &&
+        ["user","assistant"].includes(item.role) &&
+        typeof item.content==="string"
+      )
+      .slice(-12);
+
+    if(!history.length)return;
+
+    chat.replaceChildren();
+
+    history.forEach(item=>{
+      addMessage(item.role,item.content);
+    });
+
+  }catch(error){
+    console.warn("Não foi possível recuperar o histórico.",error);
+    history=[];
+  }
+}
+
+/* ENVIAR MENSAGEM */
+async function sendMessage(){
+  if(busy)return;
+
+  const message=input.value.trim();
+
+  if(!message && selectedImages.length===0)return;
+
+  const images=selectedImages.map(item=>item.data);
+
+  const userContent=message||"Analise estas imagens.";
+
+  addMessage("user",userContent,images);
+
+  const previousHistory=[...history];
+
+  input.value="";
+  selectedImages=[];
   renderPreviews();
 
-  saveConversations();
-  renderConversationList();
+  busy=true;
+  sendBtn.disabled=true;
+  typing.style.display="block";
 
-  busy = true;
-  sendBtn.disabled = true;
-  typing.style.display = "block";
-
-  try {
-    const response = await fetch("/api/chat", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        message: message || "Analise cuidadosamente as imagens enviadas. Descreva o que aparece nelas e responda à solicitação.",
+  try{
+    const response=await fetch("/api/chat",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        message,
         images,
-        history: previousHistory,
-        responseStyle: document.getElementById("responseStyle").value
+        history:previousHistory,
+        responseStyle:document.getElementById("responseStyle").value
       })
     });
 
     let data;
 
-    try {
-      data = await response.json();
-    } catch {
+    try{
+      data=await response.json();
+    }catch{
       throw new Error("O servidor retornou uma resposta inválida.");
     }
 
-    if (!response.ok) {
+    if(!response.ok){
       throw new Error(
-        data.reply || data.error || "Falha ao consultar o servidor."
+        data.reply||data.error||"Falha ao consultar o servidor."
       );
     }
 
-    const answer = data.reply || "Não foi possível obter uma resposta.";
+    const answer=data.reply||"Não foi possível obter uma resposta.";
 
-    conversation.messages.push({
-      role: "assistant",
-      content: answer
+    addMessage("assistant",answer);
+
+    history.push({
+      role:"user",
+      content:userContent
     });
 
-    conversation.messages = conversation.messages.slice(-40);
-    conversation.updatedAt = Date.now();
+    history.push({
+      role:"assistant",
+      content:answer
+    });
 
-    addMessage("assistant", answer);
+    history=history.slice(-12);
+    saveHistory();
 
-    saveConversations();
-    renderConversationList();
-
-    if (voiceMode) {
-      speakText(answer);
-    }
-
-  } catch (error) {
-    console.error("Erro ao enviar mensagem:", error);
-
-    const lastMessage = conversation.messages[conversation.messages.length - 1];
-
-    if (lastMessage && lastMessage.role === "user") {
-      conversation.messages.pop();
-    }
-
-    saveConversations();
+  }catch(error){
+    console.error("Erro ao enviar mensagem:",error);
 
     addMessage(
       "assistant",
-      error.message || "Não consegui conectar ao servidor. Tente novamente."
+      error.message||"Não consegui conectar ao servidor. Tente novamente."
     );
 
-  } finally {
-    busy = false;
-    sendBtn.disabled = false;
-    typing.style.display = "none";
+  }finally{
+    busy=false;
+    sendBtn.disabled=false;
+    typing.style.display="none";
     input.focus();
   }
 }
 
-input.addEventListener("keydown", event => {
-  if (event.key === "Enter" && !event.shiftKey) {
+/* ENTER ENVIA / SHIFT + ENTER QUEBRA LINHA */
+input.addEventListener("keydown",event=>{
+  if(event.key==="Enter"&&!event.shiftKey){
     event.preventDefault();
     sendMessage();
   }
 });
 
-/* MODO DE VOZ */
-function toggleVoiceMode() {
-  voiceMode = !voiceMode;
+/* DITADO POR VOZ */
+function startVoice(){
+  const Recognition=
+    window.SpeechRecognition||window.webkitSpeechRecognition;
 
-  voiceModeBtn.classList.toggle("enabled", voiceMode);
-  voiceModeBtn.textContent = voiceMode
-    ? "◉ VOZ ATIVADA"
-    : "◉ VOZ DESATIVADA";
-
-  if (!voiceMode) {
-    stopSpeech();
-    stopRecognition();
-  }
-}
-
-/* RECONHECIMENTO DE VOZ */
-function startVoice() {
-  const Recognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-  if (!Recognition) {
-    alert("Seu navegador não oferece reconhecimento de voz. Tente usar o Chrome atualizado.");
+  if(!Recognition){
+    alert("Seu navegador não oferece suporte ao ditado por voz.");
     return;
   }
 
-  if (recognition) {
-    stopRecognition();
-    return;
-  }
+  const recognition=new Recognition();
 
-  shouldSendVoiceText = true;
-  recognition = new Recognition();
+  recognition.lang="pt-BR";
+  recognition.interimResults=false;
+  recognition.maxAlternatives=1;
 
-  recognition.lang = "pt-BR";
-  recognition.interimResults = true;
-  recognition.continuous = false;
-  recognition.maxAlternatives = 1;
-
-  let finalTranscript = "";
-
-  recognition.onresult = event => {
-    let interim = "";
-
-    for (let i = event.resultIndex; i < event.results.length; i++) {
-      const transcript = event.results[i][0].transcript;
-
-      if (event.results[i].isFinal) {
-        finalTranscript += transcript + " ";
-      } else {
-        interim += transcript;
-      }
-    }
-
-    input.value = (finalTranscript + interim).trim();
+  recognition.onresult=event=>{
+    input.value+=(input.value?" ":"")+
+      event.results[0][0].transcript;
+    input.focus();
   };
 
-  recognition.onerror = event => {
-    console.warn("Reconhecimento de voz:", event.error);
-
-    if (event.error === "not-allowed") {
-      shouldSendVoiceText = false;
-      alert("Permita o acesso ao microfone nas configurações do navegador.");
-    }
+  recognition.onerror=()=>{
+    alert("Não foi possível usar o microfone. Verifique a permissão.");
   };
 
-  recognition.onend = () => {
-    recognition = null;
-    input.value = input.value.trim();
-
-    const shouldSend = shouldSendVoiceText;
-    shouldSendVoiceText = false;
-
-    if (shouldSend && input.value) {
-      sendMessage();
-    }
-  };
-
-  try {
-    recognition.start();
-  } catch (error) {
-    recognition = null;
-    shouldSendVoiceText = false;
-    alert("Não foi possível iniciar o microfone. Tente novamente.");
-  }
+  recognition.start();
 }
 
-function stopRecognition() {
-  shouldSendVoiceText = false;
-
-  if (recognition) {
-    try {
-      recognition.stop();
-    } catch (error) {}
-
-    recognition = null;
-  }
-}
-
-/* SÍNTESE DE VOZ */
-function stopSpeech() {
-  if ("speechSynthesis" in window) {
-    speechSynthesis.cancel();
-  }
-}
-
-function speakText(text) {
-  if (!("speechSynthesis" in window)) {
+/* OUVIR RESPOSTAS */
+function speakText(text){
+  if(!("speechSynthesis" in window)){
     alert("Leitura de voz não disponível neste navegador.");
     return;
   }
 
-  stopSpeech();
+  speechSynthesis.cancel();
 
-  const cleanText = String(text)
-    .replace(/```[\s\S]*?```/g, "Código omitido.")
-    .replace(/https?:\/\/\S+/g, "link")
-    .replace(/[*_#>`~]/g, "")
+  const cleanText=String(text)
+    .replace(/```[\s\S]*?```/g,"Código omitido.")
+    .replace(/https?:\/\/\S+/g,"link")
+    .replace(/[*_#>`~]/g,"")
     .trim();
 
-  const utterance = new SpeechSynthesisUtterance(cleanText);
+  const utterance=new SpeechSynthesisUtterance(cleanText);
+  utterance.lang="pt-BR";
+  utterance.rate=0.96;
+  utterance.pitch=0.9;
 
-  utterance.lang = "pt-BR";
-  utterance.rate = 0.96;
-  utterance.pitch = 0.95;
-  utterance.volume = 1;
-
-  const voices = speechSynthesis.getVoices();
-
-  const voice = voices.find(v =>
+  const voices=speechSynthesis.getVoices();
+  const voice=voices.find(v=>
     v.lang.toLowerCase().startsWith("pt-br")
   );
 
-  if (voice) {
-    utterance.voice = voice;
-  }
+  if(voice)utterance.voice=voice;
 
   speechSynthesis.speak(utterance);
 }
 
 /* VERIFICAR SERVIDOR */
-async function checkServer() {
-  try {
-    const response = await fetch("/api/health");
+async function checkServer(){
+  try{
+    const response=await fetch("/api/health");
 
-    if (!response.ok) {
+    if(!response.ok){
       throw new Error("Servidor indisponível.");
     }
 
-    console.log(
-      "WSAZ_777 API online:",
-      await response.json()
-    );
+    const data=await response.json();
+    console.log("WSAZ_777 status:",data);
 
-  } catch (error) {
+  }catch(error){
     console.warn("Não foi possível verificar o servidor.");
   }
 }
 
 /* INICIALIZAÇÃO */
-loadConversations();
+loadHistory();
 checkServer();
 </script>
+
+</body>
+</html>
