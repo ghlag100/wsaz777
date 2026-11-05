@@ -1,56 +1,33 @@
-
 import express from "express";
 import path from "node:path";
-import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const root = path.dirname(fileURLToPath(import.meta.url));
 
+app.disable("x-powered-by");
 app.use(express.json({ limit: "12mb" }));
+
+app.use(express.static(path.join(root, "public")));
 app.use(express.static(root));
 
 const BASE_PROMPT = `
 Você é o WSAZ_777, uma inteligência artificial de uso geral.
-Responda em português brasileiro, com clareza, educação e organização.
-Ajude com tecnologia, programação, estudos, computadores, Android e jogos.
-Não invente informações e não apresente raciocínio interno.
+Responda em português brasileiro, salvo pedido contrário.
+Seja natural, inteligente, educado, comunicativo e profissional.
+Ajude com estudos, matemática, programação, tecnologia,
+computadores, Android, jogos e conhecimentos gerais.
+Não invente informações. Não apresente raciocínio interno.
+Considere o contexto anterior. Use títulos curtos e listas quando ajudarem.
+Priorize segurança, privacidade e orientações legítimas.
 `;
 
 const RESPONSE_STYLES = {
-  concise: "Responda de forma curta e objetiva.",
-  normal: "Explique com clareza e organização.",
-  detailed: "Explique com profundidade e exemplos úteis."
+  concise: "Responda de forma curta, direta e objetiva.",
+  normal: "Explique com clareza, naturalidade e boa organização.",
+  detailed: "Explique com profundidade, etapas e exemplos úteis."
 };
-
-// TOKENS
-// Protótipo em memória: reiniciar o servidor apaga as Keys.
-const tokens = new Map();
-const TOKEN_EXPIRATION = 7 * 24 * 60 * 60 * 1000;
-
-function createToken() {
-  return "WSAZ-777-" +
-    crypto.randomBytes(3).toString("hex").toUpperCase() +
-    "-" +
-    crypto.randomBytes(3).toString("hex").toUpperCase();
-}
-
-function safeHistory(history) {
-  if (!Array.isArray(history)) return [];
-
-  return history.slice(-12)
-    .filter(item =>
-      item &&
-      ["user", "assistant"].includes(item.role) &&
-      typeof item.content === "string" &&
-      item.content.trim()
-    )
-    .map(item => ({
-      role: item.role,
-      content: item.content.slice(0, 5000)
-    }));
-}
 
 function extractAnswer(data) {
   const raw = data?.choices?.[0]?.message?.content;
@@ -59,8 +36,8 @@ function extractAnswer(data) {
 
   if (Array.isArray(raw)) {
     return raw
-      .filter(item => item?.type === "text" && item.text)
-      .map(item => item.text)
+      .filter(x => x?.type === "text" && x.text)
+      .map(x => x.text)
       .join("\n")
       .trim();
   }
@@ -68,108 +45,34 @@ function extractAnswer(data) {
   return "";
 }
 
-// STATUS
+function safeHistory(history) {
+  if (!Array.isArray(history)) return [];
+
+  return history.slice(-12)
+    .filter(x =>
+      x &&
+      ["user", "assistant"].includes(x.role) &&
+      typeof x.content === "string" &&
+      x.content.trim()
+    )
+    .map(x => ({
+      role: x.role,
+      content: x.content.slice(0, 5000)
+    }));
+}
+
+app.get("/", (_req, res) => {
+  res.sendFile(path.join(root, "index.html"));
+});
+
 app.get("/api/health", (_req, res) => {
   res.json({
     status: "online",
     text: Boolean(process.env.NVIDIA_API_KEY),
-    vision: Boolean(process.env.OPENROUTER_API_KEY),
-    tokens: "online"
+    vision: Boolean(process.env.OPENROUTER_API_KEY)
   });
 });
 
-// GERAR KEY — SOMENTE ADMINISTRADOR
-app.post("/api/tokens/generate", (req, res) => {
-  const adminKey = process.env.ADMIN_KEY;
-
-  if (!adminKey) {
-    return res.status(503).json({
-      error: "Configure ADMIN_KEY nas variáveis do Render."
-    });
-  }
-
-  if (req.get("x-admin-key") !== adminKey) {
-    return res.status(403).json({
-      error: "Autorização administrativa inválida."
-    });
-  }
-
-  const { product } = req.body || {};
-
-  if (!["pc", "celular"].includes(product)) {
-    return res.status(400).json({
-      error: "Selecione PC ou celular."
-    });
-  }
-
-  let token;
-
-  do {
-    token = createToken();
-  } while (tokens.has(token));
-
-  tokens.set(token, {
-    product,
-    createdAt: Date.now(),
-    expiresAt: Date.now() + TOKEN_EXPIRATION
-  });
-
-  res.json({
-    success: true,
-    token,
-    product,
-    expiresIn: "7 dias"
-  });
-});
-
-// VALIDAR KEY
-app.post("/api/tokens/validate", (req, res) => {
-  const { token, product } = req.body || {};
-
-  if (
-    typeof token !== "string" ||
-    !["pc", "celular"].includes(product)
-  ) {
-    return res.status(400).json({
-      valid: false,
-      message: "Dados inválidos."
-    });
-  }
-
-  const normalized = token.trim().toUpperCase();
-  const saved = tokens.get(normalized);
-
-  if (!saved) {
-    return res.status(404).json({
-      valid: false,
-      message: "Key não encontrada."
-    });
-  }
-
-  if (Date.now() > saved.expiresAt) {
-    tokens.delete(normalized);
-
-    return res.status(410).json({
-      valid: false,
-      message: "Esta Key expirou."
-    });
-  }
-
-  if (saved.product !== product) {
-    return res.status(403).json({
-      valid: false,
-      message: "Esta Key pertence a outra otimização."
-    });
-  }
-
-  return res.json({
-    valid: true,
-    product: saved.product,
-    message: "Key validada com sucesso!"
-  });
-});
-
-// CHAT NVIDIA / OPENROUTER
 app.post("/api/chat", async (req, res) => {
   try {
     const {
@@ -192,15 +95,21 @@ app.post("/api/chat", async (req, res) => {
       selectedImages.push(image);
     }
 
-    if (!text && selectedImages.length === 0) {
+    if (!text && !selectedImages.length) {
       return res.status(400).json({
         reply: "Digite uma pergunta ou envie uma imagem."
       });
     }
 
-    if (text.length > 4000 || selectedImages.length > 5) {
+    if (text.length > 4000) {
       return res.status(400).json({
-        reply: "Limite de mensagem ou imagens ultrapassado."
+        reply: "Sua mensagem ultrapassou 4.000 caracteres."
+      });
+    }
+
+    if (selectedImages.length > 5) {
+      return res.status(400).json({
+        reply: "Envie no máximo 5 imagens por mensagem."
       });
     }
 
@@ -211,31 +120,42 @@ app.post("/api/chat", async (req, res) => {
         img.length > 2_000_000
       ) {
         return res.status(400).json({
-          reply: "Imagem inválida ou muito grande."
+          reply: "Uma das imagens é inválida ou muito grande."
         });
       }
     }
 
-    const style = RESPONSE_STYLES[responseStyle]
-      || RESPONSE_STYLES.normal;
-
-    const systemPrompt = `${BASE_PROMPT}\n${style}`;
+    const systemPrompt =
+      `${BASE_PROMPT}\n\nESTILO:\n${
+        RESPONSE_STYLES[responseStyle] || RESPONSE_STYLES.normal
+      }`;
 
     const previousMessages = safeHistory(history);
 
     let response;
     let service;
 
-    if (selectedImages.length > 0) {
+    if (selectedImages.length) {
       const apiKey = process.env.OPENROUTER_API_KEY;
 
       if (!apiKey) {
         return res.status(503).json({
-          reply: "OpenRouter não configurada no Render."
+          reply: "A chave da OpenRouter não está configurada no Render."
         });
       }
 
-      service = "OPENROUTER";
+      const content = [
+        {
+          type: "text",
+          text: text || "Analise cuidadosamente as imagens enviadas."
+        },
+        ...selectedImages.map(url => ({
+          type: "image_url",
+          image_url: { url }
+        }))
+      ];
+
+      service = "OPENROUTER - VISÃO";
 
       response = await fetch(
         "https://openrouter.ai/api/v1/chat/completions",
@@ -248,28 +168,18 @@ app.post("/api/chat", async (req, res) => {
             "X-OpenRouter-Title": "WSAZ_777"
           },
           body: JSON.stringify({
-            model: process.env.OPENROUTER_VISION_MODEL ||
+            model:
+              process.env.OPENROUTER_VISION_MODEL ||
               "nvidia/nemotron-3.5-super-vl:free",
             messages: [
               {
                 role: "system",
-                content: systemPrompt +
-                  "\nVocê também interpreta imagens."
+                content:
+                  systemPrompt +
+                  "\nInterprete imagens com cuidado e descreva apenas o que conseguir observar."
               },
               ...previousMessages,
-              {
-                role: "user",
-                content: [
-                  {
-                    type: "text",
-                    text: text || "Analise as imagens."
-                  },
-                  ...selectedImages.map(url => ({
-                    type: "image_url",
-                    image_url: { url }
-                  }))
-                ]
-              }
+              { role: "user", content }
             ],
             max_tokens: 1400,
             temperature: 0.4
@@ -277,16 +187,17 @@ app.post("/api/chat", async (req, res) => {
           signal: AbortSignal.timeout(90000)
         }
       );
+
     } else {
       const apiKey = process.env.NVIDIA_API_KEY;
 
       if (!apiKey) {
         return res.status(503).json({
-          reply: "NVIDIA não configurada no Render."
+          reply: "A chave da NVIDIA não está configurada no Render."
         });
       }
 
-      service = "NVIDIA";
+      service = "NVIDIA - TEXTO";
 
       response = await fetch(
         "https://integrate.api.nvidia.com/v1/chat/completions",
@@ -297,7 +208,8 @@ app.post("/api/chat", async (req, res) => {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            model: process.env.NVIDIA_TEXT_MODEL ||
+            model:
+              process.env.NVIDIA_TEXT_MODEL ||
               "nvidia/nemotron-3-ultra-550b-a55b",
             messages: [
               { role: "system", content: systemPrompt },
@@ -320,36 +232,52 @@ app.post("/api/chat", async (req, res) => {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-      console.error(service, response.status, data?.error);
+      console.error(
+        `ERRO ${service}:`,
+        response.status,
+        data?.error?.message || ""
+      );
 
-      return res.status(502).json({
-        reply: response.status === 429
-          ? "Limite de solicitações atingido."
-          : "Não foi possível consultar a inteligência artificial."
-      });
+      let reply = "Não foi possível consultar a inteligência artificial.";
+
+      if (response.status === 401) {
+        reply = "A configuração da API está inválida.";
+      } else if (response.status === 402) {
+        reply = "O serviço está sem créditos disponíveis.";
+      } else if (response.status === 429) {
+        reply = "Limite de solicitações atingido. Tente novamente mais tarde.";
+      } else if (response.status >= 500) {
+        reply = "O serviço de IA está temporariamente indisponível.";
+      }
+
+      return res.status(502).json({ reply });
     }
 
     const answer = extractAnswer(data);
 
     if (!answer) {
       return res.status(502).json({
-        reply: "A IA não conseguiu gerar uma resposta."
+        reply: "A IA não conseguiu gerar uma resposta. Tente novamente."
       });
     }
 
-    return res.json({ reply: answer });
+    console.log(`${service}: resposta concluída.`);
+    res.json({ reply: answer });
 
   } catch (error) {
-    console.error("ERRO:", error);
+    console.error("ERRO SERVIDOR:", error);
 
-    return res.status(500).json({
-      reply: "Erro interno ao processar a solicitação."
+    const timeout = [
+      "TimeoutError",
+      "AbortError"
+    ].includes(error?.name);
+
+    res.status(timeout ? 504 : 500).json({
+      reply: timeout
+        ? "A solicitação demorou demais. Tente novamente."
+        : "Erro interno ao processar sua solicitação."
     });
   }
-});
-
-app.get("/", (_req, res) => {
-  res.sendFile(path.join(root, "index.html"));
 });
 
 app.listen(PORT, "0.0.0.0", () => {
