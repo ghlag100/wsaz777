@@ -2,1098 +2,1344 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#050914">
-<title>WSAZ_777 | AI SYSTEM</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080d16">
+<title>WSAZ_777 | Neural Core</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Orbitron:wght@400;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --bg:#050914;
-  --panel:#0b1424;
-  --panel2:#101e32;
-  --cyan:#00eaff;
-  --blue:#287bff;
-  --purple:#9b5cff;
-  --text:#eaf7ff;
-  --muted:#8295aa;
-  --border:rgba(0,234,255,.2);
+  --bg:#080d16;
+  --panel:#101a29;
+  --line:#203b52;
+  --cyan:#35e5ff;
+  --text:#edf8ff;
+  --muted:#91a6ba;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
+* { box-sizing:border-box; }
 
 body {
-  background:
-    radial-gradient(circle at 50% 0%,#10294a 0%,transparent 38%),
-    var(--bg);
+  margin:0;
+  background:radial-gradient(ellipse at top,#12324a,transparent 45%),var(--bg);
   color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
+  font-family:Inter,Arial,sans-serif;
+}
+
+button,input,textarea { font:inherit; }
+button { cursor:pointer; }
+
+.hidden { display:none!important; }
+
+/* ACESSO */
+
+#accessGate {
   min-height:100vh;
-  overflow-x:hidden;
+  display:grid;
+  place-items:center;
+  padding:20px;
 }
 
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-
-body:before {
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.15;
-  background-image:
-    linear-gradient(rgba(0,234,255,.12) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,234,255,.12) 1px,transparent 1px);
-  background-size:35px 35px;
-  mask-image:linear-gradient(to bottom,black,transparent);
-}
-
-#intro {
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  background:#030711;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:20px;
-  transition:.7s;
-}
-
-#intro img {
-  width:min(260px,65vw);
-  height:260px;
-  object-fit:contain;
-  filter:drop-shadow(0 0 25px var(--cyan));
-  animation:float 3s infinite ease-in-out;
-}
-
-#intro h1 {
-  letter-spacing:7px;
-  color:var(--cyan);
-  text-shadow:0 0 20px var(--cyan);
-}
-
-.loader {
-  width:180px;
-  height:4px;
-  background:#18283a;
+.access-card {
+  width:min(100%,420px);
+  padding:28px;
+  border:1px solid #28536b;
   border-radius:20px;
-  overflow:hidden;
+  background:#0d1928;
+  text-align:center;
 }
 
-.loader:after {
-  content:"";
-  display:block;
-  width:40%;
-  height:100%;
-  background:var(--cyan);
-  box-shadow:0 0 15px var(--cyan);
-  animation:load 1.5s infinite;
+.access-logo {
+  font:800 28px Orbitron;
+  color:var(--cyan);
+  text-shadow:0 0 22px #35e5ff77;
 }
 
-@keyframes load {
-  from{transform:translateX(-100%)}
-  to{transform:translateX(350%)}
+.field {
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  border-radius:10px;
+  border:1px solid #31516b;
+  background:#071321;
+  color:white;
 }
 
-@keyframes float {
-  50%{transform:translateY(-12px)}
+.primary {
+  border:0;
+  border-radius:10px;
+  padding:13px 18px;
+  background:linear-gradient(120deg,#0c9dbb,#1768b8);
+  color:white;
+  font-weight:800;
 }
 
-.app {
-  display:none;
-  min-height:100vh;
-}
+.access-card button { width:100%; }
+
+/* PAINEL */
+
+#app { display:none; }
 
 .sidebar {
   position:fixed;
-  top:0;
-  left:0;
-  bottom:0;
-  width:250px;
-  padding:25px 17px;
-  background:rgba(5,12,25,.95);
-  border-right:1px solid var(--border);
+  inset:0 auto 0 0;
+  width:245px;
+  padding:22px 16px;
+  background:#081321;
+  border-right:1px solid var(--line);
   z-index:20;
-  backdrop-filter:blur(20px);
 }
 
-.logo {
-  padding:12px 10px 28px;
+.brand {
+  font:800 18px Orbitron;
   color:var(--cyan);
-  font-size:22px;
-  font-weight:900;
-  letter-spacing:3px;
-  text-shadow:0 0 15px var(--cyan);
-}
-
-.logo small {
-  display:block;
-  color:var(--muted);
-  font-size:9px;
-  letter-spacing:4px;
-  margin-top:7px;
-}
-
-.nav-title {
-  font-size:10px;
-  color:#657c94;
   letter-spacing:2px;
-  margin:18px 10px 10px;
+  padding:8px 9px 25px;
+}
+
+.nav-label {
+  font-size:10px;
+  color:#66829b;
+  margin:18px 9px 8px;
 }
 
 .nav button {
+  display:block;
   width:100%;
   text-align:left;
-  padding:14px 13px;
-  margin:4px 0;
+  padding:13px;
+  border-radius:9px;
   border:1px solid transparent;
-  border-radius:10px;
-  color:#a9bbcd;
   background:transparent;
-  transition:.2s;
+  color:#b5c9d9;
+  margin:3px 0;
 }
 
-.nav button:hover,.nav button.active {
+.nav button.active,
+.nav button:hover {
   color:var(--cyan);
-  background:rgba(0,234,255,.08);
-  border-color:var(--border);
-  box-shadow:inset 3px 0 var(--cyan);
+  background:#0d2b40;
+  border-color:#24516b;
 }
 
-.sidebar-bottom {
-  position:absolute;
-  bottom:22px;
-  left:17px;
-  right:17px;
-}
-
-.status {
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:12px;
-  color:var(--muted);
-  font-size:11px;
-}
-
-.dot {
-  display:inline-block;
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#ffb52e;
-  margin-right:7px;
-}
-
-.dot.online{background:#00ff9d;box-shadow:0 0 8px #00ff9d}
-
-.main {
-  margin-left:250px;
-  padding:25px;
-  min-height:100vh;
-  position:relative;
-  z-index:1;
-}
+.main { margin-left:245px; }
 
 .topbar {
+  height:70px;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:15px;
-  margin-bottom:25px;
-}
-
-.topbar h2 {
-  font-size:19px;
-  letter-spacing:2px;
+  padding:0 25px;
+  background:#091321;
+  border-bottom:1px solid var(--line);
 }
 
 .topbar span {
   color:var(--cyan);
-  font-size:11px;
+  font-size:10px;
 }
 
-.mobile-menu {
-  display:none;
-  border:1px solid var(--border);
-  background:var(--panel);
-  color:var(--cyan);
-  padding:9px 12px;
-  border-radius:8px;
+.content {
+  max-width:1400px;
+  margin:auto;
+  padding:25px;
 }
 
-.page{display:none}
-.page.active{display:block}
+.page { display:none; }
+.page.active { display:block; }
 
 .hero {
-  border:1px solid var(--border);
-  border-radius:18px;
-  padding:30px;
-  background:
-    radial-gradient(circle at 85% 40%,rgba(0,234,255,.12),transparent 35%),
-    linear-gradient(135deg,#101f35,#07101e);
-  position:relative;
-  overflow:hidden;
+  padding:22px;
+  border:1px solid var(--line);
+  border-radius:17px;
+  background:linear-gradient(120deg,#11283b,#0b1727);
+  margin-bottom:18px;
 }
 
-.hero:after {
-  content:"WSAZ";
-  position:absolute;
-  right:25px;
-  bottom:-30px;
-  font-size:100px;
-  font-weight:900;
-  color:rgba(0,234,255,.035);
-  pointer-events:none;
-}
-
-.hero h1 {
-  font-size:clamp(24px,4vw,38px);
-  margin-bottom:12px;
-}
-
-.hero h1 span{color:var(--cyan)}
-
-.hero p {
-  color:var(--muted);
-  max-width:600px;
-  line-height:1.6;
-}
-
-.hero-actions {
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:22px;
-}
-
-.btn {
-  border:1px solid var(--cyan);
-  background:rgba(0,234,255,.1);
+.eyebrow {
+  font:10px Orbitron;
   color:var(--cyan);
-  padding:12px 17px;
-  border-radius:9px;
-  font-weight:bold;
-  transition:.2s;
-}
-
-.btn:hover {
-  background:var(--cyan);
-  color:#03101a;
-  box-shadow:0 0 20px rgba(0,234,255,.3);
-}
-
-.btn.secondary {
-  border-color:#536b85;
-  color:#b6c8d9;
-  background:rgba(255,255,255,.04);
-}
-
-.grid {
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:15px;
-  margin-top:20px;
-}
-
-.card {
-  background:linear-gradient(145deg,#101e31,#091321);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:20px;
-  min-width:0;
-}
-
-.card .symbol {
-  font-size:25px;
-  margin-bottom:13px;
-}
-
-.card h3{font-size:15px;margin-bottom:9px}
-.card p{font-size:12px;color:var(--muted);line-height:1.6}
-
-.card button{margin-top:16px;width:100%}
-
-.section-title {
-  margin:28px 0 14px;
-  font-size:15px;
   letter-spacing:2px;
-  color:var(--cyan);
 }
 
-.chat-box {
-  border:1px solid var(--border);
-  border-radius:15px;
-  background:rgba(7,17,31,.88);
+.hero h1 { font-size:30px; }
+
+.hero p,.muted {
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+}
+
+/* IA */
+
+.ai-panel,.card {
+  border:1px solid var(--line);
+  border-radius:16px;
+  background:linear-gradient(145deg,#122238,#0b1625);
   overflow:hidden;
 }
 
-.chat-head {
-  padding:16px;
-  border-bottom:1px solid var(--border);
+.ai-head {
   display:flex;
   justify-content:space-between;
   align-items:center;
+  padding:15px;
+  background:#12263a;
 }
 
-.chat-head small{color:var(--muted)}
+.ai-title {
+  font:700 13px Orbitron;
+  color:var(--cyan);
+}
 
-.messages {
-  height:430px;
-  overflow-y:auto;
+.chat {
+  height:480px;
+  overflow:auto;
   padding:18px;
-  display:flex;
-  flex-direction:column;
-  gap:13px;
+  background:#091321;
 }
 
 .message {
-  max-width:85%;
-  padding:13px 15px;
-  border-radius:12px;
-  line-height:1.55;
-  font-size:13px;
+  display:flex;
+  gap:9px;
+  margin-bottom:15px;
+}
+
+.message.user { flex-direction:row-reverse; }
+
+.avatar {
+  width:32px;
+  height:32px;
+  flex-shrink:0;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:#123b51;
+  color:var(--cyan);
+}
+
+.bubble {
+  max-width:88%;
+  padding:12px 14px;
+  border:1px solid #24445d;
+  border-radius:4px 13px 13px 13px;
+  background:#112238;
+  font-size:12px;
+  line-height:1.8;
   white-space:pre-wrap;
   overflow-wrap:anywhere;
 }
 
-.message.bot {
-  align-self:flex-start;
-  background:#12243a;
-  border:1px solid rgba(0,234,255,.18);
+.message.user .bubble {
+  background:#103653;
+  border-radius:13px 4px 13px 13px;
 }
 
-.message.user {
-  align-self:flex-end;
-  background:#073d58;
-  border:1px solid rgba(0,234,255,.3);
+.bubble img {
+  display:block;
+  max-width:250px;
+  max-height:220px;
+  object-fit:contain;
+  border-radius:9px;
+  margin-top:8px;
 }
 
-.chat-input {
+.composer {
+  padding:13px;
+  border-top:1px solid var(--line);
+  background:#0e1b2b;
+}
+
+.preview-list {
   display:flex;
   gap:9px;
-  padding:13px;
-  border-top:1px solid var(--border);
+  flex-wrap:wrap;
+  margin-bottom:10px;
 }
 
-.chat-input textarea {
-  flex:1;
-  resize:none;
-  min-width:0;
-  height:48px;
-  padding:14px;
+.preview-item { position:relative; }
+
+.preview-item img {
+  width:70px;
+  height:70px;
+  object-fit:cover;
   border-radius:9px;
-  color:white;
-  background:#081323;
-  border:1px solid #203c55;
-  outline:none;
 }
 
-.chat-input textarea:focus{border-color:var(--cyan)}
-
-.chat-input button {
+.preview-item button {
+  position:absolute;
+  right:-5px;
+  top:-5px;
   border:0;
-  background:var(--cyan);
-  color:#03101a;
-  padding:0 18px;
-  border-radius:9px;
-  font-weight:bold;
+  border-radius:50%;
+  background:#ff586d;
+  color:white;
 }
 
-.file-label {
+.input-row {
   display:flex;
-  align-items:center;
-  justify-content:center;
-  border:1px solid var(--border);
-  border-radius:9px;
-  padding:0 12px;
-  color:var(--cyan);
-  cursor:pointer;
+  gap:8px;
+  align-items:end;
 }
 
-#imageInput{display:none}
+.input-row textarea {
+  flex:1;
+  min-width:0;
+  min-height:46px;
+  padding:13px;
+  background:#071321;
+  border:1px solid #31516b;
+  border-radius:10px;
+  color:white;
+}
 
-.tool-list {
+.tool,.send {
+  height:46px;
+  min-width:44px;
+  border:1px solid #31516b;
+  border-radius:10px;
+  background:#10283b;
+  color:var(--cyan);
+}
+
+.send {
+  background:var(--cyan);
+  color:#05202b;
+}
+
+/* OTIMIZAÇÃO */
+
+.mobile-hero {
+  padding:24px;
+  border-radius:18px;
+  border:1px solid #23617a;
+  background:linear-gradient(120deg,#10283d,#0a1727);
+}
+
+.benefits {
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(2,1fr);
   gap:12px;
   margin-top:15px;
 }
 
-.tool {
-  background:#0c192a;
-  border:1px solid var(--border);
-  border-radius:12px;
+.benefit {
   padding:17px;
+  border:1px solid #24475f;
+  border-radius:13px;
+  background:#0e1d2d;
 }
 
-.tool h3{font-size:14px;margin-bottom:8px}
-.tool p{font-size:12px;color:var(--muted);line-height:1.5}
-.tool button{margin-top:13px}
-
-.key-area {
-  max-width:650px;
-  margin:20px auto;
+.benefit b {
+  display:block;
+  color:#dffaff;
+  margin-bottom:7px;
 }
 
-.key-area input {
-  width:100%;
-  padding:14px;
-  margin:10px 0;
-  border-radius:9px;
-  border:1px solid var(--border);
-  background:#071323;
-  color:white;
-  outline:none;
-}
-
-.key-result {
-  margin-top:15px;
-  padding:15px;
-  border:1px dashed var(--cyan);
-  border-radius:10px;
-  color:var(--cyan);
-  word-break:break-all;
-  display:none;
-}
-
-.notice {
-  color:#9aafc2;
+.benefit span {
   font-size:11px;
   line-height:1.6;
-  margin-top:15px;
+  color:var(--muted);
 }
 
-footer {
-  margin-top:35px;
-  padding:20px 0;
-  text-align:center;
-  color:#536a80;
-  font-size:10px;
-  letter-spacing:2px;
+/* HOLOGRAMA */
+
+.holo-wrap {
+  height:460px;
+  position:relative;
+  overflow:hidden;
+  border:1px solid #28556e;
+  border-radius:18px;
+  background:radial-gradient(ellipse at center,#12354a,#08121f 68%);
 }
 
-@media(max-width:900px) {
-  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+#holoCanvas {
+  width:100%;
+  height:100%;
+  display:block;
 }
 
-@media(max-width:700px) {
+/* ADMIN */
+
+.admin-row {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.card {
+  padding:18px;
+  margin-bottom:14px;
+}
+
+.admin-output {
+  padding:12px;
+  border:1px dashed var(--cyan);
+  color:var(--cyan);
+  overflow-wrap:anywhere;
+}
+
+@media(max-width:760px) {
   .sidebar {
+    width:265px;
     transform:translateX(-105%);
-    transition:.3s;
-    box-shadow:15px 0 40px #000;
+    transition:.25s;
   }
 
-  .sidebar.open{transform:translateX(0)}
-  .main{margin-left:0;padding:17px}
-  .mobile-menu{display:block}
-  .topbar h2{font-size:14px}
-  .hero{padding:23px 18px}
-  .grid{grid-template-columns:1fr}
-  .tool-list{grid-template-columns:1fr}
-  .messages{height:390px}
-  .message{max-width:94%}
-  .chat-input{flex-wrap:wrap}
-  .chat-input textarea{flex-basis:100%}
-  .chat-input button{height:45px;flex:1}
-  .file-label{height:45px}
+  .sidebar.open { transform:translateX(0); }
+
+  .main { margin-left:0; }
+
+  .content { padding:15px 12px; }
+
+  .benefits { grid-template-columns:1fr; }
+
+  .chat { height:48vh; }
+
+  .admin-row { grid-template-columns:1fr; }
+
+  .holo-wrap { height:380px; }
 }
 </style>
 </head>
 
 <body>
 
-<div id="intro">
-  <img src="/file_000000009618820e9a50407df0e56103.png"
-       alt="WSAZ 777">
-  <h1>WSAZ_777</h1>
-  <p style="color:#8295aa;font-size:10px;letter-spacing:4px">
-    INITIALIZING SYSTEM
-  </p>
-  <div class="loader"></div>
-</div>
+<!-- ACESSO POR KEY -->
 
-<div class="app" id="app">
+<section id="accessGate">
+  <div class="access-card">
+    <div class="access-logo">WSAZ_777</div>
+    <p>NEURAL CORE · ÁREA DE ACESSO</p>
+
+    <h2>🔐 Acesso ao painel</h2>
+    <p>Insira a KEY fornecida pelo administrador.</p>
+
+    <input class="field" id="accessKey"
+      placeholder="WSAZ-777-XXXXXX-XXXXXX">
+
+    <button class="primary" id="accessBtn">
+      VALIDAR E ENTRAR
+    </button>
+
+    <p id="accessError"></p>
+  </div>
+</section>
+
+<!-- PAINEL -->
+
+<div id="app">
 
 <aside class="sidebar" id="sidebar">
-  <div class="logo">
+
+  <div class="brand">
     WSAZ_777
-    <small>ADVANCED AI SYSTEM</small>
+    <small>NEURAL CORE · AI SYSTEM</small>
   </div>
 
-  <div class="nav-title">MENU PRINCIPAL</div>
+  <div class="nav-label">INTELIGÊNCIA</div>
 
   <nav class="nav">
-    <button class="active" data-page="home">⌂ &nbsp; Dashboard</button>
-    <button data-page="chat">◈ &nbsp; Inteligência Artificial</button>
-    <button data-page="mobile">▣ &nbsp; Otimizar celular</button>
-    <button data-page="pc">▤ &nbsp; Otimizar PC</button>
-    <button data-page="keys">⌘ &nbsp; Sistema de Keys</button>
+    <button class="active" data-page="assistant">🤖 Assistente IA</button>
+    <button data-page="cloud">☁️ Neural Cloud 360°</button>
+
+    <div class="nav-label">OTIMIZAÇÃO</div>
+
+    <button data-page="mobile">📱 Melhor experiência mobile</button>
+    <button data-page="pc">💻 Otimização para PC</button>
+
+    <div class="nav-label">ADMINISTRAÇÃO</div>
+
+    <button data-page="owner">🔐 Área do dono</button>
+    <button data-page="contact">✉ Suporte</button>
   </nav>
 
-  <div class="sidebar-bottom">
-    <div class="status">
-      <span class="dot" id="statusDot"></span>
-      <span id="statusText">Verificando conexão...</span>
-    </div>
-  </div>
+  <button class="primary" id="logoutBtn">SAIR DO PAINEL</button>
+
 </aside>
 
 <main class="main">
 
-  <header class="topbar">
-    <div style="display:flex;align-items:center;gap:12px">
-      <button class="mobile-menu" id="menuButton">☰</button>
-      <h2>WSAZ <span>CONTROL CENTER</span></h2>
+<header class="topbar">
+  <b>WSAZ_777 · CONTROL CENTER</b>
+  <span id="serverStatus">● VERIFICANDO</span>
+</header>
+
+<div class="content">
+
+<!-- IA -->
+
+<section class="page active" id="page-assistant">
+
+  <div class="hero">
+    <div class="eyebrow">ARTIFICIAL INTELLIGENCE</div>
+    <h1>🤖 WSAZ_777 IA</h1>
+    <p>Converse, envie imagens e use sua voz. Sua inteligência artificial está no centro do painel. 🚀</p>
+  </div>
+
+  <div class="ai-panel">
+
+    <div class="ai-head">
+      <div class="ai-title">✦ WSAZ_777 AI ASSISTANT</div>
+
+      <select id="responseStyle">
+        <option value="concise">Direta</option>
+        <option value="normal" selected>Normal</option>
+        <option value="detailed">Completa</option>
+      </select>
     </div>
-    <span>● SYSTEM ONLINE</span>
-  </header>
 
-  <!-- DASHBOARD -->
-  <section class="page active" id="home">
+    <div class="chat" id="chat">
+      <div class="message">
+        <div class="avatar">AI</div>
+        <div class="bubble">
+          Olá! 👋 Eu sou a WSAZ_777 IA.
 
-    <div class="hero">
-      <h1>WELCOME TO <span>WSAZ_777</span></h1>
-      <p>
-        Central de inteligência artificial, ferramentas e otimização.
-        Seu sistema está pronto para receber comandos.
+          Posso ajudar com tecnologia, jogos, Android, PC, estudos e programação.
+
+          Envie sua pergunta ou uma imagem! 🚀
+        </div>
+      </div>
+    </div>
+
+    <div id="typing" style="display:none;padding:10px">
+      🤖 WSAZ_777 está pensando...
+    </div>
+
+    <div class="composer">
+
+      <div class="preview-list" id="previewList"></div>
+
+      <div class="input-row">
+
+        <input type="file" id="imageInput"
+          accept="image/png,image/jpeg,image/webp"
+          multiple hidden>
+
+        <button class="tool" id="attachBtn">＋</button>
+        <button class="tool" id="pasteBtn">📋</button>
+        <button class="tool" id="voiceBtn">🎙️</button>
+
+        <textarea id="messageInput"
+          placeholder="Digite sua mensagem..."></textarea>
+
+        <button class="send" id="sendBtn">➤</button>
+
+      </div>
+
+      <p class="muted">
+        ENTER envia · SHIFT + ENTER quebra linha · Até 5 imagens
       </p>
 
-      <div class="hero-actions">
-        <button class="btn" onclick="showPage('chat')">
-          ACESSAR IA
-        </button>
-        <button class="btn secondary" onclick="showPage('mobile')">
-          OTIMIZAR DISPOSITIVO
-        </button>
-      </div>
     </div>
+  </div>
+</section>
 
-    <h3 class="section-title">SYSTEM MODULES</h3>
+<!-- CLOUD 360 -->
 
-    <div class="grid">
-      <div class="card">
-        <div class="symbol">◈</div>
-        <h3>INTELIGÊNCIA ARTIFICIAL</h3>
-        <p>Converse com a IA WSAZ_777 através da conexão com seu servidor.</p>
-        <button class="btn" onclick="showPage('chat')">ABRIR IA</button>
-      </div>
+<section class="page" id="page-cloud">
 
-      <div class="card">
-        <div class="symbol">▣</div>
-        <h3>MOBILE OPTIMIZER</h3>
-        <p>Recomendações para melhorar o desempenho e a organização do celular.</p>
-        <button class="btn" onclick="showPage('mobile')">ACESSAR</button>
-      </div>
+  <div class="hero">
+    <div class="eyebrow">HOLOGRAPHIC INTERFACE / 360°</div>
+    <h1>☁️ WSAZ Neural Cloud</h1>
+    <p>Avatar holográfico 3D com rotação contínua, partículas e brilho ciano.</p>
+  </div>
 
-      <div class="card">
-        <div class="symbol">▤</div>
-        <h3>PC OPTIMIZER</h3>
-        <p>Ferramentas e orientações para manutenção do computador.</p>
-        <button class="btn" onclick="showPage('pc')">ACESSAR</button>
-      </div>
+  <div class="holo-wrap">
+    <canvas id="holoCanvas"></canvas>
+  </div>
 
-      <div class="card">
-        <div class="symbol">⌘</div>
-        <h3>KEY SYSTEM</h3>
-        <p>Gere uma chave demonstrativa ou insira uma chave de acesso.</p>
-        <button class="btn" onclick="showPage('keys')">ACESSAR</button>
-      </div>
+  <button class="tool" id="rotateBtn">Ⅱ PAUSAR ROTAÇÃO</button>
+  <button class="tool" id="resetView">↻ REINICIAR</button>
 
-      <div class="card">
-        <div class="symbol">◉</div>
-        <h3>SERVER STATUS</h3>
-        <p>Verifique a comunicação entre o painel e o servidor da inteligência artificial.</p>
-        <button class="btn secondary" onclick="checkServer()">VERIFICAR</button>
-      </div>
+</section>
 
-      <div class="card">
-        <div class="symbol">✉</div>
-        <h3>SUPORTE</h3>
-        <p>Entre em contato para solicitar o manual de utilização.</p>
-        <button class="btn secondary" onclick="requestManual('WSAZ_777')">SOLICITAR MANUAL</button>
-      </div>
-    </div>
-  </section>
+<!-- CELULAR -->
 
-  <!-- CHAT -->
-  <section class="page" id="chat">
-    <h2 class="section-title">◈ WSAZ ARTIFICIAL INTELLIGENCE</h2>
+<section class="page" id="page-mobile">
 
-    <div class="chat-box">
-      <div class="chat-head">
-        <div>
-          <strong>WSAZ_777 AI</strong><br>
-          <small id="chatStatus">Conectando ao servidor...</small>
-        </div>
-        <span style="color:var(--cyan)">● AI</span>
-      </div>
+  <div class="mobile-hero">
 
-      <div class="messages" id="messages">
-        <div class="message bot">
-          Olá! Eu sou a WSAZ_777 AI. Como posso ajudar?
-        </div>
-      </div>
+    <div class="eyebrow">MOBILE PERFORMANCE EXPERIENCE</div>
 
-      <div class="chat-input">
-        <label class="file-label" for="imageInput" title="Enviar imagem">＋ IMG</label>
-        <input type="file" id="imageInput" accept="image/*">
+    <h1>🚀 Melhor experiência para o celular</h1>
 
-        <textarea id="userMessage"
-          placeholder="Digite sua mensagem para a IA..."></textarea>
-
-        <button id="sendButton" onclick="sendMessage()">ENVIAR ➤</button>
-      </div>
-    </div>
-
-    <p class="notice">
-      A IA utiliza o servidor configurado no seu projeto Node.js.
-      Não coloque chaves secretas diretamente nesta página.
+    <p class="muted">
+      Mais fluidez, velocidade e organização para aproveitar melhor seu aparelho.
     </p>
-  </section>
 
-  <!-- CELULAR -->
-  <section class="page" id="mobile">
-    <h2 class="section-title">▣ MOBILE OPTIMIZER</h2>
+    <div class="benefits">
 
-    <div class="hero">
-      <h1>OTIMIZAÇÃO <span>MOBILE</span></h1>
-      <p>
-        Confira recomendações para cuidar do desempenho do seu celular.
-        As ações abaixo mostram configurações que você pode revisar manualmente.
-      </p>
+      <div class="benefit">
+        <b>⚡ Mais velocidade</b>
+        <span>Revise aplicativos em segundo plano e mantenha o sistema atualizado.</span>
+      </div>
+
+      <div class="benefit">
+        <b>🎮 Menos lag nos jogos</b>
+        <span>Feche downloads durante as partidas e confira a estabilidade da conexão.</span>
+      </div>
+
+      <div class="benefit">
+        <b>📱 Menos travamentos</b>
+        <span>Mantenha espaço livre e evite muitos aplicativos pesados abertos.</span>
+      </div>
+
+      <div class="benefit">
+        <b>✨ Mais fluidez</b>
+        <span>Confira as opções de taxa de atualização de tela, quando disponíveis.</span>
+      </div>
+
+      <div class="benefit">
+        <b>🔋 Bateria bem aproveitada</b>
+        <span>Identifique aplicativos que consomem muita energia.</span>
+      </div>
+
+      <div class="benefit">
+        <b>🧹 Mais organização</b>
+        <span>Revise downloads e arquivos antes de remover qualquer conteúdo.</span>
+      </div>
+
     </div>
+  </div>
 
-    <div class="tool-list">
-      <div class="tool">
-        <h3>⚡ Desempenho</h3>
-        <p>Revise os aplicativos em segundo plano e feche os que não estiver usando.</p>
-        <button class="btn" onclick="showTip('Desempenho','Feche aplicativos que não estão sendo utilizados e mantenha o sistema atualizado.')">OTIMIZAR</button>
-      </div>
+</section>
 
-      <div class="tool">
-        <h3>▣ Armazenamento</h3>
-        <p>Confira arquivos grandes, downloads e aplicativos que ocupam espaço.</p>
-        <button class="btn" onclick="showTip('Armazenamento','Revise seus downloads e arquivos duplicados antes de apagar qualquer conteúdo.')">ANALISAR</button>
-      </div>
+<!-- PC -->
 
-      <div class="tool">
-        <h3>🔋 Bateria</h3>
-        <p>Confira quais aplicativos estão consumindo mais bateria.</p>
-        <button class="btn" onclick="showTip('Bateria','Verifique o consumo de bateria nas configurações do Android e ajuste os aplicativos que você não usa.')">VER DICAS</button>
-      </div>
+<section class="page" id="page-pc">
 
-      <div class="tool">
-        <h3>⚙ Atualizações</h3>
-        <p>Confira atualizações disponíveis para o Android e seus aplicativos.</p>
-        <button class="btn" onclick="showTip('Atualizações','Abra as configurações do aparelho e procure a seção Atualização de software.')">VER DICAS</button>
-      </div>
+  <div class="hero">
+    <h1>💻 Otimização para PC</h1>
+    <p>Guias de manutenção, desempenho e organização do Windows.</p>
+  </div>
 
-      <div class="tool">
-        <h3>📱 Aplicativos</h3>
-        <p>Revise permissões e notificações dos aplicativos instalados.</p>
-        <button class="btn" onclick="showTip('Aplicativos','Revise as permissões de cada aplicativo e desative apenas as que não são necessárias.')">ANALISAR</button>
-      </div>
+  <div class="card">
+    <h3>⚡ Inicialização</h3>
+    <p>Revise os programas que iniciam com o Windows.</p>
+    <a href="https://support.microsoft.com/windows" target="_blank">SUPORTE MICROSOFT ↗</a>
+  </div>
 
-      <div class="tool">
-        <h3>📖 Manual mobile</h3>
-        <p>Solicite o manual de otimização para celular.</p>
-        <button class="btn" onclick="requestManual('Otimização de celular')">OBTER MANUAL</button>
-      </div>
-    </div>
-  </section>
+  <div class="card">
+    <h3>🧹 Armazenamento</h3>
+    <p>Use as ferramentas de armazenamento do Windows.</p>
+    <a href="https://support.microsoft.com/windows" target="_blank">GUIAS WINDOWS ↗</a>
+  </div>
 
-  <!-- PC -->
-  <section class="page" id="pc">
-    <h2 class="section-title">▤ PC OPTIMIZER</h2>
+  <div class="card">
+    <h3>🎮 Drivers NVIDIA</h3>
+    <p>Baixe drivers diretamente do fabricante.</p>
+    <a href="https://www.nvidia.com/Download/index.aspx" target="_blank">NVIDIA DRIVERS ↗</a>
+  </div>
 
-    <div class="hero">
-      <h1>OTIMIZAÇÃO <span>PC</span></h1>
-      <p>
-        Ferramentas e orientações para manutenção, organização e desempenho
-        do seu computador Windows.
-      </p>
-    </div>
+</section>
 
-    <div class="tool-list">
-      <div class="tool">
-        <h3>⚡ Inicialização</h3>
-        <p>Revise os programas que iniciam junto com o Windows.</p>
-        <button class="btn" onclick="showTip('Inicialização','Abra o Gerenciador de Tarefas e revise a aba Aplicativos de Inicialização. Desative somente o que reconhecer e não precisar.')">VER ORIENTAÇÃO</button>
-      </div>
+<!-- ADMINISTRAÇÃO -->
 
-      <div class="tool">
-        <h3>▤ Armazenamento</h3>
-        <p>Confira o espaço disponível e os arquivos temporários.</p>
-        <button class="btn" onclick="showTip('Armazenamento','Use as configurações de Armazenamento do Windows para analisar arquivos temporários antes de removê-los.')">ANALISAR</button>
-      </div>
+<section class="page" id="page-owner">
 
-      <div class="tool">
-        <h3>🛡 Segurança</h3>
-        <p>Confira atualizações e verificações de segurança do Windows.</p>
-        <button class="btn" onclick="showTip('Segurança','Abra a Segurança do Windows e confira se a proteção contra ameaças está ativa.')">VER DICAS</button>
-      </div>
+  <div class="hero">
+    <h1>🔐 Área exclusiva do dono</h1>
+    <p>Somente o administrador pode gerar, consultar e revogar Keys.</p>
+  </div>
 
-      <div class="tool">
-        <h3>⚙ Atualizações</h3>
-        <p>Confira atualizações do sistema e dos drivers.</p>
-        <button class="btn" onclick="showTip('Atualizações','Abra Configurações > Windows Update e verifique atualizações disponíveis.')">VER DICAS</button>
-      </div>
+  <div class="card">
 
-      <div class="tool">
-        <h3>📊 Desempenho</h3>
-        <p>Confira o uso de memória, processador e disco.</p>
-        <button class="btn" onclick="showTip('Desempenho','Use o Gerenciador de Tarefas para identificar quais programas estão utilizando mais recursos.')">ANALISAR</button>
-      </div>
+    <h3>Autenticação administrativa</h3>
 
-      <div class="tool">
-        <h3>📖 Manual PC</h3>
-        <p>Solicite o manual de otimização para computador.</p>
-        <button class="btn" onclick="requestManual('Otimização de PC')">OBTER MANUAL</button>
-      </div>
-    </div>
-  </section>
+    <input class="field" type="password"
+      id="adminSecret"
+      placeholder="Chave administrativa">
 
-  <!-- KEYS -->
-  <section class="page" id="keys">
-    <h2 class="section-title">⌘ WSAZ KEY SYSTEM</h2>
+    <button class="primary" id="adminConnect">
+      ENTRAR NA ADMINISTRAÇÃO
+    </button>
 
-    <div class="card key-area">
-      <div style="text-align:center">
-        <div style="font-size:35px">🔐</div>
-        <h2 style="color:var(--cyan);margin:10px">KEY GENERATOR</h2>
-        <p>Gere uma chave demonstrativa para identificar sua solicitação.</p>
-      </div>
+    <p id="adminError"></p>
 
-      <button class="btn" style="width:100%;margin-top:20px"
-        onclick="generateKey()">GERAR KEY</button>
+  </div>
 
-      <div class="key-result" id="generatedKey"></div>
+  <div class="card hidden" id="adminTools">
 
-      <button class="btn secondary" style="width:100%;margin-top:10px"
-        onclick="copyKey()">COPIAR KEY</button>
+    <h3>➕ Gerar KEY</h3>
 
-      <hr style="border-color:var(--border);margin:25px 0">
+    <input class="field" id="tokenLabel"
+      value="Acesso ao painel"
+      placeholder="Identificação">
 
-      <h3>INSERIR KEY</h3>
-      <input id="keyInput" placeholder="Digite sua KEY aqui">
+    <input class="field" id="tokenDays"
+      type="number" min="1" max="365" value="30"
+      placeholder="Validade em dias">
 
-      <button class="btn" style="width:100%"
-        onclick="insertKey()">VALIDAR KEY</button>
+    <input class="field" id="tokenUses"
+      type="number" min="1" max="500" value="1"
+      placeholder="Número de utilizações">
 
-      <p id="keyStatus" class="notice"></p>
+    <button class="primary" id="generateToken">GERAR KEY</button>
 
-      <button class="btn secondary" style="width:100%;margin-top:15px"
-        onclick="requestManual('Sistema de Keys')">
-        OBTER MANUAL PELO WHATSAPP
-      </button>
+    <div class="admin-output hidden" id="newToken"></div>
 
-      <p class="notice">
-        Atenção: as chaves geradas nesta versão são demonstrativas e ficam
-        salvas somente neste navegador. Elas não são licenças seguras nem
-        validam compras ou acessos no servidor.
-      </p>
-    </div>
-  </section>
+    <button class="tool" id="copyToken">COPIAR KEY</button>
 
-  <footer>
-    WSAZ_777 · ADVANCED AI SYSTEM · 2026
-  </footer>
+    <hr style="border-color:var(--line);margin:20px 0">
 
+    <h3>📋 KEYS emitidas</h3>
+
+    <button class="tool" id="refreshTokens">ATUALIZAR LISTA</button>
+
+    <div id="tokenList"></div>
+
+  </div>
+
+</section>
+
+<!-- SUPORTE -->
+
+<section class="page" id="page-contact">
+
+  <div class="hero">
+    <h1>✉ Central de suporte</h1>
+    <p>Solicite ajuda ou o manual de utilização.</p>
+  </div>
+
+  <div class="card">
+    <h3>Atendimento</h3>
+    <a href="https://wa.me/5587981368837" target="_blank">
+      ABRIR WHATSAPP ↗
+    </a>
+  </div>
+
+</section>
+
+</div>
 </main>
 </div>
 
-<script>
-/* INICIALIZAÇÃO */
+<script type="module">
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
-const intro = document.getElementById("intro");
-const app = document.getElementById("app");
+const $ = id => document.getElementById(id);
 
-window.addEventListener("load", () => {
-  setTimeout(() => {
-    intro.style.opacity = "0";
-    setTimeout(() => {
-      intro.style.display = "none";
-      app.style.display = "block";
-    }, 700);
-  }, 1700);
+let history = [];
+let selectedImages = [];
+let busy = false;
+let adminKey = "";
+let latestToken = "";
+let recognition = null;
 
-  checkServer();
+/* ACESSO */
+
+async function checkAccess() {
+  try {
+    const r = await fetch("/api/access/status");
+    const d = await r.json();
+
+    if (d.authenticated) {
+      $("accessGate").classList.add("hidden");
+      $("app").style.display = "block";
+      health();
+    }
+  } catch {}
+}
+
+$("accessBtn").onclick = async () => {
+  const error = $("accessError");
+  error.textContent = "Validando KEY...";
+
+  try {
+    const r = await fetch("/api/access/validate", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        token:$("accessKey").value
+      })
+    });
+
+    const d = await r.json();
+
+    if (!r.ok || !d.valid) throw Error(d.message);
+
+    error.textContent = "";
+    $("accessGate").classList.add("hidden");
+    $("app").style.display = "block";
+    health();
+
+  } catch(e) {
+    error.textContent = e.message || "KEY inválida.";
+  }
+};
+
+$("accessKey").addEventListener("keydown",e=>{
+  if(e.key==="Enter") $("accessBtn").click();
 });
+
+$("logoutBtn").onclick = async () => {
+  await fetch("/api/access/logout",{method:"POST"});
+  location.reload();
+};
 
 /* NAVEGAÇÃO */
 
-function showPage(page) {
-  document.querySelectorAll(".page").forEach(p => {
+function showPage(name) {
+  document.querySelectorAll(".page").forEach(p=>{
     p.classList.remove("active");
   });
 
-  document.querySelectorAll(".nav button").forEach(b => {
-    b.classList.remove("active");
+  document.querySelectorAll(".nav button[data-page]").forEach(b=>{
+    b.classList.toggle("active",b.dataset.page===name);
   });
 
-  const selected = document.getElementById(page);
-  if (selected) selected.classList.add("active");
-
-  const button = document.querySelector(
-    `.nav button[data-page="${page}"]`
-  );
-
-  if (button) button.classList.add("active");
-
-  document.getElementById("sidebar").classList.remove("open");
-  window.scrollTo({top:0,behavior:"smooth"});
+  $("page-"+name).classList.add("active");
 }
 
-document.querySelectorAll(".nav button").forEach(button => {
-  button.addEventListener("click", () => {
-    showPage(button.dataset.page);
+document.querySelectorAll(".nav button[data-page]").forEach(b=>{
+  b.onclick=()=>showPage(b.dataset.page);
+});
+
+/* FORMATAÇÃO DA IA */
+
+function cleanAnswer(text) {
+  return String(text || "")
+    .replace(/\*\*(.*?)\*\*/gs,"$1")
+    .replace(/__(.*?)__/gs,"$1")
+    .replace(/(?<!\w)\*([^*\n]+)\*(?!\w)/g,"$1")
+    .replace(/(?<!\w)_([^_\n]+)_(?!\w)/g,"$1")
+    .replace(/^\s*#{1,6}\s*/gm,"")
+    .trim();
+}
+
+/* MENSAGENS */
+
+function addMessage(role,text,images=[]) {
+  const row=document.createElement("div");
+  row.className="message "+(role==="user"?"user":"");
+
+  const avatar=document.createElement("div");
+  avatar.className="avatar";
+  avatar.textContent=role==="user"?"EU":"AI";
+
+  const bubble=document.createElement("div");
+  bubble.className="bubble";
+  bubble.textContent=role==="assistant"?cleanAnswer(text):text;
+
+  images.forEach(src=>{
+    const img=document.createElement("img");
+    img.src=src;
+    img.alt="Imagem enviada";
+    bubble.appendChild(img);
   });
-});
 
-document.getElementById("menuButton").addEventListener("click", () => {
-  document.getElementById("sidebar").classList.toggle("open");
-});
-
-/* STATUS DO SERVIDOR */
-
-async function checkServer() {
-  const dot = document.getElementById("statusDot");
-  const status = document.getElementById("statusText");
-  const chatStatus = document.getElementById("chatStatus");
-
-  try {
-    const response = await fetch("/api/health", {
-      method:"GET",
-      cache:"no-store"
-    });
-
-    if (!response.ok) throw new Error("Servidor indisponível");
-
-    dot.classList.add("online");
-    status.textContent = "Servidor conectado";
-    chatStatus.textContent = "Servidor conectado";
-  } catch (error) {
-    dot.classList.remove("online");
-    status.textContent = "Servidor não respondeu";
-    chatStatus.textContent = "Não foi possível verificar o servidor";
-  }
+  row.append(avatar,bubble);
+  $("chat").appendChild(row);
+  $("chat").scrollTop=$("chat").scrollHeight;
 }
 
-/* CHAT COM IA */
+/* IMAGENS */
 
-const messages = document.getElementById("messages");
-const input = document.getElementById("userMessage");
-const sendButton = document.getElementById("sendButton");
+function resizeImage(file) {
+  return new Promise((resolve,reject)=>{
+    if(!/^image\/(jpeg|png|webp)$/.test(file.type))
+      return reject(Error("Use JPG, PNG ou WEBP."));
 
-let conversationHistory = [];
-let selectedImage = null;
+    const reader=new FileReader();
 
-function addMessage(text, type) {
-  const div = document.createElement("div");
-  div.className = "message " + type;
-  div.textContent = text;
-  messages.appendChild(div);
-  messages.scrollTop = messages.scrollHeight;
-}
+    reader.onload=()=>{
+      const img=new Image();
 
-document.getElementById("imageInput").addEventListener("change", event => {
-  const file = event.target.files[0];
+      img.onload=()=>{
+        const scale=Math.min(1,1300/Math.max(img.width,img.height));
+        const canvas=document.createElement("canvas");
 
-  if (!file) {
-    selectedImage = null;
-    return;
-  }
+        canvas.width=Math.round(img.width*scale);
+        canvas.height=Math.round(img.height*scale);
 
-  if (!file.type.startsWith("image/")) {
-    alert("Selecione um arquivo de imagem.");
-    event.target.value = "";
-    return;
-  }
+        canvas.getContext("2d").drawImage(
+          img,0,0,canvas.width,canvas.height
+        );
 
-  if (file.size > 5 * 1024 * 1024) {
-    alert("A imagem deve ter no máximo 5 MB.");
-    event.target.value = "";
-    return;
-  }
+        resolve(canvas.toDataURL("image/jpeg",.72));
+      };
 
-  const reader = new FileReader();
-
-  reader.onload = () => {
-    selectedImage = reader.result;
-    addMessage("Imagem selecionada: " + file.name, "user");
-  };
-
-  reader.readAsDataURL(file);
-});
-
-async function sendMessage() {
-  const message = input.value.trim();
-
-  if (!message && !selectedImage) return;
-
-  addMessage(message || "Analise esta imagem, por favor.", "user");
-
-  input.value = "";
-  sendButton.disabled = true;
-  sendButton.textContent = "...";
-
-  const imageToSend = selectedImage;
-  selectedImage = null;
-  document.getElementById("imageInput").value = "";
-
-  addMessage("WSAZ_777 está processando sua mensagem...", "bot");
-  const loadingMessage = messages.lastElementChild;
-
-  try {
-    const payload = {
-      message: message || "Analise esta imagem, por favor.",
-      history: conversationHistory
+      img.src=reader.result;
     };
 
-    if (imageToSend) {
-      payload.image = imageToSend;
+    reader.onerror=()=>reject(Error("Falha ao ler imagem."));
+    reader.readAsDataURL(file);
+  });
+}
+
+function renderPreviews() {
+  $("previewList").replaceChildren();
+
+  selectedImages.forEach((src,i)=>{
+    const box=document.createElement("div");
+    box.className="preview-item";
+
+    const img=document.createElement("img");
+    img.src=src;
+
+    const btn=document.createElement("button");
+    btn.textContent="×";
+
+    btn.onclick=()=>{
+      selectedImages.splice(i,1);
+      renderPreviews();
+    };
+
+    box.append(img,btn);
+    $("previewList").appendChild(box);
+  });
+}
+
+async function addFiles(files) {
+  for(const file of Array.from(files).slice(0,5-selectedImages.length)) {
+    try {
+      selectedImages.push(await resizeImage(file));
+    } catch(e) {
+      alert(e.message);
+    }
+  }
+
+  renderPreviews();
+}
+
+$("attachBtn").onclick=()=>$("imageInput").click();
+
+$("imageInput").onchange=async e=>{
+  await addFiles(e.target.files);
+  e.target.value="";
+};
+
+/* COLAR IMAGEM */
+
+$("pasteBtn").onclick=async()=>{
+  try {
+    const items=await navigator.clipboard.read();
+
+    for(const item of items) {
+      const type=item.types.find(t=>t.startsWith("image/"));
+
+      if(type) {
+        const blob=await item.getType(type);
+        await addFiles([new File([blob],"imagem.png",{type})]);
+        return;
+      }
     }
 
-    const response = await fetch("/api/chat", {
+    alert("Nenhuma imagem encontrada.");
+  } catch {
+    alert("Permita o acesso à área de transferência.");
+  }
+};
+
+$("messageInput").addEventListener("paste",async e=>{
+  const files=Array.from(e.clipboardData?.items||[])
+    .filter(x=>x.type.startsWith("image/"))
+    .map(x=>x.getAsFile())
+    .filter(Boolean);
+
+  if(files.length) {
+    e.preventDefault();
+    await addFiles(files);
+  }
+});
+
+/* ENVIAR PARA IA */
+
+async function sendMessage() {
+  if(busy) return;
+
+  const message=$("messageInput").value.trim();
+
+  if(!message&&!selectedImages.length) return;
+
+  const images=[...selectedImages];
+
+  addMessage("user",message||"Analise esta imagem.",images);
+
+  $("messageInput").value="";
+  selectedImages=[];
+  renderPreviews();
+
+  busy=true;
+  $("sendBtn").disabled=true;
+  $("typing").style.display="block";
+
+  try {
+    const r=await fetch("/api/chat",{
       method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify(payload)
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        message,
+        images,
+        history,
+        responseStyle:$("responseStyle").value
+      })
     });
 
-    const data = await response.json().catch(() => ({}));
+    const d=await r.json();
 
-    if (!response.ok) {
-      throw new Error(data.error || data.message || "Erro na comunicação com a IA.");
+    if(r.status===401) {
+      location.reload();
+      return;
     }
 
-    const reply =
-      data.reply ||
-      data.response ||
-      data.content ||
-      data.message ||
-      data.choices?.[0]?.message?.content ||
-      "A IA respondeu, mas não foi possível identificar o formato da resposta.";
+    if(!r.ok) throw Error(d.reply||"Erro na IA.");
 
-    loadingMessage.textContent = reply;
+    const answer=cleanAnswer(d.reply);
 
-    conversationHistory.push(
-      {role:"user",content:message || "Analise esta imagem, por favor."},
-      {role:"assistant",content:reply}
+    addMessage("assistant",answer);
+
+    history.push(
+      {role:"user",content:message||"Analise a imagem."},
+      {role:"assistant",content:answer}
     );
 
-    if (conversationHistory.length > 20) {
-      conversationHistory = conversationHistory.slice(-20);
-    }
+    history=history.slice(-12);
 
-  } catch (error) {
-    loadingMessage.textContent =
-      "Não consegui conectar com a IA.\n\n" +
-      error.message +
-      "\n\nConfira o server.js e as variáveis de ambiente no Render.";
+  } catch(e) {
+    addMessage("assistant","⚠️ "+e.message);
   } finally {
-    sendButton.disabled = false;
-    sendButton.textContent = "ENVIAR ➤";
-    messages.scrollTop = messages.scrollHeight;
+    busy=false;
+    $("sendBtn").disabled=false;
+    $("typing").style.display="none";
   }
 }
 
-input.addEventListener("keydown", event => {
-  if (event.key === "Enter" && !event.shiftKey) {
-    event.preventDefault();
+$("sendBtn").onclick=sendMessage;
+
+$("messageInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter"&&!e.shiftKey) {
+    e.preventDefault();
     sendMessage();
   }
 });
 
-/* OTIMIZAÇÃO */
+/* MICROFONE */
 
-function showTip(title, message) {
-  alert(title + "\n\n" + message);
+$("voiceBtn").onclick=async()=>{
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+
+  if(!SR) {
+    alert("Ditado por voz indisponível neste navegador.");
+    return;
+  }
+
+  try {
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    stream.getTracks().forEach(t=>t.stop());
+
+    recognition=new SR();
+    recognition.lang="pt-BR";
+    recognition.interimResults=false;
+
+    recognition.onresult=e=>{
+      $("messageInput").value +=
+        ($("messageInput").value?" ":"")+
+        e.results[0][0].transcript;
+    };
+
+    recognition.onerror=e=>{
+      alert("Erro no microfone: "+e.error);
+    };
+
+    recognition.start();
+
+  } catch {
+    alert("Permita o acesso ao microfone nas configurações do navegador.");
+  }
+};
+
+/* SERVIDOR */
+
+async function health() {
+  try {
+    const r=await fetch("/api/health");
+    const d=await r.json();
+
+    $("serverStatus").textContent=
+      r.ok?"● SISTEMA ONLINE":"● SERVIDOR INDISPONÍVEL";
+
+  } catch {
+    $("serverStatus").textContent="● SEM CONEXÃO";
+  }
 }
 
-/* SISTEMA DE KEYS DEMONSTRATIVO */
+/* ADMINISTRAÇÃO */
 
-let currentGeneratedKey = "";
+$("adminConnect").onclick=async()=>{
+  adminKey=$("adminSecret").value.trim();
 
-function generateKey() {
-  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  try {
+    const r=await fetch("/api/admin/tokens",{
+      headers:{"x-admin-key":adminKey}
+    });
 
-  function part() {
-    let result = "";
-    for (let i = 0; i < 4; i++) {
-      result += chars[Math.floor(Math.random() * chars.length)];
+    const d=await r.json();
+
+    if(!r.ok) throw Error(d.error||"Acesso negado.");
+
+    $("adminTools").classList.remove("hidden");
+    renderTokenList(d.tokens||[]);
+
+  } catch(e) {
+    adminKey="";
+    $("adminError").textContent=e.message;
+  }
+};
+
+async function adminFetch(url,options={}) {
+  const r=await fetch(url,{
+    ...options,
+    headers:{
+      ...(options.headers||{}),
+      "x-admin-key":adminKey
     }
-    return result;
-  }
+  });
 
-  currentGeneratedKey =
-    "WSAZ-" + part() + "-" + part() + "-" + part();
+  const d=await r.json();
 
-  localStorage.setItem("wsaz_demo_key", currentGeneratedKey);
+  if(!r.ok) throw Error(d.error||"Ação não autorizada.");
 
-  const result = document.getElementById("generatedKey");
-  result.style.display = "block";
-  result.textContent = currentGeneratedKey;
-
-  document.getElementById("keyStatus").textContent =
-    "KEY demonstrativa gerada neste navegador.";
+  return d;
 }
 
-function copyKey() {
-  if (!currentGeneratedKey) {
-    currentGeneratedKey = localStorage.getItem("wsaz_demo_key") || "";
-  }
+$("generateToken").onclick=async()=>{
+  try {
+    const d=await adminFetch("/api/admin/tokens",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        label:$("tokenLabel").value,
+        days:Number($("tokenDays").value),
+        maxUses:Number($("tokenUses").value)
+      })
+    });
 
-  if (!currentGeneratedKey) {
-    alert("Gere uma KEY primeiro.");
+    latestToken=d.token;
+
+    $("newToken").classList.remove("hidden");
+    $("newToken").textContent="KEY GERADA: "+d.token;
+
+    await refreshTokens();
+
+  } catch(e) {
+    $("adminError").textContent=e.message;
+  }
+};
+
+$("copyToken").onclick=async()=>{
+  if(!latestToken) return alert("Gere uma KEY primeiro.");
+
+  await navigator.clipboard.writeText(latestToken);
+  alert("KEY copiada!");
+};
+
+async function refreshTokens() {
+  const d=await adminFetch("/api/admin/tokens");
+  renderTokenList(d.tokens||[]);
+}
+
+$("refreshTokens").onclick=()=>{
+  refreshTokens().catch(e=>$("adminError").textContent=e.message);
+};
+
+function renderTokenList(tokens) {
+  const list=$("tokenList");
+  list.replaceChildren();
+
+  if(!tokens.length) {
+    list.textContent="Nenhuma KEY emitida.";
     return;
   }
 
-  navigator.clipboard.writeText(currentGeneratedKey)
-    .then(() => alert("KEY copiada!"))
-    .catch(() => alert("Não foi possível copiar automaticamente."));
+  tokens.forEach(t=>{
+    const row=document.createElement("div");
+    row.className="card";
+
+    const info=document.createElement("span");
+    info.textContent=
+      `#${t.id} · ${t.label} · ${t.uses}/${t.max_uses} usos · ${t.active?"ATIVA":"REVOGADA"}`;
+
+    row.appendChild(info);
+
+    if(t.active) {
+      const btn=document.createElement("button");
+      btn.className="tool";
+      btn.textContent="REVOGAR";
+
+      btn.onclick=async()=>{
+        if(!confirm("Revogar esta KEY?")) return;
+
+        await adminFetch(`/api/admin/tokens/${t.id}/revoke`,{
+          method:"POST"
+        });
+
+        await refreshTokens();
+      };
+
+      row.appendChild(btn);
+    }
+
+    list.appendChild(row);
+  });
 }
 
-function insertKey() {
-  const key = document.getElementById("keyInput").value.trim();
-  const status = document.getElementById("keyStatus");
+/* HOLOGRAMA 3D */
 
-  const savedKey = localStorage.getItem("wsaz_demo_key");
+let scene,camera,renderer,head;
+let autoRotate=true;
+let drag=false;
+let lastX=0,lastY=0;
 
-  if (!key) {
-    status.textContent = "Digite uma KEY.";
-    return;
+const canvas=$("holoCanvas");
+
+function initHolo() {
+  scene=new THREE.Scene();
+
+  camera=new THREE.PerspectiveCamera(42,1,.1,100);
+  camera.position.z=5.5;
+
+  renderer=new THREE.WebGLRenderer({
+    canvas,
+    alpha:true,
+    antialias:true
+  });
+
+  renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));
+
+  scene.add(new THREE.AmbientLight(0x7bdfff,1.6));
+
+  const light=new THREE.PointLight(0x22cfff,16);
+  light.position.set(3,3,4);
+  scene.add(light);
+
+  head=new THREE.Group();
+  scene.add(head);
+
+  const skull=new THREE.Mesh(
+    new THREE.IcosahedronGeometry(1.05,4),
+    new THREE.MeshBasicMaterial({
+      color:0x42dcff,
+      wireframe:true,
+      transparent:true,
+      opacity:.24
+    })
+  );
+
+  skull.scale.set(.82,1.18,.78);
+  head.add(skull);
+
+  const points=[];
+
+  for(let i=0;i<2400;i++) {
+    const y=Math.random()*2.2-1.1;
+    const a=Math.random()*Math.PI*2;
+    const r=Math.sqrt(Math.max(0,1-(y/1.2)**2));
+
+    points.push(
+      Math.cos(a)*r*.82,
+      y,
+      Math.sin(a)*r*.68
+    );
   }
 
-  if (savedKey && key === savedKey) {
-    status.textContent =
-      "KEY demonstrativa reconhecida neste navegador.";
-  } else {
-    status.textContent =
-      "KEY não reconhecida. Confira o código ou solicite o manual.";
+  const geo=new THREE.BufferGeometry();
+
+  geo.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(points,3)
+  );
+
+  head.add(new THREE.Points(
+    geo,
+    new THREE.PointsMaterial({
+      color:0x9af3ff,
+      size:.014,
+      transparent:true,
+      opacity:.9
+    })
+  ));
+
+  for(let i=0;i<3;i++) {
+    const ring=new THREE.Mesh(
+      new THREE.TorusGeometry(1.35+i*.19,.006,6,140),
+      new THREE.MeshBasicMaterial({
+        color:0x38dfff,
+        transparent:true,
+        opacity:.55-i*.1
+      })
+    );
+
+    ring.rotation.x=1.1+i*.3;
+    ring.rotation.y=i*.7;
+    head.add(ring);
   }
+
+  canvas.addEventListener("pointerdown",e=>{
+    drag=true;
+    lastX=e.clientX;
+    lastY=e.clientY;
+    canvas.setPointerCapture(e.pointerId);
+  });
+
+  canvas.addEventListener("pointermove",e=>{
+    if(!drag) return;
+
+    head.rotation.y+=(e.clientX-lastX)*.008;
+    head.rotation.x+=(e.clientY-lastY)*.008;
+
+    lastX=e.clientX;
+    lastY=e.clientY;
+  });
+
+  canvas.addEventListener("pointerup",()=>drag=false);
+  canvas.addEventListener("pointercancel",()=>drag=false);
+
+  $("rotateBtn").onclick=()=>{
+    autoRotate=!autoRotate;
+
+    $("rotateBtn").textContent=
+      autoRotate?"Ⅱ PAUSAR ROTAÇÃO":"▶ RETOMAR ROTAÇÃO";
+  };
+
+  $("resetView").onclick=()=>{
+    head.rotation.set(0,0,0);
+  };
+
+  resizeHolo();
+  animate();
 }
 
-/* WHATSAPP */
+function resizeHolo() {
+  if(!renderer) return;
 
-function requestManual(subject) {
-  const phone = "5587981368837";
+  const w=canvas.parentElement.clientWidth;
+  const h=canvas.parentElement.clientHeight;
 
-  const message =
-    "Olá! Gostaria de solicitar o manual do WSAZ_777.\n\n" +
-    "Assunto: " + subject + "\n\n" +
-    "Pode me enviar as instruções, por favor?";
+  renderer.setSize(w,h,false);
 
-  const url =
-    "https://wa.me/" + phone +
-    "?text=" + encodeURIComponent(message);
-
-  window.open(url, "_blank");
+  camera.aspect=w/h;
+  camera.updateProjectionMatrix();
 }
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  if(head&&autoRotate&&!drag) {
+    head.rotation.y+=.003;
+    head.rotation.x=Math.sin(Date.now()*.0003)*.06;
+  }
+
+  if(renderer) renderer.render(scene,camera);
+}
+
+window.addEventListener("resize",resizeHolo);
+
+checkAccess();
+initHolo();
+
 </script>
-
 </body>
 </html>
