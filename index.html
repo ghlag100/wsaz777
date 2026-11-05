@@ -11,7 +11,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800&display=swap');
 
-:root {
+:root{
   --red:#e32636;
   --red-dark:#b81425;
   --ink:#17171b;
@@ -100,7 +100,7 @@ main{max-width:1250px;margin:auto;padding:35px 25px 70px}
 .secondary-btn{background:white}
 .primary-btn:hover{background:var(--red-dark)}
 
-/* ROBÔ HOLOGRÁFICO */
+/* ROBÔ */
 .holo{
   min-height:350px;display:grid;place-items:center;
   position:relative;isolation:isolate;overflow:visible
@@ -112,8 +112,7 @@ main{max-width:1250px;margin:auto;padding:35px 25px 70px}
   animation:robotFloat 4s ease-in-out infinite
 }
 .robot-stage::before,.robot-stage::after{
-  content:"";position:absolute;border-radius:50%;
-  pointer-events:none
+  content:"";position:absolute;border-radius:50%;pointer-events:none
 }
 .robot-stage::before{
   width:230px;height:230px;border:1px solid #e3263670;
@@ -139,7 +138,7 @@ main{max-width:1250px;margin:auto;padding:35px 25px 70px}
   background:linear-gradient(135deg,#fff,#dce1e8 25%,#8c96a5 48%,#f7f8fa 70%,#9ba5b3);
   border:2px solid #fff;
   box-shadow:0 0 20px #ffffff70,0 0 45px #e3263640,
-    inset -12px -10px 20px #14192366,inset 8px 8px 18px #ffffffcc;
+  inset -12px -10px 20px #14192366,inset 8px 8px 18px #ffffffcc;
   transform-style:preserve-3d;
   animation:robotTurn 12s ease-in-out infinite
 }
@@ -175,14 +174,11 @@ main{max-width:1250px;margin:auto;padding:35px 25px 70px}
 }
 .robot-side.left{left:-14px;border-radius:8px 0 0 8px}
 .robot-side.right{right:-14px;border-radius:0 8px 8px 0}
-.robot-back{
-  position:absolute;inset:15px 20px;border-radius:45%;
-  border:2px solid #e3263670;pointer-events:none
-}
+.robot-back{position:absolute;inset:15px 20px;border-radius:45%;border:2px solid #e3263670;pointer-events:none}
 .robot-glow{
   position:absolute;width:170px;height:35px;bottom:0;
-  border-radius:50%;background:#ff191950;
-  filter:blur(18px);animation:robotPulse 3s ease-in-out infinite
+  border-radius:50%;background:#ff191950;filter:blur(18px);
+  animation:robotPulse 3s ease-in-out infinite
 }
 .holo-caption{
   position:absolute;bottom:5px;font:9px Orbitron;
@@ -212,7 +208,7 @@ main{max-width:1250px;margin:auto;padding:35px 25px 70px}
 .product p{color:var(--muted);font-size:12px;line-height:1.7;min-height:42px}
 .product a{display:inline-block;margin-top:12px;color:var(--red);font-size:10px;font-weight:900;letter-spacing:1px}
 
-/* ASSISTENTE IA */
+/* ASSISTENTE */
 .ai-panel{
   margin-top:65px;background:white;border:1px solid var(--line);
   border-radius:20px;overflow:hidden;box-shadow:var(--shadow)
@@ -276,8 +272,13 @@ main{max-width:1250px;margin:auto;padding:35px 25px 70px}
 .send-btn:disabled{opacity:.5;cursor:not-allowed}
 .tool-btn:hover{color:var(--red)}
 .composer-note{color:#999;font-size:9px;margin:10px 3px 0}
+.message-actions{display:flex;gap:7px;margin-top:9px}
+.message-actions button{
+  border:1px solid var(--line);background:#f5f5f7;
+  border-radius:7px;padding:6px 9px;cursor:pointer;font-size:11px
+}
 
-/* CONTATO E RODAPÉ */
+/* CONTATO */
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:20px}
 .contact-card,.gameplay-card{background:white;border:1px solid var(--line);border-radius:15px;padding:25px}
 .contact-card h3,.gameplay-card h3{font-size:14px}
@@ -364,6 +365,7 @@ footer p{color:#999;font-size:10px}
 </header>
 
 <main id="inicio">
+
   <section class="hero">
     <div>
       <div class="eyebrow">✦ WSAZ_777 / GAMING DIVISION</div>
@@ -375,7 +377,6 @@ footer p{color:#999;font-size:10px}
       </div>
     </div>
 
-    <!-- ROBÔ INTEGRADO: NÃO PRECISA DE ARQUIVO EXTERNO -->
     <div class="holo">
       <div class="robot-stage">
         <div class="robot-ring"></div>
@@ -410,30 +411,35 @@ footer p{color:#999;font-size:10px}
       <p>Configurações personalizadas de sensibilidade para seu estilo de jogo.</p>
       <a href="#contato">CONSULTAR →</a>
     </article>
+
     <article class="product">
       <div class="product-icon">▦</div>
       <h3>HUD PERSONALIZADO</h3>
       <p>Organização de botões e layout para melhorar conforto e controle.</p>
       <a href="#contato">CONSULTAR →</a>
     </article>
+
     <article class="product">
       <div class="product-icon">ϟ</div>
       <h3>OTIMIZAÇÃO PC</h3>
       <p>Ajustes de desempenho, estabilidade e configurações do Windows.</p>
       <a href="#contato">CONSULTAR →</a>
     </article>
+
     <article class="product">
       <div class="product-icon">◎</div>
       <h3>PRECISÃO</h3>
       <p>Dicas e ajustes legítimos para controle, mira e consistência.</p>
       <a href="#contato">CONSULTAR →</a>
     </article>
+
     <article class="product">
       <div class="product-icon">▤</div>
       <h3>CONFIGURAÇÃO EMULADOR</h3>
       <p>Orientações para resolução, controles e desempenho no PC.</p>
       <a href="#contato">CONSULTAR →</a>
     </article>
+
     <article class="product">
       <div class="product-icon">⌘</div>
       <h3>SUPORTE</h3>
@@ -448,7 +454,7 @@ footer p{color:#999;font-size:10px}
         <div class="ai-title">♛ WSAZ_777 IA</div>
         <div class="ai-subtitle">NEURAL CORE · ASSISTENTE INTELIGENTE</div>
       </div>
-      <button onclick="newChat()">＋ NOVA CONVERSA</button>
+      <button type="button" onclick="newChat()">＋ NOVA CONVERSA</button>
     </div>
 
     <div class="ai-controls">
@@ -461,13 +467,15 @@ footer p{color:#999;font-size:10px}
       <span class="status"><i></i> AI SYSTEM</span>
     </div>
 
-    <div class="chat" id="chat">
+    <div class="chat" id="chat" aria-live="polite">
       <div class="message">
         <div class="avatar">♛</div>
         <div class="bubble">
-          ✦ Bem-vindo ao assistente WSAZ_777.<br><br>
-          Posso ajudar com Free Fire, configurações de PC,
-          sensibilidade, HUD, estudos, tecnologia e muito mais.<br><br>
+          Bem-vindo ao assistente WSAZ_777.
+
+          Posso ajudar com jogos, configurações de PC,
+          sensibilidade, HUD, estudos, tecnologia e muito mais.
+
           Como posso ajudar?
         </div>
       </div>
@@ -477,19 +485,27 @@ footer p{color:#999;font-size:10px}
 
     <div class="composer">
       <div class="preview-list" id="previewList"></div>
+
       <div class="input-row">
         <input type="file" id="imageInput"
           accept="image/png,image/jpeg,image/webp" multiple hidden>
+
         <button class="tool-btn" id="attachBtn"
+          type="button"
           onclick="document.getElementById('imageInput').click()"
           title="Anexar imagens">＋</button>
-        <button class="tool-btn" onclick="startVoice()" title="Ditado por voz">◉</button>
+
+        <button class="tool-btn" type="button"
+          onclick="startVoice()" title="Ditado por voz">◉</button>
+
         <textarea id="messageInput"
           placeholder="Pergunte alguma coisa ao WSAZ_777..."
           rows="1" maxlength="4000"></textarea>
+
         <button class="send-btn" id="sendBtn"
-          onclick="sendMessage()" title="Enviar">➤</button>
+          type="button" onclick="sendMessage()" title="Enviar">➤</button>
       </div>
+
       <div class="composer-note">
         ENTER para enviar · SHIFT + ENTER para nova linha · Máximo de 5 imagens
       </div>
@@ -533,6 +549,12 @@ footer p{color:#999;font-size:10px}
 <script>
 "use strict";
 
+/*
+  HISTÓRICO INDIVIDUAL:
+  sessionStorage separa os dados por aba e origem.
+  Não utiliza armazenamento compartilhado no servidor.
+*/
+
 const chat = document.getElementById("chat");
 const input = document.getElementById("messageInput");
 const imageInput = document.getElementById("imageInput");
@@ -540,17 +562,28 @@ const previewList = document.getElementById("previewList");
 const typing = document.getElementById("typing");
 const sendBtn = document.getElementById("sendBtn");
 
+const HISTORY_KEY = "wsaz777_private_chat_history";
+
 let selectedImages = [];
 let history = [];
 let busy = false;
 
 function enterSite(){
   document.getElementById("intro").classList.add("hide");
-  sessionStorage.setItem("wsazIntroSeen","1");
+
+  try{
+    sessionStorage.setItem("wsazIntroSeen","1");
+  }catch(error){
+    console.warn("Sessão indisponível.",error);
+  }
 }
 
-if(sessionStorage.getItem("wsazIntroSeen")){
-  document.getElementById("intro").classList.add("hide");
+try{
+  if(sessionStorage.getItem("wsazIntroSeen")){
+    document.getElementById("intro").classList.add("hide");
+  }
+}catch(error){
+  console.warn("Não foi possível verificar a sessão.",error);
 }
 
 function toggleMenu(){
@@ -561,6 +594,7 @@ function closeMenu(){
   document.getElementById("nav").classList.remove("open");
 }
 
+/* CRIA MENSAGENS COM TEXTO SEGURO */
 function addMessage(role,text,images=[]){
   const wrapper=document.createElement("div");
   wrapper.className=`message ${role==="user"?"user":""}`;
@@ -580,22 +614,26 @@ function addMessage(role,text,images=[]){
     bubble.appendChild(img);
   });
 
-  wrapper.append(avatar,bubble);
-
   if(role==="assistant" && "speechSynthesis" in window){
+    const actions=document.createElement("div");
+    actions.className="message-actions";
+
     const speak=document.createElement("button");
     speak.type="button";
-    speak.textContent="🔊";
+    speak.textContent="🔊 Ouvir";
     speak.title="Ouvir resposta";
-    speak.style.cssText="display:block;margin-top:9px;border:0;background:#f3f3f5;border-radius:7px;padding:6px 9px;cursor:pointer";
     speak.addEventListener("click",()=>speakText(text));
-    bubble.appendChild(speak);
+
+    actions.appendChild(speak);
+    bubble.appendChild(actions);
   }
 
+  wrapper.append(avatar,bubble);
   chat.appendChild(wrapper);
   chat.scrollTop=chat.scrollHeight;
 }
 
+/* PRÉVIA DAS IMAGENS */
 function renderPreviews(){
   previewList.replaceChildren();
 
@@ -611,6 +649,7 @@ function renderPreviews(){
     remove.textContent="×";
     remove.type="button";
     remove.setAttribute("aria-label","Remover imagem");
+
     remove.onclick=()=>{
       selectedImages.splice(index,1);
       renderPreviews();
@@ -621,10 +660,11 @@ function renderPreviews(){
   });
 }
 
+/* REDIMENSIONAMENTO DE IMAGENS */
 function resizeImage(file){
   return new Promise((resolve,reject)=>{
-    if(!file.type.startsWith("image/")){
-      reject(new Error("Arquivo não é uma imagem."));
+    if(!file.type.match(/^image\/(jpeg|png|webp)$/)){
+      reject(new Error("Formato de imagem não suportado."));
       return;
     }
 
@@ -642,8 +682,13 @@ function resizeImage(file){
         canvas.height=Math.round(img.height*ratio);
 
         const ctx=canvas.getContext("2d");
-        ctx.drawImage(img,0,0,canvas.width,canvas.height);
 
+        if(!ctx){
+          reject(new Error("Não foi possível processar a imagem."));
+          return;
+        }
+
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
         resolve(canvas.toDataURL("image/jpeg",0.72));
       };
 
@@ -677,34 +722,91 @@ imageInput.addEventListener("change",async event=>{
   imageInput.value="";
 });
 
+/* NOVA CONVERSA */
 function newChat(){
   if(busy)return;
 
-  if("speechSynthesis" in window) speechSynthesis.cancel();
+  if("speechSynthesis" in window){
+    speechSynthesis.cancel();
+  }
 
   history=[];
   selectedImages=[];
   renderPreviews();
   chat.replaceChildren();
 
-  addMessage("assistant","✦ Nova conversa iniciada.\n\nComo posso ajudar?");
+  addMessage(
+    "assistant",
+    "Nova conversa iniciada.\n\nComo posso ajudar?"
+  );
 
   try{
-    localStorage.removeItem("wsaz777_last_history");
+    sessionStorage.removeItem(HISTORY_KEY);
   }catch(error){
     console.warn("Não foi possível limpar o histórico.",error);
   }
 }
 
+/* SALVAR HISTÓRICO SOMENTE NESTA ABA */
+function saveHistory(){
+  try{
+    sessionStorage.setItem(
+      HISTORY_KEY,
+      JSON.stringify(history.slice(-12))
+    );
+  }catch(error){
+    console.warn("Não foi possível salvar o histórico.",error);
+  }
+}
+
+/* RECUPERAR HISTÓRICO SOMENTE DESTA ABA */
+function loadHistory(){
+  try{
+    const saved=sessionStorage.getItem(HISTORY_KEY);
+
+    if(!saved)return;
+
+    const parsed=JSON.parse(saved);
+
+    if(!Array.isArray(parsed))return;
+
+    history=parsed
+      .filter(item =>
+        item &&
+        ["user","assistant"].includes(item.role) &&
+        typeof item.content==="string"
+      )
+      .slice(-12);
+
+    if(history.length===0)return;
+
+    chat.replaceChildren();
+
+    history.forEach(item=>{
+      addMessage(item.role,item.content);
+    });
+
+  }catch(error){
+    console.warn("Não foi possível recuperar o histórico.",error);
+    history=[];
+  }
+}
+
+/* ENVIAR MENSAGEM */
 async function sendMessage(){
   if(busy)return;
 
   const message=input.value.trim();
+
   if(!message && selectedImages.length===0)return;
 
   const images=selectedImages.map(item=>item.data);
 
-  addMessage("user",message||"Analise estas imagens.",images);
+  addMessage(
+    "user",
+    message||"Analise estas imagens.",
+    images
+  );
 
   const previousHistory=[...history];
 
@@ -742,22 +844,35 @@ async function sendMessage(){
     }
 
     if(!response.ok){
-      throw new Error(data.error||"Falha ao consultar o servidor.");
+      throw new Error(
+        data.reply||data.error||"Falha ao consultar o servidor."
+      );
     }
 
     const answer=data.reply||"Não foi possível obter uma resposta.";
 
     addMessage("assistant",answer);
 
-    history.push({role:"assistant",content:answer});
+    history.push({
+      role:"assistant",
+      content:answer
+    });
+
     history=history.slice(-12);
     saveHistory();
 
   }catch(error){
-    console.error(error);
-    addMessage("assistant",
-      "Não consegui conectar ao servidor. Verifique sua conexão e tente novamente."
+    console.error("Erro ao enviar mensagem:",error);
+
+    history.pop();
+
+    addMessage(
+      "assistant",
+      error.message||"Não consegui conectar ao servidor. Tente novamente."
     );
+
+    saveHistory();
+
   }finally{
     busy=false;
     sendBtn.disabled=false;
@@ -766,37 +881,7 @@ async function sendMessage(){
   }
 }
 
-function saveHistory(){
-  try{
-    localStorage.setItem("wsaz777_last_history",JSON.stringify(history));
-  }catch(error){
-    console.warn("Não foi possível salvar o histórico.",error);
-  }
-}
-
-function loadHistory(){
-  try{
-    const saved=localStorage.getItem("wsaz777_last_history");
-    if(!saved)return;
-
-    const parsed=JSON.parse(saved);
-    if(!Array.isArray(parsed))return;
-
-    history=parsed.slice(-12);
-    if(history.length===0)return;
-
-    chat.replaceChildren();
-
-    history.forEach(item=>{
-      if(item && (item.role==="user"||item.role==="assistant")){
-        addMessage(item.role,String(item.content||""));
-      }
-    });
-  }catch(error){
-    console.warn("Não foi possível recuperar o histórico.",error);
-  }
-}
-
+/* ENTER ENVIA / SHIFT + ENTER QUEBRA LINHA */
 input.addEventListener("keydown",event=>{
   if(event.key==="Enter"&&!event.shiftKey){
     event.preventDefault();
@@ -804,8 +889,10 @@ input.addEventListener("keydown",event=>{
   }
 });
 
+/* DITADO POR VOZ */
 function startVoice(){
-  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const Recognition=
+    window.SpeechRecognition||window.webkitSpeechRecognition;
 
   if(!Recognition){
     alert("Seu navegador não oferece suporte ao ditado por voz.");
@@ -813,12 +900,16 @@ function startVoice(){
   }
 
   const recognition=new Recognition();
+
   recognition.lang="pt-BR";
   recognition.interimResults=false;
   recognition.maxAlternatives=1;
 
   recognition.onresult=event=>{
-    input.value+=(input.value?" ":"")+event.results[0][0].transcript;
+    input.value+=
+      (input.value?" ":"")+
+      event.results[0][0].transcript;
+
     input.focus();
   };
 
@@ -829,6 +920,7 @@ function startVoice(){
   recognition.start();
 }
 
+/* LEITURA DE RESPOSTAS */
 function speakText(text){
   if(!("speechSynthesis" in window)){
     alert("Leitura de voz não disponível neste navegador.");
@@ -837,26 +929,51 @@ function speakText(text){
 
   speechSynthesis.cancel();
 
-  const utterance=new SpeechSynthesisUtterance(text);
+  const cleanText=String(text)
+    .replace(/```[\s\S]*?```/g,"Código omitido.")
+    .replace(/https?:\/\/\S+/g,"link")
+    .replace(/[*_#>`~]/g,"")
+    .trim();
+
+  const utterance=new SpeechSynthesisUtterance(cleanText);
   utterance.lang="pt-BR";
-  utterance.rate=1;
+  utterance.rate=0.96;
+  utterance.pitch=0.9;
+  utterance.volume=1;
+
+  const voices=speechSynthesis.getVoices();
+  const portugueseVoice=voices.find(voice=>
+    voice.lang.toLowerCase().startsWith("pt-br")
+  );
+
+  if(portugueseVoice){
+    utterance.voice=portugueseVoice;
+  }
 
   speechSynthesis.speak(utterance);
 }
 
+/* VERIFICAR SERVIDOR */
 async function checkServer(){
   try{
     const response=await fetch("/api/health");
-    if(!response.ok)throw new Error("Servidor indisponível");
+
+    if(!response.ok){
+      throw new Error("Servidor indisponível.");
+    }
+
     const data=await response.json();
     console.log("WSAZ_777 status:",data);
+
   }catch(error){
     console.warn("Não foi possível verificar o servidor.");
   }
 }
 
+/* INICIALIZAÇÃO */
 loadHistory();
 checkServer();
+
 </script>
 
 </body>
