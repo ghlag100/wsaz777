@@ -1,10 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080808">
-<title>WSAZ_777 | ELITE GAMING LAB</title>
+<title>WSAZ_777 | STORE DE WALLACE</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
@@ -19,6 +20,9 @@ html{scroll-behavior:smooth;overflow-anchor:none}
 body{background:var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif;overflow-x:hidden}
 button,input{font:inherit}
 button{cursor:pointer}
+button:disabled{opacity:.5;cursor:wait}
+a{color:inherit;text-decoration:none}
+
 .background{
  position:fixed;inset:0;z-index:-3;
  background:
@@ -32,14 +36,20 @@ button{cursor:pointer}
  background-size:35px 35px;
 }
 .grain{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse,transparent 25%,#000b)}
-a{color:inherit;text-decoration:none}
-button:disabled{opacity:.5;cursor:wait}
+
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 @keyframes spin{to{transform:rotate(360deg)}}
 @keyframes pulse{50%{opacity:.35}}
 @keyframes scan{to{top:110%}}
+@keyframes load{to{width:100%}}
+@keyframes floatArmor{
+ 0%,100%{transform:translateY(0) rotateY(-9deg)}
+ 50%{transform:translateY(-12px) rotateY(9deg)}
+}
+@keyframes ringRotate{to{transform:translate(-50%,-50%) rotate(360deg)}}
+@keyframes glowPulse{50%{filter:drop-shadow(0 0 18px #a6ff0088)}}
 
-/* INICIALIZAÇÃO — FOTO ORIGINAL */
+/* INICIALIZAÇÃO */
 .boot{
  position:fixed;inset:0;z-index:9999;display:grid;place-items:center;
  background:radial-gradient(circle,#19200b,#080808 65%);
@@ -76,9 +86,22 @@ button:disabled{opacity:.5;cursor:wait}
 .boot h1{font:900 30px Orbitron;margin-top:10px;text-shadow:0 0 20px #a6ff0055}
 .boot h1 span{color:var(--green)}
 .boot p{font-size:10px;color:#aaa;letter-spacing:3px;margin-top:10px}
+.boot-store{
+ margin:17px auto 0;padding:12px 15px;
+ width:min(100%,285px);
+ border:1px solid #a6ff0066;
+ background:linear-gradient(90deg,#a6ff0012,#111b);
+ box-shadow:0 0 22px #a6ff0010,inset 0 0 15px #a6ff0008;
+}
+.boot-store strong{
+ display:block;font:900 13px Orbitron;letter-spacing:3px;color:var(--green);
+ text-shadow:0 0 12px #a6ff0066;
+}
+.boot-store small{
+ display:block;margin-top:7px;color:#888;font-size:8px;letter-spacing:2px;
+}
 .boot-bar{height:3px;background:#333;width:210px;margin:25px auto 15px;overflow:hidden}
 .boot-bar i{display:block;height:100%;width:0;background:var(--green);animation:load 2.5s forwards}
-@keyframes load{to{width:100%}}
 .boot button{
  display:none;margin:20px auto;padding:13px 40px;
  background:var(--green);color:#080808;border:0;
@@ -92,7 +115,7 @@ button:disabled{opacity:.5;cursor:wait}
 header{
  width:95%;max-width:1500px;margin:17px auto;
  padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:15px;
- border:1px solid var(--border);background:#101010eF;
+ border:1px solid var(--border);background:#101010ef;
  clip-path:polygon(0 0,98% 0,100% 20%,100% 100%,2% 100%,0 80%);
 }
 .brand{display:flex;align-items:center;gap:12px}
@@ -104,9 +127,7 @@ header{
 
 /* CONTEÚDO */
 .layout{width:95%;max-width:1500px;margin:25px auto;display:grid;grid-template-columns:175px minmax(0,1fr);gap:18px}
-.sidebar,.panel{
- background:#101010ed;border:1px solid var(--border);
-}
+.sidebar,.panel{background:#101010ed;border:1px solid var(--border)}
 .sidebar{padding:12px;display:flex;flex-direction:column;gap:7px;min-height:600px}
 .menu{
  display:block;padding:13px 10px;font-size:11px;color:#ccc;
@@ -122,12 +143,9 @@ header{
 .hero h2{font:900 clamp(24px,4vw,42px) Orbitron;margin-top:12px}
 .hero h2 span{color:var(--green)}
 .hero p{font-size:12px;color:#aaa;margin-top:10px;line-height:1.7}
-.spray{
- color:var(--red);font:900 11px Orbitron;letter-spacing:3px;
- transform:rotate(-2deg);display:inline-block;margin-top:14px;
-}
+.spray{color:var(--red);font:900 11px Orbitron;letter-spacing:3px;transform:rotate(-2deg);display:inline-block;margin-top:14px}
 
-/* PAINEL PRINCIPAL */
+/* PAINEL / HOLOGRAMA */
 .panel{overflow:hidden}
 .panel-head{
  display:flex;justify-content:space-between;align-items:center;gap:10px;
@@ -135,29 +153,58 @@ header{
 }
 .panel-head b{font:800 12px Orbitron}
 .panel-head span{font:700 8px Orbitron;color:var(--green);letter-spacing:2px}
+
 .visual{
- min-height:260px;position:relative;display:grid;place-items:center;
- overflow:hidden;background:radial-gradient(circle,#263313 0%,#101010 45%,#080808);
+ min-height:330px;position:relative;display:grid;place-items:center;
+ overflow:hidden;background:radial-gradient(ellipse at center,#263313 0%,#101010 48%,#080808);
+ perspective:900px;
 }
 .visual:after{
  content:"";position:absolute;left:0;right:0;top:-30%;height:30%;
  background:linear-gradient(transparent,#a6ff0022,transparent);
- animation:scan 5s linear infinite;
+ animation:scan 5s linear infinite;pointer-events:none;
 }
 .visual-grid{
  position:absolute;inset:0;opacity:.2;
  background-image:linear-gradient(#a6ff0025 1px,transparent 1px),linear-gradient(90deg,#a6ff0025 1px,transparent 1px);
  background-size:25px 25px;
 }
-.visual-core{
- width:125px;height:125px;border:2px solid var(--green);
- transform:rotate(45deg);box-shadow:0 0 35px #a6ff0040;
- display:grid;place-items:center;animation:spin 18s linear infinite;
-}
-.visual-core span{transform:rotate(-45deg);font:900 29px Orbitron;color:var(--green)}
-.visual-label{position:absolute;bottom:17px;font:700 9px Orbitron;color:var(--green);letter-spacing:3px}
-.visual-corner{position:absolute;top:16px;left:17px;font:700 8px Orbitron;color:#aaa}
+.visual-corner{position:absolute;top:16px;left:17px;font:700 8px Orbitron;color:#aaa;z-index:3}
 .visual-corner.right{left:auto;right:17px;color:var(--red)}
+.ai-frame{
+ position:relative;width:260px;height:260px;display:grid;place-items:center;
+}
+.ai-ring{
+ position:absolute;left:50%;top:50%;width:230px;height:230px;
+ border:1px solid #a6ff0080;border-radius:50%;
+ transform:translate(-50%,-50%);
+ box-shadow:0 0 25px #a6ff0022,inset 0 0 25px #a6ff0015;
+}
+.ai-ring.one{animation:ringRotate 12s linear infinite}
+.ai-ring.two{
+ width:190px;height:190px;border-style:dashed;border-color:#ff234866;
+ animation:ringRotate 18s linear infinite reverse;
+}
+.ai-ring.three{width:250px;height:250px;border-color:#a6ff0030;border-style:dotted}
+.armor-hologram{
+ position:relative;width:160px;height:225px;z-index:2;
+ animation:floatArmor 5s ease-in-out infinite,glowPulse 3s ease-in-out infinite;
+ transform-style:preserve-3d;
+ filter:drop-shadow(0 0 10px #a6ff0066);
+}
+.armor-hologram svg{width:100%;height:100%;overflow:visible}
+.visual-label{
+ position:absolute;bottom:17px;z-index:3;
+ font:700 9px Orbitron;color:var(--green);letter-spacing:3px;text-align:center;
+}
+.ai-data{
+ position:absolute;bottom:45px;right:18px;color:#a6ff0080;
+ font:700 7px Orbitron;line-height:2;text-align:right;
+}
+.ai-status{
+ position:absolute;bottom:45px;left:18px;color:#ff2348aa;
+ font:700 7px Orbitron;line-height:2;
+}
 
 /* SERVIÇOS */
 .section-title{font:800 14px Orbitron;margin:22px 0 13px}
@@ -215,9 +262,20 @@ header{
 .shortcuts{display:flex;gap:8px;padding:0 10px 12px}
 .shortcut{background:none;border:1px solid #333;color:#bbb;padding:8px 11px;font-size:9px}
 
+/* DEMONSTRAÇÃO */
+.demo-wrap{padding:20px}
+.demo-heading{font:800 12px Orbitron;color:var(--green);letter-spacing:2px;margin-bottom:10px}
+.demo-description{font-size:11px;color:#aaa;line-height:1.7;margin-bottom:15px}
+.demo-video{
+ display:block;width:100%;max-height:440px;aspect-ratio:16/9;
+ background:#050505;border:1px solid #3a3a3a;object-fit:contain;
+}
+.demo-caption{font-size:9px;color:#777;margin-top:10px;line-height:1.6}
+
 /* RODAPÉ */
 footer{padding:20px 5px 30px;display:flex;justify-content:space-between;gap:10px;color:#888;font-size:9px}
 footer strong{color:var(--green)}
+
 @media(max-width:850px){
  .layout{grid-template-columns:1fr}
  .sidebar{min-height:auto;flex-direction:row;overflow-x:auto}
@@ -235,6 +293,9 @@ footer strong{color:var(--green)}
  .messages{height:42vh;min-height:250px}
  .message{max-width:95%}
  footer{flex-direction:column;text-align:center}
+ .visual{min-height:300px}
+ .ai-frame{transform:scale(.9)}
+ .ai-data,.ai-status{font-size:6px}
 }
 @media(max-width:390px){.products{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){
@@ -247,6 +308,7 @@ footer strong{color:var(--green)}
 <div class="background"></div>
 <div class="grain"></div>
 
+<!-- TELA DE INICIALIZAÇÃO -->
 <div class="boot" id="boot">
  <div class="boot-grid"></div>
  <div class="boot-content">
@@ -254,9 +316,16 @@ footer strong{color:var(--green)}
    <img src="/file_000000009618820e9a50407df0e56103.png"
         alt="Foto de inicialização WSAZ_777">
   </div>
+
   <div class="boot-tag">ELITE GAMING SYSTEM</div>
   <h1>WSAZ_<span>777</span></h1>
   <p>GAMING · TECHNOLOGY · PERFORMANCE</p>
+
+  <div class="boot-store">
+   <strong>STORE DE WALLACE</strong>
+   <small>TECNOLOGIA • PERSONALIZAÇÃO • IA</small>
+  </div>
+
   <div class="boot-bar"><i></i></div>
   <div class="boot-status" id="bootStatus">INICIALIZANDO SISTEMA...</div>
   <button id="enterButton" type="button">ACESSAR PAINEL</button>
@@ -268,7 +337,7 @@ footer strong{color:var(--green)}
   <div class="brand-icon">♛</div>
   <div>
    <div class="logo">WSAZ_777 <span>ELITE</span></div>
-   <div class="subtitle">GAMING LAB · PERFORMANCE CENTER</div>
+   <div class="subtitle">STORE DE WALLACE · GAMING LAB</div>
   </div>
  </div>
  <div class="status">● PAINEL ATIVO</div>
@@ -281,7 +350,7 @@ footer strong{color:var(--green)}
   <a class="menu" href="#chat">⌘ &nbsp; ASSISTENTE IA</a>
   <a class="menu" href="#contato">◉ &nbsp; CONTATO</a>
   <div class="side-note">
-   <b>WSAZ_777</b>
+   <b>STORE DE WALLACE</b>
    <p>Configurações, desempenho e suporte para jogadores.</p>
   </div>
  </aside>
@@ -294,20 +363,93 @@ footer strong{color:var(--green)}
    <div class="spray">NO LIMITS // JUST PERFORMANCE</div>
   </section>
 
+  <!-- CENTRAL DE OPERAÇÕES -->
   <section class="panel">
    <div class="panel-head">
     <b>◈ CENTRAL DE OPERAÇÕES</b>
-    <span>● READY</span>
+    <span>● AI SYSTEM ONLINE</span>
    </div>
+
    <div class="visual">
     <div class="visual-grid"></div>
-    <div class="visual-corner">WSAZ_777 // SYSTEM</div>
-    <div class="visual-corner right">GAMING LAB</div>
-    <div class="visual-core"><span>777</span></div>
-    <div class="visual-label">PERFORMANCE · PRECISION · CONTROL</div>
+    <div class="visual-corner">WSAZ_777 // AI CORE</div>
+    <div class="visual-corner right">WALLACE SYSTEM</div>
+
+    <div class="ai-frame">
+     <div class="ai-ring one"></div>
+     <div class="ai-ring two"></div>
+     <div class="ai-ring three"></div>
+
+     <div class="armor-hologram">
+      <svg viewBox="0 0 180 250" xmlns="http://www.w3.org/2000/svg" aria-label="Holograma futurista de armadura">
+       <defs>
+        <linearGradient id="armor" x1="0" y1="0" x2="1" y2="1">
+         <stop offset="0" stop-color="#eaffb0"/>
+         <stop offset=".35" stop-color="#a6ff00"/>
+         <stop offset="1" stop-color="#315500"/>
+        </linearGradient>
+        <linearGradient id="darkArmor" x1="0" y1="0" x2="0" y2="1">
+         <stop offset="0" stop-color="#303b1d"/>
+         <stop offset="1" stop-color="#080d04"/>
+        </linearGradient>
+       </defs>
+
+       <!-- Cabeça -->
+       <path d="M66 22 L90 12 L114 22 L123 48 L116 77 L90 92 L64 77 L57 48 Z"
+        fill="url(#darkArmor)" stroke="url(#armor)" stroke-width="2"/>
+       <path d="M64 43 L80 39 L90 44 L100 39 L116 43 L111 57 L90 64 L69 57 Z"
+        fill="#10180a" stroke="#a6ff00" stroke-width="1.5"/>
+       <path d="M70 48 L86 47 L90 52 L94 47 L110 48"
+        fill="none" stroke="#d5ff57" stroke-width="3" stroke-linecap="round"/>
+       <path d="M78 70 L90 75 L102 70" fill="none" stroke="#a6ff00" stroke-width="2"/>
+
+       <!-- Pescoço -->
+       <path d="M77 86 L103 86 L109 104 L71 104 Z"
+        fill="url(#darkArmor)" stroke="#a6ff00" stroke-width="1.5"/>
+
+       <!-- Ombros e tronco -->
+       <path d="M70 100 L48 105 L26 125 L34 153 L57 148 L64 132
+                L62 188 L118 188 L116 132 L123 148 L146 153 L154 125
+                L132 105 L110 100 L90 113 Z"
+        fill="url(#darkArmor)" stroke="url(#armor)" stroke-width="2"/>
+       <path d="M70 105 L90 118 L110 105 L115 142 L90 157 L65 142 Z"
+        fill="#19240d" stroke="#a6ff00" stroke-width="1.5"/>
+       <path d="M90 120 L103 139 L90 151 L77 139 Z"
+        fill="#a6ff00" opacity=".8"/>
+       <path d="M90 125 L96 139 L90 145 L84 139 Z" fill="#f5ffce"/>
+
+       <!-- Braços -->
+       <path d="M28 128 L17 157 L23 190 L42 188 L49 153 L43 132 Z"
+        fill="url(#darkArmor)" stroke="#a6ff00" stroke-width="2"/>
+       <path d="M152 128 L163 157 L157 190 L138 188 L131 153 L137 132 Z"
+        fill="url(#darkArmor)" stroke="#a6ff00" stroke-width="2"/>
+       <path d="M23 190 L17 216 L30 224 L43 211 L42 188 Z"
+        fill="#15200a" stroke="#a6ff00" stroke-width="1.5"/>
+       <path d="M157 190 L163 216 L150 224 L137 211 L138 188 Z"
+        fill="#15200a" stroke="#a6ff00" stroke-width="1.5"/>
+
+       <!-- Cintura -->
+       <path d="M64 183 L116 183 L122 204 L90 216 L58 204 Z"
+        fill="url(#darkArmor)" stroke="#a6ff00" stroke-width="2"/>
+       <path d="M78 190 L90 197 L102 190 L99 205 L90 210 L81 205 Z"
+        fill="#a6ff00"/>
+
+       <!-- Linhas tecnológicas -->
+       <path d="M48 119 L60 126 M132 119 L120 126 M65 160 L90 173 L115 160"
+        fill="none" stroke="#d5ff57" stroke-width="1.5" opacity=".8"/>
+       <path d="M45 145 L53 148 M135 145 L127 148"
+        stroke="#ff2348" stroke-width="2"/>
+      </svg>
+     </div>
+    </div>
+
+    <div class="ai-status">CORE: ACTIVE<br>ARMOR: ONLINE</div>
+    <div class="ai-data">SYSTEM 777<br>NEURAL LINK<br>STATUS: READY</div>
+    <div class="visual-label">ARTIFICIAL INTELLIGENCE · WSAZ_777</div>
    </div>
   </section>
 
+  <!-- SERVIÇOS -->
   <section id="servicos">
    <div class="section-title">✦ SERVIÇOS & SOLUÇÕES</div>
    <div class="products">
@@ -350,6 +492,7 @@ footer strong{color:var(--green)}
    </div>
   </section>
 
+  <!-- ASSISTENTE IA -->
   <section class="panel" id="chat">
    <div class="chat-top">
     <b>♛ WSAZ_777 IA</b>
@@ -391,12 +534,30 @@ Como posso ajudar?</div>
    </div>
   </section>
 
+  <!-- CONTATO E VÍDEO -->
   <section id="contato" class="panel">
    <div class="panel-head">
     <b>CONTATO & ATENDIMENTO</b>
     <span>WHATSAPP</span>
    </div>
-   <div style="padding:20px">
+
+   <div class="demo-wrap">
+    <div class="demo-heading">◈ DEMONSTRAÇÃO DE GAMEPLAY</div>
+    <p class="demo-description">
+     Confira a demonstração em vídeo e conheça o conteúdo apresentado pela Store de Wallace.
+    </p>
+
+    <video class="demo-video" controls playsinline preload="metadata">
+     <source src="demonstracao-ff.mp4" type="video/mp4">
+     Seu navegador não suporta a reprodução deste vídeo.
+    </video>
+
+    <p class="demo-caption">
+     Vídeo demonstrativo. Para exibi-lo, coloque o arquivo demonstracao-ff.mp4 na pasta principal do projeto.
+    </p>
+   </div>
+
+   <div style="padding:0 20px 20px">
     <p style="font-size:12px;color:#bbb;line-height:1.8">
      Entre em contato para consultar configurações, suporte e serviços disponíveis.
     </p>
@@ -409,7 +570,7 @@ Como posso ajudar?</div>
   </section>
 
   <footer>
-   <div><strong>♛ WSAZ_777</strong> · ELITE GAMING LAB</div>
+   <div><strong>♛ WSAZ_777</strong> · STORE DE WALLACE</div>
    <div>Projeto independente · 2026</div>
   </footer>
  </main>
